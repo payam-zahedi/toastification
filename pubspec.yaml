@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  equatable: ^2.0.5
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:
