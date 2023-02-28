@@ -1,7 +1,4 @@
 library toastification;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/notification/toastification_manager.dart';
+export 'src/notification/toastification_item.dart';
