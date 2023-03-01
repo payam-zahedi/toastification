@@ -1,25 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:uuid/uuid.dart';
 
 var uuid = const Uuid();
 
+typedef ToastificationBuilder = Widget Function(
+  BuildContext context,
+  ToastificationItem holder,
+);
+
 class ToastificationItem {
   ToastificationItem({
+    required this.builder,
     this.autoCloseDuration,
-  }) : id = uuid.v4();
-
-  final String id;
-  final Duration? autoCloseDuration;
-}
-
-class ToastificationHolder {
-  ToastificationHolder({
-    required this.item,
-    void Function(ToastificationHolder holder)? onAutoCompleteCompleted,
-  }) {
-    if (item.autoCloseDuration != null) {
+    void Function(ToastificationItem holder)? onAutoCompleteCompleted,
+  }) : id = uuid.v4() {
+    if (autoCloseDuration != null) {
       _timer = PausableTimer(
-        item.autoCloseDuration!,
+        autoCloseDuration!,
         () {
           onAutoCompleteCompleted?.call(this);
         },
@@ -27,7 +25,9 @@ class ToastificationHolder {
     }
   }
 
-  final ToastificationItem item;
+  final String id;
+  final Duration? autoCloseDuration;
+  final ToastificationBuilder builder;
 
   late final PausableTimer? _timer;
 

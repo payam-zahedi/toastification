@@ -38,8 +38,20 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     Toastification().addNotification(
-      context,
-      ToastificationItem(autoCloseDuration: const Duration(seconds: 3)),
+      context: context,
+      builder: (context, holder) {
+        return GestureDetector(
+          onTap: () {
+            Toastification().removeNotification(holder);
+          },
+          child: Container(
+            height: 100,
+            color: Colors.primaries[_counter],
+            child: Center(child: Text('$_counter')),
+          ),
+        );
+      },
+      autoCloseDuration: const Duration(seconds: 5),
     );
   }
 

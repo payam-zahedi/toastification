@@ -8,11 +8,11 @@ const _containerAnimationDuration = Duration(milliseconds: 500);
 class Toastification extends NavigatorObserver {
   static final Toastification _instance = Toastification._internal();
 
+  Toastification._internal();
+
   factory Toastification() {
     return _instance;
   }
-
-  Toastification._internal();
 
   OverlayEntry? _overlayEntry;
 
@@ -23,20 +23,22 @@ class Toastification extends NavigatorObserver {
 
   /// this is the list of items that are currently shown
   /// if the list is empty, the overlay entry will be removed
-  final List<ToastificationHolder> _notifications = [];
+  final List<ToastificationItem> _notifications = [];
 
   /// using this method you can show a notification
   /// if there is no notification in the notification list,
   /// we will animate in the overlay
   /// otherwise we will just add the notification to the list
-  ToastificationHolder addNotification(
-    BuildContext context,
-    ToastificationItem item, {
+  ToastificationItem addNotification({
+    required BuildContext context,
+    required ToastificationBuilder builder,
+    Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
     // final notificationModel = _createModel(context, notificationSpec);
-    final holder = ToastificationHolder(
-      item: item,
+    final holder = ToastificationItem(
+      builder: builder,
+      autoCloseDuration: autoCloseDuration,
       onAutoCompleteCompleted: (holder) {
         removeNotification(holder);
       },
@@ -50,34 +52,32 @@ class Toastification extends NavigatorObserver {
       _listGlobalKey.currentState
           ?.insertItem(0, duration: _itemAnimationDuration);
 
-      // /// we want to just show only last 3 notifications
-      // /// so we will remove the last notification if there are more than 3 notifications
-      // if (_notifications.length >= 4) {
-      //   removeNotificationList(_notifications.sublist(3));
-      // }
+      // TODO(payam): add limit count feature
     }
 
     return holder;
   }
 
   /// using this method you can show a notification by using the [navigator] overlay
-  ToastificationHolder addNotificationWithNavigator(
-    NavigatorState navigator,
-    ToastificationItem item,
-  ) {
+  ToastificationItem addNotificationWithNavigator({
+    required NavigatorState navigator,
+    required ToastificationBuilder builder,
+    Duration? autoCloseDuration,
+  }) {
     final context = navigator.context;
 
     return addNotification(
-      context,
-      item,
+      context: context,
+      builder: builder,
+      autoCloseDuration: autoCloseDuration,
       overlayState: navigator.overlay,
     );
   }
 
-  ToastificationHolder? getNotificationHolder(String id) {
+  ToastificationItem? getNotificationHolder(String id) {
     try {
       return _notifications
-          .firstWhereOrNull((notification) => notification.item.id == id);
+          .firstWhereOrNull((notification) => notification.id == id);
     } catch (e) {
       return null;
     }
@@ -86,7 +86,7 @@ class Toastification extends NavigatorObserver {
   /// using this method you can remove a notification
   /// if there is no notification in the notification list,
   /// we will remove the overlay entry
-  void removeNotification(ToastificationHolder notification) {
+  void removeNotification(ToastificationItem notification) {
     final index = _notifications.indexOf(notification);
 
     if (index != -1) {
@@ -94,20 +94,14 @@ class Toastification extends NavigatorObserver {
 
       notification.stop();
 
-      _notifications.removeAt(index);
+      final removedItem = _notifications.removeAt(index);
 
       _listGlobalKey.currentState?.removeItem(
         index,
         (BuildContext context, Animation<double> animation) {
           return _InsertTransition(
             animation: animation,
-            item: Container(
-              height: 100,
-              color: Colors.primaries[index],
-              child: Center(
-                child: Text('$index'),
-              ),
-            ),
+            item: removedItem.builder(context, removedItem),
           );
         },
         duration: _itemAnimationDuration,
@@ -144,8 +138,10 @@ class Toastification extends NavigatorObserver {
     removeNotification(_notifications.last);
   }
 
-  void _createNotificationHolder(BuildContext context,
-      {OverlayState? overlay}) {
+  void _createNotificationHolder(
+    BuildContext context, {
+    OverlayState? overlay,
+  }) {
     final overlayState = overlay ?? Overlay.of(context, rootOverlay: false);
 
     _transitionController = _createContainerAnimationController(overlayState!);
@@ -184,16 +180,16 @@ class Toastification extends NavigatorObserver {
                 initialItemCount: _notifications.length,
                 primary: true,
                 shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index,
-                    Animation<double> animation) {
+                itemBuilder: (
+                  BuildContext context,
+                  int index,
+                  Animation<double> animation,
+                ) {
                   return _InsertTransition(
                     animation: animation,
-                    item: Container(
-                      height: 100,
-                      color: Colors.primaries[index],
-                      child: Center(
-                        child: Text('$index'),
-                      ),
+                    item: _notifications[index].builder(
+                      context,
+                      _notifications[index],
                     ),
                   );
                 },
