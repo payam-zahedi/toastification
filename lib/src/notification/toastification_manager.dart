@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:toastification/src/notification/toastification_item.dart';
+import 'package:toastification/src/widget/toast_builder.dart';
 
 const _itemAnimationDuration = Duration(milliseconds: 300);
 const _containerAnimationDuration = Duration(milliseconds: 500);
@@ -99,9 +100,9 @@ class Toastification extends NavigatorObserver {
       _listGlobalKey.currentState?.removeItem(
         index,
         (BuildContext context, Animation<double> animation) {
-          return _InsertTransition(
+          return ToastBuilderWidget(
             animation: animation,
-            item: removedItem.builder(context, removedItem),
+            item: removedItem,
           );
         },
         duration: _itemAnimationDuration,
@@ -166,7 +167,7 @@ class Toastification extends NavigatorObserver {
     return OverlayEntry(
       opaque: false,
       builder: (context) {
-        Widget overlay = _ContainerTransition(
+        Widget overlay = ContainerTransition(
           animation: _transitionController!,
           child: Align(
             alignment: Alignment.topCenter,
@@ -185,12 +186,9 @@ class Toastification extends NavigatorObserver {
                   int index,
                   Animation<double> animation,
                 ) {
-                  return _InsertTransition(
+                  return ToastBuilderWidget(
                     animation: animation,
-                    item: _notifications[index].builder(
-                      context,
-                      _notifications[index],
-                    ),
+                    item: _notifications[index],
                   );
                 },
               ),
@@ -200,57 +198,6 @@ class Toastification extends NavigatorObserver {
 
         return overlay;
       },
-    );
-  }
-}
-
-class _ContainerTransition extends StatelessWidget {
-  const _ContainerTransition({
-    Key? key,
-    required this.animation,
-    required this.child,
-  }) : super(key: key);
-
-  final Animation<double> animation;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return SlideTransition(
-      position: Tween<Offset>(
-        begin: const Offset(0, -1),
-        end: const Offset(0, 0),
-      ).animate(animation),
-      child: SizeTransition(
-        sizeFactor: animation,
-        child: child,
-      ),
-    );
-  }
-}
-
-class _InsertTransition extends StatelessWidget {
-  const _InsertTransition({
-    Key? key,
-    required this.animation,
-    required this.item,
-  }) : super(key: key);
-
-  final Animation<double> animation;
-  final Widget item;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizeTransition(
-      key: ValueKey(item.hashCode),
-      sizeFactor: animation,
-      child: SlideTransition(
-        position: Tween<Offset>(
-          begin: const Offset(0, -1),
-          end: const Offset(0, 0),
-        ).animate(animation),
-        child: item,
-      ),
     );
   }
 }
