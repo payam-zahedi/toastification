@@ -220,7 +220,7 @@ class WarningToastWidget extends StatelessWidget {
       item: item,
       title: title,
       description: description,
-      backgroundColor: backgroundColor ?? Colors.amberAccent,
+      backgroundColor: backgroundColor ?? const Color(0xffffc107),
       foregroundColor: foregroundColor,
       icon: icon,
       brightness: brightness,
