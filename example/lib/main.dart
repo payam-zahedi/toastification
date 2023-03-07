@@ -40,15 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Toastification().addNotification(
       context: context,
       builder: (context, holder) {
-        return GestureDetector(
-          onTap: () {
-            Toastification().removeNotification(holder);
-          },
-          child: Container(
-            height: 100,
-            color: Colors.primaries[_counter],
-            child: Center(child: Text('$_counter')),
-          ),
+        return WarningToastWidget(
+          item: holder,
+          title: 'Title',
         );
       },
       autoCloseDuration: const Duration(seconds: 5),
