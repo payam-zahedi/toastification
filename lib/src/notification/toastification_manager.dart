@@ -93,7 +93,9 @@ class Toastification extends NavigatorObserver {
     if (index != -1) {
       notification = _notifications[index];
 
-      notification.stop();
+      if (notification.isRunning) {
+        notification.stop();
+      }
 
       final removedItem = _notifications.removeAt(index);
 
