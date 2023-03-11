@@ -71,7 +71,6 @@ class Home extends StatelessWidget {
                           title: 'Title',
                         );
                       },
-                      autoCloseDuration: const Duration(seconds: 10),
                     );
                   },
                   child: const Text('Info'),

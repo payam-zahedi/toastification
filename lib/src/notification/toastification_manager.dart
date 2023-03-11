@@ -103,6 +103,7 @@ class Toastification extends NavigatorObserver {
         index,
         (BuildContext context, Animation<double> animation) {
           return ToastBuilderWidget(
+            key: ValueKey(removedItem.id),
             animation: animation,
             item: removedItem,
           );
@@ -189,6 +190,7 @@ class Toastification extends NavigatorObserver {
                   Animation<double> animation,
                 ) {
                   return ToastBuilderWidget(
+                    key: ValueKey(_notifications[index].id),
                     animation: animation,
                     item: _notifications[index],
                   );

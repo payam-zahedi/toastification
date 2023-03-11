@@ -33,6 +33,8 @@ class ToastificationItem {
       )..start();
 
       _timeStatus.value = ToastTimeStatus.started;
+    } else {
+      _timer = null;
     }
   }
 
@@ -50,23 +52,33 @@ class ToastificationItem {
   Duration? get currentDuration => _timer?.duration;
   Duration? get elapsedDuration => _timer?.elapsed;
 
+  bool get hasTimer => _timer != null;
+
   bool get isRunning =>
       _timeStatus.value == ToastTimeStatus.started ||
       _timeStatus.value == ToastTimeStatus.paused;
 
+  bool get isStarted => _timeStatus.value == ToastTimeStatus.started;
+
   void start() {
-    _timer?.start();
-    _timeStatus.value = ToastTimeStatus.started;
+    if (hasTimer) {
+      _timer?.start();
+      _timeStatus.value = ToastTimeStatus.started;
+    }
   }
 
   void pause() {
-    _timer?.pause();
-    _timeStatus.value = ToastTimeStatus.paused;
+    if (hasTimer) {
+      _timer?.pause();
+      _timeStatus.value = ToastTimeStatus.paused;
+    }
   }
 
   void stop() {
-    _timer?.cancel();
-    _timeStatus.value = ToastTimeStatus.stopped;
+    if (hasTimer) {
+      _timer?.cancel();
+      _timeStatus.value = ToastTimeStatus.stopped;
+    }
   }
 
   void addListenerOnTimeStatus(VoidCallback listener) {
@@ -75,5 +87,24 @@ class ToastificationItem {
 
   void removeListenerOnTimeStatus(VoidCallback listener) {
     _timeStatus.removeListener(listener);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    return other is ToastificationItem && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'id: $id, timerDuration: $currentDuration, elapsedDuration: $elapsedDuration';
   }
 }
