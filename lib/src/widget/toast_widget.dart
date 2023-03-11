@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/notification/toastification_item.dart';
 import 'package:toastification/src/notification/toastification_manager.dart';
+import 'package:toastification/src/widget/toast_animation.dart';
 
 class ToastWidget extends StatelessWidget {
   const ToastWidget({
@@ -39,6 +40,7 @@ class ToastWidget extends StatelessWidget {
   final double elevation;
 
   final VoidCallback? onCloseTap;
+
   @override
   Widget build(BuildContext context) {
     final defaultTheme =
@@ -51,36 +53,62 @@ class ToastWidget extends StatelessWidget {
       data: defaultTheme.primaryIconTheme,
       child: Padding(
         padding: margin,
-        child: Material(
-          color: background,
-          elevation: elevation,
+        child: ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.circular(8),
-          child: Padding(
-            padding: padding,
-            child: Row(
-              children: [
-                icon ??
-                    const Icon(
-                      Icons.info,
-                      size: 28,
-                    ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildContent(defaultTheme),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Material(
+                color: background,
+                elevation: elevation,
+                child: Padding(
+                  padding: padding,
+                  child: Row(
+                    children: [
+                      icon ??
+                          const Icon(
+                            Icons.info,
+                            size: 28,
+                          ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: _buildContent(defaultTheme),
+                      ),
+                      const SizedBox(width: 16),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        splashRadius: 24,
+                        color: foreground,
+                        tooltip: MaterialLocalizations.of(context)
+                            .closeButtonTooltip,
+                        onPressed: onCloseTap ??
+                            () {
+                              Toastification().removeNotification(item);
+                            },
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 16),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  splashRadius: 24,
-                  color: foreground,
-                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                  onPressed: onCloseTap ??
-                      () {
-                        Toastification().removeNotification(item);
-                      },
-                ),
-              ],
-            ),
+              ),
+              if (item.hasTimer)
+                ToastTimerAnimationBuilder(
+                  item: item,
+                  builder: (context, value, child) {
+                    return Directionality(
+                      textDirection:
+                          Directionality.of(context) == TextDirection.ltr
+                              ? TextDirection.rtl
+                              : TextDirection.ltr,
+                      child: LinearProgressIndicator(
+                        value: value,
+                        backgroundColor: foreground?.withOpacity(.8),
+                        color: background,
+                        minHeight: 6,
+                      ),
+                    );
+                  },
+                )
+            ],
           ),
         ),
       ),
