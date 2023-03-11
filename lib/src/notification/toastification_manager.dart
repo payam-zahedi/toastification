@@ -173,11 +173,11 @@ class Toastification extends NavigatorObserver {
         Widget overlay = ContainerTransition(
           animation: _transitionController!,
           child: Align(
-            alignment: Alignment.topCenter,
+            alignment: AlignmentDirectional.topEnd,
             child: Container(
               margin: const EdgeInsets.symmetric(vertical: 32),
               constraints: const BoxConstraints.tightFor(
-                width: double.infinity,
+                width: 450,
               ),
               child: AnimatedList(
                 key: _listGlobalKey,
