@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/notification/toastification_item.dart';
+import 'package:toastification/src/core/toastification_item.dart';
 
 class ContainerTransition extends StatelessWidget {
   const ContainerTransition({

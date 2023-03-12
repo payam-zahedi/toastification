@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/helper/toast_helper.dart.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastTimerAnimationBuilder extends StatefulWidget {

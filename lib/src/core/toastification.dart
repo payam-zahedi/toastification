@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:toastification/src/notification/toastification_item.dart';
+import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 
 const _itemAnimationDuration = Duration(milliseconds: 300);
 const _containerAnimationDuration = Duration(milliseconds: 500);
+
+final toastification = Toastification();
 
 class Toastification extends NavigatorObserver {
   static final Toastification _instance = Toastification._internal();
 
   Toastification._internal();
 
-  factory Toastification() {
-    return _instance;
-  }
+  factory Toastification() => _instance;
 
   OverlayEntry? _overlayEntry;
 
@@ -30,22 +30,21 @@ class Toastification extends NavigatorObserver {
   /// if there is no notification in the notification list,
   /// we will animate in the overlay
   /// otherwise we will just add the notification to the list
-  ToastificationItem addNotification({
+  ToastificationItem showCustom({
     required BuildContext context,
     required ToastificationBuilder builder,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
-    // final notificationModel = _createModel(context, notificationSpec);
-    final holder = ToastificationItem(
+    final item = ToastificationItem(
       builder: builder,
       autoCloseDuration: autoCloseDuration,
       onAutoCompleteCompleted: (holder) {
-        removeNotification(holder);
+        dismiss(holder);
       },
     );
 
-    _notifications.insert(0, holder);
+    _notifications.insert(0, item);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(context, overlay: overlayState);
@@ -56,18 +55,18 @@ class Toastification extends NavigatorObserver {
       // TODO(payam): add limit count feature
     }
 
-    return holder;
+    return item;
   }
 
   /// using this method you can show a notification by using the [navigator] overlay
-  ToastificationItem addNotificationWithNavigator({
+  ToastificationItem showWithNavigatorState({
     required NavigatorState navigator,
     required ToastificationBuilder builder,
     Duration? autoCloseDuration,
   }) {
     final context = navigator.context;
 
-    return addNotification(
+    return showCustom(
       context: context,
       builder: builder,
       autoCloseDuration: autoCloseDuration,
@@ -75,7 +74,7 @@ class Toastification extends NavigatorObserver {
     );
   }
 
-  ToastificationItem? getNotificationHolder(String id) {
+  ToastificationItem? findToastificationItem(String id) {
     try {
       return _notifications
           .firstWhereOrNull((notification) => notification.id == id);
@@ -87,7 +86,7 @@ class Toastification extends NavigatorObserver {
   /// using this method you can remove a notification
   /// if there is no notification in the notification list,
   /// we will remove the overlay entry
-  void removeNotification(ToastificationItem notification) {
+  void dismiss(ToastificationItem notification) {
     final index = _notifications.indexOf(notification);
 
     if (index != -1) {
@@ -124,22 +123,22 @@ class Toastification extends NavigatorObserver {
     }
   }
 
-  void removeNotificationById(String id) {
-    final notification = getNotificationHolder(id);
+  void dismissById(String id) {
+    final notification = findToastificationItem(id);
 
     if (notification != null) {
-      removeNotification(notification);
+      dismiss(notification);
     }
   }
 
   /// remove the first notification in the list.
-  void removeFirstNotification() {
-    removeNotification(_notifications.first);
+  void dismissFirst() {
+    dismiss(_notifications.first);
   }
 
   /// remove the last notification in the list.
-  void removeLastNotification() {
-    removeNotification(_notifications.last);
+  void dismissLast() {
+    dismiss(_notifications.last);
   }
 
   void _createNotificationHolder(

@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                   backgroundColor: const Color(0xff1976d2),
                 ),
                 onPressed: () {
-                  Toastification().addNotification(
+                  toastification.showCustom(
                     context: context,
                     builder: (context, holder) {
                       return ToastWidget(
@@ -59,7 +59,7 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.blue,
                 ),
                 onPressed: () {
-                  Toastification().addNotification(
+                  toastification.showCustom(
                     context: context,
                     builder: (context, holder) {
                       return InfoToastWidget(
@@ -78,7 +78,7 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.amberAccent,
                 ),
                 onPressed: () {
-                  Toastification().addNotification(
+                  toastification.showCustom(
                     context: context,
                     builder: (context, holder) {
                       return WarningToastWidget(
@@ -97,7 +97,7 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.green,
                 ),
                 onPressed: () {
-                  Toastification().addNotification(
+                  toastification.showCustom(
                     context: context,
                     builder: (context, holder) {
                       return SuccessToastWidget(
@@ -116,7 +116,7 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {
-                  Toastification().addNotification(
+                  toastification.showCustom(
                     context: context,
                     builder: (context, holder) {
                       return ErrorToastWidget(

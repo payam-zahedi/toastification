@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/notification/toastification_item.dart';
-import 'package:toastification/src/notification/toastification_manager.dart';
+import 'package:toastification/src/core/toastification_item.dart';
+import 'package:toastification/src/core/toastification.dart';
 import 'package:toastification/src/widget/toast_animation.dart';
 
 class ToastWidget extends StatelessWidget {
@@ -83,7 +83,7 @@ class ToastWidget extends StatelessWidget {
                             .closeButtonTooltip,
                         onPressed: onCloseTap ??
                             () {
-                              Toastification().removeNotification(item);
+                              Toastification().dismiss(item);
                             },
                       ),
                     ],
