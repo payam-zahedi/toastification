@@ -18,6 +18,10 @@ class ToastWidget extends StatelessWidget {
     this.borderRadius,
     this.elevation = 4.0,
     this.onCloseTap,
+    this.showProgressBar = true,
+    this.showCloseButton = true,
+    this.closeOnClick = false,
+    this.pauseOnHover = true,
   });
 
   final ToastificationItem item;
@@ -41,6 +45,14 @@ class ToastWidget extends StatelessWidget {
 
   final VoidCallback? onCloseTap;
 
+  final bool showProgressBar;
+
+  final bool showCloseButton;
+
+  final bool closeOnClick;
+
+  final bool pauseOnHover;
+
   @override
   Widget build(BuildContext context) {
     final defaultTheme =
@@ -49,7 +61,9 @@ class ToastWidget extends StatelessWidget {
     final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
     final background = backgroundColor ?? const Color(0xff1976d2);
 
-    return IconTheme(
+    final hasTimeout = item.hasTimer;
+
+    Widget toast = IconTheme(
       data: defaultTheme.primaryIconTheme,
       child: Padding(
         padding: margin,
@@ -75,22 +89,25 @@ class ToastWidget extends StatelessWidget {
                         child: _buildContent(defaultTheme),
                       ),
                       const SizedBox(width: 16),
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        splashRadius: 24,
-                        color: foreground,
-                        tooltip: MaterialLocalizations.of(context)
-                            .closeButtonTooltip,
-                        onPressed: onCloseTap ??
-                            () {
-                              Toastification().dismiss(item);
-                            },
+                      Offstage(
+                        offstage: !showCloseButton,
+                        child: IconButton(
+                          icon: const Icon(Icons.close),
+                          splashRadius: 24,
+                          color: foreground,
+                          tooltip: MaterialLocalizations.of(context)
+                              .closeButtonTooltip,
+                          onPressed: onCloseTap ??
+                              () {
+                                Toastification().dismiss(item);
+                              },
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
-              if (item.hasTimer)
+              if (showProgressBar && hasTimeout)
                 ToastTimerAnimationBuilder(
                   item: item,
                   builder: (context, value, child) {
@@ -113,6 +130,29 @@ class ToastWidget extends StatelessWidget {
         ),
       ),
     );
+
+    if (pauseOnHover && hasTimeout) {
+      toast = MouseRegion(
+        onEnter: (event) {
+          item.pause();
+        },
+        onExit: (event) {
+          item.start();
+        },
+        child: toast,
+      );
+    }
+
+    if (closeOnClick) {
+      toast = GestureDetector(
+        onTap: () {
+          toastification.dismiss(item);
+        },
+        child: toast,
+      );
+    }
+
+    return toast;
   }
 
   Widget _buildContent(ThemeData defaultTheme) {
@@ -162,6 +202,10 @@ class InfoToastWidget extends StatelessWidget {
     this.borderRadius,
     this.elevation = 4.0,
     this.onCloseTap,
+    this.showProgressBar = true,
+    this.showCloseButton = true,
+    this.closeOnClick = false,
+    this.pauseOnHover = true,
   });
 
   final ToastificationItem item;
@@ -185,6 +229,14 @@ class InfoToastWidget extends StatelessWidget {
 
   final VoidCallback? onCloseTap;
 
+  final bool showProgressBar;
+
+  final bool showCloseButton;
+
+  final bool closeOnClick;
+
+  final bool pauseOnHover;
+
   @override
   Widget build(BuildContext context) {
     return ToastWidget(
@@ -200,6 +252,10 @@ class InfoToastWidget extends StatelessWidget {
       borderRadius: borderRadius,
       elevation: elevation,
       onCloseTap: onCloseTap,
+      showProgressBar: showProgressBar,
+      showCloseButton: showCloseButton,
+      closeOnClick: closeOnClick,
+      pauseOnHover: pauseOnHover,
     );
   }
 }
@@ -219,6 +275,10 @@ class WarningToastWidget extends StatelessWidget {
     this.borderRadius,
     this.elevation = 3.0,
     this.onCloseTap,
+    this.showProgressBar = true,
+    this.showCloseButton = true,
+    this.closeOnClick = false,
+    this.pauseOnHover = true,
   });
 
   final ToastificationItem item;
@@ -242,6 +302,14 @@ class WarningToastWidget extends StatelessWidget {
 
   final VoidCallback? onCloseTap;
 
+  final bool showProgressBar;
+
+  final bool showCloseButton;
+
+  final bool closeOnClick;
+
+  final bool pauseOnHover;
+
   @override
   Widget build(BuildContext context) {
     return ToastWidget(
@@ -257,6 +325,10 @@ class WarningToastWidget extends StatelessWidget {
       borderRadius: borderRadius,
       elevation: elevation,
       onCloseTap: onCloseTap,
+      showProgressBar: showProgressBar,
+      showCloseButton: showCloseButton,
+      closeOnClick: closeOnClick,
+      pauseOnHover: pauseOnHover,
     );
   }
 }
@@ -276,6 +348,10 @@ class SuccessToastWidget extends StatelessWidget {
     this.borderRadius,
     this.elevation = 4.0,
     this.onCloseTap,
+    this.showProgressBar = true,
+    this.showCloseButton = true,
+    this.closeOnClick = false,
+    this.pauseOnHover = true,
   });
 
   final ToastificationItem item;
@@ -298,6 +374,14 @@ class SuccessToastWidget extends StatelessWidget {
   final double elevation;
 
   final VoidCallback? onCloseTap;
+
+  final bool showProgressBar;
+
+  final bool showCloseButton;
+
+  final bool closeOnClick;
+
+  final bool pauseOnHover;
 
   @override
   Widget build(BuildContext context) {
@@ -318,6 +402,10 @@ class SuccessToastWidget extends StatelessWidget {
       borderRadius: borderRadius,
       elevation: elevation,
       onCloseTap: onCloseTap,
+      showProgressBar: showProgressBar,
+      showCloseButton: showCloseButton,
+      closeOnClick: closeOnClick,
+      pauseOnHover: pauseOnHover,
     );
   }
 }
@@ -337,6 +425,10 @@ class ErrorToastWidget extends StatelessWidget {
     this.borderRadius,
     this.elevation = 4.0,
     this.onCloseTap,
+    this.showProgressBar = true,
+    this.showCloseButton = true,
+    this.closeOnClick = false,
+    this.pauseOnHover = true,
   });
 
   final ToastificationItem item;
@@ -360,6 +452,14 @@ class ErrorToastWidget extends StatelessWidget {
 
   final VoidCallback? onCloseTap;
 
+  final bool showProgressBar;
+
+  final bool showCloseButton;
+
+  final bool closeOnClick;
+
+  final bool pauseOnHover;
+
   @override
   Widget build(BuildContext context) {
     return ToastWidget(
@@ -379,6 +479,10 @@ class ErrorToastWidget extends StatelessWidget {
       borderRadius: borderRadius,
       elevation: elevation,
       onCloseTap: onCloseTap,
+      showProgressBar: showProgressBar,
+      showCloseButton: showCloseButton,
+      closeOnClick: closeOnClick,
+      pauseOnHover: pauseOnHover,
     );
   }
 }

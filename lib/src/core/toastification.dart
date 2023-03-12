@@ -8,7 +8,7 @@ const _containerAnimationDuration = Duration(milliseconds: 500);
 
 final toastification = Toastification();
 
-class Toastification extends NavigatorObserver {
+class Toastification {
   static final Toastification _instance = Toastification._internal();
 
   Toastification._internal();

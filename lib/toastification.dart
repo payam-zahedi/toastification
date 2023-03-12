@@ -8,3 +8,4 @@ export 'src/widget/toast_builder.dart';
 export 'src/helper/toast_helper.dart.dart';
 
 // TODO(payam): custom animation
+// TODO(payam): add navigator observer 
