@@ -12,16 +12,16 @@ class ToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
-    this.brightness = Brightness.light,
-    this.padding = const EdgeInsets.all(16),
-    this.margin = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.brightness,
+    this.padding,
+    this.margin,
     this.borderRadius,
-    this.elevation = 4.0,
+    this.elevation,
     this.onCloseTap,
-    this.showProgressBar = true,
-    this.showCloseButton = true,
-    this.closeOnClick = false,
-    this.pauseOnHover = true,
+    this.showProgressBar,
+    this.showCloseButton,
+    this.closeOnClick,
+    this.pauseOnHover,
   });
 
   final ToastificationItem item;
@@ -34,39 +34,46 @@ class ToastWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
 
-  final Brightness brightness;
+  final Brightness? brightness;
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
-  final double elevation;
+  final double? elevation;
 
   final VoidCallback? onCloseTap;
 
-  final bool showProgressBar;
+  final bool? showProgressBar;
 
-  final bool showCloseButton;
+  final bool? showCloseButton;
 
-  final bool closeOnClick;
+  final bool? closeOnClick;
 
-  final bool pauseOnHover;
+  final bool? pauseOnHover;
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme =
-        brightness == Brightness.light ? ThemeData.light() : ThemeData.dark();
+    final defaultTheme = (brightness ?? Brightness.light) == Brightness.light
+        ? ThemeData.light()
+        : ThemeData.dark();
 
     final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
     final background = backgroundColor ?? const Color(0xff1976d2);
 
     final hasTimeout = item.hasTimer;
 
+    final showProgressBar = this.showProgressBar ?? true;
+    final showCloseButton = this.showCloseButton ?? true;
+    final closeOnClick = this.closeOnClick ?? false;
+    final pauseOnHover = this.pauseOnHover ?? true;
+
     Widget toast = IconTheme(
       data: defaultTheme.primaryIconTheme,
       child: Padding(
-        padding: margin,
+        padding:
+            margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.circular(8),
           child: Stack(
@@ -74,9 +81,9 @@ class ToastWidget extends StatelessWidget {
             children: [
               Material(
                 color: background,
-                elevation: elevation,
+                elevation: elevation ?? 4.0,
                 child: Padding(
-                  padding: padding,
+                  padding: padding ?? const EdgeInsets.all(16),
                   child: Row(
                     children: [
                       icon ??
@@ -196,16 +203,16 @@ class InfoToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
-    this.brightness = Brightness.light,
-    this.padding = const EdgeInsets.all(16),
-    this.margin = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.brightness,
+    this.padding,
+    this.margin,
     this.borderRadius,
-    this.elevation = 4.0,
+    this.elevation,
     this.onCloseTap,
-    this.showProgressBar = true,
-    this.showCloseButton = true,
-    this.closeOnClick = false,
-    this.pauseOnHover = true,
+    this.showProgressBar,
+    this.showCloseButton,
+    this.closeOnClick,
+    this.pauseOnHover,
   });
 
   final ToastificationItem item;
@@ -218,24 +225,24 @@ class InfoToastWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
 
-  final Brightness brightness;
+  final Brightness? brightness;
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
-  final double elevation;
+  final double? elevation;
 
   final VoidCallback? onCloseTap;
 
-  final bool showProgressBar;
+  final bool? showProgressBar;
 
-  final bool showCloseButton;
+  final bool? showCloseButton;
 
-  final bool closeOnClick;
+  final bool? closeOnClick;
 
-  final bool pauseOnHover;
+  final bool? pauseOnHover;
 
   @override
   Widget build(BuildContext context) {
@@ -269,16 +276,16 @@ class WarningToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
-    this.brightness = Brightness.light,
-    this.padding = const EdgeInsets.all(16),
-    this.margin = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.brightness,
+    this.padding,
+    this.margin,
     this.borderRadius,
-    this.elevation = 3.0,
+    this.elevation,
     this.onCloseTap,
-    this.showProgressBar = true,
-    this.showCloseButton = true,
-    this.closeOnClick = false,
-    this.pauseOnHover = true,
+    this.showProgressBar,
+    this.showCloseButton,
+    this.closeOnClick,
+    this.pauseOnHover,
   });
 
   final ToastificationItem item;
@@ -291,24 +298,24 @@ class WarningToastWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
 
-  final Brightness brightness;
+  final Brightness? brightness;
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
-  final double elevation;
+  final double? elevation;
 
   final VoidCallback? onCloseTap;
 
-  final bool showProgressBar;
+  final bool? showProgressBar;
 
-  final bool showCloseButton;
+  final bool? showCloseButton;
 
-  final bool closeOnClick;
+  final bool? closeOnClick;
 
-  final bool pauseOnHover;
+  final bool? pauseOnHover;
 
   @override
   Widget build(BuildContext context) {
@@ -342,16 +349,16 @@ class SuccessToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
-    this.brightness = Brightness.light,
-    this.padding = const EdgeInsets.all(16),
-    this.margin = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.brightness,
+    this.padding,
+    this.margin,
     this.borderRadius,
-    this.elevation = 4.0,
+    this.elevation,
     this.onCloseTap,
-    this.showProgressBar = true,
-    this.showCloseButton = true,
-    this.closeOnClick = false,
-    this.pauseOnHover = true,
+    this.showProgressBar,
+    this.showCloseButton,
+    this.closeOnClick,
+    this.pauseOnHover,
   });
 
   final ToastificationItem item;
@@ -364,24 +371,24 @@ class SuccessToastWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
 
-  final Brightness brightness;
+  final Brightness? brightness;
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
-  final double elevation;
+  final double? elevation;
 
   final VoidCallback? onCloseTap;
 
-  final bool showProgressBar;
+  final bool? showProgressBar;
 
-  final bool showCloseButton;
+  final bool? showCloseButton;
 
-  final bool closeOnClick;
+  final bool? closeOnClick;
 
-  final bool pauseOnHover;
+  final bool? pauseOnHover;
 
   @override
   Widget build(BuildContext context) {
@@ -419,16 +426,16 @@ class ErrorToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
-    this.brightness = Brightness.light,
-    this.padding = const EdgeInsets.all(16),
-    this.margin = const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    this.brightness,
+    this.padding,
+    this.margin,
     this.borderRadius,
-    this.elevation = 4.0,
+    this.elevation,
     this.onCloseTap,
-    this.showProgressBar = true,
-    this.showCloseButton = true,
-    this.closeOnClick = false,
-    this.pauseOnHover = true,
+    this.showProgressBar,
+    this.showCloseButton,
+    this.closeOnClick,
+    this.pauseOnHover,
   });
 
   final ToastificationItem item;
@@ -441,24 +448,24 @@ class ErrorToastWidget extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
 
-  final Brightness brightness;
+  final Brightness? brightness;
 
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
-  final double elevation;
+  final double? elevation;
 
   final VoidCallback? onCloseTap;
 
-  final bool showProgressBar;
+  final bool? showProgressBar;
 
-  final bool showCloseButton;
+  final bool? showCloseButton;
 
-  final bool closeOnClick;
+  final bool? closeOnClick;
 
-  final bool pauseOnHover;
+  final bool? pauseOnHover;
 
   @override
   Widget build(BuildContext context) {

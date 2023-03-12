@@ -40,15 +40,10 @@ class Home extends StatelessWidget {
                   backgroundColor: const Color(0xff1976d2),
                 ),
                 onPressed: () {
-                  toastification.showCustom(
+                  toastification.show(
                     context: context,
-                    builder: (context, holder) {
-                      return ToastWidget(
-                        item: holder,
-                        title: 'Title',
-                      );
-                    },
                     autoCloseDuration: const Duration(seconds: 5),
+                    title: 'Title',
                   );
                 },
                 child: const Text('Default'),
@@ -59,16 +54,10 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.blue,
                 ),
                 onPressed: () {
-                  toastification.showCustom(
-                    context: context,
-                    builder: (context, holder) {
-                      return InfoToastWidget(
-                        item: holder,
-                        title: 'Title',
-                      );
-                    },
-                    autoCloseDuration: const Duration(seconds: 5),
-                  );
+                  toastification.showInfo(
+                      context: context,
+                      autoCloseDuration: const Duration(seconds: 5),
+                      title: 'Title');
                 },
                 child: const Text('Info'),
               ),
@@ -78,15 +67,10 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.amberAccent,
                 ),
                 onPressed: () {
-                  toastification.showCustom(
+                  toastification.showWarning(
                     context: context,
-                    builder: (context, holder) {
-                      return WarningToastWidget(
-                        item: holder,
-                        title: 'Title',
-                      );
-                    },
                     autoCloseDuration: const Duration(seconds: 5),
+                    title: 'Title',
                   );
                 },
                 child: const Text('Warning'),
@@ -97,15 +81,10 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.green,
                 ),
                 onPressed: () {
-                  toastification.showCustom(
+                  toastification.showSuccess(
                     context: context,
-                    builder: (context, holder) {
-                      return SuccessToastWidget(
-                        item: holder,
-                        title: 'Title',
-                      );
-                    },
                     autoCloseDuration: const Duration(seconds: 5),
+                    title: 'Title',
                   );
                 },
                 child: const Text('Success'),
@@ -116,15 +95,10 @@ class Home extends StatelessWidget {
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {
-                  toastification.showCustom(
+                  toastification.showError(
                     context: context,
-                    builder: (context, holder) {
-                      return ErrorToastWidget(
-                        item: holder,
-                        title: 'Title',
-                      );
-                    },
                     autoCloseDuration: const Duration(seconds: 5),
+                    title: 'Title',
                   );
                 },
                 child: const Text('Error'),

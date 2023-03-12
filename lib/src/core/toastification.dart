@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
+import 'package:toastification/src/widget/toast_widget.dart';
 
 const _itemAnimationDuration = Duration(milliseconds: 300);
 const _containerAnimationDuration = Duration(milliseconds: 500);
@@ -71,6 +72,241 @@ class Toastification {
       builder: builder,
       autoCloseDuration: autoCloseDuration,
       overlayState: navigator.overlay,
+    );
+  }
+
+  ToastificationItem show({
+    required BuildContext context,
+    Duration? autoCloseDuration,
+    OverlayState? overlayState,
+    required String title,
+    String? description,
+    Widget? icon,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Brightness? brightness,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BorderRadiusGeometry? borderRadius,
+    double? elevation,
+    VoidCallback? onCloseTap,
+    bool? showProgressBar,
+    bool? showCloseButton,
+    bool? closeOnClick,
+    bool? pauseOnHover,
+  }) {
+    return showCustom(
+      context: context,
+      autoCloseDuration: autoCloseDuration,
+      overlayState: overlayState,
+      builder: (context, holder) {
+        return ToastWidget(
+          item: holder,
+          title: title,
+          description: description,
+          icon: icon,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          brightness: brightness,
+          padding: padding,
+          margin: margin,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showProgressBar: showProgressBar,
+          showCloseButton: showCloseButton,
+          closeOnClick: closeOnClick,
+          pauseOnHover: pauseOnHover,
+        );
+      },
+    );
+  }
+
+  ToastificationItem showSuccess({
+    required BuildContext context,
+    Duration? autoCloseDuration,
+    OverlayState? overlayState,
+    required String title,
+    String? description,
+    Widget? icon,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Brightness? brightness,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BorderRadiusGeometry? borderRadius,
+    double? elevation,
+    VoidCallback? onCloseTap,
+    bool? showProgressBar,
+    bool? showCloseButton,
+    bool? closeOnClick,
+    bool? pauseOnHover,
+  }) {
+    return showCustom(
+      context: context,
+      autoCloseDuration: autoCloseDuration,
+      overlayState: overlayState,
+      builder: (context, holder) {
+        return SuccessToastWidget(
+          item: holder,
+          title: title,
+          description: description,
+          icon: icon,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          brightness: brightness,
+          padding: padding,
+          margin: margin,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showProgressBar: showProgressBar,
+          showCloseButton: showCloseButton,
+          closeOnClick: closeOnClick,
+          pauseOnHover: pauseOnHover,
+        );
+      },
+    );
+  }
+
+  ToastificationItem showError({
+    required BuildContext context,
+    Duration? autoCloseDuration,
+    OverlayState? overlayState,
+    required String title,
+    String? description,
+    Widget? icon,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Brightness? brightness,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BorderRadiusGeometry? borderRadius,
+    double? elevation,
+    VoidCallback? onCloseTap,
+    bool? showProgressBar,
+    bool? showCloseButton,
+    bool? closeOnClick,
+    bool? pauseOnHover,
+  }) {
+    return showCustom(
+      context: context,
+      autoCloseDuration: autoCloseDuration,
+      overlayState: overlayState,
+      builder: (context, holder) {
+        return ErrorToastWidget(
+          item: holder,
+          title: title,
+          description: description,
+          icon: icon,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          brightness: brightness,
+          padding: padding,
+          margin: margin,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showProgressBar: showProgressBar,
+          showCloseButton: showCloseButton,
+          closeOnClick: closeOnClick,
+          pauseOnHover: pauseOnHover,
+        );
+      },
+    );
+  }
+
+  ToastificationItem showInfo({
+    required BuildContext context,
+    Duration? autoCloseDuration,
+    OverlayState? overlayState,
+    required String title,
+    String? description,
+    Widget? icon,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Brightness? brightness,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BorderRadiusGeometry? borderRadius,
+    double? elevation,
+    VoidCallback? onCloseTap,
+    bool? showProgressBar,
+    bool? showCloseButton,
+    bool? closeOnClick,
+    bool? pauseOnHover,
+  }) {
+    return showCustom(
+      context: context,
+      autoCloseDuration: autoCloseDuration,
+      overlayState: overlayState,
+      builder: (context, holder) {
+        return InfoToastWidget(
+          item: holder,
+          title: title,
+          description: description,
+          icon: icon,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          brightness: brightness,
+          padding: padding,
+          margin: margin,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showProgressBar: showProgressBar,
+          showCloseButton: showCloseButton,
+          closeOnClick: closeOnClick,
+          pauseOnHover: pauseOnHover,
+        );
+      },
+    );
+  }
+
+  ToastificationItem showWarning({
+    required BuildContext context,
+    Duration? autoCloseDuration,
+    OverlayState? overlayState,
+    required String title,
+    String? description,
+    Widget? icon,
+    Color? backgroundColor,
+    Color? foregroundColor,
+    Brightness? brightness,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    BorderRadiusGeometry? borderRadius,
+    double? elevation,
+    VoidCallback? onCloseTap,
+    bool? showProgressBar,
+    bool? showCloseButton,
+    bool? closeOnClick,
+    bool? pauseOnHover,
+  }) {
+    return showCustom(
+      context: context,
+      autoCloseDuration: autoCloseDuration,
+      overlayState: overlayState,
+      builder: (context, holder) {
+        return WarningToastWidget(
+          item: holder,
+          title: title,
+          description: description,
+          icon: icon,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          brightness: brightness,
+          padding: padding,
+          margin: margin,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showProgressBar: showProgressBar,
+          showCloseButton: showCloseButton,
+          closeOnClick: closeOnClick,
+          pauseOnHover: pauseOnHover,
+        );
+      },
     );
   }
 
