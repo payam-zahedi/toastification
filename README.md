@@ -257,3 +257,6 @@ If you would like to contribute to the project, please read the [CONTRIBUTING.md
 ## License
 
 Toastification is released under the `BSD-3-Clause` License. You can find the full text of the license in the LICENSE file in the root of the repository.
+
+
+#### * Written with the help of Chat GPT
