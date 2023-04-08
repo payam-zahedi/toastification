@@ -17,6 +17,12 @@ typedef ToastificationBuilder = Widget Function(
   ToastificationItem holder,
 );
 
+typedef ToastificationAnimationBuilder = Widget Function(
+  BuildContext context,
+  Animation<double> animation,
+  Widget child,
+);
+
 class ToastificationItem {
   ToastificationItem({
     required this.builder,

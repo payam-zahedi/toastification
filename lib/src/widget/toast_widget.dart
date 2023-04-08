@@ -167,7 +167,7 @@ class ToastWidget extends StatelessWidget {
 
     Widget content = Text(
       title,
-      style: defaultTheme.textTheme.headline1?.copyWith(
+      style: defaultTheme.textTheme.displayLarge?.copyWith(
         color: foreground,
         fontSize: 18,
       ),
@@ -181,7 +181,7 @@ class ToastWidget extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             description!,
-            style: defaultTheme.textTheme.headline1?.copyWith(
+            style: defaultTheme.textTheme.displayLarge?.copyWith(
               color: foreground,
               fontSize: 14,
             ),
