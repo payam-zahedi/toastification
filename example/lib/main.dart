@@ -75,7 +75,10 @@ class Home extends StatelessWidget {
                   toastification.showWarning(
                     context: context,
                     autoCloseDuration: const Duration(seconds: 5),
+                    animationDuration: const Duration(milliseconds: 400),
                     title: 'Title',
+                    animationBuilder: (context, animation, child) =>
+                        FadeTransition(opacity: animation, child: child),
                   );
                 },
                 child: const Text('Warning'),
@@ -91,6 +94,15 @@ class Home extends StatelessWidget {
                     context: context,
                     autoCloseDuration: const Duration(seconds: 5),
                     title: 'Title',
+                    animationDuration: const Duration(milliseconds: 900),
+                    animationBuilder: (context, animation, child) =>
+                        SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(1, 0),
+                        end: const Offset(0, 0),
+                      ).animate(animation),
+                      child: FadeTransition(opacity: animation, child: child),
+                    ),
                   );
                 },
                 child: const Text('Success'),
