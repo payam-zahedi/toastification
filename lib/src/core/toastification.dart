@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 import 'package:toastification/src/widget/toast_widget.dart';
-
-const _itemAnimationDuration = Duration(milliseconds: 300);
-const _containerAnimationDuration = Duration(milliseconds: 500);
 
 final toastification = Toastification();
 
@@ -18,14 +16,14 @@ class Toastification {
 
   OverlayEntry? _overlayEntry;
 
-  AnimationController? _transitionController;
-
   /// this key is attached to [AnimatedList] so we can add or remove items using it.
   final _listGlobalKey = GlobalKey<AnimatedListState>();
 
   /// this is the list of items that are currently shown
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
+
+  ToastificationConfig config = const ToastificationConfig();
 
   /// using this method you can show a notification
   /// if there is no notification in the notification list,
@@ -34,27 +32,44 @@ class Toastification {
   ToastificationItem showCustom({
     required BuildContext context,
     required ToastificationBuilder builder,
+    required ToastificationAnimationBuilder? animationBuilder,
+    required Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
     final item = ToastificationItem(
       builder: builder,
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
       onAutoCompleteCompleted: (holder) {
         dismiss(holder);
       },
     );
 
-    _notifications.insert(0, item);
+    /// we need this delay because we want to show the item animation after
+    /// the overlay created
+    var delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(context, overlay: overlayState);
-    } else {
-      _listGlobalKey.currentState
-          ?.insertItem(0, duration: _itemAnimationDuration);
 
-      // TODO(payam): add limit count feature
+      delay = const Duration(milliseconds: 300);
     }
+
+    Future.delayed(
+      delay,
+      () {
+        _notifications.insert(0, item);
+
+        _listGlobalKey.currentState?.insertItem(
+          0,
+          duration: _createAnimationDuration(item),
+        );
+      },
+    );
+
+    // TODO(payam): add limit count feature
 
     return item;
   }
@@ -63,6 +78,8 @@ class Toastification {
   ToastificationItem showWithNavigatorState({
     required NavigatorState navigator,
     required ToastificationBuilder builder,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     Duration? autoCloseDuration,
   }) {
     final context = navigator.context;
@@ -70,6 +87,8 @@ class Toastification {
     return showCustom(
       context: context,
       builder: builder,
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
       overlayState: navigator.overlay,
     );
@@ -80,6 +99,8 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     required String title,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     String? description,
     Widget? icon,
     Color? backgroundColor,
@@ -119,6 +140,8 @@ class Toastification {
           pauseOnHover: pauseOnHover,
         );
       },
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
     );
   }
 
@@ -127,6 +150,8 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     required String title,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     String? description,
     Widget? icon,
     Color? backgroundColor,
@@ -166,6 +191,8 @@ class Toastification {
           pauseOnHover: pauseOnHover,
         );
       },
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
     );
   }
 
@@ -174,6 +201,8 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     required String title,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     String? description,
     Widget? icon,
     Color? backgroundColor,
@@ -213,6 +242,8 @@ class Toastification {
           pauseOnHover: pauseOnHover,
         );
       },
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
     );
   }
 
@@ -221,6 +252,8 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     required String title,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     String? description,
     Widget? icon,
     Color? backgroundColor,
@@ -260,6 +293,8 @@ class Toastification {
           pauseOnHover: pauseOnHover,
         );
       },
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
     );
   }
 
@@ -268,6 +303,8 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     required String title,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     String? description,
     Widget? icon,
     Color? backgroundColor,
@@ -307,6 +344,8 @@ class Toastification {
           pauseOnHover: pauseOnHover,
         );
       },
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
     );
   }
 
@@ -337,18 +376,18 @@ class Toastification {
       _listGlobalKey.currentState?.removeItem(
         index,
         (BuildContext context, Animation<double> animation) {
-          return ToastBuilderWidget(
-            key: ValueKey(removedItem.id),
-            animation: animation,
+          return ToastHolderWidget(
             item: removedItem,
+            animation: animation,
+            child: _createAnimationBuilder(context, animation, removedItem),
           );
         },
-        duration: _itemAnimationDuration,
+        duration: _createAnimationDuration(removedItem),
       );
 
       /// we will remove the [_overlayEntry] if there are no notifications
       Future.delayed(
-        _itemAnimationDuration,
+        removedItem.animationDuration ?? config.animationDuration,
         () {
           if (_notifications.isEmpty) {
             _overlayEntry?.remove();
@@ -383,21 +422,9 @@ class Toastification {
   }) {
     final overlayState = overlay ?? Overlay.of(context, rootOverlay: false);
 
-    _transitionController = _createContainerAnimationController(overlayState!);
-
     _overlayEntry = _createOverlayEntry(context);
 
     overlayState.insert(_overlayEntry!);
-
-    _transitionController?.forward();
-  }
-
-  AnimationController _createContainerAnimationController(
-      OverlayState overlay) {
-    return AnimationController(
-      duration: _containerAnimationDuration,
-      vsync: overlay,
-    );
   }
 
   /// create a [OverlayEntry] as holder of the notifications
@@ -405,32 +432,30 @@ class Toastification {
     return OverlayEntry(
       opaque: false,
       builder: (context) {
-        Widget overlay = ContainerTransition(
-          animation: _transitionController!,
-          child: Align(
-            alignment: AlignmentDirectional.topEnd,
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 32),
-              constraints: const BoxConstraints.tightFor(
-                width: 450,
-              ),
-              child: AnimatedList(
-                key: _listGlobalKey,
-                initialItemCount: _notifications.length,
-                primary: true,
-                shrinkWrap: true,
-                itemBuilder: (
-                  BuildContext context,
-                  int index,
-                  Animation<double> animation,
-                ) {
-                  return ToastBuilderWidget(
-                    key: ValueKey(_notifications[index].id),
-                    animation: animation,
-                    item: _notifications[index],
-                  );
-                },
-              ),
+        Widget overlay = Align(
+          alignment: AlignmentDirectional.topEnd,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 32),
+            constraints: const BoxConstraints.tightFor(
+              width: 450,
+            ),
+            child: AnimatedList(
+              key: _listGlobalKey,
+              initialItemCount: _notifications.length,
+              primary: true,
+              shrinkWrap: true,
+              itemBuilder: (
+                BuildContext context,
+                int index,
+                Animation<double> animation,
+              ) {
+                final item = _notifications[index];
+                return ToastHolderWidget(
+                  item: item,
+                  animation: animation,
+                  child: _createAnimationBuilder(context, animation, item),
+                );
+              },
             ),
           ),
         );
@@ -438,5 +463,28 @@ class Toastification {
         return overlay;
       },
     );
+  }
+
+  Widget _createAnimationBuilder(
+    BuildContext context,
+    Animation<double> animation,
+    ToastificationItem item,
+  ) {
+    return item.animationBuilder?.call(
+          context,
+          animation,
+          item.builder(context, item),
+        ) ??
+        config.animationBuilder(
+          context,
+          animation,
+          item.builder(context, item),
+        );
+  }
+
+  Duration _createAnimationDuration(
+    ToastificationItem item,
+  ) {
+    return item.animationDuration ?? config.animationDuration;
   }
 }

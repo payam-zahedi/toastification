@@ -7,6 +7,11 @@ One of the advantages of the Toastification package is its ability to handle mul
 Overall, Toastification is a useful package for Flutter developers who want to add toast notifications to their apps without having to write the code from scratch.
 
 
+| Example Video | 
+| :------------: | 
+| <video width="100%" src="https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/usecase/default.mp4" alt="Flutter Example test"></video> |
+
+
 | Web Example | Mobile Example  |
 | :------------: | :------------: |
 | ![](https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/usecase/web.gif) |  ![](https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/usecase/mobile.gif) |

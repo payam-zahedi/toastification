@@ -17,9 +17,17 @@ typedef ToastificationBuilder = Widget Function(
   ToastificationItem holder,
 );
 
+typedef ToastificationAnimationBuilder = Widget Function(
+  BuildContext context,
+  Animation<double> animation,
+  Widget child,
+);
+
 class ToastificationItem {
   ToastificationItem({
     required this.builder,
+    this.animationBuilder,
+    this.animationDuration,
     this.autoCloseDuration,
     void Function(ToastificationItem holder)? onAutoCompleteCompleted,
   }) : id = uuid.v4() {
@@ -41,6 +49,8 @@ class ToastificationItem {
   final String id;
   final Duration? autoCloseDuration;
   final ToastificationBuilder builder;
+  final ToastificationAnimationBuilder? animationBuilder;
+  final Duration? animationDuration;
 
   late final PausableTimer? _timer;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_item.dart';
 
-class ContainerTransition extends StatelessWidget {
-  const ContainerTransition({
+class DefaultToastWidget extends StatelessWidget {
+  const DefaultToastWidget({
     Key? key,
     required this.animation,
     required this.child,
@@ -18,37 +18,32 @@ class ContainerTransition extends StatelessWidget {
         begin: const Offset(0, -1),
         end: const Offset(0, 0),
       ).animate(animation),
-      child: SizeTransition(
-        sizeFactor: animation,
-        child: child,
-      ),
+      child: child,
     );
   }
 }
 
-class ToastBuilderWidget extends StatelessWidget {
-  const ToastBuilderWidget({
-    Key? key,
-    required this.animation,
+class ToastHolderWidget extends StatelessWidget {
+  // ignore: use_key_in_widget_constructors
+  const ToastHolderWidget({
     required this.item,
-  }) : super(key: key);
+    required this.animation,
+    required this.child,
+  });
 
-  final Animation<double> animation;
   final ToastificationItem item;
+  final Animation<double> animation;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTextStyle(
-      style: ThemeData.light().textTheme.bodyLarge!,
-      child: SizeTransition(
-        key: ValueKey(item.hashCode),
-        sizeFactor: animation,
-        child: SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, -1),
-            end: const Offset(0, 0),
-          ).animate(animation),
-          child: item.builder(context, item),
+    return KeyedSubtree(
+      key: ValueKey(item.id),
+      child: DefaultTextStyle(
+        style: ThemeData.light().textTheme.bodyLarge!,
+        child: SizeTransition(
+          sizeFactor: animation,
+          child: child,
         ),
       ),
     );
