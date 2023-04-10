@@ -5,12 +5,8 @@ Toastification is a Flutter package that allows developers to easily display toa
 One of the advantages of the Toastification package is its ability to handle multiple toast messages. With Toastification, developers can display multiple toast notifications at once and display them in a queue. This means that if multiple notifications are triggered at the same time, they will be displayed one after the other, rather than overlapping on the screen.
 
 Overall, Toastification is a useful package for Flutter developers who want to add toast notifications to their apps without having to write the code from scratch.
-<video width="100%" src="https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/usecase/default.mp4" alt="Flutter Example test"></video>
 
-
-
-
-| Example Video | 
+| Example Video with custom animations | 
 | :------------: | 
 | <video width="100%" src="https://user-images.githubusercontent.com/47558577/230992882-d09e35fb-704f-4980-9b36-2a1f53b700e8.mp4" alt="Flutter Example test"></video> |
 
@@ -69,6 +65,13 @@ toastification.show(
   autoCloseDuration: const Duration(seconds: 5),
   title: 'Hello, World!',
   description: 'This is a sample toast message.',
+  animationDuration: const Duration(milliseconds: 300), 
+  animationBuilder: (context, animation, child) {
+    return RotationTransition(
+      turns: animation,
+      child: child,
+    );
+  },
   icon: Icon(Icons.check),
   backgroundColor: const Color(0xff1976d2),
   foregroundColor: Colors.white,
@@ -91,6 +94,8 @@ toastification.show(
 `title` (required): A string that represents the main message of the toast notification.
 - `description` (optional): A string that represents a secondary message of the toast notification, displayed below the main message.
 - `icon` (optional): A widget that represents an icon to be displayed in the toast notification.
+- `animationDuration`(optional): A Duration for the custom animation. Default is null (no custom animation).
+- `animationBuilder` (optional): A custom animation builder function that takes a `BuildContext`, an `Animation` object, and a `child widget` as arguments. Default is null (no custom animation). you can create your custom transition by providing this field.
 - `backgroundColor` (optional): A Color object that represents the background color of the toast notification. By default, the background color is set to Colors.grey[700].
 - `foregroundColor` (optional): A Color object that represents the foreground (text) color of the toast notification. By default, the foreground color is set to white.
 - `brightness` (optional): A Brightness object that represents the brightness of the toast notification. By default, the brightness is set to Brightness.dark.
@@ -201,6 +206,26 @@ toastification.showCustom(
 );
 ```
 With showCustom(), you're only limited by your imagination. Create a toast message that stands out from the crowd and adds a touch of personality to your app!
+
+
+### Custom Animation
+
+You can customize the animation of the toast notification by providing a Duration for the animation duration and implementing your own animation builder function using the animationBuilder parameter. Here's an example of how to use custom animations:
+
+```dart
+toastification.show(
+  context: context,
+  title: 'Default',
+  // .... Other parameters
+  animationDuration: const Duration(milliseconds: 300),
+  animationBuilder: (context, animation, child) {
+    return RotationTransition(
+      turns: animation,
+      child: child,
+    );
+  },
+);
+```
 
 ## Manage Your Notifications
 
