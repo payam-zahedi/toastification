@@ -85,17 +85,6 @@ class AnimationButtons extends StatelessWidget {
         const SizedBox(height: 16),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff1976d2),
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            onChange(null);
-          },
-          child: const Text('Default'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
             backgroundColor: Colors.blue,
             minimumSize: const Size(150, 40),
           ),
@@ -181,22 +170,6 @@ class ToastificationButtons extends StatelessWidget {
           'Default Toasts',
           style: Theme.of(context).textTheme.bodyLarge,
         ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff1976d2),
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            toastification.show(
-              context: context,
-              autoCloseDuration: const Duration(seconds: 5),
-              animationBuilder: animationBuilder,
-              title: 'Default',
-            );
-          },
-          child: const Text('Default'),
-        ),
         const SizedBox(height: 8),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
@@ -204,10 +177,11 @@ class ToastificationButtons extends StatelessWidget {
             minimumSize: const Size(150, 40),
           ),
           onPressed: () {
-            toastification.showInfo(
+            toastification.show(
               context: context,
               autoCloseDuration: const Duration(seconds: 5),
               animationBuilder: animationBuilder,
+              type: ToastificationType.info,
               title: 'Info',
             );
           },
@@ -220,10 +194,11 @@ class ToastificationButtons extends StatelessWidget {
             minimumSize: const Size(150, 40),
           ),
           onPressed: () {
-            toastification.showWarning(
+            toastification.show(
               context: context,
               autoCloseDuration: const Duration(seconds: 5),
               animationBuilder: animationBuilder,
+              type: ToastificationType.warning,
               title: 'Warning',
             );
           },
@@ -236,10 +211,11 @@ class ToastificationButtons extends StatelessWidget {
             minimumSize: const Size(150, 40),
           ),
           onPressed: () {
-            toastification.showSuccess(
+            toastification.show(
               context: context,
               autoCloseDuration: const Duration(seconds: 5),
               animationBuilder: animationBuilder,
+              type: ToastificationType.success,
               title: 'Success',
             );
           },
@@ -252,10 +228,11 @@ class ToastificationButtons extends StatelessWidget {
             minimumSize: const Size(150, 40),
           ),
           onPressed: () {
-            toastification.showError(
+            toastification.show(
               context: context,
               autoCloseDuration: const Duration(seconds: 5),
               animationBuilder: animationBuilder,
+              type: ToastificationType.failed,
               title: 'Error',
             );
           },
