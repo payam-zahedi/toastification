@@ -161,7 +161,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           showCloseButton: showCloseButton,
         );
       case ToastificationStyle.flatColored:
-        return FilledToastWidget(
+        return FlatColoredToastWidget(
           type: type,
           title: title,
           description: description,
@@ -176,7 +176,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           showCloseButton: showCloseButton,
         );
       case ToastificationStyle.flat:
-        return FilledToastWidget(
+        return FlatToastWidget(
           type: type,
           title: title,
           description: description,

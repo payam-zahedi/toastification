@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 
-class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
-  const FilledToastWidget({
+class FlatColoredToastWidget extends StatelessWidget with BuiltInToastWidget {
+  const FlatColoredToastWidget({
     super.key,
     required this.type,
     required this.title,
@@ -59,48 +59,57 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
   IconData buildIcon(BuildContext context) {
     switch (type) {
       case ToastificationType.info:
-        return Icons.info;
+        return Icons.info_outline;
       case ToastificationType.warning:
-        return Icons.warning_rounded;
+        return Icons.warning_amber_rounded;
       case ToastificationType.success:
         return Icons.check_rounded;
-
       case ToastificationType.failed:
-        return Icons.error;
+        return Icons.error_outline_rounded;
     }
   }
 
   @override
   BorderRadiusGeometry buildBorderRadius(BuildContext context) {
-    return borderRadius ?? BorderRadius.circular(8);
+    return borderRadius ?? BorderRadius.circular(12);
   }
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme = (brightness ?? Brightness.light) == Brightness.light
-        ? ThemeData.light(useMaterial3: true)
-        : ThemeData.dark(useMaterial3: true);
+    final defaultTheme = ThemeData.dark(useMaterial3: false);
 
-    final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
+    final foreground = foregroundColor ?? defaultTheme.colorScheme.outline;
     final background = backgroundColor ?? buildColor(context);
 
     final showCloseButton = this.showCloseButton ?? true;
 
+    final borderRadius = buildBorderRadius(context);
+
     return IconTheme(
       data: defaultTheme.primaryIconTheme,
       child: Material(
-        borderRadius: buildBorderRadius(context),
-        color: background,
-        elevation: elevation ?? 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius,
+          side: BorderSide(color: background.shade300, width: 1.5),
+        ),
+        color: background.shade100,
+        elevation: elevation ?? 0.0,
         child: Padding(
-          padding: padding ?? const EdgeInsets.all(16),
+          padding: padding ?? const EdgeInsets.all(12),
           child: Row(
             children: [
               icon ??
-                  Icon(
-                    buildIcon(context),
-                    size: 28,
-                    color: foreground,
+                  Material(
+                    color: background,
+                    borderRadius: borderRadius / 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: Icon(
+                        buildIcon(context),
+                        size: 22,
+                        color: foreground,
+                      ),
+                    ),
                   ),
               const SizedBox(width: 16),
               Expanded(
@@ -109,12 +118,16 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
               const SizedBox(width: 16),
               Offstage(
                 offstage: !showCloseButton,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  splashRadius: 24,
-                  color: foreground,
-                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                  onPressed: onCloseTap,
+                child: InkWell(
+                  onTap: onCloseTap,
+                  borderRadius: BorderRadius.circular(4),
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Icon(
+                      Icons.close,
+                      color: background.shade400,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -125,13 +138,14 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
   }
 
   Widget _buildContent(ThemeData defaultTheme) {
-    final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
+    const foreground = Colors.black;
 
     Widget content = Text(
       title,
-      style: defaultTheme.textTheme.displayLarge?.copyWith(
+      style: defaultTheme.textTheme.titleLarge?.copyWith(
         color: foreground,
-        fontSize: 18,
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
       ),
     );
 
@@ -141,12 +155,12 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           content,
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Text(
             description!,
             style: defaultTheme.textTheme.displayLarge?.copyWith(
               color: foreground,
-              fontSize: 14,
+              fontSize: 12,
             ),
           )
         ],
