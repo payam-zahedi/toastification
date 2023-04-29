@@ -199,6 +199,29 @@ class Toastification {
     }
   }
 
+  /// This function dismisses all the notifications in the [_notifications] list.
+  /// The delayForAnimation parameter is optional and defaults to true.
+  /// When true, it adds a delay for better animation.
+  void dismissAll({bool delayForAnimation = true}) async {
+    // Creates a new list cloneList that has all the notifications from the _notifications list, but in reverse order.
+    final cloneList = _notifications.toList(growable: false).reversed;
+
+    // For each cloned "toastItem" notification in "cloneList",
+    // we will remove it and then pause for a duration if delayForAnimation is true.
+    for (final toastItem in cloneList) {
+      /// If the item is still in the [_notification] list, we will remove it
+      if (findToastificationItem(toastItem.id) != null) {
+        // Dismiss the current notification item
+        dismiss(toastItem);
+
+        // If delayForAnimation is true, wait for 150ms before proceeding to the next item
+        if (delayForAnimation) {
+          await Future.delayed(const Duration(milliseconds: 150));
+        }
+      }
+    }
+  }
+
   void dismissById(String id) {
     final notification = findToastificationItem(id);
 
