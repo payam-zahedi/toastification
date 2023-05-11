@@ -90,7 +90,7 @@ class AnimationButtons extends StatelessWidget {
           ),
           onPressed: () {
             onChange(
-              (context, animation, child) {
+              (context, animation, alignment, child) {
                 return FadeTransition(opacity: animation, child: child);
               },
             );
@@ -105,7 +105,7 @@ class AnimationButtons extends StatelessWidget {
           ),
           onPressed: () {
             onChange(
-              (context, animation, child) {
+              (context, animation, alignment, child) {
                 return SlideTransition(
                   position: Tween<Offset>(
                     begin: const Offset(1, 0),
@@ -125,9 +125,11 @@ class AnimationButtons extends StatelessWidget {
             minimumSize: const Size(150, 40),
           ),
           onPressed: () {
-            onChange((context, animation, child) {
-              return ScaleTransition(scale: animation, child: child);
-            });
+            onChange(
+              (context, animation, alignment, child) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+            );
           },
           child: const Text('Scale'),
         ),
@@ -138,12 +140,14 @@ class AnimationButtons extends StatelessWidget {
             minimumSize: const Size(150, 40),
           ),
           onPressed: () {
-            onChange((context, animation, child) {
-              return RotationTransition(
-                turns: animation,
-                child: child,
-              );
-            });
+            onChange(
+              (context, animation, alignment, child) {
+                return RotationTransition(
+                  turns: animation,
+                  child: child,
+                );
+              },
+            );
           },
           child: const Text('Rotate'),
         ),
