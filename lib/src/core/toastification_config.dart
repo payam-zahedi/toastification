@@ -4,6 +4,14 @@ import 'package:toastification/toastification.dart';
 const _defaultAlignment = AlignmentDirectional.topEnd;
 const _itemAnimationDuration = Duration(milliseconds: 300);
 
+/// you can use [ToastificationConfig] class to change default values of [Toastification]
+/// 
+/// when you are using [show] or [showCustom] methods, 
+/// if some of the parameters are not provided,
+/// 
+/// [Toastification] will use this class to get the default values.
+/// 
+
 class ToastificationConfig {
   const ToastificationConfig({
     this.alignment = _defaultAlignment,
