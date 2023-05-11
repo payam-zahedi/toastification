@@ -5,8 +5,74 @@ import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 
+/// This is the main singleton class instance of the package.
+/// You can use this instance to show and manage your notifications.
+///
+/// use [show] method to show a built-in notifications
+/// example :
+///
+/// ```dart
+/// toastification.show(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   title: 'Hello World',
+///   description: 'This is a notification',
+///   type: ToastificationType.info,
+///   style: ToastificationStyle.floating,
+///   autoCloseDuration: Duration(seconds: 3),
+/// );
+/// ```
+///
+/// use [showCustom] method to show a custom notification
+/// you should create your own widget and pass it to the [builder] parameter
+/// example :
+///
+/// ```dart
+/// toastification.showCustom(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   animationDuration: Duration(milliseconds: 500),
+///   autoCloseDuration: Duration(seconds: 3),
+///   builder: (context, item) {
+///     return CustomToastWidget();
+///   },
+/// );
+/// ```
 final toastification = Toastification();
 
+/// This is the main class of the package.
+/// You can use this class to show and manage your notifications.
+///
+/// use [show] method to show a built-in notifications
+/// example :
+///
+/// ```dart
+/// Toastification().show(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   title: 'Hello World',
+///   description: 'This is a notification',
+///   type: ToastificationType.info,
+///   style: ToastificationStyle.floating,
+///   autoCloseDuration: Duration(seconds: 3),
+/// );
+/// ```
+///
+/// use [showCustom] method to show a custom notification
+/// you should create your own widget and pass it to the [builder] parameter
+/// example :
+///
+/// ```dart
+/// Toastification().showCustom(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   animationDuration: Duration(milliseconds: 500),
+///   autoCloseDuration: Duration(seconds: 3),
+///   builder: (context, item) {
+///     return CustomToastWidget();
+///   },
+/// );
+/// ```
 class Toastification {
   static final Toastification _instance = Toastification._internal();
 
@@ -18,10 +84,22 @@ class Toastification {
 
   ToastificationConfig config = const ToastificationConfig();
 
-  /// using this method you can show a notification
-  /// if there is no notification in the notification list,
-  /// we will animate in the overlay
-  /// otherwise we will just add the notification to the list
+  /// shows a custom notification
+  /// you should create your own widget and pass it to the [builder] parameter
+  ///
+  /// example :
+  ///
+  /// ```dart
+  /// toastification.showCustom(
+  ///   context: context,
+  ///   alignment: Alignment.topRight,
+  ///   animationDuration: Duration(milliseconds: 500),
+  ///   autoCloseDuration: Duration(seconds: 3),
+  ///   builder: (context, item) {
+  ///     return CustomToastWidget();
+  ///   },
+  /// );
+  /// ```
   ToastificationItem showCustom({
     required BuildContext context,
     AlignmentGeometry? alignment,
@@ -51,6 +129,19 @@ class Toastification {
   }
 
   /// using this method you can show a notification by using the [navigator] overlay
+  /// you should create your own widget and pass it to the [builder] parameter
+  ///
+  /// ```dart
+  /// toastification.showWithNavigatorState(
+  ///   navigator: navigatorState or Navigator.of(context),
+  ///   alignment: Alignment.topRight,
+  ///   animationDuration: Duration(milliseconds: 500),
+  ///   autoCloseDuration: Duration(seconds: 3),
+  ///   builder: (context, item) {
+  ///     return CustomToastWidget();
+  ///   },
+  /// );
+  /// ```
   ToastificationItem showWithNavigatorState({
     required NavigatorState navigator,
     required ToastificationBuilder builder,
@@ -72,6 +163,22 @@ class Toastification {
     );
   }
 
+  /// shows a built-in notification with the given parameters
+  ///
+  /// example :
+  ///
+  /// ```dart
+  /// toastification.show(
+  ///   context: context,
+  ///   alignment: Alignment.topRight,
+  ///   title: 'Hello World',
+  ///   description: 'This is a notification',
+  ///   type: ToastificationType.info,
+  ///   style: ToastificationStyle.floating,
+  ///   autoCloseDuration: Duration(seconds: 3),
+  /// );
+  /// ```
+  ///
   ToastificationItem show({
     required BuildContext context,
     AlignmentGeometry? alignment,
@@ -129,6 +236,9 @@ class Toastification {
     );
   }
 
+  /// finds and returns a [ToastificationItem] by its [id]
+  ///
+  /// if there is no notification with the given [id] it will return null
   ToastificationItem? findToastificationItem(String id) {
     try {
       for (final manager in _managers.values) {
@@ -145,9 +255,9 @@ class Toastification {
     return null;
   }
 
-  /// using this method you can remove a notification
-  /// if there is no notification in the notification list,
-  /// we will remove the overlay entry
+  /// dismisses the given [notification]
+  ///
+  /// if the [notification] is not in the list, nothing will happen
   void dismiss(ToastificationItem notification) {
     final manager = _managers[notification.alignment];
 
@@ -156,17 +266,19 @@ class Toastification {
     }
   }
 
-  /// This function dismisses all the notifications in the [_notifications] list.
-  /// The delayForAnimation parameter is optional and defaults to true.
-  /// When true, it adds a delay for better animation.
+  /// dismisses all notifications that are currently showing in the screen
+  ///
+  /// The [delayForAnimation] parameter is used to determine
+  /// whether to wait for the animation to finish or not.
   void dismissAll({bool delayForAnimation = true}) {
     for (final manager in _managers.values) {
       manager.dismissAll(delayForAnimation: delayForAnimation);
     }
   }
 
-  /// remove a notification by its [id]
-  /// if there is no notification with the given [id], nothing will happen
+  /// dismisses a notification by its [id]
+  ///
+  /// if there is no notification with the given [id] nothing will happen
   void dismissById(String id) {
     final notification = findToastificationItem(id);
 
