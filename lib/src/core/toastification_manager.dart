@@ -266,6 +266,7 @@ class ToastificationManager {
             child: AnimatedList(
               key: _listGlobalKey,
               initialItemCount: _notifications.length,
+              reverse: alignment.y >= 0,
               primary: true,
               shrinkWrap: true,
               itemBuilder: (
@@ -297,11 +298,13 @@ class ToastificationManager {
     return item.animationBuilder?.call(
           context,
           animation,
+          alignment,
           item.builder(context, item),
         ) ??
         config.animationBuilder(
           context,
           animation,
+          alignment,
           item.builder(context, item),
         );
   }
