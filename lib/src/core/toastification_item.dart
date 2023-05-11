@@ -20,12 +20,14 @@ typedef ToastificationBuilder = Widget Function(
 typedef ToastificationAnimationBuilder = Widget Function(
   BuildContext context,
   Animation<double> animation,
+  Alignment alignment,
   Widget child,
 );
 
 class ToastificationItem {
   ToastificationItem({
     required this.builder,
+    required this.alignment,
     this.animationBuilder,
     this.animationDuration,
     this.autoCloseDuration,
@@ -47,9 +49,15 @@ class ToastificationItem {
   }
 
   final String id;
+
+  final Alignment alignment;
+
   final Duration? autoCloseDuration;
+
   final ToastificationBuilder builder;
+
   final ToastificationAnimationBuilder? animationBuilder;
+
   final Duration? animationDuration;
 
   late final PausableTimer? _timer;
