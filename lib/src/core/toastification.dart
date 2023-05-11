@@ -24,14 +24,15 @@ class Toastification {
   /// otherwise we will just add the notification to the list
   ToastificationItem showCustom({
     required BuildContext context,
-    AlignmentGeometry alignment = Alignment.topRight,
+    AlignmentGeometry? alignment,
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
-    final effectiveAlignment = alignment.resolve(Directionality.of(context));
+    final effectiveAlignment =
+        (alignment ?? config.alignment).resolve(Directionality.of(context));
 
     final manager = _managers.putIfAbsent(
       effectiveAlignment,
@@ -53,7 +54,7 @@ class Toastification {
   ToastificationItem showWithNavigatorState({
     required NavigatorState navigator,
     required ToastificationBuilder builder,
-    AlignmentGeometry alignment = Alignment.topRight,
+    AlignmentGeometry? alignment,
     ToastificationAnimationBuilder? animationBuilder,
     Duration? animationDuration,
     Duration? autoCloseDuration,
@@ -73,7 +74,7 @@ class Toastification {
 
   ToastificationItem show({
     required BuildContext context,
-    AlignmentGeometry alignment = Alignment.topRight,
+    AlignmentGeometry? alignment,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     ToastificationAnimationBuilder? animationBuilder,
