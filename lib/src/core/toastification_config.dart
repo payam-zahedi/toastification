@@ -38,10 +38,12 @@ class ToastificationConfig {
 Widget _defaultAnimationBuilderConfig(
   BuildContext context,
   Animation<double> animation,
+  Alignment alignment,
   Widget child,
 ) {
-  return DefaultToastWidget(
+  return DefaultToastTransition(
     animation: animation,
+    alignment: alignment,
     child: child,
   );
 }
