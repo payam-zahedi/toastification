@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/toastification_item.dart';
+import 'package:toastification/toastification.dart';
 
-class DefaultToastWidget extends StatelessWidget {
-  const DefaultToastWidget({
+class DefaultToastTransition extends StatelessWidget {
+  const DefaultToastTransition({
     Key? key,
     required this.animation,
+    required this.alignment,
     required this.child,
   }) : super(key: key);
 
   final Animation<double> animation;
+  final Alignment alignment;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return SlideTransition(
       position: Tween<Offset>(
-        begin: const Offset(0, -1),
+        begin: alignment.y >= 0 ? const Offset(0, 1) : const Offset(0, -1),
         end: const Offset(0, 0),
       ).animate(animation),
       child: child,

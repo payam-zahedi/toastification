@@ -70,12 +70,12 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
       controller = AnimationController(
         value: ToastHelper.convertRange(
           0,
-          widget.item.currentDuration!.inMicroseconds.toDouble(),
+          widget.item.originalDuration!.inMicroseconds.toDouble(),
           0,
           1.0,
           widget.item.elapsedDuration!.inMicroseconds.toDouble(),
         ),
-        duration: widget.item.currentDuration,
+        duration: widget.item.originalDuration,
         vsync: this,
       );
 
@@ -87,7 +87,7 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
     } else {
       controller = AnimationController(
         value: 0,
-        duration: widget.item.currentDuration,
+        duration: widget.item.originalDuration,
         vsync: this,
       );
     }

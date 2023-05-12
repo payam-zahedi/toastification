@@ -1,13 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/core/toastification_item.dart';
+import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/built_in_builder.dart';
-import 'package:toastification/src/widget/toast_builder.dart';
 
+/// This is the main singleton class instance of the package.
+/// You can use this instance to show and manage your notifications.
+///
+/// use [show] method to show a built-in notifications
+/// example :
+///
+/// ```dart
+/// toastification.show(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   title: 'Hello World',
+///   description: 'This is a notification',
+///   type: ToastificationType.info,
+///   style: ToastificationStyle.floating,
+///   autoCloseDuration: Duration(seconds: 3),
+/// );
+/// ```
+///
+/// use [showCustom] method to show a custom notification
+/// you should create your own widget and pass it to the [builder] parameter
+/// example :
+///
+/// ```dart
+/// toastification.showCustom(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   animationDuration: Duration(milliseconds: 500),
+///   autoCloseDuration: Duration(seconds: 3),
+///   builder: (context, item) {
+///     return CustomToastWidget();
+///   },
+/// );
+/// ```
 final toastification = Toastification();
 
+/// This is the main class of the package.
+/// You can use this class to show and manage your notifications.
+///
+/// use [show] method to show a built-in notifications
+/// example :
+///
+/// ```dart
+/// Toastification().show(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   title: 'Hello World',
+///   description: 'This is a notification',
+///   type: ToastificationType.info,
+///   style: ToastificationStyle.floating,
+///   autoCloseDuration: Duration(seconds: 3),
+/// );
+/// ```
+///
+/// use [showCustom] method to show a custom notification
+/// you should create your own widget and pass it to the [builder] parameter
+/// example :
+///
+/// ```dart
+/// Toastification().showCustom(
+///   context: context,
+///   alignment: Alignment.topRight,
+///   animationDuration: Duration(milliseconds: 500),
+///   autoCloseDuration: Duration(seconds: 3),
+///   builder: (context, item) {
+///     return CustomToastWidget();
+///   },
+/// );
+/// ```
 class Toastification {
   static final Toastification _instance = Toastification._internal();
 
@@ -15,70 +80,94 @@ class Toastification {
 
   factory Toastification() => _instance;
 
-  OverlayEntry? _overlayEntry;
+  final Map<Alignment, ToastificationManager> _managers = {};
 
-  /// this key is attached to [AnimatedList] so we can add or remove items using it.
-  final _listGlobalKey = GlobalKey<AnimatedListState>();
-
-  /// this is the list of items that are currently shown
-  /// if the list is empty, the overlay entry will be removed
-  final List<ToastificationItem> _notifications = [];
-
+  /// the default configuration for the toastification
+  /// 
+  /// when you are using [show] or [showCustom] methods,
+  /// if some of the parameters are not provided,
+  /// [Toastification] will use this class to get the default values.
+  ///
+  /// update this value to change the default configuration of the toastification package
+  ///
+  /// example :
+  ///
+  /// ```dart
+  /// toastification.config = ToastificationConfig(
+  ///   alignment: Alignment.topRight,
+  ///   animationDuration: const Duration(milliseconds: 500),
+  ///   animationBuilder: (context, animation,alignment, child) {
+  ///     return FadeTransition(
+  ///       opacity: animation,
+  ///       child: child,
+  ///     );
+  ///   },
+  /// );
+  /// ```
   ToastificationConfig config = const ToastificationConfig();
 
-  /// using this method you can show a notification
-  /// if there is no notification in the notification list,
-  /// we will animate in the overlay
-  /// otherwise we will just add the notification to the list
+  /// shows a custom notification
+  /// you should create your own widget and pass it to the [builder] parameter
+  ///
+  /// example :
+  ///
+  /// ```dart
+  /// toastification.showCustom(
+  ///   context: context,
+  ///   alignment: Alignment.topRight,
+  ///   animationDuration: Duration(milliseconds: 500),
+  ///   autoCloseDuration: Duration(seconds: 3),
+  ///   builder: (context, item) {
+  ///     return CustomToastWidget();
+  ///   },
+  /// );
+  /// ```
   ToastificationItem showCustom({
     required BuildContext context,
+    AlignmentGeometry? alignment,
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
-    final item = ToastificationItem(
+    final effectiveAlignment =
+        (alignment ?? config.alignment).resolve(Directionality.of(context));
+
+    final manager = _managers.putIfAbsent(
+      effectiveAlignment,
+      () =>
+          ToastificationManager(alignment: effectiveAlignment, config: config),
+    );
+
+    return manager.showCustom(
+      context: context,
       builder: builder,
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
-      onAutoCompleteCompleted: (holder) {
-        dismiss(holder);
-      },
+      overlayState: overlayState,
     );
-
-    /// we need this delay because we want to show the item animation after
-    /// the overlay created
-    var delay = const Duration(milliseconds: 10);
-
-    if (_overlayEntry == null) {
-      _createNotificationHolder(context, overlay: overlayState);
-
-      delay = const Duration(milliseconds: 300);
-    }
-
-    Future.delayed(
-      delay,
-      () {
-        _notifications.insert(0, item);
-
-        _listGlobalKey.currentState?.insertItem(
-          0,
-          duration: _createAnimationDuration(item),
-        );
-      },
-    );
-
-    // TODO(payam): add limit count feature
-
-    return item;
   }
 
   /// using this method you can show a notification by using the [navigator] overlay
+  /// you should create your own widget and pass it to the [builder] parameter
+  ///
+  /// ```dart
+  /// toastification.showWithNavigatorState(
+  ///   navigator: navigatorState or Navigator.of(context),
+  ///   alignment: Alignment.topRight,
+  ///   animationDuration: Duration(milliseconds: 500),
+  ///   autoCloseDuration: Duration(seconds: 3),
+  ///   builder: (context, item) {
+  ///     return CustomToastWidget();
+  ///   },
+  /// );
+  /// ```
   ToastificationItem showWithNavigatorState({
     required NavigatorState navigator,
     required ToastificationBuilder builder,
+    AlignmentGeometry? alignment,
     ToastificationAnimationBuilder? animationBuilder,
     Duration? animationDuration,
     Duration? autoCloseDuration,
@@ -87,6 +176,7 @@ class Toastification {
 
     return showCustom(
       context: context,
+      alignment: alignment,
       builder: builder,
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
@@ -95,8 +185,25 @@ class Toastification {
     );
   }
 
+  /// shows a built-in notification with the given parameters
+  ///
+  /// example :
+  ///
+  /// ```dart
+  /// toastification.show(
+  ///   context: context,
+  ///   alignment: Alignment.topRight,
+  ///   title: 'Hello World',
+  ///   description: 'This is a notification',
+  ///   type: ToastificationType.info,
+  ///   style: ToastificationStyle.floating,
+  ///   autoCloseDuration: Duration(seconds: 3),
+  /// );
+  /// ```
+  ///
   ToastificationItem show({
     required BuildContext context,
+    AlignmentGeometry? alignment,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     ToastificationAnimationBuilder? animationBuilder,
@@ -121,6 +228,7 @@ class Toastification {
   }) {
     return showCustom(
       context: context,
+      alignment: alignment,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
       builder: (context, holder) {
@@ -150,142 +258,54 @@ class Toastification {
     );
   }
 
+  /// finds and returns a [ToastificationItem] by its [id]
+  ///
+  /// if there is no notification with the given [id] it will return null
   ToastificationItem? findToastificationItem(String id) {
     try {
-      return _notifications
-          .firstWhereOrNull((notification) => notification.id == id);
+      for (final manager in _managers.values) {
+        final foundValue = manager.findToastificationItem(id);
+
+        if (foundValue != null) {
+          return foundValue;
+        }
+      }
     } catch (e) {
       return null;
     }
+
+    return null;
   }
 
-  /// using this method you can remove a notification
-  /// if there is no notification in the notification list,
-  /// we will remove the overlay entry
+  /// dismisses the given [notification]
+  ///
+  /// if the [notification] is not in the list, nothing will happen
   void dismiss(ToastificationItem notification) {
-    final index = _notifications.indexOf(notification);
+    final manager = _managers[notification.alignment];
 
-    if (index != -1) {
-      notification = _notifications[index];
-
-      if (notification.isRunning) {
-        notification.stop();
-      }
-
-      final removedItem = _notifications.removeAt(index);
-
-      _listGlobalKey.currentState?.removeItem(
-        index,
-        (BuildContext context, Animation<double> animation) {
-          return ToastHolderWidget(
-            item: removedItem,
-            animation: animation,
-            child: _createAnimationBuilder(context, animation, removedItem),
-          );
-        },
-        duration: _createAnimationDuration(removedItem),
-      );
-
-      /// we will remove the [_overlayEntry] if there are no notifications
-      Future.delayed(
-        removedItem.animationDuration ?? config.animationDuration,
-        () {
-          if (_notifications.isEmpty) {
-            _overlayEntry?.remove();
-            _overlayEntry = null;
-          }
-        },
-      );
+    if (manager != null) {
+      manager.dismiss(notification);
     }
   }
 
+  /// dismisses all notifications that are currently showing in the screen
+  ///
+  /// The [delayForAnimation] parameter is used to determine
+  /// whether to wait for the animation to finish or not.
+  void dismissAll({bool delayForAnimation = true}) {
+    for (final manager in _managers.values) {
+      manager.dismissAll(delayForAnimation: delayForAnimation);
+    }
+  }
+
+  /// dismisses a notification by its [id]
+  ///
+  /// if there is no notification with the given [id] nothing will happen
   void dismissById(String id) {
     final notification = findToastificationItem(id);
 
     if (notification != null) {
       dismiss(notification);
     }
-  }
-
-  /// remove the first notification in the list.
-  void dismissFirst() {
-    dismiss(_notifications.first);
-  }
-
-  /// remove the last notification in the list.
-  void dismissLast() {
-    dismiss(_notifications.last);
-  }
-
-  void _createNotificationHolder(
-    BuildContext context, {
-    OverlayState? overlay,
-  }) {
-    final overlayState = overlay ?? Overlay.of(context, rootOverlay: false);
-
-    _overlayEntry = _createOverlayEntry(context);
-
-    overlayState.insert(_overlayEntry!);
-  }
-
-  /// create a [OverlayEntry] as holder of the notifications
-  OverlayEntry _createOverlayEntry(BuildContext context) {
-    return OverlayEntry(
-      opaque: false,
-      builder: (context) {
-        Widget overlay = Align(
-          alignment: AlignmentDirectional.topEnd,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 32),
-            constraints: const BoxConstraints.tightFor(
-              width: 450,
-            ),
-            child: AnimatedList(
-              key: _listGlobalKey,
-              initialItemCount: _notifications.length,
-              primary: true,
-              shrinkWrap: true,
-              itemBuilder: (
-                BuildContext context,
-                int index,
-                Animation<double> animation,
-              ) {
-                final item = _notifications[index];
-                return ToastHolderWidget(
-                  item: item,
-                  animation: animation,
-                  child: _createAnimationBuilder(context, animation, item),
-                );
-              },
-            ),
-          ),
-        );
-
-        return overlay;
-      },
-    );
-  }
-
-  Widget _createAnimationBuilder(
-    BuildContext context,
-    Animation<double> animation,
-    ToastificationItem item,
-  ) {
-    return item.animationBuilder?.call(
-          context,
-          animation,
-          item.builder(context, item),
-        ) ??
-        config.animationBuilder(
-          context,
-          animation,
-          item.builder(context, item),
-        );
-  }
-
-  Duration _createAnimationDuration(
-    ToastificationItem item,
-  ) {
-    return item.animationDuration ?? config.animationDuration;
   }
 }

@@ -3,6 +3,7 @@ library toastification;
 // core
 export 'src/core/toastification.dart';
 export 'src/core/toastification_item.dart';
+export 'src/core/toastification_config.dart';
 
 // holder
 export 'src/widget/toast_animation.dart';
