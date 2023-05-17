@@ -83,7 +83,7 @@ class Toastification {
   final Map<Alignment, ToastificationManager> _managers = {};
 
   /// the default configuration for the toastification
-  /// 
+  ///
   /// when you are using [show] or [showCustom] methods,
   /// if some of the parameters are not provided,
   /// [Toastification] will use this class to get the default values.
@@ -224,6 +224,7 @@ class Toastification {
     bool? showProgressBar,
     bool? showCloseButton,
     bool? closeOnClick,
+    bool? dragToClose,
     bool? pauseOnHover,
   }) {
     return showCustom(
@@ -250,6 +251,7 @@ class Toastification {
           showProgressBar: showProgressBar,
           showCloseButton: showCloseButton,
           closeOnClick: closeOnClick,
+          dragToClose: dragToClose,
           pauseOnHover: pauseOnHover,
         );
       },
@@ -280,11 +282,14 @@ class Toastification {
   /// dismisses the given [notification]
   ///
   /// if the [notification] is not in the list, nothing will happen
-  void dismiss(ToastificationItem notification) {
+  void dismiss(
+    ToastificationItem notification, {
+    bool showRemoveAnimation = true,
+  }) {
     final manager = _managers[notification.alignment];
 
     if (manager != null) {
-      manager.dismiss(notification);
+      manager.dismiss(notification, showRemoveAnimation: showRemoveAnimation);
     }
   }
 
@@ -301,11 +306,14 @@ class Toastification {
   /// dismisses a notification by its [id]
   ///
   /// if there is no notification with the given [id] nothing will happen
-  void dismissById(String id) {
+  void dismissById(
+    String id, {
+    bool showRemoveAnimation = true,
+  }) {
     final notification = findToastificationItem(id);
 
     if (notification != null) {
-      dismiss(notification);
+      dismiss(notification, showRemoveAnimation: true);
     }
   }
 }
