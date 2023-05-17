@@ -162,7 +162,16 @@ class ToastificationManager {
   /// using this method you can remove a notification
   /// if there is no notification in the notification list,
   /// we will remove the overlay entry
-  void dismiss(ToastificationItem notification) {
+  ///
+  /// if the [showRemoveAnimation] is true, we will show the remove animation
+  /// of the [notification] item.
+  /// otherwise we will remove the notification without showing any animation.
+  /// this is useful when you want to remove the notification manually,
+  /// like when you have some [Dismissible] widget
+  void dismiss(
+    ToastificationItem notification, {
+    bool showRemoveAnimation = true,
+  }) {
     final index = _notifications.indexOf(notification);
 
     if (index != -1) {
@@ -174,17 +183,31 @@ class ToastificationManager {
 
       final removedItem = _notifications.removeAt(index);
 
-      _listGlobalKey.currentState?.removeItem(
-        index,
-        (BuildContext context, Animation<double> animation) {
-          return ToastHolderWidget(
-            item: removedItem,
-            animation: animation,
-            child: _createAnimationBuilder(context, animation, removedItem),
-          );
-        },
-        duration: _createAnimationDuration(removedItem),
-      );
+      /// if the [showRemoveAnimation] is true, we will show the remove animation
+      /// of the notification.
+      if (showRemoveAnimation) {
+        _listGlobalKey.currentState?.removeItem(
+          index,
+          (BuildContext context, Animation<double> animation) {
+            return ToastHolderWidget(
+              item: removedItem,
+              animation: animation,
+              child: _createAnimationBuilder(context, animation, removedItem),
+            );
+          },
+          duration: _createAnimationDuration(removedItem),
+        );
+
+        /// if the [showRemoveAnimation] is false, we will remove the notification
+        /// without showing the remove animation.
+      } else {
+        _listGlobalKey.currentState?.removeItem(
+          index,
+          (BuildContext context, Animation<double> animation) {
+            return const SizedBox.shrink();
+          },
+        );
+      }
 
       /// we will remove the [_overlayEntry] if there are no notifications
       Future.delayed(
@@ -219,14 +242,6 @@ class ToastificationManager {
           await Future.delayed(const Duration(milliseconds: 150));
         }
       }
-    }
-  }
-
-  void dismissById(String id) {
-    final notification = findToastificationItem(id);
-
-    if (notification != null) {
-      dismiss(notification);
     }
   }
 
