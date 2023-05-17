@@ -224,6 +224,7 @@ class Toastification {
     bool? showProgressBar,
     bool? showCloseButton,
     bool? closeOnClick,
+    bool? dragToClose,
     bool? pauseOnHover,
   }) {
     return showCustom(
@@ -250,6 +251,7 @@ class Toastification {
           showProgressBar: showProgressBar,
           showCloseButton: showCloseButton,
           closeOnClick: closeOnClick,
+          dragToClose: dragToClose,
           pauseOnHover: pauseOnHover,
         );
       },
