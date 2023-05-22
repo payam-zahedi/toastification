@@ -1,3 +1,4 @@
+import 'package:example/src/features/home/views/pages/home.dart';
 import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -11,9 +12,9 @@ class ToastificationApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Toastification',
       theme: lightTheme,
-      home: Container(),
+      home: const HomeScreen(),
     );
   }
 }
