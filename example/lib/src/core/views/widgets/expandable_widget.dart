@@ -15,6 +15,7 @@ class ExpandableWidget extends StatefulWidget {
     required this.isExpanded,
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
+    this.borderRadius,
   });
 
   /// The widget builder that builds the expandable widget's header.
@@ -37,6 +38,9 @@ class ExpandableWidget extends StatefulWidget {
 
   /// The duration of the expansion animation.
   final Duration animationDuration;
+
+  /// The border radius of the expandable widget.
+  final BorderRadius? borderRadius;
 
   @override
   State<StatefulWidget> createState() => _ExpandableWidgetState();
@@ -77,6 +81,7 @@ class _ExpandableWidgetState extends State<ExpandableWidget> {
     );
 
     header = InkWell(
+      borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
       hoverColor: Colors.transparent,
       onTap: () => _handlePressed(widget.isExpanded),
       child: header,

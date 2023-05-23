@@ -21,7 +21,7 @@ class ExpandableSection extends StatefulWidget {
 
 class _ExpandableSectionState extends State<ExpandableSection> {
   late bool _customTileExpanded;
-  
+
   @override
   void initState() {
     super.initState();
@@ -33,15 +33,17 @@ class _ExpandableSectionState extends State<ExpandableSection> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final header = Padding(
+      padding: const EdgeInsetsDirectional.only(start: 2),
+      child: Text(
+        widget.title,
+        style: theme.textTheme.titleMedium,
+      ),
+    );
+
     return ExpandableWidget(
       headerBuilder: (context, isExpanded) {
-        return Padding(
-          padding: const EdgeInsetsDirectional.only(start: 2),
-          child: Text(
-            widget.title,
-            style: theme.textTheme.titleMedium,
-          ),
-        );
+        return header;
       },
       body: Padding(
         padding: const EdgeInsets.only(top: 4),
@@ -49,16 +51,11 @@ class _ExpandableSectionState extends State<ExpandableSection> {
           child: Row(
             children: <Widget>[
               VerticalDivider(
-                color: theme.colorScheme.onBackground.withOpacity(.06),
+                color: theme.colorScheme.outline,
                 thickness: 1,
                 width: 42,
               ),
-              Expanded(
-                child: Container(
-                  height: 200,
-                  color: Colors.black12,
-                ),
-              ),
+              Expanded(child: widget.body),
             ],
           ),
         ),
@@ -69,6 +66,41 @@ class _ExpandableSectionState extends State<ExpandableSection> {
           _customTileExpanded = !isExpanded;
         });
       },
+    );
+  }
+}
+
+class SubSection extends StatelessWidget {
+  const SubSection({
+    super.key,
+    required this.title,
+    required this.body,
+  });
+
+  final String title;
+  final Widget body;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 12, bottom: 12),
+          child: Text(
+            title,
+            style: theme.textTheme.titleMedium?.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: theme.colorScheme.onSurface.withOpacity(.4),
+            ),
+          ),
+        ),
+        body,
+      ],
     );
   }
 }

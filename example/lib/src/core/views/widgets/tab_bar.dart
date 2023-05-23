@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ToastTypeTabBar extends StatefulWidget {
@@ -43,7 +42,7 @@ class _ToastTypeTabBarState extends State<ToastTypeTabBar>
         Container(
           height: 48,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade100, width: 1.3),
+            border: Border.all(color: theme.colorScheme.outline, width: 1.3),
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: TabBar(
