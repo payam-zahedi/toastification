@@ -1,4 +1,3 @@
-import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class ColoredTag extends StatelessWidget {
@@ -20,7 +19,7 @@ class ColoredTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
-        color: background ?? tagBackgroundColor,
+        color: background ?? theme.colorScheme.surfaceVariant,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -28,7 +27,7 @@ class ColoredTag extends StatelessWidget {
         style: theme.textTheme.titleSmall?.copyWith(
           fontSize: 14,
           fontWeight: FontWeight.bold,
-          color: foreground ?? tagTextColor,
+          color: foreground ?? theme.colorScheme.onSurfaceVariant,
           letterSpacing: 1.09,
         ),
       ),

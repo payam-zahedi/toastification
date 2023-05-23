@@ -1,46 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-const primary = Color(0xff605CFF);
-const onPrimary = Color(0xffFFFFFF);
-const secondary = Color(0xffFFCE51);
-const onSecondary = Color(0xff000000);
-const background = Color(0xffffffff);
-const onBackground = Color(0xff303030);
-const surface = Color(0xffe2ecf4);
-const onSurface = Color(0xff111111);
+const _primary = Color(0xff605CFF);
+const _onPrimary = Color(0xffFFFFFF);
+const _secondary = Color(0xffFFCE51);
+const _onSecondary = Color(0xff000000);
+const _background = Color(0xffffffff);
+const _onBackground = Color(0xff303030);
+const _surface = Color(0xffe2ecf4);
+const _onSurface = Color(0xff111111);
 
-const tagBackgroundColor = Color(0xffEDFBFE);
-const tagTextColor = Color(0xff21C9EE);
+// border color
+const _outline = Color(0xffF2F2F2);
 
-final lightTheme = _lightThemeBuilder();
+const _tagBackgroundColor = Color(0xffEDFBFE);
+const _tagTextColor = Color(0xff21C9EE);
 
-ThemeData _lightThemeBuilder() {
+final lightTheme = _themeBuilder();
+
+ThemeData _themeBuilder() {
+  final scheme = ColorScheme.fromSeed(
+    seedColor: _primary,
+    primary: _primary,
+    onPrimary: _onPrimary,
+    secondary: _secondary,
+    onSecondary: _onSecondary,
+    background: _background,
+    onBackground: _onBackground,
+    surface: _surface,
+    onSurface: _onSurface,
+    outline: _outline,
+    surfaceVariant: _tagBackgroundColor,
+    onSurfaceVariant: _tagTextColor,
+  );
+
   final textTheme = GoogleFonts.robotoTextTheme().apply(
-    bodyColor: onSurface,
-    displayColor: onSurface,
+    bodyColor: scheme.onSurface,
+    displayColor: scheme.onSurface,
   );
 
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primary,
-      primary: primary,
-      onPrimary: onPrimary,
-      secondary: secondary,
-      onSecondary: onSecondary,
-      background: background,
-      onBackground: onBackground,
-      surface: surface,
-      onSurface: onSurface,
-    ),
+    colorScheme: scheme,
+    dividerColor: scheme.outline,
     textTheme: textTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
         minimumSize: const Size(100, 62),
-        backgroundColor: primary,
-        foregroundColor: onPrimary,
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
         textStyle: textTheme.bodyLarge?.copyWith(
           fontWeight: FontWeight.bold,
         ),
@@ -59,14 +68,14 @@ final darkTheme = ThemeData(
   useMaterial3: false,
   brightness: Brightness.dark,
   colorScheme: const ColorScheme.dark(
-    primary: primary,
-    onPrimary: onPrimary,
-    secondary: secondary,
-    onSecondary: onSecondary,
-    background: background,
-    onBackground: onBackground,
-    surface: surface,
-    onSurface: onSurface,
+    primary: _primary,
+    onPrimary: _onPrimary,
+    secondary: _secondary,
+    onSecondary: _onSecondary,
+    background: _background,
+    onBackground: _onBackground,
+    surface: _surface,
+    onSurface: _onSurface,
   ),
   elevatedButtonTheme: const ElevatedButtonThemeData(
     style: ButtonStyle(
