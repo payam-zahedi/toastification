@@ -1,4 +1,7 @@
-import 'package:example/src/core/views/widgets/expandable_widget.dart';
+import 'package:example/src/core/views/widgets/expandable_section.dart';
+import 'package:example/src/core/views/widgets/picker/alignment.dart';
+import 'package:example/src/core/views/widgets/picker/border_radius.dart';
+import 'package:example/src/core/views/widgets/picker/elevation.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -58,50 +61,66 @@ class PositionSection extends StatefulWidget {
 }
 
 class _PositionSectionState extends State<PositionSection> {
-  bool _customTileExpanded = false;
+  AlignmentGeometry _selectedAlignment = Alignment.topRight;
+  BorderRadiusGeometry _selectedBorderRadius = BorderRadius.zero;
+  double _selectedElevation = 0;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return ExpandableWidget(
-      headerBuilder: (context, isExpanded) {
-        return Padding(
-          padding: const EdgeInsetsDirectional.only(start: 2),
-          child: Text(
-            'Position',
-            style: theme.textTheme.titleMedium,
-          ),
-        );
-      },
-      body: Padding(
-        padding: const EdgeInsets.only(top: 4),
-        child: IntrinsicHeight(
-          child: Row(
-            children: <Widget>[
-              VerticalDivider(
-                color: theme.colorScheme.onBackground.withOpacity(.06),
-                thickness: 1,
-                width: 42,
-              ),
+    return ExpandableSection(
+      title: "Position",
+      body: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Expanded(
-                child: Container(
-                  height: 200,
-                  color: Colors.black12,
+                flex: 10,
+                child: SubSection(
+                  title: 'PLACEMENT',
+                  body: AlignmentPicker(
+                    selectedAlignment: _selectedAlignment,
+                    onChanged: (alignment) {
+                      setState(() {
+                        _selectedAlignment = alignment;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              //  TODO(payam): make it responsive
+              const Spacer(flex: 3),
+              Expanded(
+                flex: 7,
+                child: SubSection(
+                  title: 'BORDER',
+                  body: BorderRadiusPicker(
+                    selectedBorderRadius: _selectedBorderRadius,
+                    onChanged: (borderRadius) {
+                      setState(() {
+                        _selectedBorderRadius = borderRadius;
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
           ),
-        ),
+          const SizedBox(height: 42),
+          SubSection(
+            title: 'BORDER',
+            body: ElevationPicker(
+              selectedElevation: _selectedElevation,
+              onChanged: (elevation) {
+                setState(() {
+                  _selectedElevation = elevation;
+                });
+              },
+            ),
+          ),
+          const SizedBox(height: 18),
+        ],
       ),
-      isExpanded: _customTileExpanded,
-      expansionCallback: (isExpanded) {
-        setState(() {
-          _customTileExpanded = !isExpanded;
-        });
-      },
     );
   }
 }
-
-
