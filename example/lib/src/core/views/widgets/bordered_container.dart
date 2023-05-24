@@ -4,7 +4,7 @@ class BorderedContainer extends StatelessWidget {
   const BorderedContainer({
     super.key,
     this.active = false,
-    this.height,
+    this.height = 48,
     this.width,
     this.elevation = 0,
     this.margin,
@@ -43,21 +43,20 @@ class BorderedContainer extends StatelessWidget {
     final borderSize = active ? 1.5 : 1.0;
     return Padding(
       padding: margin ?? EdgeInsets.zero,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
-        child: SizedBox(
-          height: height ?? 48,
-          width: width,
-          child: Material(
-            animationDuration: const Duration(milliseconds: 400),
-            color: backgroundColor,
-            elevation: elevation,
-            
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: BorderSide(color: borderColor, width: borderSize),
-            ),
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Material(
+          animationDuration: const Duration(milliseconds: 400),
+          color: backgroundColor,
+          elevation: elevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: BorderSide(color: borderColor, width: borderSize),
+          ),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(10),
             child: Padding(
               padding: padding ?? EdgeInsets.zero,
               child: Center(
