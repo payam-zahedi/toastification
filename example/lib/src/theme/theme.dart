@@ -9,6 +9,8 @@ const _background = Color(0xffffffff);
 const _onBackground = Color(0xff303030);
 const _surface = Color(0xffe2ecf4);
 const _onSurface = Color(0xff111111);
+const _error = Color(0xffFF5740);
+const _onError = Color(0xffffffff);
 
 // border color
 const _outline = Color(0xffF2F2F2);
@@ -29,6 +31,8 @@ ThemeData _themeBuilder() {
     onBackground: _onBackground,
     surface: _surface,
     onSurface: _onSurface,
+    error: _error,
+    onError: _onError,
     outline: _outline,
     surfaceVariant: _tagBackgroundColor,
     onSurfaceVariant: _tagTextColor,
@@ -59,6 +63,17 @@ ThemeData _themeBuilder() {
           side: BorderSide(width: 1, color: Colors.black12),
         ),
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 28),
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
+      hintStyle: textTheme.bodyMedium?.copyWith(
+        color: scheme.onSurface.withOpacity(.5),
+        fontWeight: FontWeight.w400,
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(width: 1),
       ),
     ),
   );
