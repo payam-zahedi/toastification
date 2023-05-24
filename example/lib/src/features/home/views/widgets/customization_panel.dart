@@ -1,7 +1,11 @@
+import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/widgets/drop_down.dart';
 import 'package:example/src/core/views/widgets/expandable_section.dart';
 import 'package:example/src/core/views/widgets/picker/alignment.dart';
 import 'package:example/src/core/views/widgets/picker/border_radius.dart';
+import 'package:example/src/core/views/widgets/picker/color.dart';
 import 'package:example/src/core/views/widgets/picker/elevation.dart';
+import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -10,57 +14,66 @@ class CustomizationPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    const titleColor = Color(0xff1C1B28);
-
-    return SizedBox(
+    return const SizedBox(
       width: 600,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                'Customize your toast!',
-                style: theme.textTheme.displayMedium?.copyWith(
-                  fontSize: 40,
-                  fontWeight: FontWeight.w500,
-                  color: titleColor,
-                  height: 1,
-                ),
-              ),
-              Text(
-                ' Let’s make it easy!',
-                style: theme.textTheme.displayMedium?.copyWith(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  color: titleColor.withOpacity(.4),
-                  height: 1.2,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          const ToastTypeTabBar(),
-          const PositionSection(),
+          _CustomizeTitle(),
+          SizedBox(height: 24),
+          ToastTypeTabBar(),
+          _PositionSection(),
+          _ContentAndStyleSection(),
         ],
       ),
     );
   }
 }
 
-class PositionSection extends StatefulWidget {
-  const PositionSection({super.key});
+class _CustomizeTitle extends StatelessWidget {
+  const _CustomizeTitle();
 
   @override
-  State<PositionSection> createState() => _PositionSectionState();
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    const titleColor = Color(0xff1C1B28);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          'Customize your toast!',
+          style: theme.textTheme.displayMedium?.copyWith(
+            fontSize: 40,
+            fontWeight: FontWeight.w500,
+            color: titleColor,
+            height: 1,
+          ),
+        ),
+        Text(
+          ' Let’s make it easy!',
+          style: theme.textTheme.displayMedium?.copyWith(
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+            color: titleColor.withOpacity(.4),
+            height: 1.2,
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-class _PositionSectionState extends State<PositionSection> {
+class _PositionSection extends StatefulWidget {
+  const _PositionSection();
+
+  @override
+  State<_PositionSection> createState() => _PositionSectionState();
+}
+
+class _PositionSectionState extends State<_PositionSection> {
   AlignmentGeometry _selectedAlignment = Alignment.topRight;
   BorderRadiusGeometry _selectedBorderRadius = BorderRadius.zero;
   double _selectedElevation = 0;
@@ -68,7 +81,7 @@ class _PositionSectionState extends State<PositionSection> {
   @override
   Widget build(BuildContext context) {
     return ExpandableSection(
-      title: "Position",
+      title: 'Position',
       body: Column(
         children: [
           Row(
@@ -116,6 +129,200 @@ class _PositionSectionState extends State<PositionSection> {
                   _selectedElevation = elevation;
                 });
               },
+            ),
+          ),
+          const SizedBox(height: 18),
+        ],
+      ),
+    );
+  }
+}
+
+class _ContentAndStyleSection extends StatefulWidget {
+  const _ContentAndStyleSection();
+
+  @override
+  State<_ContentAndStyleSection> createState() =>
+      _ContentAndStyleSectionState();
+}
+
+class _ContentAndStyleSectionState extends State<_ContentAndStyleSection> {
+  TextDirection _textDirection = TextDirection.ltr;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ExpandableSection(
+      title: 'Content & Style',
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SubSection(
+            title: 'CONTENT',
+            body: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          BorderedContainer(
+                            width: 48,
+                            height: 48,
+                            child: const Icon(Icons.info_outline_rounded),
+                            onTap: () {},
+                          ),
+                          const SizedBox(width: 10),
+                          const Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Type the title text here..',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      const SizedBox(
+                        height: 106,
+                        child: TextField(
+                          expands: true,
+                          maxLines: null,
+                          textAlignVertical: TextAlignVertical.top,
+                          decoration: InputDecoration(
+                            hintText: 'Type the body text here..',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: 164,
+                  child: Column(
+                    // three bordered containers
+                    children: [
+                      FilledButton(
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size(200, 56),
+                          padding: const EdgeInsets.symmetric(horizontal: 17),
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            height: 1,
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Add Section'),
+                            // soon to be icon
+                            SoonWidget(),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      BorderedContainer(
+                        height: 48,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        onTap: () {
+                          setState(() {
+                            _textDirection = TextDirection.ltr;
+                          });
+                        },
+                        active: _textDirection == TextDirection.ltr,
+                        child: Row(
+                          children: [
+                            const Expanded(child: Text('LTR layout')),
+                            Offstage(
+                              offstage: _textDirection != TextDirection.ltr,
+                              child: const Icon(Icons.check),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      BorderedContainer(
+                        height: 48,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        onTap: () {
+                          setState(() {
+                            _textDirection = TextDirection.rtl;
+                          });
+                        },
+                        active: _textDirection == TextDirection.rtl,
+                        child: Row(
+                          children: [
+                            const Expanded(child: Text('RTL layout')),
+                            Offstage(
+                              offstage: _textDirection != TextDirection.rtl,
+                              child: const Icon(Icons.check),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+          SubSection(
+            title: 'STYLE',
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: ColorPicker(
+                        title: 'Background',
+                        selectedColor: theme.colorScheme.surfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ColorPicker(
+                        title: 'Icon',
+                        selectedColor: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ColorPicker(
+                        title: 'Text',
+                        selectedColor: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                const BorderedDropDown<String>(
+                  hint: 'Palette templates',
+                  available: false,
+                  items: [
+                    DropdownMenuItem(
+                      value: 'Roboto',
+                      child: Text('Roboto'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Open Sans',
+                      child: Text('Open Sans'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Lato',
+                      child: Text('Lato'),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 18),
