@@ -1,4 +1,5 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
 import 'package:example/src/core/views/widgets/expandable_section.dart';
 import 'package:example/src/core/views/widgets/picker/alignment.dart';
@@ -7,6 +8,7 @@ import 'package:example/src/core/views/widgets/picker/color.dart';
 import 'package:example/src/core/views/widgets/picker/elevation.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
+import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:flutter/material.dart';
 
 class CustomizationPanel extends StatelessWidget {
@@ -25,6 +27,7 @@ class CustomizationPanel extends StatelessWidget {
           ToastTypeTabBar(),
           _PositionSection(),
           _ContentAndStyleSection(),
+          _ControllersAndInteractions(),
         ],
       ),
     );
@@ -326,6 +329,203 @@ class _ContentAndStyleSectionState extends State<_ContentAndStyleSection> {
             ),
           ),
           const SizedBox(height: 18),
+        ],
+      ),
+    );
+  }
+}
+
+class _ControllersAndInteractions extends StatefulWidget {
+  const _ControllersAndInteractions();
+
+  @override
+  State<_ControllersAndInteractions> createState() =>
+      _ControllersAndInteractionsState();
+}
+
+class _ControllersAndInteractionsState
+    extends State<_ControllersAndInteractions> {
+  String? _animationType;
+  String? _closeType;
+
+  bool _newOnTop = true;
+  bool _closeOnClick = true;
+  bool _dragToClose = true;
+  bool _pauseOnHover = true;
+  bool _showProgressBar = true;
+
+  double _timeout = 3;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return ExpandableSection(
+      title: 'Controllers & Interaction',
+      body: Column(
+        children: [
+          SubSection(
+            title: 'SYSTEM',
+            body: Row(
+              children: [
+                Expanded(
+                  child: ToggleTile(
+                    title: 'Newest on top',
+                    value: _newOnTop,
+                    onChanged: (value) {
+                      setState(() {
+                        _newOnTop = value!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BorderedDropDown<String>(
+                    icon: const Icon(Icons.star_outline_rounded),
+                    hint: 'Animation type',
+                    value: _animationType,
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'Default',
+                        child: Text('Default'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Fade',
+                        child: Text('Fade'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Slide',
+                        child: Text('Slide'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _animationType = value!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SubSection(
+            title: 'CLOSE',
+            body: Row(
+              children: [
+                Expanded(
+                  child: ToggleTile(
+                    title: 'Close on click',
+                    value: _closeOnClick,
+                    onChanged: (value) {
+                      setState(() {
+                        _closeOnClick = value!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BorderedDropDown<String>(
+                    icon: const Icon(Icons.close_rounded, size: 18),
+                    hint: 'Choose close button type',
+                    value: _closeType,
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'Icon',
+                        child: Text('Icon'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Text',
+                        child: Text('Text'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _closeType = value!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SubSection(
+            title: 'PROGRESS BAR',
+            body: Row(
+              children: [
+                Expanded(
+                  child: ToggleTile(
+                    title: 'Show progress bar',
+                    value: _showProgressBar,
+                    onChanged: (value) {
+                      setState(() {
+                        _showProgressBar = value!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: CountTile(
+                    title: 'Timeout',
+                    icon: Icon(
+                      Icons.timer_outlined,
+                      color: theme.colorScheme.onSurface.withOpacity(.2),
+                    ),
+                    value: _timeout,
+                    valueSuffix: 's',
+                    onChanged: (value) {
+                      setState(() {
+                        _timeout = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SubSection(
+            title: 'DRAG',
+            body: Row(
+              children: [
+                Expanded(
+                  child: ToggleTile(
+                    title: 'Drag to close',
+                    value: _dragToClose,
+                    onChanged: (value) {
+                      setState(() {
+                        _dragToClose = value!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                const Spacer(),
+              ],
+            ),
+          ),
+          SubSection(
+            title: 'PAUSE',
+            body: Row(
+              children: [
+                Expanded(
+                  child: ToggleTile(
+                    title: 'Pause on hover',
+                    value: _pauseOnHover,
+                    onChanged: (value) {
+                      setState(() {
+                        _pauseOnHover = value!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                const Spacer(),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
         ],
       ),
     );

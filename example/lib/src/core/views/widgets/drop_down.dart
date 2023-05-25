@@ -1,4 +1,3 @@
-
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +8,7 @@ class BorderedDropDown<T> extends StatelessWidget {
     this.value,
     required this.items,
     this.onChanged,
+    this.icon,
     this.available = true,
   });
 
@@ -17,6 +17,7 @@ class BorderedDropDown<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final ValueChanged<T?>? onChanged;
 
+  final Widget? icon;
   final bool available;
 
   @override
@@ -27,6 +28,8 @@ class BorderedDropDown<T> extends StatelessWidget {
       focusColor: theme.colorScheme.background,
       borderRadius: BorderRadius.circular(10),
       decoration: InputDecoration(
+        prefixIcon: icon,
+        prefixIconColor: theme.colorScheme.onSurface.withOpacity(.2),
         hintText: hint,
         hintStyle: theme.textTheme.bodyMedium?.copyWith(
           height: 1.1,
