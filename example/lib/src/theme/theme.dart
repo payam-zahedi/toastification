@@ -18,6 +18,9 @@ const _outline = Color(0xffF2F2F2);
 const _tagBackgroundColor = Color(0xffEDFBFE);
 const _tagTextColor = Color(0xff21C9EE);
 
+const _switchActiveColor = Color(0xff605CFF);
+const _switchInActiveColor = Color(0xffD9DEE4);
+
 final lightTheme = _themeBuilder();
 
 ThemeData _themeBuilder() {
@@ -76,6 +79,8 @@ ThemeData _themeBuilder() {
         borderSide: const BorderSide(width: 1),
       ),
     ),
+    disabledColor: _switchInActiveColor,
+    focusColor: _switchActiveColor,
   );
 }
 
