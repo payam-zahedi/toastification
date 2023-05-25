@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 const _primary = Color(0xff605CFF);
 const _onPrimary = Color(0xffFFFFFF);
@@ -41,10 +40,11 @@ ThemeData _themeBuilder() {
     onSurfaceVariant: _tagTextColor,
   );
 
-  final textTheme = GoogleFonts.robotoTextTheme().apply(
-    bodyColor: scheme.onSurface,
-    displayColor: scheme.onSurface,
-  );
+  final textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
+        fontFamily: 'PlusJakartaDisplay',
+        bodyColor: scheme.onSurface,
+        displayColor: scheme.onSurface,
+      );
 
   return ThemeData(
     useMaterial3: true,
@@ -58,7 +58,7 @@ ThemeData _themeBuilder() {
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
         textStyle: textTheme.bodyLarge?.copyWith(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
         ),
         elevation: 0,
         shape: const RoundedRectangleBorder(
