@@ -350,7 +350,7 @@ class _ControllersAndInteractionsState
 
   bool _newOnTop = true;
   bool _closeOnClick = true;
-  bool _dragToClose = true;
+  bool _dragToClose = false;
   bool _pauseOnHover = true;
   bool _showProgressBar = true;
 
@@ -485,32 +485,12 @@ class _ControllersAndInteractionsState
               ],
             ),
           ),
-          SubSection(
-            title: 'DRAG',
-            body: Row(
-              children: [
-                Expanded(
-                  child: ToggleTile(
-                    title: 'Drag to close',
-                    value: _dragToClose,
-                    onChanged: (value) {
-                      setState(() {
-                        _dragToClose = value!;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 10),
-                const Spacer(),
-              ],
-            ),
-          ),
-          SubSection(
-            title: 'PAUSE',
-            body: Row(
-              children: [
-                Expanded(
-                  child: ToggleTile(
+          Row(
+            children: [
+              Expanded(
+                child: SubSection(
+                  title: 'PAUSE',
+                  body: ToggleTile(
                     title: 'Pause on hover',
                     value: _pauseOnHover,
                     onChanged: (value) {
@@ -520,10 +500,23 @@ class _ControllersAndInteractionsState
                     },
                   ),
                 ),
-                const SizedBox(width: 10),
-                const Spacer(),
-              ],
-            ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: SubSection(
+                  title: 'DRAG',
+                  body: ToggleTile(
+                    title: 'Drag to close',
+                    value: _dragToClose,
+                    onChanged: (value) {
+                      setState(() {
+                        _dragToClose = value!;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 16),
         ],

@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
             sliver: SliverToBoxAdapter(child: ToastHeader()),
           ),
           SliverPadding(
-            padding: EdgeInsets.only(top: 64),
+            padding: EdgeInsets.only(top: 64, bottom: 64),
             sliver: SliverToBoxAdapter(child: ToastCustomizationSection()),
           ),
         ],

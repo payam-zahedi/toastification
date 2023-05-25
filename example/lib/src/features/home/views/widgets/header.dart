@@ -1,4 +1,3 @@
-
 import 'package:example/src/core/views/widgets/core.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -54,7 +53,7 @@ class ToastHeader extends StatelessWidget {
                 foregroundColor: theme.colorScheme.onSecondary,
               ),
               onPressed: () {},
-              label: const Text('Make a Random Toast'),
+              label: const Text('Give a Star'),
               icon: const FaIcon(FontAwesomeIcons.star),
             )
           ],

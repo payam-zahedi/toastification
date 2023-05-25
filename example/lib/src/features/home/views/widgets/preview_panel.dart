@@ -1,3 +1,4 @@
+import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:flutter/material.dart';
 
 class PreviewPanel extends StatelessWidget {
@@ -5,14 +6,19 @@ class PreviewPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Container(
-          color: Colors.yellow,
-          width: 100,
+    return const Column(
+      children: [
+        BorderedContainer(
+          active: true,
           height: 200,
-        );
-      },
+          child: Text('Toast Preview'),
+        ),
+        SizedBox(height: 16),
+        BorderedContainer(
+          height: 500,
+          child: Text('Code Preview'),
+        ),
+      ],
     );
   }
 }
