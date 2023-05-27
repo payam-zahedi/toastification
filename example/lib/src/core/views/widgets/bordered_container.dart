@@ -61,7 +61,7 @@ class BorderedContainer extends StatelessWidget {
               padding: padding ?? EdgeInsets.zero,
               child: Center(
                 child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 10),
                   style: theme.textTheme.titleSmall!.copyWith(
                     fontSize: 14,
                     fontWeight: active ? FontWeight.w500 : FontWeight.w400,

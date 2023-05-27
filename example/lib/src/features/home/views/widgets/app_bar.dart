@@ -29,10 +29,6 @@ class ToastAppBar extends StatelessWidget {
           const Spacer(),
           FilledButton.icon(
             style: FilledButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 28),
               backgroundColor: Colors.black12,
               foregroundColor: colorScheme.onBackground,
             ),
