@@ -1,77 +1,78 @@
-import 'package:example/src/core/views/widgets/divider.dart';
 import 'package:example/src/features/home/views/widgets/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(child: ToastAppBar()),
-          SliverPadding(
-            padding: EdgeInsets.only(top: 100),
-            sliver: SliverToBoxAdapter(child: ToastHeader()),
-          ),
-          SliverPadding(
-            padding: EdgeInsets.only(top: 64, bottom: 64),
-            sliver: SliverToBoxAdapter(child: ToastCustomizationSection()),
-          ),
-        ],
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final showHorizontalCustomizationSection = screenWidth > 1020;
+
+    return DefaultStickyHeaderController(
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            const SliverToBoxAdapter(child: ToastAppBar()),
+            const SliverPadding(
+              padding: EdgeInsets.only(top: 100),
+              sliver: SliverToBoxAdapter(child: ToastHeader()),
+            ),
+            if (showHorizontalCustomizationSection)
+              const _HorizontalSection()
+            else ...[
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: 64, vertical: 24),
+                sliver: CustomizationPanel(),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.symmetric(horizontal: 64, vertical: 24),
+                sliver: SliverToBoxAdapter(child: PreviewPanel()),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class ToastCustomizationSection extends StatelessWidget {
-  const ToastCustomizationSection({super.key});
+class _HorizontalSection extends StatelessWidget {
+  const _HorizontalSection({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const customizationPanel = CustomizationPanel();
-    const previewPanel = PreviewPanel();
+    final screenWidth = MediaQuery.of(context).size.width;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final axis =
-            constraints.maxWidth > 1300 ? Axis.horizontal : Axis.vertical;
-
-        final isHorizontal = axis == Axis.horizontal;
-        final flex = isHorizontal ? FlexFit.tight : FlexFit.loose;
-
-        final padding = constraints.maxWidth / 12;
-
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding),
-          child: Flex(
-            direction: axis,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: isHorizontal
-                ? CrossAxisAlignment.start
-                : CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 6,
-                fit: flex,
-                child: customizationPanel,
-              ),
-              const SizedBox(width: 65, height: 16),
-              FlexDivider(axis: axis),
-              const SizedBox(width: 30, height: 16),
-              Flexible(
-                flex: 5,
-                fit: flex,
-                child: previewPanel,
-              ),
-            ],
+    final sideHeaderWidth = screenWidth * 0.36;
+    final previewPanelPadding = screenWidth * 0.04;
+    return SliverPadding(
+      padding:
+          EdgeInsets.symmetric(horizontal: previewPanelPadding, vertical: 64),
+      sliver: SliverStickyHeader(
+        overlapsContent: true,
+        header: Align(
+          alignment: AlignmentDirectional.centerEnd,
+          child: SizedBox(
+            width: sideHeaderWidth,
+            child: const Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(30, 16, 0, 16),
+              child: PreviewPanel(),
+            ),
           ),
-        );
-      },
+        ),
+        sliver: SliverPadding(
+          padding: EdgeInsetsDirectional.only(end: sideHeaderWidth),
+          sliver: const CustomizationPanel(),
+        ),
+      ),
     );
   }
 }

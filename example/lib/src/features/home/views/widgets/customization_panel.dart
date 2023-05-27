@@ -16,12 +16,9 @@ class CustomizationPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 600,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+    return const SliverList(
+      delegate: SliverChildListDelegate.fixed(
+        [
           _CustomizeTitle(),
           SizedBox(height: 24),
           ToastTypeTabBar(),
@@ -42,29 +39,30 @@ class _CustomizeTitle extends StatelessWidget {
     final theme = Theme.of(context);
 
     const titleColor = Color(0xff1C1B28);
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Text(
-          'Customize your toast!',
-          style: theme.textTheme.displayMedium?.copyWith(
-            fontSize: 40,
-            fontWeight: FontWeight.w500,
-            color: titleColor,
-            height: 1,
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: 'Customize your toast!',
+            style: theme.textTheme.displayMedium?.copyWith(
+              fontSize: 40,
+              fontWeight: FontWeight.w500,
+              color: titleColor,
+              height: 1,
+            ),
           ),
-        ),
-        Text(
-          ' Let’s make it easy!',
-          style: theme.textTheme.displayMedium?.copyWith(
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
-            color: titleColor.withOpacity(.4),
-            height: 1.2,
+          TextSpan(
+            text: ' Let’s make it easy!',
+            style: theme.textTheme.displayMedium?.copyWith(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+              color: titleColor.withOpacity(.4),
+              height: 1.2,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
