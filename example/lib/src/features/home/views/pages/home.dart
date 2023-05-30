@@ -8,6 +8,8 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  static const route = '/';
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;

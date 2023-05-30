@@ -28,6 +28,7 @@ dependencies:
   flutter_svg: ^2.0.6
   font_awesome_flutter: ^10.4.0
   flutter_sticky_header: ^0.6.5
+  responsive_framework: ^0.2.0 
 
 dev_dependencies:
   flutter_test:
