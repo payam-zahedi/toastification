@@ -20,10 +20,7 @@ class HomeScreen extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: ToastAppBar()),
-            SliverPadding(
-              padding: EdgeInsets.only(top: 100),
-              sliver: SliverToBoxAdapter(child: ToastHeader()),
-            ),
+            SliverToBoxAdapter(child: ToastHeader()),
             CustomizationSection()
           ],
         ),

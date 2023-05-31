@@ -1,3 +1,4 @@
+import 'package:example/src/core/usecase/extension/responsive.dart';
 import 'package:flutter/material.dart';
 
 class ColoredTag extends StatelessWidget {
@@ -25,7 +26,11 @@ class ColoredTag extends StatelessWidget {
       child: Text(
         text,
         style: theme.textTheme.titleSmall?.copyWith(
-          fontSize: 14,
+          fontSize: context.responsiveValue(
+            desktop: 14,
+            tablet: 12,
+            mobile: 11,
+          ),
           fontWeight: FontWeight.bold,
           color: foreground ?? theme.colorScheme.onSurfaceVariant,
           letterSpacing: 1.09,
