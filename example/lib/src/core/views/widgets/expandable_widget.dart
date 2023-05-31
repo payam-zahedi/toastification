@@ -16,6 +16,7 @@ class ExpandableWidget extends StatefulWidget {
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
     this.borderRadius,
+    this.borderSide,
   });
 
   /// The widget builder that builds the expandable widget's header.
@@ -41,6 +42,9 @@ class ExpandableWidget extends StatefulWidget {
 
   /// The border radius of the expandable widget.
   final BorderRadius? borderRadius;
+
+  /// The border side of the expandable widget.
+  final BorderSide? borderSide;
 
   @override
   State<StatefulWidget> createState() => _ExpandableWidgetState();
@@ -86,6 +90,16 @@ class _ExpandableWidgetState extends State<ExpandableWidget> {
       onTap: () => _handlePressed(widget.isExpanded),
       child: header,
     );
+
+    if (widget.borderSide != null) {
+      header = Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: widget.borderRadius ?? BorderRadius.circular(10),
+          side: widget.borderSide!,
+        ),
+        child: header,
+      );
+    }
 
     return Column(
       children: <Widget>[

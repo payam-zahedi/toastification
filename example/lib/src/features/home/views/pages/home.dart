@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:example/src/features/home/views/widgets/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,35 +15,35 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final showHorizontalCustomizationSection = screenWidth > 1020;
-
-    return DefaultStickyHeaderController(
+    return const DefaultStickyHeaderController(
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(child: ToastAppBar()),
-            const SliverPadding(
+            SliverToBoxAdapter(child: ToastAppBar()),
+            SliverPadding(
               padding: EdgeInsets.only(top: 100),
               sliver: SliverToBoxAdapter(child: ToastHeader()),
             ),
-            if (showHorizontalCustomizationSection)
-              const _HorizontalSection()
-            else ...[
-              const SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 64, vertical: 24),
-                sliver: CustomizationPanel(),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 64, vertical: 24),
-                sliver: SliverToBoxAdapter(child: PreviewPanel()),
-              ),
-            ],
+            CustomizationSection()
           ],
         ),
       ),
     );
+  }
+}
+
+class CustomizationSection extends StatelessWidget {
+  const CustomizationSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final isVertical = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+
+    if (!isVertical) {
+      return const _HorizontalSection();
+    }
+
+    return const _VerticalSection();
   }
 }
 
@@ -73,6 +76,30 @@ class _HorizontalSection extends StatelessWidget {
         sliver: SliverPadding(
           padding: EdgeInsetsDirectional.only(end: sideHeaderWidth),
           sliver: const CustomizationPanel(),
+        ),
+      ),
+    );
+  }
+}
+
+class _VerticalSection extends StatelessWidget {
+  const _VerticalSection();
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    const widgetMaxSize = 600;
+    return SliverPadding(
+      padding: EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: max((screenWidth - widgetMaxSize) / 2, 8),
+      ),
+      sliver: SliverStickyHeader(
+        header: const PreviewPanel(),
+        sliver: const SliverPadding(
+          padding: EdgeInsetsDirectional.fromSTEB(8, 32, 8, 8),
+          sliver: CustomizationPanel(),
         ),
       ),
     );

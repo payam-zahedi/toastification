@@ -68,6 +68,17 @@ ThemeData _themeBuilder() {
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 28),
       ),
     ),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        foregroundColor: scheme.onBackground,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        maximumSize: const Size(36, 36),
+        minimumSize: const Size(36, 36),
+        padding: const EdgeInsets.all(0),
+      ),
+    ),
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
       hintStyle: textTheme.bodyMedium?.copyWith(
