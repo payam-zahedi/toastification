@@ -1,7 +1,9 @@
 import 'package:example/src/core/usecase/extension/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
+import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 class ToastHeader extends StatelessWidget {
   const ToastHeader({super.key});
@@ -91,6 +93,13 @@ class ToastHeader extends StatelessWidget {
                     label: const Text('Give a Star'),
                     icon: const FaIcon(FontAwesomeIcons.star),
                   ),
+                  if (ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) ...[
+                    const Padding(
+                      padding: EdgeInsets.only(top: 85, bottom: 24),
+                      child: CustomizeTitle(),
+                    ),
+                    const AnimatedArrow(),
+                  ],
                 ],
               )
             ],
@@ -98,5 +107,56 @@ class ToastHeader extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class AnimatedArrow extends StatefulWidget {
+  const AnimatedArrow({super.key});
+
+  @override
+  _AnimatedArrowState createState() => _AnimatedArrowState();
+}
+
+class _AnimatedArrowState extends State<AnimatedArrow>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    )..repeat(reverse: true);
+
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (_, child) {
+        return Transform.translate(
+          offset: Offset(0, 8 * _animation.value),
+          child: child,
+        );
+      },
+      child: const FaIcon(
+        FontAwesomeIcons.arrowDown,
+        size: 16,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

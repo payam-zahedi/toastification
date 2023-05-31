@@ -1,3 +1,4 @@
+import 'package:example/src/core/usecase/extension/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
@@ -10,29 +11,31 @@ import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
 
 class CustomizationPanel extends StatelessWidget {
   const CustomizationPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SliverList(
+    return SliverList(
       delegate: SliverChildListDelegate.fixed(
         [
-          _CustomizeTitle(),
-          SizedBox(height: 24),
-          ToastTypeTabBar(),
-          _PositionSection(),
-          _ContentAndStyleSection(),
-          _ControllersAndInteractions(),
+          if (!ResponsiveWrapper.of(context).isSmallerThan(MOBILE))
+            const CustomizeTitle(),
+          const SizedBox(height: 24),
+          const ToastTypeTabBar(),
+          const _PositionSection(),
+          const _ContentAndStyleSection(),
+          const _ControllersAndInteractions(),
         ],
       ),
     );
   }
 }
 
-class _CustomizeTitle extends StatelessWidget {
-  const _CustomizeTitle();
+class CustomizeTitle extends StatelessWidget {
+  const CustomizeTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,29 +43,44 @@ class _CustomizeTitle extends StatelessWidget {
 
     const titleColor = Color(0xff1C1B28);
 
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: 'Customize your toast!',
-            style: theme.textTheme.displayMedium?.copyWith(
-              fontSize: 40,
-              fontWeight: FontWeight.w500,
-              color: titleColor,
-              height: 1,
-            ),
-          ),
-          TextSpan(
-            text: ' Let’s make it easy!',
-            style: theme.textTheme.displayMedium?.copyWith(
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-              color: titleColor.withOpacity(.4),
-              height: 1.2,
-            ),
-          ),
-        ],
+    return Flex(
+      direction: context.responsiveValue(
+        desktop: Axis.horizontal,
+        tablet: Axis.vertical,
+        mobile: Axis.vertical,
       ),
+      crossAxisAlignment: context.responsiveValue(
+        desktop: CrossAxisAlignment.end,
+        tablet: CrossAxisAlignment.center,
+        mobile: CrossAxisAlignment.center,
+      ),
+      children: [
+        Text(
+          'Customize your toast!',
+          style: theme.textTheme.displayMedium?.copyWith(
+            fontSize: context.responsiveValue(
+              desktop: 40,
+              mobile: 20,
+            ),
+            fontWeight: FontWeight.w500,
+            color: titleColor,
+            height: 1,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          ' Let’s make it easy!',
+          style: theme.textTheme.displayMedium?.copyWith(
+            fontSize: context.responsiveValue(
+              desktop: 24,
+              mobile: 14,
+            ),
+            fontWeight: FontWeight.w500,
+            color: titleColor.withOpacity(.4),
+            height: 1.2,
+          ),
+        ),
+      ],
     );
   }
 }
