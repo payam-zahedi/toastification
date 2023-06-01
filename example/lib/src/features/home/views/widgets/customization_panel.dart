@@ -11,7 +11,7 @@ import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class CustomizationPanel extends StatelessWidget {
   const CustomizationPanel({super.key});
@@ -123,7 +123,14 @@ class _PositionSectionState extends State<_PositionSection> {
                   ),
                 ),
                 //  TODO(payam): make it responsive
-                const Spacer(flex: 3),
+                Spacer(
+                  flex: context.responsiveValue(
+                    mobile: 1,
+                    tablet: 1,
+                    desktop: 3,
+                  ),
+                ),
+
                 Expanded(
                   flex: 7,
                   child: SubSection(
@@ -174,6 +181,7 @@ class _ContentAndStyleSectionState extends State<_ContentAndStyleSection> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.only(top: 32),
       child: ExpandableSection(
@@ -303,23 +311,35 @@ class _ContentAndStyleSectionState extends State<_ContentAndStyleSection> {
               body: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Row(
+                  ResponsiveRowColumn(
+                    layout: context.responsiveValue(
+                      mobile: ResponsiveRowColumnType.COLUMN,
+                      tablet: ResponsiveRowColumnType.ROW,
+                      desktop: ResponsiveRowColumnType.ROW,
+                    ),
+                    rowSpacing: 10,
+                    columnSpacing: 10,
+                    columnMainAxisSize: MainAxisSize.min,
                     children: [
-                      Expanded(
+                      ResponsiveRowColumnItem(
+                        rowFit: FlexFit.tight,
+                        columnFit: FlexFit.loose,
                         child: ColorPicker(
                           title: 'Background',
                           selectedColor: theme.colorScheme.surfaceVariant,
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
+                      ResponsiveRowColumnItem(
+                        rowFit: FlexFit.tight,
+                        columnFit: FlexFit.loose,
                         child: ColorPicker(
                           title: 'Icon',
                           selectedColor: theme.colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
+                      ResponsiveRowColumnItem(
+                        rowFit: FlexFit.tight,
+                        columnFit: FlexFit.loose,
                         child: ColorPicker(
                           title: 'Text',
                           selectedColor: theme.colorScheme.onSurface,
@@ -390,9 +410,19 @@ class _ControllersAndInteractionsState
           children: [
             SubSection(
               title: 'SYSTEM',
-              body: Row(
+              body: ResponsiveRowColumn(
+                rowSpacing: 10,
+                columnSpacing: 10,
+                columnMainAxisSize: MainAxisSize.min,
+                layout: context.responsiveValue(
+                  mobile: ResponsiveRowColumnType.COLUMN,
+                  tablet: ResponsiveRowColumnType.ROW,
+                  desktop: ResponsiveRowColumnType.ROW,
+                ),
                 children: [
-                  Expanded(
+                  ResponsiveRowColumnItem(
+                    rowFit: FlexFit.tight,
+                    columnFit: FlexFit.loose,
                     child: ToggleTile(
                       title: 'Newest on top',
                       value: _newOnTop,
@@ -403,8 +433,9 @@ class _ControllersAndInteractionsState
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
+                  ResponsiveRowColumnItem(
+                    rowFit: FlexFit.tight,
+                    columnFit: FlexFit.loose,
                     child: BorderedDropDown<String>(
                       icon: const Icon(Icons.star_outline_rounded),
                       hint: 'Animation type',
@@ -435,9 +466,19 @@ class _ControllersAndInteractionsState
             ),
             SubSection(
               title: 'CLOSE',
-              body: Row(
+              body: ResponsiveRowColumn(
+                rowSpacing: 10,
+                columnSpacing: 10,
+                columnMainAxisSize: MainAxisSize.min,
+                layout: context.responsiveValue(
+                  mobile: ResponsiveRowColumnType.COLUMN,
+                  tablet: ResponsiveRowColumnType.ROW,
+                  desktop: ResponsiveRowColumnType.ROW,
+                ),
                 children: [
-                  Expanded(
+                  ResponsiveRowColumnItem(
+                    rowFit: FlexFit.tight,
+                    columnFit: FlexFit.loose,
                     child: ToggleTile(
                       title: 'Close on click',
                       value: _closeOnClick,
@@ -448,8 +489,9 @@ class _ControllersAndInteractionsState
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
+                  ResponsiveRowColumnItem(
+                    rowFit: FlexFit.tight,
+                    columnFit: FlexFit.loose,
                     child: BorderedDropDown<String>(
                       icon: const Icon(Icons.close_rounded, size: 18),
                       hint: 'Choose close button type',
@@ -476,9 +518,19 @@ class _ControllersAndInteractionsState
             ),
             SubSection(
               title: 'PROGRESS BAR',
-              body: Row(
+              body: ResponsiveRowColumn(
+                rowSpacing: 10,
+                columnSpacing: 10,
+                columnMainAxisSize: MainAxisSize.min,
+                layout: context.responsiveValue(
+                  mobile: ResponsiveRowColumnType.COLUMN,
+                  tablet: ResponsiveRowColumnType.ROW,
+                  desktop: ResponsiveRowColumnType.ROW,
+                ),
                 children: [
-                  Expanded(
+                  ResponsiveRowColumnItem(
+                    rowFit: FlexFit.tight,
+                    columnFit: FlexFit.loose,
                     child: ToggleTile(
                       title: 'Show progress bar',
                       value: _showProgressBar,
@@ -489,8 +541,9 @@ class _ControllersAndInteractionsState
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
+                  ResponsiveRowColumnItem(
+                    rowFit: FlexFit.tight,
+                    columnFit: FlexFit.loose,
                     child: CountTile(
                       title: 'Timeout',
                       icon: Icon(
@@ -509,9 +562,19 @@ class _ControllersAndInteractionsState
                 ],
               ),
             ),
-            Row(
+            ResponsiveRowColumn(
+              rowSpacing: 10,
+              columnSpacing: 10,
+              columnMainAxisSize: MainAxisSize.min,
+              layout: context.responsiveValue(
+                mobile: ResponsiveRowColumnType.COLUMN,
+                tablet: ResponsiveRowColumnType.ROW,
+                desktop: ResponsiveRowColumnType.ROW,
+              ),
               children: [
-                Expanded(
+                ResponsiveRowColumnItem(
+                  rowFit: FlexFit.tight,
+                  columnFit: FlexFit.loose,
                   child: SubSection(
                     title: 'PAUSE',
                     body: ToggleTile(
@@ -525,8 +588,9 @@ class _ControllersAndInteractionsState
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                Expanded(
+                ResponsiveRowColumnItem(
+                  rowFit: FlexFit.tight,
+                  columnFit: FlexFit.loose,
                   child: SubSection(
                     title: 'DRAG',
                     body: ToggleTile(

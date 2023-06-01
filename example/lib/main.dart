@@ -22,12 +22,17 @@ class ToastificationApp extends StatelessWidget {
         defaultScale: true,
         breakpoints: [
           const ResponsiveBreakpoint.resize(
-            480,
-            name: MOBILE,
+            200,
+            name: 'SMALL-MOBILE',
             scaleFactor: .85,
           ),
+          const ResponsiveBreakpoint.resize(
+            550,
+            name: MOBILE,
+            scaleFactor: .9,
+          ),
           const ResponsiveBreakpoint.autoScale(850, name: TABLET),
-          const ResponsiveBreakpoint.autoScaleDown(1250, name: DESKTOP),
+          const ResponsiveBreakpoint.autoScaleDown(1100, name: DESKTOP),
         ],
         background: Container(
           color: const Color(0xFFF5F5F5),

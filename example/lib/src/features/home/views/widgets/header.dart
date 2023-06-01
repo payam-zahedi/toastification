@@ -114,10 +114,10 @@ class AnimatedArrow extends StatefulWidget {
   const AnimatedArrow({super.key});
 
   @override
-  _AnimatedArrowState createState() => _AnimatedArrowState();
+  AnimatedArrowState createState() => AnimatedArrowState();
 }
 
-class _AnimatedArrowState extends State<AnimatedArrow>
+class AnimatedArrowState extends State<AnimatedArrow>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 

@@ -18,6 +18,7 @@ class ColorPicker extends StatelessWidget {
     final theme = Theme.of(context);
     return BorderedContainer(
       height: null,
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 12,

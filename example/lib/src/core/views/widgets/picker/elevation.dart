@@ -27,7 +27,12 @@ class ElevationPicker extends StatelessWidget {
             active: selectedElevation == 0,
             child: Row(
               children: [
-                const Expanded(child: Text('Sharp')),
+                const Expanded(
+                  child: Text(
+                    'Sharp',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Offstage(
                   offstage: selectedElevation != 0,
                   child: const Icon(Icons.check),
@@ -48,7 +53,12 @@ class ElevationPicker extends StatelessWidget {
             active: selectedElevation == 5,
             child: Row(
               children: [
-                const Expanded(child: Text('Low mode shadow')),
+                const Expanded(
+                  child: Text(
+                    'Low mode shadow',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Offstage(
                   offstage: selectedElevation != 5,
                   child: const Icon(Icons.check),
@@ -69,7 +79,12 @@ class ElevationPicker extends StatelessWidget {
             active: selectedElevation == 10,
             child: Row(
               children: [
-                const Expanded(child: Text('High mode shadow')),
+                const Expanded(
+                  child: Text(
+                    'High mode shadow',
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 Offstage(
                   offstage: selectedElevation != 10,
                   child: const Icon(Icons.check),
