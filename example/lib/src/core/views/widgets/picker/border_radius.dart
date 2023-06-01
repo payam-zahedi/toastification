@@ -1,72 +1,53 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:flutter/material.dart';
 
+final borderRadiusValues = {
+  'Sharp': BorderRadius.zero,
+  'Curved': BorderRadius.circular(10),
+  'Round': BorderRadius.circular(25),
+};
+
 class BorderRadiusPicker extends StatelessWidget {
   const BorderRadiusPicker({
     super.key,
-    required this.selectedBorderRadius,
+    this.selectedBorderRadius,
     this.onChanged,
   });
 
-  final BorderRadiusGeometry selectedBorderRadius;
+  final BorderRadiusGeometry? selectedBorderRadius;
   final ValueChanged<BorderRadiusGeometry>? onChanged;
 
   @override
   Widget build(BuildContext context) {
+    final selectedBorderRadius =
+        this.selectedBorderRadius ?? borderRadiusValues.values.first;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        BorderedContainer(
-          active: selectedBorderRadius == BorderRadius.zero,
+      children: borderRadiusValues.entries.map((e) {
+        final name = e.key;
+        final value = e.value;
+
+        final topPadding = name == borderRadiusValues.keys.first ? 0.0 : 10.0;
+
+        return BorderedContainer(
+          active: selectedBorderRadius == value,
           height: 48,
+          margin: EdgeInsets.only(top: topPadding),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           onTap: () {
-            onChanged?.call(BorderRadius.zero);
+            onChanged?.call(value);
           },
-          child: const Row(
+          child: Row(
             children: [
               Expanded(
-                child: Text('Sharp'),
+                child: Text(name),
               ),
-              Icon(Icons.check),
+              if (selectedBorderRadius == value) const Icon(Icons.check),
             ],
           ),
-        ),
-        BorderedContainer(
-          active: selectedBorderRadius == BorderRadius.circular(10),
-          height: 48,
-          margin: const EdgeInsets.only(top: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          onTap: () {
-            onChanged?.call(BorderRadius.circular(10));
-          },
-          child: const Row(
-            children: [
-              Expanded(
-                child: Text('Curved'),
-              ),
-              Icon(Icons.roundabout_left),
-            ],
-          ),
-        ),
-        BorderedContainer(
-          active: selectedBorderRadius == BorderRadius.circular(25),
-          height: 48,
-          margin: const EdgeInsets.only(top: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          onTap: () {
-            onChanged?.call(BorderRadius.circular(25));
-          },
-          child: const Row(
-            children: [
-              Expanded(
-                child: Text('Round'),
-              ),
-              Icon(Icons.circle_outlined),
-            ],
-          ),
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 }

@@ -1,10 +1,11 @@
 import 'package:example/src/features/home/views/pages/home.dart';
 import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
-  runApp(const ToastificationApp());
+  runApp(const ProviderScope(child: ToastificationApp()));
 }
 
 class ToastificationApp extends StatelessWidget {

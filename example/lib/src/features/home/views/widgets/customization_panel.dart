@@ -10,21 +10,29 @@ import 'package:example/src/core/views/widgets/picker/elevation.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
+import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class CustomizationPanel extends StatelessWidget {
+class CustomizationPanel extends ConsumerWidget {
   const CustomizationPanel({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SliverList(
       delegate: SliverChildListDelegate.fixed(
         [
           if (!ResponsiveWrapper.of(context).isSmallerThan(MOBILE))
             const CustomizeTitle(),
           const SizedBox(height: 24),
-          const ToastTypeTabBar(),
+          ToastTypeTabBar(
+            onTypeChanged: (value) {
+              ref
+                  .read(toastDetailControllerProvider.notifier)
+                  .changeType(value);
+            },
+          ),
           const _PositionSection(),
           const _ContentAndStyleSection(),
           const _ControllersAndInteractions(),
@@ -85,18 +93,8 @@ class CustomizeTitle extends StatelessWidget {
   }
 }
 
-class _PositionSection extends StatefulWidget {
+class _PositionSection extends StatelessWidget {
   const _PositionSection();
-
-  @override
-  State<_PositionSection> createState() => _PositionSectionState();
-}
-
-class _PositionSectionState extends State<_PositionSection> {
-  AlignmentGeometry _selectedAlignment = Alignment.topRight;
-  BorderRadiusGeometry _selectedBorderRadius = BorderRadius.zero;
-  double _selectedElevation = 0;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -108,19 +106,9 @@ class _PositionSectionState extends State<_PositionSection> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
+                const Expanded(
                   flex: 10,
-                  child: SubSection(
-                    title: 'PLACEMENT',
-                    body: AlignmentPicker(
-                      selectedAlignment: _selectedAlignment,
-                      onChanged: (alignment) {
-                        setState(() {
-                          _selectedAlignment = alignment;
-                        });
-                      },
-                    ),
-                  ),
+                  child: _AlignmentSection(),
                 ),
                 //  TODO(payam): make it responsive
                 Spacer(
@@ -131,37 +119,74 @@ class _PositionSectionState extends State<_PositionSection> {
                   ),
                 ),
 
-                Expanded(
-                  flex: 7,
-                  child: SubSection(
-                    title: 'BORDER',
-                    body: BorderRadiusPicker(
-                      selectedBorderRadius: _selectedBorderRadius,
-                      onChanged: (borderRadius) {
-                        setState(() {
-                          _selectedBorderRadius = borderRadius;
-                        });
-                      },
-                    ),
-                  ),
-                ),
+                const Expanded(flex: 7, child: _BorderSection()),
               ],
             ),
             const SizedBox(height: 42),
-            SubSection(
-              title: 'BORDER',
-              body: ElevationPicker(
-                selectedElevation: _selectedElevation,
-                onChanged: (elevation) {
-                  setState(() {
-                    _selectedElevation = elevation;
-                  });
-                },
-              ),
-            ),
+            const _ElevationSection(),
             const SizedBox(height: 18),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _AlignmentSection extends ConsumerWidget {
+  const _AlignmentSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'PLACEMENT',
+      body: AlignmentPicker(
+        selectedAlignment: ref.watch(toastDetailControllerProvider).alignment,
+        onChanged: (alignment) {
+          ref
+              .read(toastDetailControllerProvider.notifier)
+              .changeAlignment(alignment);
+        },
+      ),
+    );
+  }
+}
+
+class _BorderSection extends ConsumerWidget {
+  const _BorderSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'BORDER',
+      body: BorderRadiusPicker(
+        selectedBorderRadius: ref
+            .watch(toastDetailControllerProvider)
+            .borderRadius
+            ?.resolve(Directionality.of(context)),
+        onChanged: (borderRadius) {
+          ref
+              .read(toastDetailControllerProvider.notifier)
+              .changeBorderRadius(borderRadius);
+        },
+      ),
+    );
+  }
+}
+
+class _ElevationSection extends ConsumerWidget {
+  const _ElevationSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'SHADOW',
+      body: ElevationPicker(
+        selectedElevation: ref.watch(toastDetailControllerProvider).elevation,
+        onChanged: (elevation) {
+          ref
+              .read(toastDetailControllerProvider.notifier)
+              .changeElevation(elevation);
+        },
       ),
     );
   }

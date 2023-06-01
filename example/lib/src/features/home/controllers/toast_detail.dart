@@ -11,8 +11,7 @@ final toastDetailControllerProvider =
 class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   ToastDetailControllerNotifier() : super(ToastDetail());
 
-
-  void changeType(ToastificationType type) {
+  void changeType(ToastificationType? type) {
     state = state.copyWith(type: type);
   }
 
@@ -28,7 +27,6 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(title: title);
   }
 
-
   void changeDescription(String description) {
     state = state.copyWith(description: description);
   }
@@ -40,7 +38,6 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   void changeBackgroundColor(Color? backgroundColor) {
     state = state.copyWith(backgroundColor: backgroundColor);
   }
-
 
   void changeForegroundColor(Color? foregroundColor) {
     state = state.copyWith(foregroundColor: foregroundColor);
@@ -93,6 +90,4 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   void changePauseOnHover(bool? pauseOnHover) {
     state = state.copyWith(pauseOnHover: pauseOnHover);
   }
-
-
 }

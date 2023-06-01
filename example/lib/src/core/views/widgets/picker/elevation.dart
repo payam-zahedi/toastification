@@ -1,100 +1,60 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:flutter/material.dart';
 
+final elevationValues = {
+  'None': 0.0,
+  'Low mode shadow': 5.0,
+  'High mode shadow': 10.0,
+};
+
 class ElevationPicker extends StatelessWidget {
   const ElevationPicker({
     super.key,
-    required this.selectedElevation,
+    this.selectedElevation,
     this.onChanged,
   });
 
-  final double selectedElevation;
+  final double? selectedElevation;
   final ValueChanged<double>? onChanged;
 
   @override
   Widget build(BuildContext context) {
-    /// Three elevation levels are supported: 0, 5, and 10.
+    final selectedElevation =
+        this.selectedElevation ?? elevationValues.values.first;
+
     return Row(
-      children: [
-        Expanded(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: elevationValues.entries.map((e) {
+        final name = e.key;
+        final value = e.value;
+
+        return Expanded(
           child: BorderedContainer(
             height: 48,
-            elevation: 0,
+            elevation: value,
+            margin: const EdgeInsetsDirectional.only(end: 10),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             onTap: () {
-              onChanged?.call(0);
+              onChanged?.call(value);
             },
-            active: selectedElevation == 0,
+            active: selectedElevation == value,
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Sharp',
+                    name,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Offstage(
-                  offstage: selectedElevation != 0,
+                  offstage: selectedElevation != value,
                   child: const Icon(Icons.check),
                 ),
               ],
             ),
           ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: BorderedContainer(
-            height: 48,
-            elevation: 5,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            onTap: () {
-              onChanged?.call(5);
-            },
-            active: selectedElevation == 5,
-            child: Row(
-              children: [
-                const Expanded(
-                  child: Text(
-                    'Low mode shadow',
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Offstage(
-                  offstage: selectedElevation != 5,
-                  child: const Icon(Icons.check),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Expanded(
-          child: BorderedContainer(
-            height: 48,
-            elevation: 10,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            onTap: () {
-              onChanged?.call(10);
-            },
-            active: selectedElevation == 10,
-            child: Row(
-              children: [
-                const Expanded(
-                  child: Text(
-                    'High mode shadow',
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Offstage(
-                  offstage: selectedElevation != 10,
-                  child: const Icon(Icons.check),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 16),
-      ],
+        );
+      }).toList(),
     );
   }
 }

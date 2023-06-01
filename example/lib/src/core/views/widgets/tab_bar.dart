@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 class ToastTypeTabBar extends StatefulWidget {
-  const ToastTypeTabBar({super.key});
+  const ToastTypeTabBar({
+    super.key,
+    this.initialType,
+    this.onTypeChanged,
+  });
+  final ToastificationType? initialType;
+
+  final ValueChanged<ToastificationType?>? onTypeChanged;
 
   @override
   State<ToastTypeTabBar> createState() => _ToastTypeTabBarState();
@@ -47,6 +55,19 @@ class _ToastTypeTabBarState extends State<ToastTypeTabBar>
           ),
           child: TabBar(
             controller: _tabController,
+            onTap: (value) {
+              if (widget.onTypeChanged != null) {
+                final type = switch (value) {
+                  1 => ToastificationType.success,
+                  2 => ToastificationType.info,
+                  3 => ToastificationType.warning,
+                  4 => ToastificationType.failed,
+                  _ => null,
+                };
+
+                widget.onTypeChanged!(type);
+              }
+            },
             padding: const EdgeInsets.all(4),
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: BoxDecoration(
