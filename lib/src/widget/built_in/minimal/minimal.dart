@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
+import 'package:toastification/toastification.dart';
 
-class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
-  const FlatToastWidget({
+class MinimalToastWidget extends StatelessWidget with BuiltInToastWidget {
+  const MinimalToastWidget({
     super.key,
     required this.type,
     required this.title,
@@ -43,35 +43,33 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
 
   @override
   MaterialColor buildColor(BuildContext context) {
-    switch (type) {
-      case ToastificationType.info:
-        return Colors.blue;
-      case ToastificationType.warning:
-        return Colors.amber;
-      case ToastificationType.success:
-        return Colors.green;
-      case ToastificationType.failed:
-        return Colors.red;
-    }
+    final color = switch (type) {
+      ToastificationType.info => const Color(0xff84C4FF),
+      ToastificationType.warning => const Color(0xffFFCE84),
+      ToastificationType.success => const Color(0xff59C83E),
+      ToastificationType.failed => const Color(0xffFF8484),
+    };
+
+    return ToastHelper.createMaterialColor(color);
   }
 
   @override
   IconData buildIcon(BuildContext context) {
     switch (type) {
       case ToastificationType.info:
-        return Icons.info_outline;
+        return Icons.question_mark_rounded;
       case ToastificationType.warning:
         return Icons.warning_amber_rounded;
       case ToastificationType.success:
-        return Icons.check_rounded;
+        return Icons.done;
       case ToastificationType.failed:
-        return Icons.error_outline_rounded;
+        return Icons.priority_high_rounded;
     }
   }
 
   @override
   BorderRadiusGeometry buildBorderRadius(BuildContext context) {
-    return borderRadius ?? BorderRadius.circular(12);
+    return borderRadius ?? BorderRadius.circular(16);
   }
 
   @override
@@ -80,8 +78,10 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
         ? ThemeData.dark(useMaterial3: false)
         : ThemeData.light(useMaterial3: false);
 
-    final foreground = foregroundColor ?? defaultTheme.colorScheme.outline;
-    final background = backgroundColor ?? buildColor(context);
+    final tintColor = buildColor(context);
+
+    final foreground = foregroundColor ?? defaultTheme.colorScheme.onSurface;
+    final background = backgroundColor ?? defaultTheme.colorScheme.surface;
 
     final showCloseButton = this.showCloseButton ?? true;
 
@@ -92,30 +92,30 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
       child: Material(
         shape: RoundedRectangleBorder(
           borderRadius: borderRadius,
-          side: BorderSide(color: background.shade200, width: 2),
+          side: const BorderSide(
+            color: Color(0xffEBEBEB),
+            width: 2,
+          ),
         ),
-        color: defaultTheme.colorScheme.surface,
+        color: background,
         elevation: elevation ?? 0.0,
         child: Padding(
-          padding: padding ?? const EdgeInsets.all(12),
+          padding: padding ??
+              const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
           child: Row(
             children: [
               icon ??
-                  Material(
-                    color: background.shade400,
-                    borderRadius: borderRadius / 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        buildIcon(context),
-                        size: 22,
-                        color: foreground,
-                      ),
+                  _IconHolder(
+                    color: tintColor,
+                    icon: Icon(
+                      buildIcon(context),
+                      size: 20,
+                      color: background,
                     ),
                   ),
               const SizedBox(width: 16),
               Expanded(
-                child: _buildContent(defaultTheme),
+                child: _buildContent(defaultTheme, foreground),
               ),
               const SizedBox(width: 4),
               Offstage(
@@ -127,7 +127,7 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: Icon(
                       Icons.close,
-                      color: background.shade300,
+                      color: foreground.withOpacity(.3),
                     ),
                   ),
                 ),
@@ -139,9 +139,7 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
     );
   }
 
-  Widget _buildContent(ThemeData defaultTheme) {
-    final foreground = defaultTheme.colorScheme.onSurface;
-
+  Widget _buildContent(ThemeData defaultTheme, Color foreground) {
     Widget content = Text(
       title,
       style: defaultTheme.textTheme.titleLarge?.copyWith(
@@ -171,5 +169,30 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
     }
 
     return content;
+  }
+}
+
+class _IconHolder extends StatelessWidget {
+  const _IconHolder({super.key, required this.color, required this.icon});
+  final Color color;
+  final Widget icon;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 36,
+      height: 36,
+      child: Material(
+        color: color.withOpacity(.3),
+        shape: const CircleBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(3.33),
+          child: Material(
+            color: color,
+            shape: const CircleBorder(),
+            child: icon,
+          ),
+        ),
+      ),
+    );
   }
 }

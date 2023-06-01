@@ -209,12 +209,10 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     final style = this.style ?? ToastificationStyle.fillColored;
 
     final backgroundColor = buildMaterialColor(this.backgroundColor);
-
     final onCloseTap = buildOnCloseTap();
 
-    switch (style) {
-      case ToastificationStyle.fillColored:
-        return FilledToastWidget(
+    final widget = switch (style) {
+      ToastificationStyle.minimal => MinimalToastWidget(
           type: type,
           title: title,
           description: description,
@@ -227,9 +225,8 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           elevation: elevation,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
-        );
-      case ToastificationStyle.flatColored:
-        return FlatColoredToastWidget(
+        ),
+      ToastificationStyle.fillColored => FilledToastWidget(
           type: type,
           title: title,
           description: description,
@@ -242,9 +239,8 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           elevation: elevation,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
-        );
-      case ToastificationStyle.flat:
-        return FlatToastWidget(
+        ),
+      ToastificationStyle.flatColored => FlatColoredToastWidget(
           type: type,
           title: title,
           description: description,
@@ -257,8 +253,24 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           elevation: elevation,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
-        );
-    }
+        ),
+      ToastificationStyle.flat => FlatToastWidget(
+          type: type,
+          title: title,
+          description: description,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          icon: icon,
+          brightness: brightness,
+          padding: padding,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showCloseButton: showCloseButton,
+        )
+    };
+
+    return widget as BuiltInToastWidget;
   }
 
   VoidCallback buildOnCloseTap() {

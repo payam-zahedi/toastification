@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum ToastificationStyle {
+  minimal,
   fillColored,
   flatColored,
   flat,

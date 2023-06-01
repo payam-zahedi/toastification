@@ -47,7 +47,7 @@ class ToastPreview extends ConsumerWidget {
         child: Center(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: isTablet ? 64 : 32),
-            child: FlatToastWidget(
+            child: MinimalToastWidget(
               type: toastDetail.type ?? ToastificationType.info,
               title: toastDetail.title,
               description: toastDetail.description,
@@ -60,7 +60,7 @@ class ToastPreview extends ConsumerWidget {
               icon: toastDetail.icon,
               borderRadius: toastDetail.borderRadius,
               elevation: toastDetail.elevation,
-              onCloseTap: toastDetail.onCloseTap,
+              onCloseTap: toastDetail.onCloseTap ?? () {},
               showCloseButton: toastDetail.showCloseButton,
             ),
           ),

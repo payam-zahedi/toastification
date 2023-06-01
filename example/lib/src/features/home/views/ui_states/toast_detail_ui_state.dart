@@ -12,7 +12,7 @@ class ToastDetail with _$ToastDetail {
     // placement
     @Default(Alignment.topRight) AlignmentGeometry alignment,
     @Default('Toast Title') String title,
-    @Default('Toast Description') String description,
+    String? description,
     Widget? icon,
     Color? backgroundColor,
     Color? foregroundColor,
