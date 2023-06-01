@@ -23,11 +23,11 @@ class ToastDetail with _$ToastDetail {
     Duration? autoCloseDuration,
     Duration? animationDuration,
     VoidCallback? onCloseTap,
-    bool? showProgressBar,
-    bool? showCloseButton,
-    bool? closeOnClick,
-    bool? dragToClose,
-    bool? pauseOnHover,
+    @Default(true) bool newestOnTop,
+    @Default(true) bool showProgressBar,
+    @Default(true) bool showCloseButton,
+    @Default(true) bool closeOnClick,
+    @Default(true) bool pauseOnHover,
+    @Default(false) bool dragToClose,
   }) = _ToastDetail;
-
 }

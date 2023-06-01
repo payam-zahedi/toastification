@@ -6,7 +6,7 @@ class CountTile extends StatelessWidget {
     super.key,
     this.icon,
     required this.title,
-    required this.value,
+    this.value,
     this.valueSuffix,
     this.minValue = 0.0,
     this.maxValue = 10.0,
@@ -18,7 +18,7 @@ class CountTile extends StatelessWidget {
   final String title;
   final String? valueSuffix;
 
-  final double value;
+  final double? value;
   final double maxValue;
   final double minValue;
 
@@ -29,6 +29,8 @@ class CountTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final value = this.value ?? minValue;
+
     final theme = Theme.of(context);
     return BorderedContainer(
       padding: const EdgeInsets.symmetric(
