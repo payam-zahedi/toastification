@@ -2,6 +2,11 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/src/widget/built_in/built_in_style.dart';
+import 'package:toastification/src/widget/built_in/filled/filled_style.dart';
+import 'package:toastification/src/widget/built_in/flat/flat_style.dart';
+import 'package:toastification/src/widget/built_in/flat_colored/flat_colored_style.dart';
+import 'package:toastification/src/widget/built_in/minimal/minimal_style.dart';
 import 'package:toastification/toastification.dart';
 
 /// This widget help you to use the default behavior of the built-in
@@ -171,10 +176,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme = (brightness ?? Brightness.light) == Brightness.light
-        ? ThemeData.light()
-        : ThemeData.dark();
-
     final style = this.style ?? ToastificationStyle.fillColored;
 
     final showProgressBar = (this.showProgressBar ?? true) &&
@@ -184,17 +185,17 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
-    final toastContent = buildToast(context);
+    final (toastContent, defaultStyle) = buildToastDetail(context);
 
-    final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
-    final background = toastContent.buildColor(context);
+    final foreground = foregroundColor ?? defaultStyle.foregroundColor(context);
+    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
 
     return ToastificationBuiltInContainer(
       item: item,
       background: background,
       foreground: foreground,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      borderRadius: borderRadius ?? toastContent.buildBorderRadius(context),
+      borderRadius: borderRadius ?? defaultStyle.borderRadius(context),
       showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
       dragToClose: dragToClose,
@@ -203,7 +204,9 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     );
   }
 
-  BuiltInToastWidget buildToast(BuildContext context) {
+  (Widget toast, BuiltInStyle defaultStyle) buildToastDetail(
+    BuildContext context,
+  ) {
     final type = this.type ?? ToastificationType.info;
 
     final style = this.style ?? ToastificationStyle.fillColored;
@@ -270,7 +273,14 @@ class BuiltInWidgetBuilder extends StatelessWidget {
         )
     };
 
-    return widget as BuiltInToastWidget;
+    final defaultStyle = switch (style) {
+      ToastificationStyle.minimal => MinimalStyle(type),
+      ToastificationStyle.fillColored => FilledStyle(type),
+      ToastificationStyle.flatColored => FlatColoredStyle(type),
+      ToastificationStyle.flat => FlatStyle(type),
+    };
+
+    return (widget, defaultStyle);
   }
 
   VoidCallback buildOnCloseTap() {

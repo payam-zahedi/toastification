@@ -1,4 +1,3 @@
-
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/toggle.dart';
 import 'package:flutter/material.dart';

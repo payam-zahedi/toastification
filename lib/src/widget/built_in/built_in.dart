@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/src/widget/built_in/built_in_style.dart';
 
 enum ToastificationStyle {
   minimal,
@@ -14,12 +15,51 @@ enum ToastificationType {
   failed,
 }
 
-mixin BuiltInToastWidget on Widget {
-  ToastificationType get type;
+class BuiltInContent extends StatelessWidget {
+  const BuiltInContent({
+    super.key,
+    required this.style,
+    required this.title,
+    this.description,
+    this.foregroundColor,
+  });
 
-  MaterialColor buildColor(BuildContext context);
+  final BuiltInStyle style;
 
-  IconData buildIcon(BuildContext context);
+  final String title;
 
-  BorderRadiusGeometry buildBorderRadius(BuildContext context);
+  final String? description;
+
+  final Color? foregroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final foreground = foregroundColor ?? style.foregroundColor(context);
+
+    Widget content = Text(
+      title,
+      style: style.titleTextStyle(context)?.copyWith(
+            color: foreground,
+          ),
+    );
+
+    if (description?.isNotEmpty ?? false) {
+      content = Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          content,
+          const SizedBox(height: 2),
+          Text(
+            description!,
+            style: style.descriptionTextStyle(context)?.copyWith(
+                  color: foreground,
+                ),
+          ),
+        ],
+      );
+    }
+
+    return content;
+  }
 }

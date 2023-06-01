@@ -15,15 +15,17 @@ class ToastHelper {
   }
 
   static MaterialColor createMaterialColor(Color color) {
-    List strengths = <double>[.05];
-    Map<int, Color> swatch = {};
-    final int r = color.red, g = color.green, b = color.blue;
+    final strengths = <double>[.05];
+    final swatch = <int, Color>{};
 
-    for (int i = 1; i < 10; i++) {
+    final r = color.red, g = color.green, b = color.blue;
+
+    for (var i = 1; i < 10; i++) {
       strengths.add(0.1 * i);
     }
-    for (var strength in strengths) {
-      final double ds = 0.5 - strength;
+
+    for (final strength in strengths) {
+      final ds = .9 - strength;
       swatch[(strength * 1000).round()] = Color.fromRGBO(
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
         g + ((ds < 0 ? g : (255 - g)) * ds).round(),

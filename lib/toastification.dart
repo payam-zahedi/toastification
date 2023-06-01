@@ -23,4 +23,4 @@ export 'src/helper/toast_helper.dart';
 
 // TODO(payam): add navigator observer
 // TODO(payam): check how you can access to the Theme in the overlay.
-// [OverlayPortal] 
+// [OverlayPortal]
