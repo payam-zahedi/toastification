@@ -20,6 +20,9 @@ const _tagTextColor = Color(0xff21C9EE);
 const _switchActiveColor = Color(0xff605CFF);
 const _switchInActiveColor = Color(0xffC5CCD7);
 
+const _cardColor = Color(0xffFAFAFA);
+const _cardBorderColor = Color(0xffEBEBEB);
+
 final lightTheme = _themeBuilder();
 
 ThemeData _themeBuilder() {
@@ -29,15 +32,17 @@ ThemeData _themeBuilder() {
     onPrimary: _onPrimary,
     secondary: _secondary,
     onSecondary: _onSecondary,
+    tertiary: _tagBackgroundColor,
+    onTertiary: _tagTextColor,
     background: _background,
     onBackground: _onBackground,
     surface: _surface,
     onSurface: _onSurface,
+    surfaceVariant: _cardColor,
+    onSurfaceVariant: _cardBorderColor,
     error: _error,
     onError: _onError,
     outline: _outline,
-    surfaceVariant: _tagBackgroundColor,
-    onSurfaceVariant: _tagTextColor,
   );
 
   final textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
@@ -89,6 +94,18 @@ ThemeData _themeBuilder() {
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(width: 1),
       ),
+    ),
+    cardTheme: CardTheme(
+      color: scheme.surfaceVariant,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: scheme.onSurfaceVariant,
+          width: 1,
+        ),
+      ),
+      elevation: 0,
+      margin: EdgeInsets.zero,
     ),
     disabledColor: _switchInActiveColor,
     focusColor: _switchActiveColor,

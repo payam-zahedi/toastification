@@ -20,7 +20,7 @@ class ColoredTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
-        color: background ?? theme.colorScheme.surfaceVariant,
+        color: background ?? theme.colorScheme.tertiary,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
@@ -32,7 +32,7 @@ class ColoredTag extends StatelessWidget {
             mobile: 11,
           ),
           fontWeight: FontWeight.bold,
-          color: foreground ?? theme.colorScheme.onSurfaceVariant,
+          color: foreground ?? theme.colorScheme.onTertiary,
           letterSpacing: 1.09,
         ),
       ),

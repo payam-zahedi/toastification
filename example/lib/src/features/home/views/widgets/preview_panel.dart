@@ -4,6 +4,7 @@ import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:toastification/toastification.dart';
 
 class PreviewPanel extends StatelessWidget {
   const PreviewPanel({super.key});
@@ -33,10 +34,22 @@ class ToastPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final isTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
 
-    return BorderedContainer(
-      active: true,
-      height: isTablet ? 120 : 155,
-      child: const Text('Toast Preview'),
+    return SizedBox(
+      height: isTablet ? 120 : 182,
+      width: double.infinity,
+      child: Material(
+        shape: Theme.of(context).cardTheme.shape,
+        color: Theme.of(context).cardTheme.color,
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: isTablet ? 64 : 32),
+            child: FlatToastWidget(
+              type: ToastificationType.info,
+              title: 'Component updates available',
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
