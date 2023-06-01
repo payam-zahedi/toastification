@@ -2,7 +2,9 @@
 
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
+import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:toastification/toastification.dart';
 
@@ -27,12 +29,14 @@ class PreviewPanel extends StatelessWidget {
   }
 }
 
-class ToastPreview extends StatelessWidget {
+class ToastPreview extends ConsumerWidget {
   const ToastPreview({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
+
+    final toastDetail = ref.watch(toastDetailControllerProvider);
 
     return SizedBox(
       height: isTablet ? 120 : 182,
@@ -44,8 +48,20 @@ class ToastPreview extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: isTablet ? 64 : 32),
             child: FlatToastWidget(
-              type: ToastificationType.info,
-              title: 'Component updates available',
+              type: toastDetail.type ?? ToastificationType.info,
+              title: toastDetail.title,
+              description: toastDetail.description,
+              backgroundColor: toastDetail.backgroundColor == null
+                  ? null
+                  : ToastHelper.createMaterialColor(
+                      toastDetail.backgroundColor!,
+                    ),
+              foregroundColor: toastDetail.foregroundColor,
+              icon: toastDetail.icon,
+              borderRadius: toastDetail.borderRadius,
+              elevation: toastDetail.elevation,
+              onCloseTap: toastDetail.onCloseTap,
+              showCloseButton: toastDetail.showCloseButton,
             ),
           ),
         ),

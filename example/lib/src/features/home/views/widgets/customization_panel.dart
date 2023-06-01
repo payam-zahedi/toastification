@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:example/src/core/usecase/extension/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
@@ -281,17 +283,22 @@ class _ContentSection extends ConsumerWidget {
                       onTap: () {},
                     ),
                     const SizedBox(width: 10),
-                    const Expanded(
+                    Expanded(
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: 'Type the title text here..',
                         ),
+                        onChanged: (value) {
+                          ref
+                              .read(toastDetailControllerProvider.notifier)
+                              .changeTitle(value);
+                        },
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
-                const SizedBox(
+                SizedBox(
                   height: 106,
                   child: TextField(
                     expands: true,
@@ -300,6 +307,11 @@ class _ContentSection extends ConsumerWidget {
                     decoration: InputDecoration(
                       hintText: 'Type the body text here..',
                     ),
+                    onChanged: (value) {
+                      ref
+                          .read(toastDetailControllerProvider.notifier)
+                          .changeDescription(value);
+                    },
                   ),
                 ),
               ],

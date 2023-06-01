@@ -2,9 +2,9 @@ import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:flutter/material.dart';
 
 final borderRadiusValues = {
-  'Sharp': BorderRadius.zero,
-  'Curved': BorderRadius.circular(10),
-  'Round': BorderRadius.circular(25),
+  'Sharp': BorderRadius.circular(4),
+  'Curved': BorderRadius.circular(12),
+  'Round': BorderRadius.circular(50),
 };
 
 class BorderRadiusPicker extends StatelessWidget {
@@ -20,7 +20,7 @@ class BorderRadiusPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final selectedBorderRadius =
-        this.selectedBorderRadius ?? borderRadiusValues.values.first;
+        this.selectedBorderRadius ?? BorderRadius.circular(12);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
