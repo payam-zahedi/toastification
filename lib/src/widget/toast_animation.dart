@@ -55,12 +55,7 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        return Directionality(
-          textDirection: Directionality.of(context) == TextDirection.ltr
-              ? TextDirection.rtl
-              : TextDirection.ltr,
-          child: widget.builder(context, controller.value, child),
-        );
+        return widget.builder(context, controller.value, child);
       },
     );
   }

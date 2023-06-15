@@ -39,6 +39,7 @@ class ToastificationBuiltInContainer extends StatelessWidget {
   final bool dragToClose;
 
   final bool pauseOnHover;
+
   @override
   Widget build(BuildContext context) {
     final hasTimeout = item.hasTimer;
@@ -56,17 +57,11 @@ class ToastificationBuiltInContainer extends StatelessWidget {
               ToastTimerAnimationBuilder(
                 item: item,
                 builder: (context, value, child) {
-                  return Directionality(
-                    textDirection:
-                        Directionality.of(context) == TextDirection.ltr
-                            ? TextDirection.rtl
-                            : TextDirection.ltr,
-                    child: LinearProgressIndicator(
-                      value: value,
-                      backgroundColor: foreground?.withOpacity(.8),
-                      color: background,
-                      minHeight: 6,
-                    ),
+                  return LinearProgressIndicator(
+                    value: value,
+                    backgroundColor: foreground?.withOpacity(.8),
+                    color: background,
+                    minHeight: 6,
                   );
                 },
               ),
@@ -171,9 +166,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme = (brightness ?? Brightness.light) == Brightness.light
-        ? ThemeData.light()
-        : ThemeData.dark();
+    final defaultTheme = Theme.of(context);
 
     final style = this.style ?? ToastificationStyle.fillColored;
 
@@ -193,7 +186,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
       item: item,
       background: background,
       foreground: foreground,
-      margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin: margin,
       borderRadius: borderRadius ?? toastContent.buildBorderRadius(context),
       showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
@@ -216,6 +209,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
       case ToastificationStyle.fillColored:
         return FilledToastWidget(
           type: type,
+          textDirection: item.textDirection,
           title: title,
           description: description,
           backgroundColor: backgroundColor,
@@ -230,6 +224,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
         );
       case ToastificationStyle.flatColored:
         return FlatColoredToastWidget(
+          textDirection: item.textDirection,
           type: type,
           title: title,
           description: description,
@@ -245,6 +240,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
         );
       case ToastificationStyle.flat:
         return FlatToastWidget(
+          textDirection: item.textDirection,
           type: type,
           title: title,
           description: description,

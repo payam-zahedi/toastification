@@ -50,6 +50,7 @@ class ToastificationItem {
     required this.builder,
     required this.alignment,
     this.animationBuilder,
+    required this.textDirection,
     this.animationDuration,
     this.autoCloseDuration,
     void Function(ToastificationItem holder)? onAutoCompleteCompleted,
@@ -93,6 +94,8 @@ class ToastificationItem {
   final Duration? animationDuration;
 
   late final PausableTimer? _timer;
+
+  final TextDirection textDirection;
 
   final ValueNotifier<ToastTimeStatus> _timeStatus =
       ValueNotifier(ToastTimeStatus.init);

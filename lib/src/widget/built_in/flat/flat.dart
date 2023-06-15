@@ -16,6 +16,7 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
     this.elevation,
     this.onCloseTap,
     this.showCloseButton,
+    required this.textDirection,
   });
 
   @override
@@ -25,6 +26,7 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
   final String? description;
 
   final Widget? icon;
+  final TextDirection textDirection;
 
   final MaterialColor? backgroundColor;
   final Color? foregroundColor;
@@ -76,11 +78,9 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme = (brightness == Brightness.dark)
-        ? ThemeData.dark(useMaterial3: false)
-        : ThemeData.light(useMaterial3: false);
+    final defaultTheme = Theme.of(context);
 
-    final foreground = foregroundColor ?? defaultTheme.colorScheme.outline;
+    //final foreground = foregroundColor ?? defaultTheme.colorScheme.outline;
     final background = backgroundColor ?? buildColor(context);
 
     final showCloseButton = this.showCloseButton ?? true;
@@ -98,41 +98,56 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
         elevation: elevation ?? 0.0,
         child: Padding(
           padding: padding ?? const EdgeInsets.all(12),
-          child: Row(
-            children: [
-              icon ??
-                  Material(
-                    color: background.shade400,
-                    borderRadius: borderRadius / 2,
+          child: IntrinsicHeight(
+            child: Directionality(
+              textDirection: textDirection,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Offstage(
+                    offstage: !showCloseButton,
                     child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Icon(
-                        buildIcon(context),
-                        size: 22,
-                        color: foreground,
+                      padding: const EdgeInsetsDirectional.only(end: 8.0),
+                      child: ClipOval(
+                        child: Material(
+                          color: Colors.transparent, // Button color
+                          child: InkWell(
+                            onTap: onCloseTap,
+                            child: const SizedBox(
+                              width: 28,
+                              height: 28,
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: FittedBox(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(6.0),
+                                      child: Icon(Icons.close,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildContent(defaultTheme),
-              ),
-              const SizedBox(width: 16),
-              Offstage(
-                offstage: !showCloseButton,
-                child: InkWell(
-                  onTap: onCloseTap,
-                  borderRadius: BorderRadius.circular(4),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Icon(
-                      Icons.close,
-                      color: background.shade300,
+                  Offstage(
+                    offstage: !showCloseButton,
+                    child: const Padding(
+                      padding: EdgeInsetsDirectional.only(end: 16.0),
+                      child: VerticalDivider(
+                          color: Colors.white70, width: 2.0, thickness: 2.0),
                     ),
                   ),
-                ),
+                  Expanded(child: _buildContent(defaultTheme)),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -154,7 +169,7 @@ class FlatToastWidget extends StatelessWidget with BuiltInToastWidget {
     if (description?.isNotEmpty ?? false) {
       content = Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           content,
           const SizedBox(height: 2),

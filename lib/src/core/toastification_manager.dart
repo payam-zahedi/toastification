@@ -40,6 +40,7 @@ class ToastificationManager {
     final item = ToastificationItem(
       builder: builder,
       alignment: alignment,
+      textDirection: Directionality.of(context),
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
@@ -329,4 +330,34 @@ class ToastificationManager {
   ) {
     return item.animationDuration ?? config.animationDuration;
   }
+}
+class StyleBuilder extends StatelessWidget with BuiltInToastWidget{
+  const StyleBuilder({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+
+  @override
+  BorderRadiusGeometry buildBorderRadius(BuildContext context) {
+    // TODO: implement buildBorderRadius
+    throw UnimplementedError();
+  }
+
+  @override
+  MaterialColor buildColor(BuildContext context) {
+    // TODO: implement buildColor
+    throw UnimplementedError();
+  }
+
+  @override
+  IconData buildIcon(BuildContext context) {
+    // TODO: implement buildIcon
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement type
+  ToastificationType get type => throw UnimplementedError();
 }

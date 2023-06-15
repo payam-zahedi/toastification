@@ -232,7 +232,7 @@ class Toastification {
       alignment: alignment,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
-      builder: (context, holder) {
+      builder: (ctx, holder) {
         return BuiltInWidgetBuilder(
           item: holder,
           type: type,

@@ -14,6 +14,7 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
     this.padding,
     this.borderRadius,
     this.elevation,
+    required this.textDirection,
     this.onCloseTap,
     this.showCloseButton,
   });
@@ -25,6 +26,8 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
   final String? description;
 
   final Widget? icon;
+
+  final TextDirection textDirection;
 
   final MaterialColor? backgroundColor;
   final Color? foregroundColor;
@@ -77,11 +80,9 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme = (brightness ?? Brightness.light) == Brightness.light
-        ? ThemeData.light(useMaterial3: true)
-        : ThemeData.dark(useMaterial3: true);
+    final defaultTheme = Theme.of(context);
 
-    final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
+    //final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
     final background = backgroundColor ?? buildColor(context);
 
     final showCloseButton = this.showCloseButton ?? true;
@@ -94,30 +95,56 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
         elevation: elevation ?? 4.0,
         child: Padding(
           padding: padding ?? const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              icon ??
-                  Icon(
-                    buildIcon(context),
-                    size: 28,
-                    color: foreground,
+          child: IntrinsicHeight(
+            child: Directionality(
+              textDirection: textDirection,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Offstage(
+                    offstage: !showCloseButton,
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.only(end: 8.0),
+                      child: ClipOval(
+                        child: Material(
+                          color: Colors.transparent, // Button color
+                          child: InkWell(
+                            onTap: onCloseTap,
+                            child: const SizedBox(
+                              width: 28,
+                              height: 28,
+                              child: Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: FittedBox(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(6.0),
+                                      child: Icon(Icons.close,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildContent(defaultTheme),
+                  Offstage(
+                    offstage: !showCloseButton,
+                    child: const Padding(
+                      padding: EdgeInsetsDirectional.only(end: 16.0),
+                      child: VerticalDivider(
+                          color: Colors.white70, width: 2.0, thickness: 2.0),
+                    ),
+                  ),
+                  Expanded(child: _buildContent(defaultTheme)),
+                ],
               ),
-              const SizedBox(width: 16),
-              Offstage(
-                offstage: !showCloseButton,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  splashRadius: 24,
-                  color: foreground,
-                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                  onPressed: onCloseTap,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -129,6 +156,7 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
 
     Widget content = Text(
       title,
+      textAlign: TextAlign.end,
       style: defaultTheme.textTheme.displayLarge?.copyWith(
         color: foreground,
         fontSize: 18,
@@ -138,7 +166,7 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
     if (description?.isNotEmpty ?? false) {
       content = Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           content,
           const SizedBox(height: 4),
