@@ -7,19 +7,19 @@ class FilledStyle extends BuiltInStyle {
 
   @override
   EdgeInsetsGeometry padding(BuildContext context) {
-    return const EdgeInsets.all(12);
+    return const EdgeInsets.symmetric(horizontal: 20, vertical: 16);
   }
 
   @override
   MaterialColor primaryColor(BuildContext context) {
     final color = switch (type) {
-      ToastificationType.info => Colors.blue,
-      ToastificationType.warning => Colors.amber,
-      ToastificationType.success => Colors.green,
-      ToastificationType.failed => Colors.red,
+      ToastificationType.info => infoColor,
+      ToastificationType.warning => warningColor,
+      ToastificationType.success => successColor,
+      ToastificationType.failed => errorColor,
     };
 
-    return color;
+    return ToastHelper.createMaterialColor(color);
   }
 
   @override
@@ -40,10 +40,10 @@ class FilledStyle extends BuiltInStyle {
   @override
   IconData icon(BuildContext context) {
     return switch (type) {
-      ToastificationType.info => Icons.info,
-      ToastificationType.warning => Icons.warning_rounded,
-      ToastificationType.success => Icons.check_rounded,
-      ToastificationType.failed => Icons.error,
+      ToastificationType.info => Icons.stop_circle,
+      ToastificationType.warning => Icons.stop_circle,
+      ToastificationType.success => Icons.stop_circle,
+      ToastificationType.failed => Icons.stop_circle,
     };
   }
 
@@ -64,34 +64,40 @@ class FilledStyle extends BuiltInStyle {
 
   @override
   BorderSide borderSide(BuildContext context) {
-    return BorderSide.none;
+    return const BorderSide(
+      color: Colors.black12,
+      width: 1,
+    );
   }
 
   @override
   BorderRadiusGeometry borderRadius(BuildContext context) {
-    return const BorderRadius.all(Radius.circular(8));
+    return const BorderRadius.all(Radius.circular(12));
   }
 
   @override
   TextStyle? titleTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.bodyMedium?.copyWith(
+    return Theme.of(context).textTheme.titleSmall?.copyWith(
           color: foregroundColor(context),
+          fontSize: 12,
           fontWeight: FontWeight.w500,
-          height: 1.3,
+          height: 1.4,
         );
   }
 
   @override
   TextStyle? descriptionTextStyle(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: foregroundColor(context),
+          fontSize: 10,
+          fontWeight: FontWeight.w300,
+          color: foregroundColor(context).withOpacity(.9),
           height: 1.3,
         );
   }
 
   @override
   double elevation(BuildContext context) {
-    return 8.0;
+    return 0.0;
   }
 
   @override

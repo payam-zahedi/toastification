@@ -8,6 +8,7 @@ class FilledToastWidget extends StatelessWidget {
     required this.type,
     required this.title,
     this.description,
+    this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
@@ -26,7 +27,10 @@ class FilledToastWidget extends StatelessWidget {
 
   final Widget? icon;
 
+  final MaterialColor? primaryColor;
+
   final MaterialColor? backgroundColor;
+
   final Color? foregroundColor;
 
   final Brightness? brightness;
@@ -41,58 +45,68 @@ class FilledToastWidget extends StatelessWidget {
 
   final bool? showCloseButton;
 
-  FilledStyle get style => FilledStyle(type);
+  FilledStyle get defaultStyle => FilledStyle(type);
 
   @override
   Widget build(BuildContext context) {
+    final iconColor = defaultStyle.iconColor(context);
+
+    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
+
     final showCloseButton = this.showCloseButton ?? true;
 
-    final foreground = foregroundColor ?? style.foregroundColor(context);
-    final background = backgroundColor ?? style.backgroundColor(context);
+    final borderRadius =
+        this.borderRadius ?? defaultStyle.borderRadius(context);
 
-    final borderRadius = this.borderRadius ?? style.borderRadius(context);
+    final borderSide = defaultStyle.borderSide(context);
     return IconTheme(
-      data: Theme.of(context).iconTheme,
-      child: Material(
-        color: background,
-        shape: RoundedRectangleBorder(
-          borderRadius: borderRadius,
-          side: style.borderSide(context),
-        ),
-        elevation: elevation ?? style.elevation(context),
-        child: Padding(
-          padding: padding ?? style.padding(context),
-          child: Row(
-            children: [
-              icon ??
-                  Icon(
-                    style.icon(context),
-                    size: 28,
-                    color: style.iconColor(context),
+      data: Theme.of(context).primaryIconTheme,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Material(
+          color: background,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+            side: borderSide,
+          ),
+          elevation: elevation ?? defaultStyle.elevation(context),
+          child: Padding(
+            padding: padding ?? defaultStyle.padding(context),
+            child: Row(
+              children: [
+                icon ??
+                    Icon(
+                      defaultStyle.icon(context),
+                      size: 24,
+                      color: iconColor,
+                    ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BuiltInContent(
+                    style: defaultStyle,
+                    title: title,
+                    description: description,
+                    foregroundColor: foregroundColor,
                   ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: BuiltInContent(
-                  style: style,
-                  title: title,
-                  description: description,
-                  foregroundColor: foreground,
                 ),
-              ),
-              const SizedBox(width: 4),
-              Offstage(
-                offstage: !showCloseButton,
-                child: IconButton(
-                  icon: Icon(
-                    style.closeIcon(context),
-                    color: style.closeIconColor(context),
+                const SizedBox(width: 4),
+                Offstage(
+                  offstage: !showCloseButton,
+                  child: InkWell(
+                    onTap: onCloseTap,
+                    borderRadius: BorderRadius.circular(4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Icon(
+                        defaultStyle.closeIcon(context),
+                        color: defaultStyle.closeIconColor(context),
+                        size: 18,
+                      ),
+                    ),
                   ),
-                  splashRadius: 24,
-                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                  onPressed: onCloseTap,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
