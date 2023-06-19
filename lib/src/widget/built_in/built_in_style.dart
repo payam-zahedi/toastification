@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 const infoColor = Color(0xFF47AFFF);
-const successColor = Color(0xFF47AFFF);
-const warningColor = Color(0xFF47AFFF);
-const errorColor = Color(0xFF47AFFF);
+const successColor = Color(0xFF32BC32);
+const warningColor = Color(0xFFFFB600);
+const errorColor = Color(0xFFFF3A30);
 
 abstract class BuiltInStyle {
   const BuiltInStyle(this.type);
