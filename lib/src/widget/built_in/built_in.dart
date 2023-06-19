@@ -12,6 +12,7 @@ enum ToastificationType {
   info,
   warning,
   success,
+  // TODO(payam): rename this to error
   failed,
 }
 
@@ -34,12 +35,10 @@ class BuiltInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foreground = foregroundColor ?? style.foregroundColor(context);
-
     Widget content = Text(
       title,
       style: style.titleTextStyle(context)?.copyWith(
-            color: foreground,
+            color: foregroundColor,
           ),
     );
 
@@ -53,7 +52,7 @@ class BuiltInContent extends StatelessWidget {
           Text(
             description!,
             style: style.descriptionTextStyle(context)?.copyWith(
-                  color: foreground,
+                  color: foregroundColor?.withOpacity(.7),
                 ),
           ),
         ],

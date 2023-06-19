@@ -7,16 +7,16 @@ class FlatStyle extends BuiltInStyle {
 
   @override
   EdgeInsetsGeometry padding(BuildContext context) {
-    return const EdgeInsets.all(12);
+    return const EdgeInsets.symmetric(horizontal: 20, vertical: 16);
   }
 
   @override
   MaterialColor primaryColor(BuildContext context) {
     final color = switch (type) {
-      ToastificationType.info => const Color(0xff84C4FF),
-      ToastificationType.warning => const Color(0xffFFCE84),
-      ToastificationType.success => const Color(0xff59C83E),
-      ToastificationType.failed => const Color(0xffFF8484),
+      ToastificationType.info => infoColor,
+      ToastificationType.warning => warningColor,
+      ToastificationType.success => successColor,
+      ToastificationType.failed => errorColor,
     };
 
     return ToastHelper.createMaterialColor(color);
@@ -37,23 +37,23 @@ class FlatStyle extends BuiltInStyle {
   @override
   Color foregroundColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.light
-        ? const Color(0xff2B2B2B)
-        : const Color(0xffF2F2F2);
+        ? Colors.black
+        : Colors.white;
   }
 
   @override
   IconData icon(BuildContext context) {
     return switch (type) {
-      ToastificationType.info => Icons.question_mark_rounded,
-      ToastificationType.warning => Icons.warning_amber_rounded,
-      ToastificationType.success => Icons.done,
-      ToastificationType.failed => Icons.priority_high_rounded,
+      ToastificationType.info => Icons.stop_circle,
+      ToastificationType.warning => Icons.stop_circle,
+      ToastificationType.success => Icons.stop_circle,
+      ToastificationType.failed => Icons.stop_circle,
     };
   }
 
   @override
   Color iconColor(BuildContext context) {
-    return onPrimaryColor(context);
+    return primaryColor(context);
   }
 
   @override
@@ -63,13 +63,15 @@ class FlatStyle extends BuiltInStyle {
 
   @override
   Color closeIconColor(BuildContext context) {
-    return primaryColor(context);
+    return Theme.of(context).brightness == Brightness.light
+        ? Colors.black26
+        : Colors.white30;
   }
 
   @override
   BorderSide borderSide(BuildContext context) {
-    return BorderSide(
-      color: primaryColor(context),
+    return const BorderSide(
+      color: Color(0xffEBEBEB),
       width: 1.5,
     );
   }
@@ -81,17 +83,20 @@ class FlatStyle extends BuiltInStyle {
 
   @override
   TextStyle? titleTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.bodyMedium?.copyWith(
+    return Theme.of(context).textTheme.titleSmall?.copyWith(
           color: foregroundColor(context),
+          fontSize: 12,
           fontWeight: FontWeight.w500,
-          height: 1.3,
+          height: 1.4,
         );
   }
 
   @override
   TextStyle? descriptionTextStyle(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: foregroundColor(context),
+          fontSize: 10,
+          fontWeight: FontWeight.w300,
+          color: foregroundColor(context).withOpacity(.7),
           height: 1.3,
         );
   }
