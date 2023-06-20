@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 final borderRadiusValues = {
   'Sharp': BorderRadius.circular(4),
   'Curved': BorderRadius.circular(12),
-  'Round': BorderRadius.circular(50),
+  'Round': BorderRadius.circular(100),
 };
 
 class BorderRadiusPicker extends StatelessWidget {

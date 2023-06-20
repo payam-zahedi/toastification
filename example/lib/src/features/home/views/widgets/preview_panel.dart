@@ -38,91 +38,94 @@ class ToastPreview extends ConsumerWidget {
 
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
-    return Material(
-      shape: Theme.of(context).cardTheme.shape,
-      color: Theme.of(context).cardTheme.color,
-      child: SizedBox(
-        width: double.infinity,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 400,
-                minHeight: isTablet ? 120 : 182,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  MinimalToastWidget(
-                    type: toastDetail.type ?? ToastificationType.info,
-                    title: toastDetail.title,
-                    description: toastDetail.description,
-                    backgroundColor: toastDetail.backgroundColor == null
-                        ? null
-                        : ToastHelper.createMaterialColor(
-                            toastDetail.backgroundColor!,
-                          ),
-                    foregroundColor: toastDetail.foregroundColor,
-                    icon: toastDetail.icon,
-                    borderRadius: toastDetail.borderRadius,
-                    elevation: toastDetail.elevation,
-                    onCloseTap: toastDetail.onCloseTap ?? () {},
-                    showCloseButton: toastDetail.showCloseButton,
-                  ),
-                  SizedBox(height: 8),
-                  FlatToastWidget(
-                    type: toastDetail.type ?? ToastificationType.info,
-                    title: toastDetail.title,
-                    description: toastDetail.description,
-                    backgroundColor: toastDetail.backgroundColor == null
-                        ? null
-                        : ToastHelper.createMaterialColor(
-                            toastDetail.backgroundColor!,
-                          ),
-                    foregroundColor: toastDetail.foregroundColor,
-                    icon: toastDetail.icon,
-                    borderRadius: toastDetail.borderRadius,
-                    elevation: toastDetail.elevation,
-                    onCloseTap: toastDetail.onCloseTap ?? () {},
-                    showCloseButton: toastDetail.showCloseButton,
-                  ),
-                  SizedBox(height: 10),
-                  FlatColoredToastWidget(
-                    type: toastDetail.type ?? ToastificationType.info,
-                    title: toastDetail.title,
-                    description: toastDetail.description,
-                    backgroundColor: toastDetail.backgroundColor == null
-                        ? null
-                        : ToastHelper.createMaterialColor(
-                            toastDetail.backgroundColor!,
-                          ),
-                    foregroundColor: toastDetail.foregroundColor,
-                    icon: toastDetail.icon,
-                    borderRadius: toastDetail.borderRadius,
-                    elevation: toastDetail.elevation,
-                    onCloseTap: toastDetail.onCloseTap ?? () {},
-                    showCloseButton: toastDetail.showCloseButton,
-                  ),
-                  SizedBox(height: 10),
-                  FilledToastWidget(
-                    type: toastDetail.type ?? ToastificationType.info,
-                    title: toastDetail.title,
-                    description: toastDetail.description,
-                    backgroundColor: toastDetail.backgroundColor == null
-                        ? null
-                        : ToastHelper.createMaterialColor(
-                            toastDetail.backgroundColor!,
-                          ),
-                    foregroundColor: toastDetail.foregroundColor,
-                    icon: toastDetail.icon,
-                    borderRadius: toastDetail.borderRadius,
-                    elevation: toastDetail.elevation,
-                    onCloseTap: toastDetail.onCloseTap ?? () {},
-                    showCloseButton: toastDetail.showCloseButton,
-                  ),
-                ],
+    return Directionality(
+      textDirection: toastDetail.direction ?? TextDirection.ltr,
+      child: Material(
+        shape: Theme.of(context).cardTheme.shape,
+        color: Theme.of(context).cardTheme.color,
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 400,
+                  minHeight: isTablet ? 120 : 182,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    FlatToastWidget(
+                      type: toastDetail.type ?? ToastificationType.info,
+                      title: toastDetail.title,
+                      description: toastDetail.description,
+                      backgroundColor: toastDetail.backgroundColor == null
+                          ? null
+                          : ToastHelper.createMaterialColor(
+                              toastDetail.backgroundColor!,
+                            ),
+                      foregroundColor: toastDetail.foregroundColor,
+                      icon: toastDetail.icon,
+                      borderRadius: toastDetail.borderRadius,
+                      elevation: toastDetail.elevation,
+                      onCloseTap: toastDetail.onCloseTap ?? () {},
+                      showCloseButton: toastDetail.showCloseButton,
+                    ),
+                    SizedBox(height: 10),
+                    FilledToastWidget(
+                      type: toastDetail.type ?? ToastificationType.info,
+                      title: toastDetail.title,
+                      description: toastDetail.description,
+                      backgroundColor: toastDetail.backgroundColor == null
+                          ? null
+                          : ToastHelper.createMaterialColor(
+                              toastDetail.backgroundColor!,
+                            ),
+                      foregroundColor: toastDetail.foregroundColor,
+                      icon: toastDetail.icon,
+                      borderRadius: toastDetail.borderRadius,
+                      elevation: toastDetail.elevation,
+                      onCloseTap: toastDetail.onCloseTap ?? () {},
+                      showCloseButton: toastDetail.showCloseButton,
+                    ),
+                    SizedBox(height: 10),
+                    FlatColoredToastWidget(
+                      type: toastDetail.type ?? ToastificationType.info,
+                      title: toastDetail.title,
+                      description: toastDetail.description,
+                      backgroundColor: toastDetail.backgroundColor == null
+                          ? null
+                          : ToastHelper.createMaterialColor(
+                              toastDetail.backgroundColor!,
+                            ),
+                      foregroundColor: toastDetail.foregroundColor,
+                      icon: toastDetail.icon,
+                      borderRadius: toastDetail.borderRadius,
+                      elevation: toastDetail.elevation,
+                      onCloseTap: toastDetail.onCloseTap ?? () {},
+                      showCloseButton: toastDetail.showCloseButton,
+                    ),
+                    SizedBox(height: 8),
+                    MinimalToastWidget(
+                      type: toastDetail.type ?? ToastificationType.info,
+                      title: toastDetail.title,
+                      description: toastDetail.description,
+                      backgroundColor: toastDetail.backgroundColor == null
+                          ? null
+                          : ToastHelper.createMaterialColor(
+                              toastDetail.backgroundColor!,
+                            ),
+                      foregroundColor: toastDetail.foregroundColor,
+                      icon: toastDetail.icon,
+                      borderRadius: toastDetail.borderRadius,
+                      elevation: toastDetail.elevation,
+                      onCloseTap: toastDetail.onCloseTap ?? () {},
+                      showCloseButton: toastDetail.showCloseButton,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

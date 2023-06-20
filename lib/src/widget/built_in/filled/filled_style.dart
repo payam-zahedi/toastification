@@ -89,7 +89,7 @@ class FilledStyle extends BuiltInStyle {
   TextStyle? descriptionTextStyle(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall?.copyWith(
           fontSize: 10,
-          fontWeight: FontWeight.w300,
+          fontWeight: FontWeight.w400,
           color: foregroundColor(context).withOpacity(.9),
           height: 1.3,
         );

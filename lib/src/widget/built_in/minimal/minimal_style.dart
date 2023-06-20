@@ -7,16 +7,16 @@ class MinimalStyle extends BuiltInStyle {
 
   @override
   EdgeInsetsGeometry padding(BuildContext context) {
-    return const EdgeInsets.symmetric(horizontal: 18, vertical: 14);
+    return const EdgeInsets.symmetric(horizontal: 20, vertical: 16);
   }
 
   @override
   MaterialColor primaryColor(BuildContext context) {
     final color = switch (type) {
-      ToastificationType.info => const Color(0xff84C4FF),
-      ToastificationType.warning => const Color(0xffFFCE84),
-      ToastificationType.success => const Color(0xff59C83E),
-      ToastificationType.failed => const Color(0xffFF8484),
+      ToastificationType.info => infoColor,
+      ToastificationType.warning => warningColor,
+      ToastificationType.success => successColor,
+      ToastificationType.failed => errorColor,
     };
 
     return ToastHelper.createMaterialColor(color);
@@ -36,22 +36,24 @@ class MinimalStyle extends BuiltInStyle {
 
   @override
   Color foregroundColor(BuildContext context) {
-    return Colors.black;
+    return Theme.of(context).brightness == Brightness.light
+        ? Colors.black
+        : Colors.white;
   }
 
   @override
   IconData icon(BuildContext context) {
     return switch (type) {
-      ToastificationType.info => Icons.question_mark_rounded,
-      ToastificationType.warning => Icons.warning_amber_rounded,
-      ToastificationType.success => Icons.done,
-      ToastificationType.failed => Icons.priority_high_rounded,
+      ToastificationType.info => Icons.stop_circle,
+      ToastificationType.warning => Icons.stop_circle,
+      ToastificationType.success => Icons.stop_circle,
+      ToastificationType.failed => Icons.stop_circle,
     };
   }
 
   @override
   Color iconColor(BuildContext context) {
-    return onPrimaryColor(context);
+    return primaryColor(context);
   }
 
   @override
@@ -61,36 +63,57 @@ class MinimalStyle extends BuiltInStyle {
 
   @override
   Color closeIconColor(BuildContext context) {
-    return foregroundColor(context).withOpacity(.4);
+    return primaryColor(context).shade100;
   }
 
   @override
   BorderSide borderSide(BuildContext context) {
     return const BorderSide(
       color: Color(0xffEBEBEB),
-      width: 2,
+      width: 1.5,
+    );
+  }
+
+  BoxBorder boxBorder(BuildContext context) {
+    return Border.fromBorderSide(
+      borderSide(context),
     );
   }
 
   @override
   BorderRadiusGeometry borderRadius(BuildContext context) {
-    return const BorderRadius.all(Radius.circular(16));
+    return const BorderRadius.all(Radius.circular(12));
+  }
+
+  BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) {
+    return BorderRadiusDirectional.only(
+      topEnd: borderRadius.topRight.clamp(
+        minimum: const Radius.circular(0),
+        maximum: const Radius.circular(30),
+      ),
+      bottomEnd: borderRadius.bottomRight.clamp(
+        minimum: const Radius.circular(0),
+        maximum: const Radius.circular(30),
+      ),
+    );
   }
 
   @override
   TextStyle? titleTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontSize: 14,
+    return Theme.of(context).textTheme.titleSmall?.copyWith(
           color: foregroundColor(context),
+          fontSize: 12,
           fontWeight: FontWeight.w500,
-          height: 1.3,
+          height: 1.4,
         );
   }
 
   @override
   TextStyle? descriptionTextStyle(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall?.copyWith(
-          color: foregroundColor(context),
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
+          color: foregroundColor(context).withOpacity(.7),
           height: 1.3,
         );
   }
