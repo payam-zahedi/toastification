@@ -61,7 +61,7 @@ class _ToastTypeTabBarState extends State<ToastTypeTabBar>
                   1 => ToastificationType.success,
                   2 => ToastificationType.info,
                   3 => ToastificationType.warning,
-                  4 => ToastificationType.failed,
+                  4 => ToastificationType.error,
                   _ => null,
                 };
 

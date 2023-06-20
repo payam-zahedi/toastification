@@ -16,7 +16,7 @@ class FlatColoredStyle extends BuiltInStyle {
       ToastificationType.info => infoColor,
       ToastificationType.warning => warningColor,
       ToastificationType.success => successColor,
-      ToastificationType.failed => errorColor,
+      ToastificationType.error => errorColor,
     };
 
     return ToastHelper.createMaterialColor(color);
@@ -43,7 +43,7 @@ class FlatColoredStyle extends BuiltInStyle {
       ToastificationType.info => Icons.stop_circle,
       ToastificationType.warning => Icons.stop_circle,
       ToastificationType.success => Icons.stop_circle,
-      ToastificationType.failed => Icons.stop_circle,
+      ToastificationType.error => Icons.stop_circle,
     };
   }
 

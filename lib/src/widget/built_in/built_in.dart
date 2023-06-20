@@ -12,8 +12,7 @@ enum ToastificationType {
   info,
   warning,
   success,
-  // TODO(payam): rename this to error
-  failed,
+  error,
 }
 
 class BuiltInContent extends StatelessWidget {
