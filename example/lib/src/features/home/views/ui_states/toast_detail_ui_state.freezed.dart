@@ -16,13 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ToastDetail {
-  ToastificationType? get type => throw _privateConstructorUsedError;
+  ToastificationType get type => throw _privateConstructorUsedError;
   ToastificationStyle get style =>
       throw _privateConstructorUsedError; // placement
   AlignmentGeometry get alignment => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   Widget? get icon => throw _privateConstructorUsedError;
+  Color? get primaryColor => throw _privateConstructorUsedError;
   Color? get backgroundColor => throw _privateConstructorUsedError;
   Color? get foregroundColor => throw _privateConstructorUsedError;
   Color? get iconColor => throw _privateConstructorUsedError;
@@ -51,12 +52,13 @@ abstract class $ToastDetailCopyWith<$Res> {
       _$ToastDetailCopyWithImpl<$Res, ToastDetail>;
   @useResult
   $Res call(
-      {ToastificationType? type,
+      {ToastificationType type,
       ToastificationStyle style,
       AlignmentGeometry alignment,
       String title,
       String description,
       Widget? icon,
+      Color? primaryColor,
       Color? backgroundColor,
       Color? foregroundColor,
       Color? iconColor,
@@ -87,12 +89,13 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = freezed,
+    Object? type = null,
     Object? style = null,
     Object? alignment = null,
     Object? title = null,
     Object? description = null,
     Object? icon = freezed,
+    Object? primaryColor = freezed,
     Object? backgroundColor = freezed,
     Object? foregroundColor = freezed,
     Object? iconColor = freezed,
@@ -110,10 +113,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? dragToClose = null,
   }) {
     return _then(_value.copyWith(
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as ToastificationType?,
+              as ToastificationType,
       style: null == style
           ? _value.style
           : style // ignore: cast_nullable_to_non_nullable
@@ -134,6 +137,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as Widget?,
+      primaryColor: freezed == primaryColor
+          ? _value.primaryColor
+          : primaryColor // ignore: cast_nullable_to_non_nullable
+              as Color?,
       backgroundColor: freezed == backgroundColor
           ? _value.backgroundColor
           : backgroundColor // ignore: cast_nullable_to_non_nullable
@@ -207,12 +214,13 @@ abstract class _$$_ToastDetailCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ToastificationType? type,
+      {ToastificationType type,
       ToastificationStyle style,
       AlignmentGeometry alignment,
       String title,
       String description,
       Widget? icon,
+      Color? primaryColor,
       Color? backgroundColor,
       Color? foregroundColor,
       Color? iconColor,
@@ -241,12 +249,13 @@ class __$$_ToastDetailCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? type = freezed,
+    Object? type = null,
     Object? style = null,
     Object? alignment = null,
     Object? title = null,
     Object? description = null,
     Object? icon = freezed,
+    Object? primaryColor = freezed,
     Object? backgroundColor = freezed,
     Object? foregroundColor = freezed,
     Object? iconColor = freezed,
@@ -264,10 +273,10 @@ class __$$_ToastDetailCopyWithImpl<$Res>
     Object? dragToClose = null,
   }) {
     return _then(_$_ToastDetail(
-      type: freezed == type
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as ToastificationType?,
+              as ToastificationType,
       style: null == style
           ? _value.style
           : style // ignore: cast_nullable_to_non_nullable
@@ -288,6 +297,10 @@ class __$$_ToastDetailCopyWithImpl<$Res>
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
               as Widget?,
+      primaryColor: freezed == primaryColor
+          ? _value.primaryColor
+          : primaryColor // ignore: cast_nullable_to_non_nullable
+              as Color?,
       backgroundColor: freezed == backgroundColor
           ? _value.backgroundColor
           : backgroundColor // ignore: cast_nullable_to_non_nullable
@@ -356,12 +369,13 @@ class __$$_ToastDetailCopyWithImpl<$Res>
 
 class _$_ToastDetail implements _ToastDetail {
   _$_ToastDetail(
-      {this.type,
+      {this.type = ToastificationType.success,
       this.style = ToastificationStyle.flat,
       this.alignment = Alignment.topRight,
       this.title = 'Toast Title',
       this.description = 'Toast Description',
       this.icon,
+      this.primaryColor,
       this.backgroundColor,
       this.foregroundColor,
       this.iconColor,
@@ -379,7 +393,8 @@ class _$_ToastDetail implements _ToastDetail {
       this.dragToClose = false});
 
   @override
-  final ToastificationType? type;
+  @JsonKey()
+  final ToastificationType type;
   @override
   @JsonKey()
   final ToastificationStyle style;
@@ -395,6 +410,8 @@ class _$_ToastDetail implements _ToastDetail {
   final String description;
   @override
   final Widget? icon;
+  @override
+  final Color? primaryColor;
   @override
   final Color? backgroundColor;
   @override
@@ -434,7 +451,7 @@ class _$_ToastDetail implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, elevation: $elevation, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, onCloseTap: $onCloseTap, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, showCloseButton: $showCloseButton, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, elevation: $elevation, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, onCloseTap: $onCloseTap, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, showCloseButton: $showCloseButton, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
   }
 
   @override
@@ -450,6 +467,8 @@ class _$_ToastDetail implements _ToastDetail {
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.primaryColor, primaryColor) ||
+                other.primaryColor == primaryColor) &&
             (identical(other.backgroundColor, backgroundColor) ||
                 other.backgroundColor == backgroundColor) &&
             (identical(other.foregroundColor, foregroundColor) ||
@@ -491,6 +510,7 @@ class _$_ToastDetail implements _ToastDetail {
         title,
         description,
         icon,
+        primaryColor,
         backgroundColor,
         foregroundColor,
         iconColor,
@@ -517,12 +537,13 @@ class _$_ToastDetail implements _ToastDetail {
 
 abstract class _ToastDetail implements ToastDetail {
   factory _ToastDetail(
-      {final ToastificationType? type,
+      {final ToastificationType type,
       final ToastificationStyle style,
       final AlignmentGeometry alignment,
       final String title,
       final String description,
       final Widget? icon,
+      final Color? primaryColor,
       final Color? backgroundColor,
       final Color? foregroundColor,
       final Color? iconColor,
@@ -540,7 +561,7 @@ abstract class _ToastDetail implements ToastDetail {
       final bool dragToClose}) = _$_ToastDetail;
 
   @override
-  ToastificationType? get type;
+  ToastificationType get type;
   @override
   ToastificationStyle get style;
   @override // placement
@@ -551,6 +572,8 @@ abstract class _ToastDetail implements ToastDetail {
   String get description;
   @override
   Widget? get icon;
+  @override
+  Color? get primaryColor;
   @override
   Color? get backgroundColor;
   @override

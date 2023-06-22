@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in_style.dart';
 import 'package:toastification/src/widget/built_in/filled/filled_style.dart';
 import 'package:toastification/src/widget/built_in/flat/flat_style.dart';
 import 'package:toastification/src/widget/built_in/flat_colored/flat_colored_style.dart';

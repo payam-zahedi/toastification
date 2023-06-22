@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:example/src/features/home/views/widgets/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
+import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -17,8 +19,8 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: CustomScrollView(
           slivers: [
-            // SliverToBoxAdapter(child: ToastAppBar()),
-            // SliverToBoxAdapter(child: ToastHeader()),
+            SliverToBoxAdapter(child: ToastAppBar()),
+            SliverToBoxAdapter(child: ToastHeader()),
             CustomizationSection()
           ],
         ),

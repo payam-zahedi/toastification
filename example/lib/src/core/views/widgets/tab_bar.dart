@@ -1,7 +1,10 @@
+import 'package:example/src/core/views/widgets/soon.dart';
+import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:toastification/toastification.dart';
 
-class ToastTypeTabBar extends StatefulWidget {
+class ToastTypeTabBar extends ConsumerWidget {
   const ToastTypeTabBar({
     super.key,
     this.initialType,
@@ -9,32 +12,13 @@ class ToastTypeTabBar extends StatefulWidget {
   });
   final ToastificationType? initialType;
 
-  final ValueChanged<ToastificationType?>? onTypeChanged;
+  final ValueChanged<ToastificationType>? onTypeChanged;
 
   @override
-  State<ToastTypeTabBar> createState() => _ToastTypeTabBarState();
-}
-
-class _ToastTypeTabBarState extends State<ToastTypeTabBar>
-    with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
-  @override
-  void initState() {
-    super.initState();
-
-    _tabController = TabController(length: 5, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+
+    final type = ref.watch(toastDetailControllerProvider).type;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,87 +31,120 @@ class _ToastTypeTabBarState extends State<ToastTypeTabBar>
           ),
         ),
         const SizedBox(height: 14),
-        Container(
-          height: 48,
-          decoration: BoxDecoration(
-            border: Border.all(color: theme.colorScheme.outline, width: 1.3),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: TabBar(
-            controller: _tabController,
-            onTap: (value) {
-              if (widget.onTypeChanged != null) {
-                final type = switch (value) {
-                  1 => ToastificationType.success,
-                  2 => ToastificationType.info,
-                  3 => ToastificationType.warning,
-                  4 => ToastificationType.error,
-                  _ => null,
-                };
+        Row(
+          children: [
+            Expanded(
+              child: TabTypeItem(
+                selected: type == ToastificationType.success,
+                title: 'Success',
+                color: successColor,
+                onTap: () {
+                  ref
+                      .read(toastDetailControllerProvider.notifier)
+                      .changeType(ToastificationType.success);
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: TabTypeItem(
+                selected: type == ToastificationType.info,
+                title: 'Info',
+                color: infoColor,
+                onTap: () {
+                  ref
+                      .read(toastDetailControllerProvider.notifier)
+                      .changeType(ToastificationType.info);
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: TabTypeItem(
+                selected: type == ToastificationType.warning,
+                title: 'Warning',
+                color: warningColor,
+                onTap: () {
+                  ref
+                      .read(toastDetailControllerProvider.notifier)
+                      .changeType(ToastificationType.warning);
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: TabTypeItem(
+                selected: type == ToastificationType.error,
+                title: 'Error',
+                color: errorColor,
+                onTap: () {
+                  ref
+                      .read(toastDetailControllerProvider.notifier)
+                      .changeType(ToastificationType.error);
+                },
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Expanded(
+              child: CustomTabItem(),
 
-                widget.onTypeChanged!(type);
-              }
-            },
-            padding: const EdgeInsets.all(4),
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicator: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(
-                color: theme.colorScheme.onSurface.withOpacity(.1),
-              ),
             ),
-            labelPadding: const EdgeInsets.all(4),
-            dividerColor: Colors.transparent,
-            labelColor: theme.colorScheme.onPrimary,
-            unselectedLabelColor: theme.colorScheme.onSurface,
-            labelStyle: theme.textTheme.titleSmall?.copyWith(
-              height: 1,
-              fontWeight: FontWeight.w500,
-            ),
-            enableFeedback: true,
-            splashFactory: InkRipple.splashFactory,
-            splashBorderRadius: BorderRadius.circular(8.0),
-            tabs: const [
-              Tab(
-                child: ToastTabItem(
-                  text: 'Default',
-                ),
-              ),
-              Tab(
-                child: ToastTabItem(
-                  text: 'Success',
-                  color: Color(0xff84FF89),
-                ),
-              ),
-              Tab(
-                child: ToastTabItem(
-                  text: 'Info',
-                  color: Color(0xff84C4FF),
-                ),
-              ),
-              Tab(
-                child: ToastTabItem(
-                  text: 'Warning',
-                  color: Color(0xffFFCE84),
-                ),
-              ),
-              Tab(
-                child: ToastTabItem(
-                  text: 'Error',
-                  color: Color(0xffFF8484),
-                ),
-              ),
-            ],
-          ),
-        ),
+          ],
+        )
       ],
     );
   }
 }
 
-class ToastTabItem extends StatelessWidget {
-  const ToastTabItem({
+class TabTypeItem extends StatelessWidget {
+  const TabTypeItem({
+    super.key,
+    required this.selected,
+    required this.title,
+    required this.color,
+    required this.onTap,
+  });
+
+  final bool selected;
+  final String title;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(10.0),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        height: 40,
+        decoration: BoxDecoration(
+          color:
+              selected ? color.withOpacity(.1) : theme.colorScheme.background,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: selected ? color : theme.colorScheme.outline,
+            width: 1.5,
+          ),
+        ),
+        child: Center(
+          child: Text(
+            title,
+            style: theme.textTheme.titleSmall?.copyWith(
+              height: 1,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class IndicatorTabItem extends StatelessWidget {
+  const IndicatorTabItem({
     super.key,
     this.color,
     required this.text,
@@ -151,7 +168,7 @@ class ToastTabItem extends StatelessWidget {
             height: 9,
             decoration: BoxDecoration(
               color: color,
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(10.0),
               border: Border.all(
                 color: theme.colorScheme.onSurface.withOpacity(.05),
               ),
@@ -164,5 +181,41 @@ class ToastTabItem extends StatelessWidget {
     }
 
     return child;
+  }
+}
+
+class CustomTabItem extends StatelessWidget {
+  const CustomTabItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      height: 37,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          color: theme.colorScheme.onSurface.withOpacity(.1),
+          width: 1.5,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Custom',
+            style: theme.textTheme.titleSmall?.copyWith(
+              color: theme.colorScheme.onPrimary,
+              height: 1,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(width: 8),
+          const SoonWidget()
+        ],
+      ),
+    );
   }
 }

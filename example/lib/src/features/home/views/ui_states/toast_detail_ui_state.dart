@@ -7,13 +7,14 @@ part 'toast_detail_ui_state.freezed.dart';
 @freezed
 class ToastDetail with _$ToastDetail {
   factory ToastDetail({
-    ToastificationType? type,
+    @Default(ToastificationType.success) ToastificationType type,
     @Default(ToastificationStyle.flat) ToastificationStyle style,
     // placement
     @Default(Alignment.topRight) AlignmentGeometry alignment,
     @Default('Toast Title') String title,
     @Default('Toast Description') String description,
     Widget? icon,
+    Color? primaryColor,
     Color? backgroundColor,
     Color? foregroundColor,
     Color? iconColor,

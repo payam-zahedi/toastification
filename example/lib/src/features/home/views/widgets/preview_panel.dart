@@ -67,7 +67,7 @@ class ToastPreview extends ConsumerWidget {
     switch (toastDetail.style) {
       case ToastificationStyle.flat:
         return FlatToastWidget(
-          type: toastDetail.type ?? ToastificationType.info,
+          type: toastDetail.type,
           title: toastDetail.title,
           description: toastDetail.description,
           backgroundColor: toastDetail.backgroundColor == null
@@ -84,7 +84,7 @@ class ToastPreview extends ConsumerWidget {
         );
       case ToastificationStyle.fillColored:
         return FilledToastWidget(
-          type: toastDetail.type ?? ToastificationType.info,
+          type: toastDetail.type,
           title: toastDetail.title,
           description: toastDetail.description,
           backgroundColor: toastDetail.backgroundColor == null
@@ -101,7 +101,7 @@ class ToastPreview extends ConsumerWidget {
         );
       case ToastificationStyle.flatColored:
         return FlatColoredToastWidget(
-          type: toastDetail.type ?? ToastificationType.info,
+          type: toastDetail.type,
           title: toastDetail.title,
           description: toastDetail.description,
           backgroundColor: toastDetail.backgroundColor == null
@@ -118,7 +118,7 @@ class ToastPreview extends ConsumerWidget {
         );
       case ToastificationStyle.minimal:
         return MinimalToastWidget(
-          type: toastDetail.type ?? ToastificationType.info,
+          type: toastDetail.type,
           title: toastDetail.title,
           description: toastDetail.description,
           backgroundColor: toastDetail.backgroundColor == null

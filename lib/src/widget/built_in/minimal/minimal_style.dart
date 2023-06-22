@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in_style.dart';
 import 'package:toastification/toastification.dart';
 
 class MinimalStyle extends BuiltInStyle {

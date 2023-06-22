@@ -11,7 +11,7 @@ final toastDetailControllerProvider =
 class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   ToastDetailControllerNotifier() : super(ToastDetail());
 
-  void changeType(ToastificationType? type) {
+  void changeType(ToastificationType type) {
     state = state.copyWith(type: type);
   }
 
