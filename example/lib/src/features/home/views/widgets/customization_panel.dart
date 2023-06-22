@@ -9,6 +9,7 @@ import 'package:example/src/core/views/widgets/picker/alignment.dart';
 import 'package:example/src/core/views/widgets/picker/border_radius.dart';
 import 'package:example/src/core/views/widgets/picker/color.dart';
 import 'package:example/src/core/views/widgets/picker/elevation.dart';
+import 'package:example/src/core/views/widgets/picker/toast_style.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
@@ -16,6 +17,7 @@ import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:toastification/toastification.dart';
 
 class CustomizationPanel extends ConsumerWidget {
   const CustomizationPanel({super.key});
@@ -33,6 +35,16 @@ class CustomizationPanel extends ConsumerWidget {
               ref
                   .read(toastDetailControllerProvider.notifier)
                   .changeType(value);
+            },
+          ),
+          const SizedBox(height: 32),
+          ToastStylePicker(
+            type: ref.watch(toastDetailControllerProvider).type,
+            initialStyle: ToastificationStyle.flat,
+            onStyleChanged: (style) {
+              ref
+                  .read(toastDetailControllerProvider.notifier)
+                  .changeStyle(style);
             },
           ),
           const _PositionHolder(),

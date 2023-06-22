@@ -3,6 +3,7 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
+import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -51,87 +52,88 @@ class ToastPreview extends ConsumerWidget {
               child: ConstrainedBox(
                 constraints: BoxConstraints(
                   maxWidth: 400,
-                  minHeight: isTablet ? 120 : 182,
+                  minHeight: isTablet ? 120 : 132,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    FlatToastWidget(
-                      type: toastDetail.type ?? ToastificationType.info,
-                      title: toastDetail.title,
-                      description: toastDetail.description,
-                      backgroundColor: toastDetail.backgroundColor == null
-                          ? null
-                          : ToastHelper.createMaterialColor(
-                              toastDetail.backgroundColor!,
-                            ),
-                      foregroundColor: toastDetail.foregroundColor,
-                      icon: toastDetail.icon,
-                      borderRadius: toastDetail.borderRadius,
-                      elevation: toastDetail.elevation,
-                      onCloseTap: toastDetail.onCloseTap ?? () {},
-                      showCloseButton: toastDetail.showCloseButton,
-                    ),
-                    SizedBox(height: 10),
-                    FilledToastWidget(
-                      type: toastDetail.type ?? ToastificationType.info,
-                      title: toastDetail.title,
-                      description: toastDetail.description,
-                      backgroundColor: toastDetail.backgroundColor == null
-                          ? null
-                          : ToastHelper.createMaterialColor(
-                              toastDetail.backgroundColor!,
-                            ),
-                      foregroundColor: toastDetail.foregroundColor,
-                      icon: toastDetail.icon,
-                      borderRadius: toastDetail.borderRadius,
-                      elevation: toastDetail.elevation,
-                      onCloseTap: toastDetail.onCloseTap ?? () {},
-                      showCloseButton: toastDetail.showCloseButton,
-                    ),
-                    SizedBox(height: 10),
-                    FlatColoredToastWidget(
-                      type: toastDetail.type ?? ToastificationType.info,
-                      title: toastDetail.title,
-                      description: toastDetail.description,
-                      backgroundColor: toastDetail.backgroundColor == null
-                          ? null
-                          : ToastHelper.createMaterialColor(
-                              toastDetail.backgroundColor!,
-                            ),
-                      foregroundColor: toastDetail.foregroundColor,
-                      icon: toastDetail.icon,
-                      borderRadius: toastDetail.borderRadius,
-                      elevation: toastDetail.elevation,
-                      onCloseTap: toastDetail.onCloseTap ?? () {},
-                      showCloseButton: toastDetail.showCloseButton,
-                    ),
-                    SizedBox(height: 8),
-                    MinimalToastWidget(
-                      type: toastDetail.type ?? ToastificationType.info,
-                      title: toastDetail.title,
-                      description: toastDetail.description,
-                      backgroundColor: toastDetail.backgroundColor == null
-                          ? null
-                          : ToastHelper.createMaterialColor(
-                              toastDetail.backgroundColor!,
-                            ),
-                      foregroundColor: toastDetail.foregroundColor,
-                      icon: toastDetail.icon,
-                      borderRadius: toastDetail.borderRadius,
-                      elevation: toastDetail.elevation,
-                      onCloseTap: toastDetail.onCloseTap ?? () {},
-                      showCloseButton: toastDetail.showCloseButton,
-                    ),
-                  ],
-                ),
+                child: Center(child: _buildToastWidget(toastDetail)),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildToastWidget(ToastDetail toastDetail) {
+    switch (toastDetail.style) {
+      case ToastificationStyle.flat:
+        return FlatToastWidget(
+          type: toastDetail.type ?? ToastificationType.info,
+          title: toastDetail.title,
+          description: toastDetail.description,
+          backgroundColor: toastDetail.backgroundColor == null
+              ? null
+              : ToastHelper.createMaterialColor(
+                  toastDetail.backgroundColor!,
+                ),
+          foregroundColor: toastDetail.foregroundColor,
+          icon: toastDetail.icon,
+          borderRadius: toastDetail.borderRadius,
+          elevation: toastDetail.elevation,
+          onCloseTap: toastDetail.onCloseTap ?? () {},
+          showCloseButton: toastDetail.showCloseButton,
+        );
+      case ToastificationStyle.fillColored:
+        return FilledToastWidget(
+          type: toastDetail.type ?? ToastificationType.info,
+          title: toastDetail.title,
+          description: toastDetail.description,
+          backgroundColor: toastDetail.backgroundColor == null
+              ? null
+              : ToastHelper.createMaterialColor(
+                  toastDetail.backgroundColor!,
+                ),
+          foregroundColor: toastDetail.foregroundColor,
+          icon: toastDetail.icon,
+          borderRadius: toastDetail.borderRadius,
+          elevation: toastDetail.elevation,
+          onCloseTap: toastDetail.onCloseTap ?? () {},
+          showCloseButton: toastDetail.showCloseButton,
+        );
+      case ToastificationStyle.flatColored:
+        return FlatColoredToastWidget(
+          type: toastDetail.type ?? ToastificationType.info,
+          title: toastDetail.title,
+          description: toastDetail.description,
+          backgroundColor: toastDetail.backgroundColor == null
+              ? null
+              : ToastHelper.createMaterialColor(
+                  toastDetail.backgroundColor!,
+                ),
+          foregroundColor: toastDetail.foregroundColor,
+          icon: toastDetail.icon,
+          borderRadius: toastDetail.borderRadius,
+          elevation: toastDetail.elevation,
+          onCloseTap: toastDetail.onCloseTap ?? () {},
+          showCloseButton: toastDetail.showCloseButton,
+        );
+      case ToastificationStyle.minimal:
+        return MinimalToastWidget(
+          type: toastDetail.type ?? ToastificationType.info,
+          title: toastDetail.title,
+          description: toastDetail.description,
+          backgroundColor: toastDetail.backgroundColor == null
+              ? null
+              : ToastHelper.createMaterialColor(
+                  toastDetail.backgroundColor!,
+                ),
+          foregroundColor: toastDetail.foregroundColor,
+          icon: toastDetail.icon,
+          borderRadius: toastDetail.borderRadius,
+          elevation: toastDetail.elevation,
+          onCloseTap: toastDetail.onCloseTap ?? () {},
+          showCloseButton: toastDetail.showCloseButton,
+        );
+    }
   }
 }
 
