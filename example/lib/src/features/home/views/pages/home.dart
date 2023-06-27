@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:example/src/core/views/widgets/bottom_navigation.dart';
 import 'package:example/src/features/home/views/widgets/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const DefaultStickyHeaderController(
       child: Scaffold(
+        bottomNavigationBar: BottomNavigationView(),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: ToastAppBar()),

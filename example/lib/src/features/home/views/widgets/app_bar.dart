@@ -13,7 +13,7 @@ class ToastAppBar extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final sidePaddings = context.responsiveValue(
-      desktop: 145.0,
+      desktop: 58.0,
       tablet: 32.0,
     );
 
