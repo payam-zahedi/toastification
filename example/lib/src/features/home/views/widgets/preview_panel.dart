@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/code/code_viewer.dart';
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
+import 'package:example/src/features/home/views/ui_states/toast_code_formatter.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,9 +15,9 @@ class PreviewPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: Theme.of(context).colorScheme.background,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: const Column(
+      child: const Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.0),
+        child: Column(
           children: [
             ToastPreview(),
             SizedBox(height: 16),
@@ -47,11 +46,11 @@ class ToastPreview extends ConsumerWidget {
         child: SizedBox(
           width: double.infinity,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             child: Center(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth: 400,
+                  maxWidth: 350,
                   minHeight: isTablet ? 120 : 132,
                 ),
                 child: Center(child: _buildToastWidget(toastDetail)),
@@ -157,9 +156,21 @@ class _RawCodePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const BorderedContainer(
-      height: 50,
-      child: Text('Code Preview'),
+    return Material(
+      shape: Theme.of(context).cardTheme.shape,
+      color: Theme.of(context).cardTheme.color,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          minWidth: double.infinity,
+          maxHeight: 380,
+        ),
+        child: const SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: CodePreviewer(),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -227,6 +238,45 @@ class _ExpandableCodePreviewState extends State<ExpandableCodePreview> {
         child: _RawCodePreview(),
       ),
       isExpanded: isExpanded,
+    );
+  }
+}
+
+class CodePreviewer extends ConsumerWidget {
+  const CodePreviewer({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final toastDetail = ref.watch(toastDetailControllerProvider);
+
+    final code = ToastCodeFormatter.format(toastDetail);
+
+    final codeTheme = Map<String, TextStyle>.from(defaultTheme);
+
+    codeTheme.update(
+      'root',
+      (value) => value.copyWith(
+        backgroundColor: Theme.of(context).cardTheme.color,
+      ),
+    );
+
+    return CodeViewer(
+      // The original code to be highlighted
+      source: code,
+
+      // Specify language
+      // It is recommended to give it a value for performance
+      language: 'dart',
+
+      // Specify highlight theme
+      // All available themes are listed in `themes` folder
+      theme: codeTheme,
+
+      // Specify padding
+      padding: const EdgeInsets.all(0),
+      tabSize: 8,
+      // Specify text style
+      textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.9),
     );
   }
 }
