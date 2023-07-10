@@ -16,29 +16,30 @@ class ToastificationApp extends StatelessWidget {
     return MaterialApp(
       title: 'Toastification',
       theme: lightTheme,
-      builder: (context, child) => ResponsiveWrapper.builder(
-        child,
-        maxWidth: 1300,
-        minWidth: 480,
-        defaultScale: true,
-        breakpoints: [
-          const ResponsiveBreakpoint.resize(
-            200,
-            name: 'SMALL-MOBILE',
-            scaleFactor: .85,
+      builder: (context, child) {
+        return ResponsiveWrapper.builder(
+          child,
+          maxWidth: 1400,
+          minWidth: 500,
+          defaultScale: true,
+          breakpoints: [
+            const ResponsiveBreakpoint.resize(
+              550,
+              name: MOBILE,
+              scaleFactor: .9,
+            ),
+            const ResponsiveBreakpoint.resize(
+              850,
+              name: TABLET,
+              scaleFactor: .85,
+            ),
+            const ResponsiveBreakpoint.resize(1100, name: DESKTOP),
+          ],
+          background: Container(
+            color: const Color(0xFFF9F9F9),
           ),
-          const ResponsiveBreakpoint.resize(
-            550,
-            name: MOBILE,
-            scaleFactor: .9,
-          ),
-          const ResponsiveBreakpoint.autoScale(850, name: TABLET),
-          const ResponsiveBreakpoint.autoScaleDown(1100, name: DESKTOP),
-        ],
-        background: Container(
-          color: const Color(0xFFF5F5F5),
-        ),
-      ),
+        );
+      },
       initialRoute: "/",
       onGenerateRoute: (RouteSettings settings) {
         return Routes.fadeThrough(
