@@ -29,6 +29,8 @@ dependencies:
   flutter_svg: ^2.0.6
   font_awesome_flutter: ^10.4.0
   flutter_sticky_header: ^0.6.5
+  highlight: ^0.7.0
+  flutter_highlight: ^0.7.0
   responsive_framework: ^0.2.0 
   flutter_riverpod: ^2.3.6
   freezed_annotation: ^2.2.0
