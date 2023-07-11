@@ -3,6 +3,7 @@ import 'package:example/src/core/views/widgets/core.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 class ToastHeader extends StatelessWidget {
@@ -91,7 +92,7 @@ class ToastHeader extends StatelessWidget {
                     ),
                     onPressed: () {},
                     label: const Text('Give a Star'),
-                    icon: const FaIcon(FontAwesomeIcons.star),
+                    icon: const Icon(Iconsax.star_copy, size: 24),
                   ),
                   if (ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) ...[
                     const Padding(

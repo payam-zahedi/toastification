@@ -16,6 +16,7 @@ import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 
@@ -291,7 +292,7 @@ class _ContentSection extends ConsumerWidget {
                     BorderedContainer(
                       width: 48,
                       height: 48,
-                      child: const Icon(Icons.info_outline_rounded),
+                      child: const Icon(Iconsax.info_circle_copy),
                       onTap: () {},
                     ),
                     const SizedBox(width: 10),
@@ -514,7 +515,7 @@ class _SystemSection extends ConsumerWidget {
             rowFit: FlexFit.tight,
             columnFit: FlexFit.loose,
             child: BorderedDropDown<String>(
-              icon: const Icon(Icons.star_outline_rounded),
+              icon: const Icon(Iconsax.star_1_copy),
               hint: 'Animation type',
               items: const [
                 DropdownMenuItem(
@@ -638,7 +639,7 @@ class _ProgressBarSection extends ConsumerWidget {
             child: CountTile(
               title: 'Timeout',
               icon: Icon(
-                Icons.timer_outlined,
+                Iconsax.timer_1_copy,
                 color: theme.colorScheme.onSurface.withOpacity(.2),
               ),
               value: timeoutValue,

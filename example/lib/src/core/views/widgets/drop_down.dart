@@ -28,7 +28,10 @@ class BorderedDropDown<T> extends StatelessWidget {
       focusColor: theme.colorScheme.background,
       borderRadius: BorderRadius.circular(10),
       decoration: InputDecoration(
-        prefixIcon: icon,
+        prefixIcon: Padding(
+          padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+          child: icon,
+        ),
         prefixIconColor: theme.colorScheme.onSurface.withOpacity(.2),
         hintText: hint,
         hintStyle: theme.textTheme.bodyMedium?.copyWith(

@@ -1,6 +1,6 @@
 import 'package:example/src/core/usecase/extension/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class BottomNavigationView extends StatelessWidget {
   const BottomNavigationView({super.key});
@@ -33,7 +33,7 @@ class BottomNavigationView extends StatelessWidget {
         ),
         onPressed: () {},
         label: const Text('Save My Toast'),
-        icon: const FaIcon(FontAwesomeIcons.bookmark),
+        icon: const Icon(Iconsax.save_add_copy),
       ),
       tablet: FilledButton(
         style: FilledButton.styleFrom(
@@ -43,7 +43,7 @@ class BottomNavigationView extends StatelessWidget {
           foregroundColor: theme.colorScheme.onSurface,
         ),
         onPressed: () {},
-        child: const FaIcon(FontAwesomeIcons.bookmark, size: 20),
+        child: const Icon(Iconsax.save_add_copy, size: 20),
       ),
     );
 
@@ -55,7 +55,7 @@ class BottomNavigationView extends StatelessWidget {
         ),
         onPressed: () {},
         label: const Text('Copy Code'),
-        icon: const FaIcon(FontAwesomeIcons.copy),
+        icon: const Icon(Iconsax.document_copy_copy),
       ),
       tablet: FilledButton(
         style: FilledButton.styleFrom(
@@ -63,7 +63,7 @@ class BottomNavigationView extends StatelessWidget {
           minimumSize: size,
         ),
         onPressed: () {},
-        child: const FaIcon(FontAwesomeIcons.copy, size: 20),
+        child: const Icon(Iconsax.document_copy1, size: 20),
       ),
     );
     return Container(

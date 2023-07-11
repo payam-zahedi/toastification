@@ -36,15 +36,6 @@ class FilledStyle extends BuiltInStyle {
     return onPrimaryColor(context);
   }
 
-  @override
-  IconData icon(BuildContext context) {
-    return switch (type) {
-      ToastificationType.info => Icons.stop_circle,
-      ToastificationType.warning => Icons.stop_circle,
-      ToastificationType.success => Icons.stop_circle,
-      ToastificationType.error => Icons.stop_circle,
-    };
-  }
 
   @override
   Color iconColor(BuildContext context) {
