@@ -1,10 +1,12 @@
 import 'package:example/src/core/views/code/code_viewer.dart';
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
+import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/ui_states/toast_code_formatter.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:toastification/toastification.dart';
 
@@ -152,10 +154,41 @@ class CodePreview extends StatelessWidget {
 }
 
 class _RawCodePreview extends StatelessWidget {
-  const _RawCodePreview();
+  const _RawCodePreview({this.showCopyButton = true});
 
+  final bool showCopyButton;
   @override
   Widget build(BuildContext context) {
+    Widget child = const SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: CodePreviewer(),
+      ),
+    );
+
+    if (showCopyButton) {
+      child = Stack(
+        children: [
+          child,
+          Positioned.directional(
+            textDirection: Directionality.of(context),
+            end: 16,
+            top: 16,
+            child: Consumer(
+              builder: (context, ref, _) {
+                return IconButton(
+                  onPressed: () {
+                    copyCode(context, ref.read(toastDetailControllerProvider));
+                  },
+                  icon: const Icon(Iconsax.document_copy_copy, size: 20),
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
+
     return Material(
       shape: Theme.of(context).cardTheme.shape,
       color: Theme.of(context).cardTheme.color,
@@ -164,12 +197,7 @@ class _RawCodePreview extends StatelessWidget {
           minWidth: double.infinity,
           maxHeight: 380,
         ),
-        child: const SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: CodePreviewer(),
-          ),
-        ),
+        child: child,
       ),
     );
   }
@@ -222,11 +250,16 @@ class _ExpandableCodePreviewState extends State<ExpandableCodePreview> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.copy_all_rounded,
-                  ),
+                Consumer(
+                  builder: (context, ref, _) {
+                    return IconButton(
+                      onPressed: () {
+                        copyCode(
+                            context, ref.read(toastDetailControllerProvider));
+                      },
+                      icon: const Icon(Iconsax.document_copy_copy, size: 20),
+                    );
+                  },
                 ),
               ],
             ),
@@ -235,7 +268,7 @@ class _ExpandableCodePreviewState extends State<ExpandableCodePreview> {
       },
       body: const Padding(
         padding: EdgeInsets.symmetric(vertical: 8.0),
-        child: _RawCodePreview(),
+        child: _RawCodePreview(showCopyButton: false),
       ),
       isExpanded: isExpanded,
     );

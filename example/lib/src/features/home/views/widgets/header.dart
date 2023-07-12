@@ -1,5 +1,6 @@
 import 'package:example/src/core/usecase/extension/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
+import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -80,7 +81,9 @@ class ToastHeader extends StatelessWidget {
                     style: FilledButton.styleFrom(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: add this feature
+                    },
                     child: const Text('Make a Random Toast'),
                   ),
                   const SizedBox(width: 24, height: 16),
@@ -90,7 +93,9 @@ class ToastHeader extends StatelessWidget {
                       backgroundColor: theme.colorScheme.secondary,
                       foregroundColor: theme.colorScheme.onSecondary,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      openGithub(context);
+                    },
                     label: const Text('Give a Star'),
                     icon: const Icon(Iconsax.star_copy, size: 24),
                   ),

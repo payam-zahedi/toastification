@@ -1,4 +1,5 @@
 import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -46,7 +47,9 @@ class ToastAppBar extends StatelessWidget {
                 backgroundColor: Colors.black12,
                 foregroundColor: colorScheme.onBackground,
               ),
-              onPressed: () {},
+              onPressed: () {
+                openGithub(context);
+              },
               icon: const FaIcon(FontAwesomeIcons.github),
               label: const Text('Check the code'),
             ),

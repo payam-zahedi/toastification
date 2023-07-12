@@ -219,6 +219,8 @@ class Toastification {
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
     BorderRadiusGeometry? borderRadius,
+    // TODO(payam): fix the elevation issue
+    // TODO(payam): change this with box shadows
     double? elevation,
     VoidCallback? onCloseTap,
     bool? showProgressBar,

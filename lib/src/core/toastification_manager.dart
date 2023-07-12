@@ -259,7 +259,7 @@ class ToastificationManager {
     BuildContext context, {
     OverlayState? overlay,
   }) {
-    final overlayState = overlay ?? Overlay.of(context, rootOverlay: false);
+    final overlayState = overlay ?? Overlay.of(context, rootOverlay: true);
 
     _overlayEntry = _createOverlayEntry(context);
 

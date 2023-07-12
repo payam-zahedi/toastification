@@ -21,7 +21,7 @@ class ToastDetail with _$ToastDetail {
     BorderRadiusGeometry? borderRadius,
     double? elevation,
     TextDirection? direction,
-    Duration? autoCloseDuration,
+    @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
     Duration? animationDuration,
     VoidCallback? onCloseTap,
     @Default(true) bool newestOnTop,

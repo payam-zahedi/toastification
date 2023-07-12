@@ -382,7 +382,7 @@ class _$_ToastDetail implements _ToastDetail {
       this.borderRadius,
       this.elevation,
       this.direction,
-      this.autoCloseDuration,
+      this.autoCloseDuration = const Duration(seconds: 4),
       this.animationDuration,
       this.onCloseTap,
       this.newestOnTop = true,
@@ -425,6 +425,7 @@ class _$_ToastDetail implements _ToastDetail {
   @override
   final TextDirection? direction;
   @override
+  @JsonKey()
   final Duration? autoCloseDuration;
   @override
   final Duration? animationDuration;
