@@ -1,248 +1,78 @@
+import 'package:example/src/features/home/views/pages/home.dart';
+import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:toastification/toastification.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: ToastificationApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ToastificationApp extends StatelessWidget {
+  const ToastificationApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Home(),
+      title: 'Toastification',
+      theme: lightTheme,
+      builder: (context, child) {
+        return ResponsiveWrapper.builder(
+          child,
+          maxWidth: 1400,
+          minWidth: 500,
+          defaultScale: true,
+          breakpoints: [
+            const ResponsiveBreakpoint.resize(
+              550,
+              name: MOBILE,
+              scaleFactor: .9,
+            ),
+            const ResponsiveBreakpoint.resize(
+              850,
+              name: TABLET,
+              scaleFactor: .85,
+            ),
+            const ResponsiveBreakpoint.resize(1100, name: DESKTOP),
+          ],
+          background: Container(
+            color: const Color(0xFFF9F9F9),
+          ),
+        );
+      },
+      initialRoute: "/",
+      onGenerateRoute: (RouteSettings settings) {
+        return Routes.fadeThrough(
+          settings,
+          (context) {
+            return BouncingScrollWrapper.builder(
+              context,
+              buildPage(settings.name ?? ''),
+            );
+          },
+        );
+      },
     );
+  }
+
+  Widget buildPage(String route) {
+    return switch (route) {
+      HomeScreen.route => const HomeScreen(),
+      _ => const SizedBox.shrink(),
+    };
   }
 }
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  ValueNotifier<ToastificationAnimationBuilder?> animationBuilder =
-      ValueNotifier(null);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: const Text('Toastification Example'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: ValueListenableBuilder<ToastificationAnimationBuilder?>(
-            valueListenable: animationBuilder,
-            builder: (context, value, _) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ToastificationButtons(animationBuilder: value),
-                  AnimationButtons(
-                    onChange: (selectedValue) {
-                      animationBuilder.value = selectedValue;
-                    },
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AnimationButtons extends StatelessWidget {
-  const AnimationButtons({
-    super.key,
-    required this.onChange,
-  });
-
-  final ValueChanged<ToastificationAnimationBuilder?> onChange;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Animations',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        const SizedBox(height: 16),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            onChange(
-              (context, animation, alignment, child) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-            );
-          },
-          child: const Text('Fade'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.amberAccent,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            onChange(
-              (context, animation, alignment, child) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(1, 0),
-                    end: const Offset(0, 0),
-                  ).animate(animation),
-                  child: child,
-                );
-              },
-            );
-          },
-          child: const Text('Slide'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            onChange(
-              (context, animation, alignment, child) {
-                return ScaleTransition(scale: animation, child: child);
-              },
-            );
-          },
-          child: const Text('Scale'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            onChange(
-              (context, animation, alignment, child) {
-                return RotationTransition(
-                  turns: animation,
-                  child: child,
-                );
-              },
-            );
-          },
-          child: const Text('Rotate'),
-        ),
-      ],
-    );
-  }
-}
-
-class ToastificationButtons extends StatelessWidget {
-  const ToastificationButtons({
-    super.key,
-    this.animationBuilder,
-  });
-
-  final ToastificationAnimationBuilder? animationBuilder;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Default Toasts',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            toastification.show(
-              context: context,
-              autoCloseDuration: const Duration(seconds: 5),
-              animationBuilder: animationBuilder,
-              type: ToastificationType.info,
-              title: 'Info',
-            );
-          },
-          child: const Text('Info'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.amberAccent,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            toastification.show(
-              context: context,
-              autoCloseDuration: const Duration(seconds: 5),
-              animationBuilder: animationBuilder,
-              type: ToastificationType.warning,
-              title: 'Warning',
-            );
-          },
-          child: const Text('Warning'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            toastification.show(
-              context: context,
-              autoCloseDuration: const Duration(seconds: 5),
-              animationBuilder: animationBuilder,
-              type: ToastificationType.success,
-              title: 'Success',
-            );
-          },
-          child: const Text('Success'),
-        ),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            minimumSize: const Size(150, 40),
-          ),
-          onPressed: () {
-            toastification.show(
-              context: context,
-              autoCloseDuration: const Duration(seconds: 5),
-              animationBuilder: animationBuilder,
-              type: ToastificationType.failed,
-              title: 'Error',
-            );
-          },
-          child: const Text('Error'),
-        ),
-      ],
+class Routes {
+  static Route<T> fadeThrough<T>(RouteSettings settings, WidgetBuilder page,
+      {int duration = 300}) {
+    return PageRouteBuilder<T>(
+      settings: settings,
+      transitionDuration: Duration(milliseconds: duration),
+      pageBuilder: (context, animation, secondaryAnimation) => page(context),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 }

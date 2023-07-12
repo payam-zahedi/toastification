@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
+import 'package:toastification/src/widget/built_in/filled/filled_style.dart';
 
-class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
+class FilledToastWidget extends StatelessWidget {
   const FilledToastWidget({
     super.key,
     required this.type,
     required this.title,
     this.description,
+    this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
@@ -18,7 +20,6 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
     this.showCloseButton,
   });
 
-  @override
   final ToastificationType type;
 
   final String title;
@@ -26,7 +27,10 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
 
   final Widget? icon;
 
+  final MaterialColor? primaryColor;
+
   final MaterialColor? backgroundColor;
+
   final Color? foregroundColor;
 
   final Brightness? brightness;
@@ -41,118 +45,71 @@ class FilledToastWidget extends StatelessWidget with BuiltInToastWidget {
 
   final bool? showCloseButton;
 
-  @override
-  MaterialColor buildColor(BuildContext context) {
-    switch (type) {
-      case ToastificationType.info:
-        return Colors.blue;
-      case ToastificationType.warning:
-        return Colors.amber;
-      case ToastificationType.success:
-        return Colors.green;
-      case ToastificationType.failed:
-        return Colors.red;
-    }
-  }
-
-  @override
-  IconData buildIcon(BuildContext context) {
-    switch (type) {
-      case ToastificationType.info:
-        return Icons.info;
-      case ToastificationType.warning:
-        return Icons.warning_rounded;
-      case ToastificationType.success:
-        return Icons.check_rounded;
-
-      case ToastificationType.failed:
-        return Icons.error;
-    }
-  }
-
-  @override
-  BorderRadiusGeometry buildBorderRadius(BuildContext context) {
-    return borderRadius ?? BorderRadius.circular(8);
-  }
+  FilledStyle get defaultStyle => FilledStyle(type);
 
   @override
   Widget build(BuildContext context) {
-    final defaultTheme = (brightness ?? Brightness.light) == Brightness.light
-        ? ThemeData.light(useMaterial3: true)
-        : ThemeData.dark(useMaterial3: true);
+    final iconColor = defaultStyle.iconColor(context);
 
-    final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
-    final background = backgroundColor ?? buildColor(context);
+    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
 
     final showCloseButton = this.showCloseButton ?? true;
 
+    final borderRadius =
+        this.borderRadius ?? defaultStyle.borderRadius(context);
+
+    final borderSide = defaultStyle.borderSide(context);
     return IconTheme(
-      data: defaultTheme.primaryIconTheme,
-      child: Material(
-        borderRadius: buildBorderRadius(context),
-        color: background,
-        elevation: elevation ?? 4.0,
-        child: Padding(
-          padding: padding ?? const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              icon ??
-                  Icon(
-                    buildIcon(context),
-                    size: 28,
-                    color: foreground,
+      data: Theme.of(context).primaryIconTheme,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Material(
+          color: background,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+            side: borderSide,
+          ),
+          elevation: elevation ?? defaultStyle.elevation(context),
+          child: Padding(
+            padding: padding ?? defaultStyle.padding(context),
+            child: Row(
+              children: [
+                icon ??
+                    Icon(
+                      defaultStyle.icon(context),
+                      size: 24,
+                      color: iconColor,
+                    ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BuiltInContent(
+                    style: defaultStyle,
+                    title: title,
+                    description: description,
+                    foregroundColor: foregroundColor,
                   ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: _buildContent(defaultTheme),
-              ),
-              const SizedBox(width: 16),
-              Offstage(
-                offstage: !showCloseButton,
-                child: IconButton(
-                  icon: const Icon(Icons.close),
-                  splashRadius: 24,
-                  color: foreground,
-                  tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
-                  onPressed: onCloseTap,
                 ),
-              ),
-            ],
+                const SizedBox(width: 4),
+                Offstage(
+                  offstage: !showCloseButton,
+                  child: InkWell(
+                    onTap: onCloseTap,
+                    borderRadius: BorderRadius.circular(4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Icon(
+                        defaultStyle.closeIcon(context),
+                        color: defaultStyle.closeIconColor(context),
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-
-  Widget _buildContent(ThemeData defaultTheme) {
-    final foreground = foregroundColor ?? defaultTheme.primaryIconTheme.color;
-
-    Widget content = Text(
-      title,
-      style: defaultTheme.textTheme.displayLarge?.copyWith(
-        color: foreground,
-        fontSize: 18,
-      ),
-    );
-
-    if (description?.isNotEmpty ?? false) {
-      content = Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          content,
-          const SizedBox(height: 4),
-          Text(
-            description!,
-            style: defaultTheme.textTheme.displayLarge?.copyWith(
-              color: foreground,
-              fontSize: 14,
-            ),
-          )
-        ],
-      );
-    }
-
-    return content;
   }
 }
