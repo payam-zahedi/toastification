@@ -122,6 +122,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     this.style,
     required this.title,
     this.description,
+    this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
@@ -149,6 +150,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
   final Widget? icon;
 
+  final Color? primaryColor;
   final Color? backgroundColor;
   final Color? foregroundColor;
 
@@ -210,28 +212,16 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
     final style = this.style ?? ToastificationStyle.fillColored;
 
+    final primaryColor = buildMaterialColor(this.primaryColor);
     final backgroundColor = buildMaterialColor(this.backgroundColor);
     final onCloseTap = buildOnCloseTap();
 
     final widget = switch (style) {
-      ToastificationStyle.minimal => MinimalToastWidget(
+      ToastificationStyle.flat => FlatToastWidget(
           type: type,
           title: title,
           description: description,
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
-          icon: icon,
-          brightness: brightness,
-          padding: padding,
-          borderRadius: borderRadius,
-          elevation: elevation,
-          onCloseTap: onCloseTap,
-          showCloseButton: showCloseButton,
-        ),
-      ToastificationStyle.fillColored => FilledToastWidget(
-          type: type,
-          title: title,
-          description: description,
+          primaryColor: primaryColor,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
           icon: icon,
@@ -246,6 +236,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           type: type,
           title: title,
           description: description,
+          primaryColor: primaryColor,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
           icon: icon,
@@ -256,10 +247,11 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
-      ToastificationStyle.flat => FlatToastWidget(
+      ToastificationStyle.fillColored => FilledToastWidget(
           type: type,
           title: title,
           description: description,
+          primaryColor: primaryColor,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
           icon: icon,
@@ -269,7 +261,22 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           elevation: elevation,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
-        )
+        ),
+      ToastificationStyle.minimal => MinimalToastWidget(
+          type: type,
+          title: title,
+          description: description,
+          primaryColor: primaryColor,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          icon: icon,
+          brightness: brightness,
+          padding: padding,
+          borderRadius: borderRadius,
+          elevation: elevation,
+          onCloseTap: onCloseTap,
+          showCloseButton: showCloseButton,
+        ),
     };
 
     final defaultStyle = switch (style) {
@@ -289,14 +296,15 @@ class BuiltInWidgetBuilder extends StatelessWidget {
         };
   }
 
-  MaterialColor? buildMaterialColor(Color? backgroundColor) {
-    if (backgroundColor == null) return null;
+  MaterialColor? buildMaterialColor(Color? color) {
+    if (color == null) return null;
+
+    if (color is MaterialColor) return color;
 
     final findInMaterialColors = Colors.primaries
-        .firstWhereOrNull((element) => element.shade500 == backgroundColor);
+        .firstWhereOrNull((element) => element.shade500 == color);
 
-    return findInMaterialColors ??
-        ToastHelper.createMaterialColor(backgroundColor);
+    return findInMaterialColors ?? ToastHelper.createMaterialColor(color);
   }
 }
 
