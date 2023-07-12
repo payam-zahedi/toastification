@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/core/toastification_item.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
-import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 
 class ToastificationManager {
@@ -73,81 +71,6 @@ class ToastificationManager {
     // TODO(payam): add limit count feature
 
     return item;
-  }
-
-  /// using this method you can show a notification by using the [navigator] overlay
-  ToastificationItem showWithNavigatorState({
-    required NavigatorState navigator,
-    required ToastificationBuilder builder,
-    ToastificationAnimationBuilder? animationBuilder,
-    Duration? animationDuration,
-    Duration? autoCloseDuration,
-  }) {
-    final context = navigator.context;
-
-    return showCustom(
-      context: context,
-      builder: builder,
-      animationBuilder: animationBuilder,
-      animationDuration: animationDuration,
-      autoCloseDuration: autoCloseDuration,
-      overlayState: navigator.overlay,
-    );
-  }
-
-  ToastificationItem show({
-    required BuildContext context,
-    Duration? autoCloseDuration,
-    OverlayState? overlayState,
-    ToastificationAnimationBuilder? animationBuilder,
-    ToastificationType? type,
-    ToastificationStyle? style,
-    required String title,
-    Duration? animationDuration,
-    String? description,
-    Widget? icon,
-    Color? backgroundColor,
-    Color? foregroundColor,
-    Brightness? brightness,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
-    BorderRadiusGeometry? borderRadius,
-    double? elevation,
-    VoidCallback? onCloseTap,
-    bool? showProgressBar,
-    bool? showCloseButton,
-    bool? closeOnClick,
-    bool? pauseOnHover,
-  }) {
-    return showCustom(
-      context: context,
-      autoCloseDuration: autoCloseDuration,
-      overlayState: overlayState,
-      builder: (context, holder) {
-        return BuiltInWidgetBuilder(
-          item: holder,
-          type: type,
-          style: style,
-          title: title,
-          description: description,
-          icon: icon,
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
-          brightness: brightness,
-          padding: padding,
-          margin: margin,
-          borderRadius: borderRadius,
-          elevation: elevation,
-          onCloseTap: onCloseTap,
-          showProgressBar: showProgressBar,
-          showCloseButton: showCloseButton,
-          closeOnClick: closeOnClick,
-          pauseOnHover: pauseOnHover,
-        );
-      },
-      animationBuilder: animationBuilder,
-      animationDuration: animationDuration,
-    );
   }
 
   ToastificationItem? findToastificationItem(String id) {
