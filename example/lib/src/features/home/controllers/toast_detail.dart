@@ -51,8 +51,8 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(borderRadius: borderRadius);
   }
 
-  void changeElevation(double? elevation) {
-    state = state.copyWith(elevation: elevation);
+  void changeShadow(ShadowOptions shadow) {
+    state = state.copyWith(shadow: shadow);
   }
 
   void changeDirection(TextDirection? direction) {

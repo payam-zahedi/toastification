@@ -113,6 +113,7 @@ class ToastificationManager {
           index,
           (BuildContext context, Animation<double> animation) {
             return ToastHolderWidget(
+              income: false,
               item: removedItem,
               animation: animation,
               child: _createAnimationBuilder(context, animation, removedItem),
@@ -199,14 +200,13 @@ class ToastificationManager {
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 32),
             constraints: const BoxConstraints.tightFor(
-              width: 450,
+              width: 400,
             ),
             child: AnimatedList(
               key: _listGlobalKey,
               initialItemCount: _notifications.length,
               reverse: alignment.y >= 0,
               primary: true,
-              shrinkWrap: true,
               itemBuilder: (
                 BuildContext context,
                 int index,

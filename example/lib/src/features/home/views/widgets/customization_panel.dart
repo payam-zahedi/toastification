@@ -256,15 +256,18 @@ class _ElevationSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SubSection(
-      title: 'SHADOW',
-      body: ElevationPicker(
-        selectedElevation: ref.watch(toastDetailControllerProvider).elevation,
-        onChanged: (elevation) {
-          ref
-              .read(toastDetailControllerProvider.notifier)
-              .changeElevation(elevation);
-        },
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 32),
+      child: SubSection(
+        title: 'SHADOW',
+        body: ShadowPicker(
+          selectedShadow: ref.watch(toastDetailControllerProvider).shadow,
+          onChanged: (shadow) {
+            ref
+                .read(toastDetailControllerProvider.notifier)
+                .changeShadow(shadow);
+          },
+        ),
       ),
     );
   }

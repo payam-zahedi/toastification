@@ -67,8 +67,8 @@ class ToastCodeFormatter {
       code.writeln('\tborderRadius: ${toastDetail.borderRadius},');
     }
 
-    if (toastDetail.elevation != null && toastDetail.elevation! > 0) {
-      code.writeln('\televation: ${toastDetail.elevation},');
+    if (toastDetail.shadow != ShadowOptions.none) {
+      code.writeln('\tboxShadow: ${toastDetail.shadow.name},');
     }
 
     if (toastDetail.showProgressBar == false) {
