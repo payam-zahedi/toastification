@@ -79,7 +79,7 @@ class ToastPreview extends ConsumerWidget {
           foregroundColor: toastDetail.foregroundColor,
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
-          elevation: toastDetail.elevation,
+          boxShadow: toastDetail.shadow.shadow,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );
@@ -96,7 +96,7 @@ class ToastPreview extends ConsumerWidget {
           foregroundColor: toastDetail.foregroundColor,
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
-          elevation: toastDetail.elevation,
+          boxShadow: toastDetail.shadow.shadow,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );
@@ -113,7 +113,7 @@ class ToastPreview extends ConsumerWidget {
           foregroundColor: toastDetail.foregroundColor,
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
-          elevation: toastDetail.elevation,
+          boxShadow: toastDetail.shadow.shadow,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );
@@ -130,7 +130,7 @@ class ToastPreview extends ConsumerWidget {
           foregroundColor: toastDetail.foregroundColor,
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
-          elevation: toastDetail.elevation,
+          boxShadow: toastDetail.shadow.shadow,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );

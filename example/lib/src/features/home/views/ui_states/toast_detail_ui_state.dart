@@ -4,6 +4,25 @@ import 'package:toastification/toastification.dart';
 
 part 'toast_detail_ui_state.freezed.dart';
 
+enum ShadowOptions {
+  none(name: 'none', title: 'None', shadow: []),
+  lowMode(
+      name: 'lowModeShadow', title: 'Low mode shadow', shadow: lowModeShadow),
+  highMode(
+      name: 'highModeShadow',
+      title: 'High mode shadow',
+      shadow: highModeShadow);
+
+  const ShadowOptions({
+    required this.name,
+    required this.title,
+    required this.shadow,
+  });
+
+  final String name;
+  final String title;
+  final List<BoxShadow> shadow;
+}
 @freezed
 class ToastDetail with _$ToastDetail {
   factory ToastDetail({
@@ -19,7 +38,7 @@ class ToastDetail with _$ToastDetail {
     Color? foregroundColor,
     Color? iconColor,
     BorderRadiusGeometry? borderRadius,
-    double? elevation,
+    @Default(ShadowOptions.none) ShadowOptions shadow,
     TextDirection? direction,
     @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
     Duration? animationDuration,

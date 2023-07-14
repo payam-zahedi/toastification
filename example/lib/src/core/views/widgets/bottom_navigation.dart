@@ -1,12 +1,16 @@
 import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/features/home/controllers/toast_detail.dart';
+import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:toastification/toastification.dart';
 
-class BottomNavigationView extends StatelessWidget {
+class BottomNavigationView extends ConsumerWidget {
   const BottomNavigationView({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final sidePaddings = context.responsiveValue(
       desktop: 58.0,
       tablet: 32.0,
@@ -53,7 +57,9 @@ class BottomNavigationView extends StatelessWidget {
           padding: edgeInsets,
           minimumSize: size,
         ),
-        onPressed: () {},
+        onPressed: () {
+          copyCode(context, ref.read(toastDetailControllerProvider));
+        },
         label: const Text('Copy Code'),
         icon: const Icon(Iconsax.document_copy_copy),
       ),
@@ -62,8 +68,10 @@ class BottomNavigationView extends StatelessWidget {
           padding: const EdgeInsets.all(0),
           minimumSize: size,
         ),
-        onPressed: () {},
-        child: const Icon(Iconsax.document_copy1, size: 20),
+        onPressed: () {
+          copyCode(context, ref.read(toastDetailControllerProvider));
+        },
+        child: const Icon(Iconsax.document_copy_copy, size: 20),
       ),
     );
     return Container(
@@ -93,7 +101,31 @@ class BottomNavigationView extends StatelessWidget {
               backgroundColor: theme.colorScheme.onSurfaceVariant,
               foregroundColor: theme.colorScheme.onSurface,
             ),
-            onPressed: () {},
+            onPressed: () {
+              final toastDetail = ref.read(toastDetailControllerProvider);
+
+              toastification.show(
+                context: context,
+                alignment: toastDetail.alignment,
+                title: toastDetail.title,
+                description: toastDetail.description,
+                type: toastDetail.type,
+                style: toastDetail.style,
+                autoCloseDuration: toastDetail.autoCloseDuration,
+                animationDuration: toastDetail.animationDuration,
+                icon: toastDetail.icon,
+                foregroundColor: toastDetail.foregroundColor,
+                backgroundColor: toastDetail.backgroundColor,
+                borderRadius: toastDetail.borderRadius,
+                boxShadow: toastDetail.shadow.shadow,
+                closeOnClick: toastDetail.closeOnClick,
+                dragToClose: toastDetail.dragToClose,
+                onCloseTap: toastDetail.onCloseTap,
+                pauseOnHover: toastDetail.pauseOnHover,
+                showCloseButton: toastDetail.showCloseButton,
+                showProgressBar: toastDetail.showProgressBar,
+              );
+            },
             child: const Text('Preview on My Screen'),
           ),
           const Spacer(),

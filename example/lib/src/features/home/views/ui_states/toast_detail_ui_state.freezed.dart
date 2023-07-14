@@ -28,7 +28,7 @@ mixin _$ToastDetail {
   Color? get foregroundColor => throw _privateConstructorUsedError;
   Color? get iconColor => throw _privateConstructorUsedError;
   BorderRadiusGeometry? get borderRadius => throw _privateConstructorUsedError;
-  double? get elevation => throw _privateConstructorUsedError;
+  ShadowOptions get shadow => throw _privateConstructorUsedError;
   TextDirection? get direction => throw _privateConstructorUsedError;
   Duration? get autoCloseDuration => throw _privateConstructorUsedError;
   Duration? get animationDuration => throw _privateConstructorUsedError;
@@ -63,7 +63,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       Color? foregroundColor,
       Color? iconColor,
       BorderRadiusGeometry? borderRadius,
-      double? elevation,
+      ShadowOptions shadow,
       TextDirection? direction,
       Duration? autoCloseDuration,
       Duration? animationDuration,
@@ -100,7 +100,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? foregroundColor = freezed,
     Object? iconColor = freezed,
     Object? borderRadius = freezed,
-    Object? elevation = freezed,
+    Object? shadow = null,
     Object? direction = freezed,
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
@@ -157,10 +157,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.borderRadius
           : borderRadius // ignore: cast_nullable_to_non_nullable
               as BorderRadiusGeometry?,
-      elevation: freezed == elevation
-          ? _value.elevation
-          : elevation // ignore: cast_nullable_to_non_nullable
-              as double?,
+      shadow: null == shadow
+          ? _value.shadow
+          : shadow // ignore: cast_nullable_to_non_nullable
+              as ShadowOptions,
       direction: freezed == direction
           ? _value.direction
           : direction // ignore: cast_nullable_to_non_nullable
@@ -225,7 +225,7 @@ abstract class _$$_ToastDetailCopyWith<$Res>
       Color? foregroundColor,
       Color? iconColor,
       BorderRadiusGeometry? borderRadius,
-      double? elevation,
+      ShadowOptions shadow,
       TextDirection? direction,
       Duration? autoCloseDuration,
       Duration? animationDuration,
@@ -260,7 +260,7 @@ class __$$_ToastDetailCopyWithImpl<$Res>
     Object? foregroundColor = freezed,
     Object? iconColor = freezed,
     Object? borderRadius = freezed,
-    Object? elevation = freezed,
+    Object? shadow = null,
     Object? direction = freezed,
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
@@ -317,10 +317,10 @@ class __$$_ToastDetailCopyWithImpl<$Res>
           ? _value.borderRadius
           : borderRadius // ignore: cast_nullable_to_non_nullable
               as BorderRadiusGeometry?,
-      elevation: freezed == elevation
-          ? _value.elevation
-          : elevation // ignore: cast_nullable_to_non_nullable
-              as double?,
+      shadow: null == shadow
+          ? _value.shadow
+          : shadow // ignore: cast_nullable_to_non_nullable
+              as ShadowOptions,
       direction: freezed == direction
           ? _value.direction
           : direction // ignore: cast_nullable_to_non_nullable
@@ -380,7 +380,7 @@ class _$_ToastDetail implements _ToastDetail {
       this.foregroundColor,
       this.iconColor,
       this.borderRadius,
-      this.elevation,
+      this.shadow = ShadowOptions.none,
       this.direction,
       this.autoCloseDuration = const Duration(seconds: 4),
       this.animationDuration,
@@ -421,7 +421,8 @@ class _$_ToastDetail implements _ToastDetail {
   @override
   final BorderRadiusGeometry? borderRadius;
   @override
-  final double? elevation;
+  @JsonKey()
+  final ShadowOptions shadow;
   @override
   final TextDirection? direction;
   @override
@@ -452,7 +453,7 @@ class _$_ToastDetail implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, elevation: $elevation, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, onCloseTap: $onCloseTap, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, showCloseButton: $showCloseButton, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, onCloseTap: $onCloseTap, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, showCloseButton: $showCloseButton, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
   }
 
   @override
@@ -478,8 +479,7 @@ class _$_ToastDetail implements _ToastDetail {
                 other.iconColor == iconColor) &&
             (identical(other.borderRadius, borderRadius) ||
                 other.borderRadius == borderRadius) &&
-            (identical(other.elevation, elevation) ||
-                other.elevation == elevation) &&
+            (identical(other.shadow, shadow) || other.shadow == shadow) &&
             (identical(other.direction, direction) ||
                 other.direction == direction) &&
             (identical(other.autoCloseDuration, autoCloseDuration) ||
@@ -516,7 +516,7 @@ class _$_ToastDetail implements _ToastDetail {
         foregroundColor,
         iconColor,
         borderRadius,
-        elevation,
+        shadow,
         direction,
         autoCloseDuration,
         animationDuration,
@@ -549,7 +549,7 @@ abstract class _ToastDetail implements ToastDetail {
       final Color? foregroundColor,
       final Color? iconColor,
       final BorderRadiusGeometry? borderRadius,
-      final double? elevation,
+      final ShadowOptions shadow,
       final TextDirection? direction,
       final Duration? autoCloseDuration,
       final Duration? animationDuration,
@@ -584,7 +584,7 @@ abstract class _ToastDetail implements ToastDetail {
   @override
   BorderRadiusGeometry? get borderRadius;
   @override
-  double? get elevation;
+  ShadowOptions get shadow;
   @override
   TextDirection? get direction;
   @override

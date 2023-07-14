@@ -1,4 +1,5 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
 
 final elevationValues = {
@@ -48,6 +49,58 @@ class ElevationPicker extends StatelessWidget {
                 ),
                 Offstage(
                   offstage: selectedElevation != value,
+                  child: const Icon(Icons.check),
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+
+class ShadowPicker extends StatelessWidget {
+  const ShadowPicker({
+    super.key,
+    this.selectedShadow = ShadowOptions.none,
+    this.onChanged,
+  });
+
+  final ShadowOptions selectedShadow;
+  final ValueChanged<ShadowOptions>? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedShadow = this.selectedShadow;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: ShadowOptions.values.map((e) {
+        final name = e.title;
+        final value = e;
+
+        return Expanded(
+          child: ShadowContainer(
+            height: 48,
+            boxShadow: e.shadow,
+            margin: const EdgeInsetsDirectional.only(end: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            onTap: () {
+              onChanged?.call(value);
+            },
+            active: selectedShadow == value,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    name,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Offstage(
+                  offstage: selectedShadow != value,
                   child: const Icon(Icons.check),
                 ),
               ],
