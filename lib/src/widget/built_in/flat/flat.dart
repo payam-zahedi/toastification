@@ -95,7 +95,6 @@ class FlatToastWidget extends StatelessWidget {
               offstage: !showCloseButton,
               child: Material(
                 color: Colors.transparent,
-
                 borderRadius: BorderRadius.circular(4),
                 child: Builder(builder: (context) {
                   return InkWell(

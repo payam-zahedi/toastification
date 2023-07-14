@@ -36,10 +36,9 @@ class FlatColoredStyle extends BuiltInStyle {
     return Colors.black;
   }
 
-
   @override
   Color iconColor(BuildContext context) {
-    return primaryColor(context);
+    return foregroundColor(context);
   }
 
   @override

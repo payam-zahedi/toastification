@@ -25,7 +25,7 @@ class ToastHelper {
     }
 
     for (final strength in strengths) {
-      final ds = .9 - strength;
+      final ds = .95 - strength;
       swatch[(strength * 1000).round()] = Color.fromRGBO(
         r + ((ds < 0 ? r : (255 - r)) * ds).round(),
         g + ((ds < 0 ? g : (255 - g)) * ds).round(),
