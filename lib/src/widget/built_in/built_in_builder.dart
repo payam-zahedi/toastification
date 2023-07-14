@@ -95,6 +95,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     required this.item,
     this.type,
     this.style,
+    this.direction,
     required this.title,
     this.description,
     this.primaryColor,
@@ -140,6 +141,8 @@ class BuiltInWidgetBuilder extends StatelessWidget {
   final double? elevation;
 
   final List<BoxShadow>? boxShadow;
+
+  final TextDirection? direction;
 
   final VoidCallback? onCloseTap;
 
@@ -205,6 +208,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           borderRadius: borderRadius,
           elevation: elevation,
           boxShadow: boxShadow,
+          direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
@@ -221,6 +225,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           borderRadius: borderRadius,
           elevation: elevation,
           boxShadow: boxShadow,
+          direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
@@ -237,6 +242,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           borderRadius: borderRadius,
           elevation: elevation,
           boxShadow: boxShadow,
+          direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
@@ -253,6 +259,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           borderRadius: borderRadius,
           elevation: elevation,
           boxShadow: boxShadow,
+          direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
