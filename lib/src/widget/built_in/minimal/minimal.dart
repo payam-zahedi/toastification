@@ -76,50 +76,54 @@ class MinimalToastWidget extends StatelessWidget {
               width: 3,
             ),
           ),
-          child: Material(
-            color: background,
-            shape: RoundedRectangleBorder(
-              side: defaultStyle.borderSide(context),
+          child: Container(
+            decoration: BoxDecoration(
+              color: background,
               borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
+              border: Border.fromBorderSide(defaultStyle.borderSide(context)),
+              boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
             ),
-            elevation: elevation ?? defaultStyle.elevation(context),
-            child: Padding(
-              padding: padding ?? defaultStyle.padding(context),
-              child: Row(
-                children: [
-                  icon ??
-                      Icon(
-                        defaultStyle.icon(context),
-                        size: 24,
-                        color: iconColor,
-                      ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: BuiltInContent(
-                      style: defaultStyle,
-                      title: title,
-                      description: description,
-                      foregroundColor: foregroundColor,
+            padding: padding ?? defaultStyle.padding(context),
+            child: Row(
+              children: [
+                icon ??
+                    Icon(
+                      defaultStyle.icon(context),
+                      size: 24,
+                      color: iconColor,
                     ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BuiltInContent(
+                    style: defaultStyle,
+                    title: title,
+                    description: description,
+                    foregroundColor: foregroundColor,
                   ),
-                  const SizedBox(width: 4),
-                  Offstage(
-                    offstage: !showCloseButton,
-                    child: InkWell(
-                      onTap: onCloseTap,
-                      borderRadius: BorderRadius.circular(4),
-                      child: Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: Icon(
-                          defaultStyle.closeIcon(context),
-                          color: defaultStyle.closeIconColor(context),
-                          size: 18,
+                ),
+                const SizedBox(width: 4),
+                Offstage(
+                  offstage: !showCloseButton,
+                  child: Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(4),
+                    child: Builder(builder: (context) {
+                      return InkWell(
+                        onTap: onCloseTap,
+                        borderRadius: BorderRadius.circular(4),
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: Icon(
+                            defaultStyle.closeIcon(context),
+                            color: defaultStyle.closeIconColor(context),
+                            size: 18,
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
