@@ -223,6 +223,7 @@ class Toastification {
     // TODO(payam): fix the elevation issue
     // TODO(payam): change this with box shadows
     double? elevation,
+    List<BoxShadow>? boxShadow,
     VoidCallback? onCloseTap,
     bool? showProgressBar,
     bool? showCloseButton,
@@ -251,6 +252,7 @@ class Toastification {
           margin: margin,
           borderRadius: borderRadius,
           elevation: elevation,
+          boxShadow: boxShadow,
           onCloseTap: onCloseTap,
           showProgressBar: showProgressBar,
           showCloseButton: showCloseButton,

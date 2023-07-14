@@ -50,33 +50,7 @@ class ToastificationBuiltInContainer extends StatelessWidget {
     Widget toast = Padding(
       padding:
           margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: ClipRRect(
-        borderRadius: borderRadius,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            child,
-            if (showProgressBar && hasTimeout)
-              ToastTimerAnimationBuilder(
-                item: item,
-                builder: (context, value, child) {
-                  return Directionality(
-                    textDirection:
-                        Directionality.of(context) == TextDirection.ltr
-                            ? TextDirection.rtl
-                            : TextDirection.ltr,
-                    child: LinearProgressIndicator(
-                      value: value,
-                      backgroundColor: foreground?.withOpacity(.8),
-                      color: background,
-                      minHeight: 6,
-                    ),
-                  );
-                },
-              ),
-          ],
-        ),
-      ),
+      child: child,
     );
 
     if (pauseOnHover && hasTimeout) {
@@ -114,6 +88,7 @@ class ToastificationBuiltInContainer extends StatelessWidget {
   }
 }
 
+// TODO(payam): add progress bar to widgets
 class BuiltInWidgetBuilder extends StatelessWidget {
   const BuiltInWidgetBuilder({
     super.key,
@@ -131,6 +106,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     this.margin,
     this.borderRadius,
     this.elevation,
+    this.boxShadow,
     this.onCloseTap,
     this.showProgressBar,
     this.showCloseButton,
@@ -163,6 +139,8 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
   final double? elevation;
 
+  final List<BoxShadow>? boxShadow;
+
   final VoidCallback? onCloseTap;
 
   final bool? showProgressBar;
@@ -177,10 +155,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ?? ToastificationStyle.fillColored;
-
-    final showProgressBar = (this.showProgressBar ?? true) &&
-        style == ToastificationStyle.fillColored;
+    final showProgressBar = (this.showProgressBar ?? true);
 
     final closeOnClick = this.closeOnClick ?? false;
     final pauseOnHover = this.pauseOnHover ?? true;
@@ -229,6 +204,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           padding: padding,
           borderRadius: borderRadius,
           elevation: elevation,
+          boxShadow: boxShadow,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
@@ -244,6 +220,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           padding: padding,
           borderRadius: borderRadius,
           elevation: elevation,
+          boxShadow: boxShadow,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
@@ -259,6 +236,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           padding: padding,
           borderRadius: borderRadius,
           elevation: elevation,
+          boxShadow: boxShadow,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),
@@ -274,6 +252,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           padding: padding,
           borderRadius: borderRadius,
           elevation: elevation,
+          boxShadow: boxShadow,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
         ),

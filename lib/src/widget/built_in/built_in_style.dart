@@ -7,6 +7,23 @@ const successColor = Color(0xFF32BC32);
 const warningColor = Color(0xFFFFB600);
 const errorColor = Color(0xFFFF3A30);
 
+const lowModeShadow = [
+  BoxShadow(
+    color: Color(0x07000000),
+    blurRadius: 16,
+    offset: Offset(0, 16),
+    spreadRadius: 0,
+  )
+];
+const highModeShadow = [
+  BoxShadow(
+    color: Color(0x14000000),
+    blurRadius: 30,
+    offset: Offset(0, 20),
+    spreadRadius: 0,
+  )
+];
+
 abstract class BuiltInStyle {
   const BuiltInStyle(this.type);
 
@@ -19,6 +36,7 @@ abstract class BuiltInStyle {
   Color backgroundColor(BuildContext context);
   Color foregroundColor(BuildContext context);
 
+  // TODO(payam): update default styles
   IconData icon(BuildContext context) {
     return switch (type) {
       ToastificationType.info => Iconsax.warning_2_copy,

@@ -17,6 +17,7 @@ class MinimalToastWidget extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.elevation,
+    this.boxShadow,
     this.onCloseTap,
     this.showCloseButton,
   });
@@ -41,6 +42,8 @@ class MinimalToastWidget extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
 
   final double? elevation;
+
+  final List<BoxShadow>? boxShadow;
 
   final VoidCallback? onCloseTap;
 

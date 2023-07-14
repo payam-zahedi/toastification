@@ -16,6 +16,7 @@ class FlatToastWidget extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.elevation,
+    this.boxShadow,
     this.onCloseTap,
     this.showCloseButton,
   });
@@ -41,6 +42,8 @@ class FlatToastWidget extends StatelessWidget {
 
   final double? elevation;
 
+  final List<BoxShadow>? boxShadow;
+
   final VoidCallback? onCloseTap;
 
   final bool? showCloseButton;
@@ -61,38 +64,39 @@ class FlatToastWidget extends StatelessWidget {
     final borderSide = defaultStyle.borderSide(context);
     return IconTheme(
       data: Theme.of(context).primaryIconTheme,
-      child: ConstrainedBox(
+      child: Container(
         constraints: const BoxConstraints(minHeight: 64),
-        child: Material(
+        decoration: BoxDecoration(
           color: background,
-          shape: RoundedRectangleBorder(
-            borderRadius: borderRadius,
-            side: borderSide,
-          ),
-          elevation: elevation ?? defaultStyle.elevation(context),
-          child: Padding(
-            padding: padding ?? defaultStyle.padding(context),
-            child: Row(
-              children: [
-                icon ??
-                    Icon(
-                      defaultStyle.icon(context),
-                      size: 24,
-                      color: iconColor,
-                    ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: BuiltInContent(
-                    style: defaultStyle,
-                    title: title,
-                    description: description,
-                    foregroundColor: foregroundColor,
-                  ),
+          borderRadius: borderRadius,
+          border: Border.fromBorderSide(borderSide),
+          boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+        ),
+        padding: padding ?? defaultStyle.padding(context),
+        child: Row(
+          children: [
+            icon ??
+                Icon(
+                  defaultStyle.icon(context),
+                  size: 24,
+                  color: iconColor,
                 ),
-                const SizedBox(width: 4),
-                Offstage(
-                  offstage: !showCloseButton,
-                  child: InkWell(
+            const SizedBox(width: 10),
+            Expanded(
+              child: BuiltInContent(
+                style: defaultStyle,
+                title: title,
+                description: description,
+                foregroundColor: foregroundColor,
+              ),
+            ),
+            const SizedBox(width: 4),
+            Offstage(
+              offstage: !showCloseButton,
+              child: Material(
+                borderRadius: BorderRadius.circular(4),
+                child: Builder(builder: (context) {
+                  return InkWell(
                     onTap: onCloseTap,
                     borderRadius: BorderRadius.circular(4),
                     child: Padding(
@@ -103,11 +107,11 @@ class FlatToastWidget extends StatelessWidget {
                         size: 18,
                       ),
                     ),
-                  ),
-                ),
-              ],
+                  );
+                }),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
