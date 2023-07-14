@@ -39,10 +39,10 @@ abstract class BuiltInStyle {
   // TODO(payam): update default styles
   IconData icon(BuildContext context) {
     return switch (type) {
-      ToastificationType.info => Iconsax.warning_2_copy,
-      ToastificationType.warning => Iconsax.danger_copy,
       ToastificationType.success => Iconsax.tick_circle_copy,
-      ToastificationType.error => Iconsax.info_circle_copy,
+      ToastificationType.info => Iconsax.info_circle_copy,
+      ToastificationType.warning => Iconsax.danger_copy,
+      ToastificationType.error => Iconsax.close_circle_copy,
     };
   }
 
@@ -59,7 +59,7 @@ abstract class BuiltInStyle {
   TextStyle? descriptionTextStyle(BuildContext context);
 
   double elevation(BuildContext context);
-  List<BoxShadow> boxShadow(BuildContext context);
+  List<BoxShadow> boxShadow(BuildContext context) => const [];
 
   double progressIndicatorStrokeWidth(BuildContext context);
   Color progressIndicatorValueColor(BuildContext context);
