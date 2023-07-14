@@ -113,9 +113,7 @@ class ToastificationManager {
           index,
           (BuildContext context, Animation<double> animation) {
             return ToastHolderWidget(
-              income: false,
               item: removedItem,
-              animation: animation,
               child: _createAnimationBuilder(context, animation, removedItem),
             );
           },
@@ -207,6 +205,7 @@ class ToastificationManager {
               initialItemCount: _notifications.length,
               reverse: alignment.y >= 0,
               primary: true,
+              shrinkWrap: true,
               itemBuilder: (
                 BuildContext context,
                 int index,
@@ -215,7 +214,6 @@ class ToastificationManager {
                 final item = _notifications[index];
                 return ToastHolderWidget(
                   item: item,
-                  animation: animation,
                   child: _createAnimationBuilder(context, animation, item),
                 );
               },

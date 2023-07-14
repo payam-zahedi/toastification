@@ -11,7 +11,6 @@ const _itemAnimationDuration = Duration(milliseconds: 300);
 ///
 /// [Toastification] will use this class to get the default values.
 ///
-
 class ToastificationConfig {
   const ToastificationConfig({
     this.alignment = _defaultAlignment,
@@ -52,7 +51,7 @@ Widget _defaultAnimationBuilderConfig(
   Alignment alignment,
   Widget child,
 ) {
-  return DefaultToastTransition(
+  return ToastificationTransition(
     animation: animation,
     alignment: alignment,
     child: child,
