@@ -36,7 +36,6 @@ abstract class BuiltInStyle {
   Color backgroundColor(BuildContext context);
   Color foregroundColor(BuildContext context);
 
-  // TODO(payam): update default styles
   IconData icon(BuildContext context) {
     return switch (type) {
       ToastificationType.success => Iconsax.tick_circle_copy,
@@ -58,7 +57,7 @@ abstract class BuiltInStyle {
   TextStyle? titleTextStyle(BuildContext context);
   TextStyle? descriptionTextStyle(BuildContext context);
 
-  double elevation(BuildContext context);
+  double elevation(BuildContext context) => 0.0;
   List<BoxShadow> boxShadow(BuildContext context) => const [];
 
   double progressIndicatorStrokeWidth(BuildContext context);

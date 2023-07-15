@@ -106,7 +106,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     this.padding,
     this.margin,
     this.borderRadius,
-    this.elevation,
     this.boxShadow,
     this.onCloseTap,
     this.showProgressBar,
@@ -137,8 +136,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
-
-  final double? elevation;
 
   final List<BoxShadow>? boxShadow;
 
@@ -206,7 +203,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           brightness: brightness,
           padding: padding,
           borderRadius: borderRadius,
-          elevation: elevation,
           boxShadow: boxShadow,
           direction: direction,
           onCloseTap: onCloseTap,
@@ -223,7 +219,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           brightness: brightness,
           padding: padding,
           borderRadius: borderRadius,
-          elevation: elevation,
           boxShadow: boxShadow,
           direction: direction,
           onCloseTap: onCloseTap,
@@ -240,7 +235,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           brightness: brightness,
           padding: padding,
           borderRadius: borderRadius,
-          elevation: elevation,
           boxShadow: boxShadow,
           direction: direction,
           onCloseTap: onCloseTap,
@@ -257,7 +251,6 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           brightness: brightness,
           padding: padding,
           borderRadius: borderRadius,
-          elevation: elevation,
           boxShadow: boxShadow,
           direction: direction,
           onCloseTap: onCloseTap,

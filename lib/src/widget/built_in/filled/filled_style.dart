@@ -36,7 +36,6 @@ class FilledStyle extends BuiltInStyle {
     return onPrimaryColor(context);
   }
 
-
   @override
   Color iconColor(BuildContext context) {
     return onPrimaryColor(context);
@@ -83,16 +82,6 @@ class FilledStyle extends BuiltInStyle {
           color: foregroundColor(context).withOpacity(.9),
           height: 1.3,
         );
-  }
-
-  @override
-  double elevation(BuildContext context) {
-    return 0.0;
-  }
-
-  @override
-  List<BoxShadow> boxShadow(BuildContext context) {
-    return [];
   }
 
   @override

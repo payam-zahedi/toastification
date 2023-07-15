@@ -15,7 +15,6 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.brightness,
     this.padding,
     this.borderRadius,
-    this.elevation,
     this.boxShadow,
     this.direction,
     this.onCloseTap,
@@ -40,8 +39,6 @@ class FlatColoredToastWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   final BorderRadiusGeometry? borderRadius;
-
-  final double? elevation;
 
   final List<BoxShadow>? boxShadow;
 
