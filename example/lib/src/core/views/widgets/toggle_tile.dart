@@ -1,4 +1,5 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/toggle.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +8,15 @@ class ToggleTile extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
+    this.soon = false,
     required this.onChanged,
   });
 
   final String title;
 
   final bool value;
+
+  final bool soon;
 
   final ValueChanged<bool?> onChanged;
 
@@ -21,18 +25,25 @@ class ToggleTile extends StatelessWidget {
     /// a bordered container with a switch
     return BorderedContainer(
       active: value,
-      onTap: () {
-        onChanged(!value);
-      },
+      onTap: !soon
+          ? () {
+              onChanged(!value);
+            }
+          : null,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       height: 48,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title),
+          if (soon)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(4, 4, 4, 0),
+              child: SoonWidget(),
+            ),
+          const Spacer(),
           RoundToggle(
             value: value,
-            onChanged: onChanged,
+            onChanged: !soon ? onChanged : (v) {},
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:flutter/material.dart';
 
 class ColorPicker extends StatelessWidget {
@@ -36,11 +37,18 @@ class ColorPicker extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    title,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      height: 1.18,
-                    ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            height: 1.18,
+                          ),
+                        ),
+                      ),
+                      const Icon(Icons.keyboard_arrow_down),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   Row(
@@ -59,19 +67,21 @@ class ColorPicker extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 9),
-                      Text(
-                        selectedColor.hex,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          height: 1.18,
+                      Expanded(
+                        child: Text(
+                          selectedColor.hex,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            height: 1.18,
+                          ),
                         ),
                       ),
+                      const SoonWidget(),
                     ],
                   ),
                 ],
               ),
             ),
           ),
-          const Icon(Icons.keyboard_arrow_down),
         ],
       ),
     );

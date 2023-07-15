@@ -292,11 +292,16 @@ class _ContentSection extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    BorderedContainer(
-                      width: 48,
-                      height: 48,
-                      child: const Icon(Iconsax.info_circle_copy),
-                      onTap: () {},
+                    Stack(
+                      alignment: Alignment.center,
+                      children: const [
+                        BorderedContainer(
+                          width: 48,
+                          height: 48,
+                          child: Icon(Iconsax.info_circle_copy),
+                        ),
+                        SoonWidget()
+                      ],
                     ),
                     const SizedBox(width: 10),
                     Expanded(
@@ -507,6 +512,7 @@ class _SystemSection extends ConsumerWidget {
             child: ToggleTile(
               title: 'Newest on top',
               value: ref.watch(toastDetailControllerProvider).newestOnTop,
+              soon: true,
               onChanged: (value) {
                 ref
                     .read(toastDetailControllerProvider.notifier)

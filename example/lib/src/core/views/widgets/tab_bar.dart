@@ -87,7 +87,6 @@ class ToastTypeTabBar extends ConsumerWidget {
             const SizedBox(width: 8),
             const Expanded(
               child: CustomTabItem(),
-
             ),
           ],
         )
@@ -201,8 +200,8 @@ class CustomTabItem extends StatelessWidget {
           width: 1.5,
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        alignment: Alignment.center,
         children: [
           Text(
             'Custom',
@@ -212,8 +211,10 @@ class CustomTabItem extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(width: 8),
-          const SoonWidget()
+          const Align(
+            alignment: AlignmentDirectional(.4, .1),
+            child: SoonWidget(),
+          )
         ],
       ),
     );
