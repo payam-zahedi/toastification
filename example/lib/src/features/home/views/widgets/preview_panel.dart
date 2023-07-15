@@ -40,23 +40,20 @@ class ToastPreview extends ConsumerWidget {
 
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
-    return Directionality(
-      textDirection: toastDetail.direction ?? TextDirection.ltr,
-      child: Material(
-        shape: Theme.of(context).cardTheme.shape,
-        color: Theme.of(context).cardTheme.color,
-        child: SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxWidth: 350,
-                  minHeight: isTablet ? 120 : 132,
-                ),
-                child: Center(child: _buildToastWidget(toastDetail)),
+    return Material(
+      shape: Theme.of(context).cardTheme.shape,
+      color: Theme.of(context).cardTheme.color,
+      child: SizedBox(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: 350,
+                minHeight: isTablet ? 120 : 132,
               ),
+              child: Center(child: _buildToastWidget(toastDetail)),
             ),
           ),
         ),
@@ -80,6 +77,7 @@ class ToastPreview extends ConsumerWidget {
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
           boxShadow: toastDetail.shadow.shadow,
+          direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );
@@ -97,6 +95,7 @@ class ToastPreview extends ConsumerWidget {
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
           boxShadow: toastDetail.shadow.shadow,
+          direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );
@@ -114,6 +113,7 @@ class ToastPreview extends ConsumerWidget {
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
           boxShadow: toastDetail.shadow.shadow,
+          direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );
@@ -131,6 +131,7 @@ class ToastPreview extends ConsumerWidget {
           icon: toastDetail.icon,
           borderRadius: toastDetail.borderRadius,
           boxShadow: toastDetail.shadow.shadow,
+          direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
         );

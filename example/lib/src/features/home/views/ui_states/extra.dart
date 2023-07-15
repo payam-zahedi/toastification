@@ -57,3 +57,28 @@ void openGithub(BuildContext context) async {
     }
   }
 }
+
+void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
+  toastification.show(
+    context: context,
+    alignment: toastDetail.alignment,
+    title: toastDetail.title,
+    description: toastDetail.description,
+    type: toastDetail.type,
+    style: toastDetail.style,
+    autoCloseDuration: toastDetail.autoCloseDuration,
+    animationDuration: toastDetail.animationDuration,
+    icon: toastDetail.icon,
+    foregroundColor: toastDetail.foregroundColor,
+    backgroundColor: toastDetail.backgroundColor,
+    borderRadius: toastDetail.borderRadius,
+    boxShadow: toastDetail.shadow.shadow,
+    direction: toastDetail.direction,
+    closeOnClick: toastDetail.closeOnClick,
+    dragToClose: toastDetail.dragToClose,
+    onCloseTap: toastDetail.onCloseTap,
+    pauseOnHover: toastDetail.pauseOnHover,
+    showCloseButton: toastDetail.showCloseButton,
+    showProgressBar: toastDetail.showProgressBar,
+  );
+}
