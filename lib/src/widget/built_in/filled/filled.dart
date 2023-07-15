@@ -19,6 +19,10 @@ class FilledToastWidget extends StatelessWidget {
     this.direction,
     this.onCloseTap,
     this.showCloseButton,
+    this.showProgressBar = false,
+    this.progressBarValue,
+    this.progressBarWidget,
+    this.progressIndicatorTheme,
   });
 
   final ToastificationType type;
@@ -47,6 +51,12 @@ class FilledToastWidget extends StatelessWidget {
   final TextDirection? direction;
 
   final bool? showCloseButton;
+
+  final bool showProgressBar;
+  final double? progressBarValue;
+  final Widget? progressBarWidget;
+
+  final ProgressIndicatorThemeData? progressIndicatorTheme;
 
   FilledStyle get defaultStyle => FilledStyle(type);
 
@@ -92,7 +102,13 @@ class FilledToastWidget extends StatelessWidget {
                   style: defaultStyle,
                   title: title,
                   description: description,
+                  primaryColor: primaryColor,
                   foregroundColor: foregroundColor,
+                  backgroundColor: backgroundColor,
+                  showProgressBar: showProgressBar,
+                  progressBarValue: progressBarValue,
+                  progressBarWidget: progressBarWidget,
+                  progressIndicatorTheme: progressIndicatorTheme,
                 ),
               ),
               const SizedBox(width: 4),

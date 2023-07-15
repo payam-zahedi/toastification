@@ -88,7 +88,6 @@ class ToastificationBuiltInContainer extends StatelessWidget {
   }
 }
 
-// TODO(payam): add progress bar to widgets
 class BuiltInWidgetBuilder extends StatelessWidget {
   const BuiltInWidgetBuilder({
     super.key,
@@ -109,6 +108,7 @@ class BuiltInWidgetBuilder extends StatelessWidget {
     this.boxShadow,
     this.onCloseTap,
     this.showProgressBar,
+    this.progressBarTheme,
     this.showCloseButton,
     this.closeOnClick,
     this.dragToClose,
@@ -144,6 +144,8 @@ class BuiltInWidgetBuilder extends StatelessWidget {
   final VoidCallback? onCloseTap;
 
   final bool? showProgressBar;
+
+  final ProgressIndicatorThemeData? progressBarTheme;
 
   final bool? showCloseButton;
 
@@ -187,9 +189,27 @@ class BuiltInWidgetBuilder extends StatelessWidget {
 
     final style = this.style ?? ToastificationStyle.fillColored;
 
+    final defaultStyle = switch (style) {
+      ToastificationStyle.minimal => MinimalStyle(type),
+      ToastificationStyle.fillColored => FilledStyle(type),
+      ToastificationStyle.flatColored => FlatColoredStyle(type),
+      ToastificationStyle.flat => FlatStyle(type),
+    };
+
     final primaryColor = buildMaterialColor(this.primaryColor);
     final backgroundColor = buildMaterialColor(this.backgroundColor);
     final onCloseTap = buildOnCloseTap();
+
+    final showProgressBar = this.showProgressBar ?? false;
+
+    final progressBarWidget = showProgressBar
+        ? ToastTimerAnimationBuilder(
+            item: item,
+            builder: (context, value, _) {
+              return LinearProgressIndicator(value: value);
+            },
+          )
+        : null;
 
     final widget = switch (style) {
       ToastificationStyle.flat => FlatToastWidget(
@@ -207,6 +227,9 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
+          showProgressBar: showProgressBar,
+          progressIndicatorTheme: progressBarTheme,
+          progressBarWidget: progressBarWidget,
         ),
       ToastificationStyle.flatColored => FlatColoredToastWidget(
           type: type,
@@ -223,6 +246,9 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
+          showProgressBar: showProgressBar,
+          progressIndicatorTheme: progressBarTheme,
+          progressBarWidget: progressBarWidget,
         ),
       ToastificationStyle.fillColored => FilledToastWidget(
           type: type,
@@ -239,6 +265,9 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
+          showProgressBar: showProgressBar,
+          progressIndicatorTheme: progressBarTheme,
+          progressBarWidget: progressBarWidget,
         ),
       ToastificationStyle.minimal => MinimalToastWidget(
           type: type,
@@ -255,14 +284,10 @@ class BuiltInWidgetBuilder extends StatelessWidget {
           direction: direction,
           onCloseTap: onCloseTap,
           showCloseButton: showCloseButton,
+          showProgressBar: showProgressBar,
+          progressIndicatorTheme: progressBarTheme,
+          progressBarWidget: progressBarWidget,
         ),
-    };
-
-    final defaultStyle = switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
     };
 
     return (widget, defaultStyle);

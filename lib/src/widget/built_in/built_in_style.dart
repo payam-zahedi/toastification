@@ -60,7 +60,7 @@ abstract class BuiltInStyle {
   double elevation(BuildContext context) => 0.0;
   List<BoxShadow> boxShadow(BuildContext context) => const [];
 
-  double progressIndicatorStrokeWidth(BuildContext context);
-  Color progressIndicatorValueColor(BuildContext context);
-  Color progressIndicatorBackgroundColor(BuildContext context);
+  double progressIndicatorStrokeWidth(BuildContext context) => 2.0;
+
+  ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context);
 }

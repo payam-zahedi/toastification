@@ -21,7 +21,13 @@ class BuiltInContent extends StatelessWidget {
     required this.style,
     required this.title,
     this.description,
+    this.primaryColor,
     this.foregroundColor,
+    this.backgroundColor,
+    this.showProgressBar = false,
+    this.progressBarValue,
+    this.progressBarWidget,
+    this.progressIndicatorTheme,
   });
 
   final BuiltInStyle style;
@@ -30,7 +36,15 @@ class BuiltInContent extends StatelessWidget {
 
   final String? description;
 
+  final Color? primaryColor;
   final Color? foregroundColor;
+  final Color? backgroundColor;
+
+  final bool showProgressBar;
+  final double? progressBarValue;
+  final Widget? progressBarWidget;
+
+  final ProgressIndicatorThemeData? progressIndicatorTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +55,33 @@ class BuiltInContent extends StatelessWidget {
           ),
     );
 
-    if (description?.isNotEmpty ?? false) {
+    final showColumn =
+        description?.isNotEmpty == true || showProgressBar == true;
+
+    if (showColumn) {
       content = Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           content,
-          const SizedBox(height: 2),
-          Text(
-            description!,
-            style: style.descriptionTextStyle(context)?.copyWith(
-                  color: foregroundColor?.withOpacity(.7),
-                ),
-          ),
+          if (description?.isNotEmpty == true) ...[
+            const SizedBox(height: 4),
+            Text(
+              description!,
+              style: style.descriptionTextStyle(context)?.copyWith(
+                    color: foregroundColor?.withOpacity(.7),
+                  ),
+            ),
+          ],
+          if (showProgressBar) ...[
+            const SizedBox(height: 10),
+            ProgressIndicatorTheme(
+              data: progressIndicatorTheme ??
+                  style.progressIndicatorTheme(context),
+              child: progressBarWidget ??
+                  LinearProgressIndicator(value: progressBarValue),
+            ),
+          ],
         ],
       );
     }

@@ -19,6 +19,10 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.direction,
     this.onCloseTap,
     this.showCloseButton,
+    this.showProgressBar = false,
+    this.progressBarValue,
+    this.progressBarWidget,
+    this.progressIndicatorTheme,
   });
 
   final ToastificationType type;
@@ -48,6 +52,12 @@ class FlatColoredToastWidget extends StatelessWidget {
 
   final bool? showCloseButton;
 
+  final bool showProgressBar;
+  final double? progressBarValue;
+  final Widget? progressBarWidget;
+
+  final ProgressIndicatorThemeData? progressIndicatorTheme;
+
   FlatColoredStyle get defaultStyle => FlatColoredStyle(type);
 
   @override
@@ -63,8 +73,7 @@ class FlatColoredToastWidget extends StatelessWidget {
 
     final borderSide = defaultStyle.borderSide(context);
 
-
-  final direction = this.direction ?? Directionality.of(context);
+    final direction = this.direction ?? Directionality.of(context);
 
     return Directionality(
       textDirection: direction,
@@ -93,7 +102,13 @@ class FlatColoredToastWidget extends StatelessWidget {
                   style: defaultStyle,
                   title: title,
                   description: description,
+                  primaryColor: primaryColor,
                   foregroundColor: foregroundColor,
+                  backgroundColor: backgroundColor,
+                  showProgressBar: showProgressBar,
+                  progressBarValue: progressBarValue,
+                  progressBarWidget: progressBarWidget,
+                  progressIndicatorTheme: progressIndicatorTheme,
                 ),
               ),
               const SizedBox(width: 4),

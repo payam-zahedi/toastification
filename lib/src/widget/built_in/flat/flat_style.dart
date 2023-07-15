@@ -40,7 +40,6 @@ class FlatStyle extends BuiltInStyle {
         : Colors.white;
   }
 
-
   @override
   Color iconColor(BuildContext context) {
     return primaryColor(context);
@@ -92,17 +91,12 @@ class FlatStyle extends BuiltInStyle {
   }
 
   @override
-  double progressIndicatorStrokeWidth(BuildContext context) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Color progressIndicatorValueColor(BuildContext context) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Color progressIndicatorBackgroundColor(BuildContext context) {
-    throw UnimplementedError();
+  ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context) {
+    return ProgressIndicatorThemeData(
+      color: foregroundColor(context).withOpacity(.15),
+      linearMinHeight: super.progressIndicatorStrokeWidth(context),
+      linearTrackColor: foregroundColor(context).withOpacity(.05),
+      refreshBackgroundColor: foregroundColor(context).withOpacity(.05),
+    );
   }
 }

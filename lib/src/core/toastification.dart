@@ -190,7 +190,6 @@ class Toastification {
     );
   }
 
-
   /// shows a built-in notification with the given parameters
   ///
   /// example :
@@ -229,6 +228,7 @@ class Toastification {
     TextDirection? direction,
     VoidCallback? onCloseTap,
     bool? showProgressBar,
+    ProgressIndicatorThemeData? progressBarTheme,
     bool? showCloseButton,
     bool? closeOnClick,
     bool? dragToClose,
@@ -258,6 +258,7 @@ class Toastification {
           direction: direction,
           onCloseTap: onCloseTap,
           showProgressBar: showProgressBar,
+          progressBarTheme: progressBarTheme,
           showCloseButton: showCloseButton,
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
