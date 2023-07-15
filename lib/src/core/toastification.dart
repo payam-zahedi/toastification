@@ -190,7 +190,6 @@ class Toastification {
     );
   }
 
-
   /// shows a built-in notification with the given parameters
   ///
   /// example :

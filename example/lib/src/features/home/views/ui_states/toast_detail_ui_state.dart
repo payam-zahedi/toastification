@@ -23,6 +23,7 @@ enum ShadowOptions {
   final String title;
   final List<BoxShadow> shadow;
 }
+
 @freezed
 class ToastDetail with _$ToastDetail {
   factory ToastDetail({

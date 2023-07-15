@@ -87,7 +87,7 @@ class FlatColoredStyle extends BuiltInStyle {
   @override
   ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context) {
     return ProgressIndicatorThemeData(
-      color: foregroundColor(context).withOpacity(.10),
+      color: foregroundColor(context).withOpacity(.15),
       linearMinHeight: super.progressIndicatorStrokeWidth(context),
       linearTrackColor: foregroundColor(context).withOpacity(.05),
       refreshBackgroundColor: foregroundColor(context).withOpacity(.05),
