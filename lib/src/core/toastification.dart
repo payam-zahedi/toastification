@@ -190,6 +190,7 @@ class Toastification {
     );
   }
 
+
   /// shows a built-in notification with the given parameters
   ///
   /// example :
@@ -205,7 +206,7 @@ class Toastification {
   ///   autoCloseDuration: Duration(seconds: 3),
   /// );
   /// ```
-  ///
+  // TODO(payam): add brightness and dark mode items
   ToastificationItem show({
     required BuildContext context,
     AlignmentGeometry? alignment,
@@ -221,7 +222,6 @@ class Toastification {
     Color? primaryColor,
     Color? backgroundColor,
     Color? foregroundColor,
-    Brightness? brightness,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
     BorderRadiusGeometry? borderRadius,
@@ -251,7 +251,6 @@ class Toastification {
           primaryColor: primaryColor,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
-          brightness: brightness,
           padding: padding,
           margin: margin,
           borderRadius: borderRadius,
