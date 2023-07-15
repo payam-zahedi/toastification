@@ -54,6 +54,7 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: controller,
+      child: widget.child,
       builder: (context, child) {
         return widget.builder(context, controller.value, child);
       },
