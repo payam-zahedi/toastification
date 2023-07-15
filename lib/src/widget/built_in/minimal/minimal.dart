@@ -20,6 +20,10 @@ class MinimalToastWidget extends StatelessWidget {
     this.direction,
     this.onCloseTap,
     this.showCloseButton,
+    this.showProgressBar = false,
+    this.progressBarValue,
+    this.progressBarWidget,
+    this.progressIndicatorTheme,
   });
 
   final ToastificationType type;
@@ -48,6 +52,12 @@ class MinimalToastWidget extends StatelessWidget {
   final TextDirection? direction;
 
   final bool? showCloseButton;
+
+  final bool showProgressBar;
+  final double? progressBarValue;
+  final Widget? progressBarWidget;
+
+  final ProgressIndicatorThemeData? progressIndicatorTheme;
 
   MinimalStyle get defaultStyle => MinimalStyle(type);
 
@@ -101,7 +111,13 @@ class MinimalToastWidget extends StatelessWidget {
                       style: defaultStyle,
                       title: title,
                       description: description,
+                      primaryColor: primaryColor,
                       foregroundColor: foregroundColor,
+                      backgroundColor: backgroundColor,
+                      showProgressBar: showProgressBar,
+                      progressBarValue: progressBarValue,
+                      progressBarWidget: progressBarWidget,
+                      progressIndicatorTheme: progressIndicatorTheme,
                     ),
                   ),
                   const SizedBox(width: 4),
