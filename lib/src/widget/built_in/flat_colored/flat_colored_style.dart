@@ -85,16 +85,6 @@ class FlatColoredStyle extends BuiltInStyle {
   }
 
   @override
-  double elevation(BuildContext context) {
-    return 0;
-  }
-
-  @override
-  List<BoxShadow> boxShadow(BuildContext context) {
-    return [];
-  }
-
-  @override
   double progressIndicatorStrokeWidth(BuildContext context) {
     throw UnimplementedError();
   }

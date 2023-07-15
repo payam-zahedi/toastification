@@ -125,14 +125,17 @@ class Toastification {
   ToastificationItem showCustom({
     required BuildContext context,
     AlignmentGeometry? alignment,
+    TextDirection? direction,
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
+    direction ??= Directionality.of(context);
+
     final effectiveAlignment =
-        (alignment ?? config.alignment).resolve(Directionality.of(context));
+        (alignment ?? config.alignment).resolve(direction);
 
     final manager = _managers.putIfAbsent(
       effectiveAlignment,
@@ -168,6 +171,7 @@ class Toastification {
     required NavigatorState navigator,
     required ToastificationBuilder builder,
     AlignmentGeometry? alignment,
+    TextDirection? textDirection,
     ToastificationAnimationBuilder? animationBuilder,
     Duration? animationDuration,
     Duration? autoCloseDuration,
@@ -177,6 +181,7 @@ class Toastification {
     return showCustom(
       context: context,
       alignment: alignment,
+      direction: textDirection,
       builder: builder,
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
@@ -184,6 +189,7 @@ class Toastification {
       overlayState: navigator.overlay,
     );
   }
+
 
   /// shows a built-in notification with the given parameters
   ///
@@ -200,7 +206,7 @@ class Toastification {
   ///   autoCloseDuration: Duration(seconds: 3),
   /// );
   /// ```
-  ///
+  // TODO(payam): add brightness and dark mode items
   ToastificationItem show({
     required BuildContext context,
     AlignmentGeometry? alignment,
@@ -216,12 +222,11 @@ class Toastification {
     Color? primaryColor,
     Color? backgroundColor,
     Color? foregroundColor,
-    Brightness? brightness,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
     BorderRadiusGeometry? borderRadius,
-    double? elevation,
     List<BoxShadow>? boxShadow,
+    TextDirection? direction,
     VoidCallback? onCloseTap,
     bool? showProgressBar,
     bool? showCloseButton,
@@ -232,6 +237,7 @@ class Toastification {
     return showCustom(
       context: context,
       alignment: alignment,
+      direction: direction,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
       builder: (context, holder) {
@@ -245,12 +251,11 @@ class Toastification {
           primaryColor: primaryColor,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
-          brightness: brightness,
           padding: padding,
           margin: margin,
           borderRadius: borderRadius,
-          elevation: elevation,
           boxShadow: boxShadow,
+          direction: direction,
           onCloseTap: onCloseTap,
           showProgressBar: showProgressBar,
           showCloseButton: showCloseButton,

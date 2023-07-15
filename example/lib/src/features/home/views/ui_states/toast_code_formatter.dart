@@ -1,5 +1,6 @@
 import 'package:dart_style/dart_style.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
+import 'package:flutter/material.dart';
 
 class ToastCodeFormatter {
   static final _formatter = DartFormatter();
@@ -73,6 +74,10 @@ class ToastCodeFormatter {
 
     if (toastDetail.showProgressBar == false) {
       code.writeln('\tshowProgressBar: ${toastDetail.showProgressBar},');
+    }
+
+    if (toastDetail.direction == TextDirection.rtl) {
+      code.writeln('\tdirection: ${toastDetail.direction},');
     }
 
     if (toastDetail.showCloseButton == false) {

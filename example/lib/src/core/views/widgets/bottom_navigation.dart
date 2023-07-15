@@ -4,7 +4,6 @@ import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:toastification/toastification.dart';
 
 class BottomNavigationView extends ConsumerWidget {
   const BottomNavigationView({super.key});
@@ -104,27 +103,7 @@ class BottomNavigationView extends ConsumerWidget {
             onPressed: () {
               final toastDetail = ref.read(toastDetailControllerProvider);
 
-              toastification.show(
-                context: context,
-                alignment: toastDetail.alignment,
-                title: toastDetail.title,
-                description: toastDetail.description,
-                type: toastDetail.type,
-                style: toastDetail.style,
-                autoCloseDuration: toastDetail.autoCloseDuration,
-                animationDuration: toastDetail.animationDuration,
-                icon: toastDetail.icon,
-                foregroundColor: toastDetail.foregroundColor,
-                backgroundColor: toastDetail.backgroundColor,
-                borderRadius: toastDetail.borderRadius,
-                boxShadow: toastDetail.shadow.shadow,
-                closeOnClick: toastDetail.closeOnClick,
-                dragToClose: toastDetail.dragToClose,
-                onCloseTap: toastDetail.onCloseTap,
-                pauseOnHover: toastDetail.pauseOnHover,
-                showCloseButton: toastDetail.showCloseButton,
-                showProgressBar: toastDetail.showProgressBar,
-              );
+              showCurrentToast(context, toastDetail);
             },
             child: const Text('Preview on My Screen'),
           ),
