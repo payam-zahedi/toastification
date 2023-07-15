@@ -80,6 +80,7 @@ class ToastPreview extends ConsumerWidget {
           direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
+          showProgressBar: toastDetail.showProgressBar,
         );
       case ToastificationStyle.fillColored:
         return FilledToastWidget(
@@ -98,6 +99,7 @@ class ToastPreview extends ConsumerWidget {
           direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
+          showProgressBar: toastDetail.showProgressBar,
         );
       case ToastificationStyle.flatColored:
         return FlatColoredToastWidget(
@@ -116,6 +118,7 @@ class ToastPreview extends ConsumerWidget {
           direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
+          showProgressBar: toastDetail.showProgressBar,
         );
       case ToastificationStyle.minimal:
         return MinimalToastWidget(
@@ -134,6 +137,7 @@ class ToastPreview extends ConsumerWidget {
           direction: toastDetail.direction,
           onCloseTap: toastDetail.onCloseTap ?? () {},
           showCloseButton: toastDetail.showCloseButton,
+          showProgressBar: toastDetail.showProgressBar,
         );
     }
   }
@@ -160,10 +164,12 @@ class _RawCodePreview extends StatelessWidget {
   final bool showCopyButton;
   @override
   Widget build(BuildContext context) {
-    Widget child = const SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: CodePreviewer(),
+    Widget child = SingleChildScrollView(
+      primary: true,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: const CodePreviewer(),
       ),
     );
 

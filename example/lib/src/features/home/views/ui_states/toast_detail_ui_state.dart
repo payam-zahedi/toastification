@@ -44,7 +44,7 @@ class ToastDetail with _$ToastDetail {
     Duration? animationDuration,
     VoidCallback? onCloseTap,
     @Default(true) bool newestOnTop,
-    @Default(true) bool showProgressBar,
+    @Default(false) bool showProgressBar,
     @Default(true) bool showCloseButton,
     @Default(true) bool closeOnClick,
     @Default(true) bool pauseOnHover,

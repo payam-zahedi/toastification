@@ -72,7 +72,7 @@ class ToastCodeFormatter {
       code.writeln('\tboxShadow: ${toastDetail.shadow.name},');
     }
 
-    if (toastDetail.showProgressBar == false) {
+    if (toastDetail.showProgressBar == true) {
       code.writeln('\tshowProgressBar: ${toastDetail.showProgressBar},');
     }
 

@@ -386,7 +386,7 @@ class _$_ToastDetail implements _ToastDetail {
       this.animationDuration,
       this.onCloseTap,
       this.newestOnTop = true,
-      this.showProgressBar = true,
+      this.showProgressBar = false,
       this.showCloseButton = true,
       this.closeOnClick = true,
       this.pauseOnHover = true,

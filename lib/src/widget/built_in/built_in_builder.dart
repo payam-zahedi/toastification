@@ -88,7 +88,6 @@ class ToastificationBuiltInContainer extends StatelessWidget {
   }
 }
 
-// TODO(payam): add progress bar to widgets
 class BuiltInWidgetBuilder extends StatelessWidget {
   const BuiltInWidgetBuilder({
     super.key,
