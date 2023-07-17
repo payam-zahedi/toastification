@@ -82,7 +82,7 @@ class ToastHeader extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                     ),
                     onPressed: () {
-                      // TODO: add this feature
+                      // TODO: add Make a Random Toast feature
                     },
                     child: const Text('Make a Random Toast'),
                   ),
