@@ -554,6 +554,14 @@ class _CloseSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
+    final closeButtonShowType = ref.watch(
+      toastDetailControllerProvider.select(
+        (value) => value.closeButtonShowType,
+      ),
+    );
+
     return SubSection(
       title: 'CLOSE',
       body: ResponsiveRowColumn(
@@ -582,20 +590,46 @@ class _CloseSection extends ConsumerWidget {
           ResponsiveRowColumnItem(
             rowFit: FlexFit.tight,
             columnFit: FlexFit.loose,
-            child: BorderedDropDown<String>(
+            child: BorderedDropDown<CloseButtonShowType>(
+              value: closeButtonShowType,
               icon: const Icon(Icons.close_rounded, size: 18),
-              hint: 'Choose close button type',
-              items: const [
-                DropdownMenuItem(
-                  value: 'Icon',
-                  child: Text('Icon'),
-                ),
-                DropdownMenuItem(
-                  value: 'Text',
-                  child: Text('Text'),
-                ),
-              ],
-              onChanged: (value) {},
+              hint: 'Close Button',
+              items: CloseButtonShowType.values.map(
+                (item) {
+                  final isSelected = item == closeButtonShowType;
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.title,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.1,
+                              color: isSelected
+                                  ? theme.colorScheme.onSurface
+                                  : theme.colorScheme.onBackground,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        if (isSelected)
+                          Icon(
+                            Icons.check,
+                            color: theme.colorScheme.primary,
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              ).toList(),
+              onChanged: (value) {
+                ref
+                    .read(toastDetailControllerProvider.notifier)
+                    .changeCloseButtonShowType(value!);
+              },
             ),
           ),
         ],

@@ -56,6 +56,8 @@ ThemeData _themeBuilder() {
     brightness: Brightness.light,
     colorScheme: scheme,
     dividerColor: scheme.outline,
+    disabledColor: _switchInActiveColor,
+    focusColor: _switchActiveColor,
     textTheme: textTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
@@ -107,8 +109,6 @@ ThemeData _themeBuilder() {
       elevation: 0,
       margin: EdgeInsets.zero,
     ),
-    disabledColor: _switchInActiveColor,
-    focusColor: _switchActiveColor,
   );
 }
 

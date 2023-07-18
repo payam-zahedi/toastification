@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/flat_colored/flat_colored_style.dart';
+import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 
 class FlatColoredToastWidget extends StatelessWidget {
   const FlatColoredToastWidget({
@@ -112,26 +113,10 @@ class FlatColoredToastWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 4),
-              Offstage(
-                offstage: !showCloseButton,
-                child: Material(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(4),
-                  child: Builder(builder: (context) {
-                    return InkWell(
-                      onTap: onCloseTap,
-                      borderRadius: BorderRadius.circular(4),
-                      child: Padding(
-                        padding: const EdgeInsets.all(1.0),
-                        child: Icon(
-                          defaultStyle.closeIcon(context),
-                          color: defaultStyle.closeIconColor(context),
-                          size: 18,
-                        ),
-                      ),
-                    );
-                  }),
-                ),
+              ToastCloseButton(
+                showCloseButton: showCloseButton,
+                onCloseTap: onCloseTap,
+                defaultStyle: defaultStyle,
               ),
             ],
           ),

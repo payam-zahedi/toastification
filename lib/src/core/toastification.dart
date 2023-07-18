@@ -229,7 +229,7 @@ class Toastification {
     VoidCallback? onCloseTap,
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
-    bool? showCloseButton,
+    CloseButtonShowType? closeButtonShowType,
     bool? closeOnClick,
     bool? dragToClose,
     bool? pauseOnHover,
@@ -241,7 +241,7 @@ class Toastification {
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
       builder: (context, holder) {
-        return BuiltInWidgetBuilder(
+        return BuiltInBuilder(
           item: holder,
           type: type,
           style: style,
@@ -259,7 +259,7 @@ class Toastification {
           onCloseTap: onCloseTap,
           showProgressBar: showProgressBar,
           progressBarTheme: progressBarTheme,
-          showCloseButton: showCloseButton,
+          closeButtonShowType: closeButtonShowType,
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
           pauseOnHover: pauseOnHover,
