@@ -83,15 +83,17 @@ class BorderedDropDown<T> extends StatelessWidget {
 
             return Row(
               children: [
-                Text(
-                  hint,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    height: 1.1,
-                    color: theme.colorScheme.onSurface,
-                    fontWeight: FontWeight.w400,
+                Expanded(
+                  child: Text(
+                    hint,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      height: 1.1,
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Spacer(),
                 Text(
                   item.value.toString(),
                   style: theme.textTheme.bodyMedium?.copyWith(

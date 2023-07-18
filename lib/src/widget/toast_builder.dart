@@ -6,12 +6,17 @@ class ToastHolderWidget extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
   const ToastHolderWidget({
     required this.item,
-    required this.child,
+    required this.animation,
+    required this.alignment,
+    required this.transformerBuilder,
   });
 
   final ToastificationItem item;
 
-  final Widget child;
+  final Animation<double> animation;
+  final AlignmentGeometry alignment;
+
+  final ToastificationAnimationBuilder transformerBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +25,70 @@ class ToastHolderWidget extends StatelessWidget {
       child: DefaultTextStyle(
         style: Theme.of(context).textTheme.bodyLarge ??
             ThemeData.light().textTheme.bodyLarge!,
-        child: child,
+        child: _AnimationTransformer(
+          animation: animation,
+          alignment: alignment,
+          transformerBuilder: transformerBuilder,
+          child: item.builder(context, item),
+        ),
       ),
+    );
+  }
+}
+
+class _AnimationTransformer extends AnimatedWidget {
+  const _AnimationTransformer({
+    required Animation<double> animation,
+    required this.alignment,
+    required this.transformerBuilder,
+    required this.child,
+  }) : super(listenable: animation);
+
+  Animation<double> get animation => listenable as Animation<double>;
+
+  final AlignmentGeometry alignment;
+
+  final ToastificationAnimationBuilder transformerBuilder;
+
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    const AlignmentDirectional axisAlign = AlignmentDirectional(-1.0, 0);
+
+    final alignment = this.alignment.resolve(Directionality.of(context));
+
+    final slideInAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Interval(
+          0,
+          0.6,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    final targetAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: animation,
+        curve: const Interval(
+          0.3,
+          1,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    return Align(
+      alignment: axisAlign,
+      heightFactor: math.max(slideInAnimation.value, 0.0),
+      child: transformerBuilder(context, targetAnimation, alignment, child),
     );
   }
 }
@@ -42,22 +109,26 @@ class ToastificationTransition extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    const AlignmentDirectional axisAlign = AlignmentDirectional(-1.0, 0);
-
     final alignment = this.alignment.resolve(Directionality.of(context));
 
-    return Align(
-      alignment: axisAlign,
-      heightFactor: math.max(animation.value, 0.0),
-      child: FadeTransition(
-        opacity: animation,
-        child: SlideTransition(
-          position: Tween<Offset>(
-            begin: alignment.y >= 0 ? const Offset(0, 1) : const Offset(0, -1),
-            end: const Offset(0, 0),
-          ).animate(animation),
-          child: child,
-        ),
+    final isCenter = alignment.x == 0;
+
+    final slideOffset = isCenter
+        ? alignment.y >= 0
+            ? const Offset(0, 1)
+            : const Offset(0, -1)
+        : alignment.x >= 0
+            ? const Offset(1, 0)
+            : const Offset(-1, 0);
+
+    return FadeTransition(
+      opacity: animation,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: slideOffset,
+          end: const Offset(0, 0),
+        ).animate(animation),
+        child: child,
       ),
     );
   }

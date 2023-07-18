@@ -1,3 +1,4 @@
+import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:toastification/toastification.dart';
@@ -43,8 +44,10 @@ class ToastDetail with _$ToastDetail {
     TextDirection? direction,
     @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
     Duration? animationDuration,
+    @Default(BounceAnimationType()) AnimationType animationType,
     VoidCallback? onCloseTap,
-    CloseButtonShowType? closeButtonShowType,
+    @Default(CloseButtonShowType.always)
+    CloseButtonShowType closeButtonShowType,
     @Default(true) bool newestOnTop,
     @Default(false) bool showProgressBar,
     @Default(true) bool closeOnClick,

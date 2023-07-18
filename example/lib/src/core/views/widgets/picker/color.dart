@@ -1,5 +1,4 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
-import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:flutter/material.dart';
 
 class ColorPicker extends StatelessWidget {
@@ -75,7 +74,6 @@ class ColorPicker extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SoonWidget(),
                     ],
                   ),
                 ],

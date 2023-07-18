@@ -1,6 +1,8 @@
 import 'package:dart_style/dart_style.dart';
+import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/toastification.dart';
 
 class ToastCodeFormatter {
   static final _formatter = DartFormatter();
@@ -44,6 +46,11 @@ class ToastCodeFormatter {
       code.writeln('),');
     }
 
+    if (toastDetail.animationType != const BounceAnimationType()) {
+      code.writeln(
+          '\tanimationBuilder: ${toastDetail.animationType.buildCode()},');
+    }
+
     if (toastDetail.primaryColor != null) {
       code.writeln('\tprimaryColor: ${toastDetail.primaryColor},');
     }
@@ -80,9 +87,9 @@ class ToastCodeFormatter {
       code.writeln('\tdirection: ${toastDetail.direction},');
     }
 
-    if (toastDetail.closeButtonShowType != null) {
+    if (toastDetail.closeButtonShowType != CloseButtonShowType.always) {
       code.writeln(
-        '\tcloseButtonShowType: ${toastDetail.closeButtonShowType!.toValueString()},',
+        '\tcloseButtonShowType: ${toastDetail.closeButtonShowType.toValueString()},',
       );
     }
 

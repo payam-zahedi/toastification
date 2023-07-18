@@ -32,8 +32,9 @@ mixin _$ToastDetail {
   TextDirection? get direction => throw _privateConstructorUsedError;
   Duration? get autoCloseDuration => throw _privateConstructorUsedError;
   Duration? get animationDuration => throw _privateConstructorUsedError;
+  AnimationType get animationType => throw _privateConstructorUsedError;
   VoidCallback? get onCloseTap => throw _privateConstructorUsedError;
-  CloseButtonShowType? get closeButtonShowType =>
+  CloseButtonShowType get closeButtonShowType =>
       throw _privateConstructorUsedError;
   bool get newestOnTop => throw _privateConstructorUsedError;
   bool get showProgressBar => throw _privateConstructorUsedError;
@@ -68,8 +69,9 @@ abstract class $ToastDetailCopyWith<$Res> {
       TextDirection? direction,
       Duration? autoCloseDuration,
       Duration? animationDuration,
+      AnimationType animationType,
       VoidCallback? onCloseTap,
-      CloseButtonShowType? closeButtonShowType,
+      CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
       bool closeOnClick,
@@ -105,8 +107,9 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? direction = freezed,
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
+    Object? animationType = null,
     Object? onCloseTap = freezed,
-    Object? closeButtonShowType = freezed,
+    Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
@@ -174,14 +177,18 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.animationDuration
           : animationDuration // ignore: cast_nullable_to_non_nullable
               as Duration?,
+      animationType: null == animationType
+          ? _value.animationType
+          : animationType // ignore: cast_nullable_to_non_nullable
+              as AnimationType,
       onCloseTap: freezed == onCloseTap
           ? _value.onCloseTap
           : onCloseTap // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
-      closeButtonShowType: freezed == closeButtonShowType
+      closeButtonShowType: null == closeButtonShowType
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
-              as CloseButtonShowType?,
+              as CloseButtonShowType,
       newestOnTop: null == newestOnTop
           ? _value.newestOnTop
           : newestOnTop // ignore: cast_nullable_to_non_nullable
@@ -230,8 +237,9 @@ abstract class _$$_ToastDetailCopyWith<$Res>
       TextDirection? direction,
       Duration? autoCloseDuration,
       Duration? animationDuration,
+      AnimationType animationType,
       VoidCallback? onCloseTap,
-      CloseButtonShowType? closeButtonShowType,
+      CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
       bool closeOnClick,
@@ -265,8 +273,9 @@ class __$$_ToastDetailCopyWithImpl<$Res>
     Object? direction = freezed,
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
+    Object? animationType = null,
     Object? onCloseTap = freezed,
-    Object? closeButtonShowType = freezed,
+    Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
@@ -334,14 +343,18 @@ class __$$_ToastDetailCopyWithImpl<$Res>
           ? _value.animationDuration
           : animationDuration // ignore: cast_nullable_to_non_nullable
               as Duration?,
+      animationType: null == animationType
+          ? _value.animationType
+          : animationType // ignore: cast_nullable_to_non_nullable
+              as AnimationType,
       onCloseTap: freezed == onCloseTap
           ? _value.onCloseTap
           : onCloseTap // ignore: cast_nullable_to_non_nullable
               as VoidCallback?,
-      closeButtonShowType: freezed == closeButtonShowType
+      closeButtonShowType: null == closeButtonShowType
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
-              as CloseButtonShowType?,
+              as CloseButtonShowType,
       newestOnTop: null == newestOnTop
           ? _value.newestOnTop
           : newestOnTop // ignore: cast_nullable_to_non_nullable
@@ -385,8 +398,9 @@ class _$_ToastDetail implements _ToastDetail {
       this.direction,
       this.autoCloseDuration = const Duration(seconds: 4),
       this.animationDuration,
+      this.animationType = const BounceAnimationType(),
       this.onCloseTap,
-      this.closeButtonShowType,
+      this.closeButtonShowType = CloseButtonShowType.always,
       this.newestOnTop = true,
       this.showProgressBar = false,
       this.closeOnClick = true,
@@ -432,9 +446,13 @@ class _$_ToastDetail implements _ToastDetail {
   @override
   final Duration? animationDuration;
   @override
+  @JsonKey()
+  final AnimationType animationType;
+  @override
   final VoidCallback? onCloseTap;
   @override
-  final CloseButtonShowType? closeButtonShowType;
+  @JsonKey()
+  final CloseButtonShowType closeButtonShowType;
   @override
   @JsonKey()
   final bool newestOnTop;
@@ -453,7 +471,7 @@ class _$_ToastDetail implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, onCloseTap: $onCloseTap, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, onCloseTap: $onCloseTap, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
   }
 
   @override
@@ -486,6 +504,8 @@ class _$_ToastDetail implements _ToastDetail {
                 other.autoCloseDuration == autoCloseDuration) &&
             (identical(other.animationDuration, animationDuration) ||
                 other.animationDuration == animationDuration) &&
+            (identical(other.animationType, animationType) ||
+                other.animationType == animationType) &&
             (identical(other.onCloseTap, onCloseTap) ||
                 other.onCloseTap == onCloseTap) &&
             (identical(other.closeButtonShowType, closeButtonShowType) ||
@@ -520,6 +540,7 @@ class _$_ToastDetail implements _ToastDetail {
         direction,
         autoCloseDuration,
         animationDuration,
+        animationType,
         onCloseTap,
         closeButtonShowType,
         newestOnTop,
@@ -553,8 +574,9 @@ abstract class _ToastDetail implements ToastDetail {
       final TextDirection? direction,
       final Duration? autoCloseDuration,
       final Duration? animationDuration,
+      final AnimationType animationType,
       final VoidCallback? onCloseTap,
-      final CloseButtonShowType? closeButtonShowType,
+      final CloseButtonShowType closeButtonShowType,
       final bool newestOnTop,
       final bool showProgressBar,
       final bool closeOnClick,
@@ -592,9 +614,11 @@ abstract class _ToastDetail implements ToastDetail {
   @override
   Duration? get animationDuration;
   @override
+  AnimationType get animationType;
+  @override
   VoidCallback? get onCloseTap;
   @override
-  CloseButtonShowType? get closeButtonShowType;
+  CloseButtonShowType get closeButtonShowType;
   @override
   bool get newestOnTop;
   @override

@@ -43,34 +43,33 @@ class CountTile extends StatelessWidget {
             icon!,
           ],
           const SizedBox(width: 10),
-          Text(title, overflow: TextOverflow.ellipsis),
+          Expanded(child: Text(title, overflow: TextOverflow.ellipsis)),
 
           /// a rich text that shows 0.15 s
-          Expanded(
-            child: Text.rich(
-              textAlign: TextAlign.end,
-              TextSpan(
-                children: [
+          Text.rich(
+            textAlign: TextAlign.end,
+            maxLines: 1,
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: value.toStringAsFixed(2),
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                if (valueSuffix != null)
                   TextSpan(
-                    text: value.toStringAsFixed(2),
+                    text: ' $valueSuffix',
                     style: DefaultTextStyle.of(context).style.copyWith(
-                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.onSurface.withOpacity(.5),
+                          fontWeight: FontWeight.w300,
+                          height: 1,
                         ),
                   ),
-                  if (valueSuffix != null)
-                    TextSpan(
-                      text: ' $valueSuffix',
-                      style: DefaultTextStyle.of(context).style.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(.5),
-                            fontWeight: FontWeight.w300,
-                            height: 1,
-                          ),
-                    ),
-                ],
-              ),
+              ],
             ),
           ),
-          const SizedBox(width: 24),
+          const SizedBox(width: 19),
           FilledButton(
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.all(0),

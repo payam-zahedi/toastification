@@ -14,6 +14,7 @@ import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
+import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -494,6 +495,12 @@ class _SystemSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
+    final animationType = ref.watch(
+      toastDetailControllerProvider.select((value) => value.animationType),
+    );
+
     return SubSection(
       title: 'SYSTEM',
       body: ResponsiveRowColumn(
@@ -523,24 +530,47 @@ class _SystemSection extends ConsumerWidget {
           ResponsiveRowColumnItem(
             rowFit: FlexFit.tight,
             columnFit: FlexFit.loose,
-            child: BorderedDropDown<String>(
+            child: BorderedDropDown<AnimationType?>(
+              value: animationType,
               icon: const Icon(Iconsax.star_1_copy),
               hint: 'Animation type',
-              items: const [
-                DropdownMenuItem(
-                  value: 'Default',
-                  child: Text('Default'),
-                ),
-                DropdownMenuItem(
-                  value: 'Fade',
-                  child: Text('Fade'),
-                ),
-                DropdownMenuItem(
-                  value: 'Slide',
-                  child: Text('Slide'),
-                ),
-              ],
-              onChanged: (value) {},
+              items: AnimationType.types.map(
+                (item) {
+                  final isSelected = item == animationType;
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item.title,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.1,
+                              color: isSelected
+                                  ? theme.colorScheme.onSurface
+                                  : theme.colorScheme.onBackground,
+                              fontWeight: isSelected
+                                  ? FontWeight.w600
+                                  : FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                        if (isSelected)
+                          Icon(
+                            Icons.check,
+                            color: theme.colorScheme.primary,
+                          ),
+                      ],
+                    ),
+                  );
+                },
+              ).toList(),
+              onChanged: (value) {
+                ref
+                    .read(toastDetailControllerProvider.notifier)
+                    .changeAnimationType(value!);
+              },
             ),
           ),
         ],
@@ -604,6 +634,7 @@ class _CloseSection extends ConsumerWidget {
                         Expanded(
                           child: Text(
                             item.title,
+                            overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               height: 1.1,
                               color: isSelected

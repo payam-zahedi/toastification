@@ -19,7 +19,7 @@ class ToastificationApp extends StatelessWidget {
       builder: (context, child) {
         return ResponsiveWrapper.builder(
           child,
-          maxWidth: 1400,
+          maxWidth: 1500,
           minWidth: 500,
           defaultScale: true,
           breakpoints: [
