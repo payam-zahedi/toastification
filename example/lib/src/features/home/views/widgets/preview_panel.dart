@@ -61,85 +61,23 @@ class ToastPreview extends ConsumerWidget {
     );
   }
 
-  Widget _buildToastWidget(ToastDetail toastDetail) {
-    switch (toastDetail.style) {
-      case ToastificationStyle.flat:
-        return FlatToastWidget(
-          type: toastDetail.type,
-          title: toastDetail.title,
-          description: toastDetail.description,
-          backgroundColor: toastDetail.backgroundColor == null
-              ? null
-              : ToastHelper.createMaterialColor(
-                  toastDetail.backgroundColor!,
-                ),
-          foregroundColor: toastDetail.foregroundColor,
-          icon: toastDetail.icon,
-          borderRadius: toastDetail.borderRadius,
-          boxShadow: toastDetail.shadow.shadow,
-          direction: toastDetail.direction,
-          onCloseTap: toastDetail.onCloseTap ?? () {},
-          showCloseButton: toastDetail.showCloseButton,
-          showProgressBar: toastDetail.showProgressBar,
-        );
-      case ToastificationStyle.fillColored:
-        return FilledToastWidget(
-          type: toastDetail.type,
-          title: toastDetail.title,
-          description: toastDetail.description,
-          backgroundColor: toastDetail.backgroundColor == null
-              ? null
-              : ToastHelper.createMaterialColor(
-                  toastDetail.backgroundColor!,
-                ),
-          foregroundColor: toastDetail.foregroundColor,
-          icon: toastDetail.icon,
-          borderRadius: toastDetail.borderRadius,
-          boxShadow: toastDetail.shadow.shadow,
-          direction: toastDetail.direction,
-          onCloseTap: toastDetail.onCloseTap ?? () {},
-          showCloseButton: toastDetail.showCloseButton,
-          showProgressBar: toastDetail.showProgressBar,
-        );
-      case ToastificationStyle.flatColored:
-        return FlatColoredToastWidget(
-          type: toastDetail.type,
-          title: toastDetail.title,
-          description: toastDetail.description,
-          backgroundColor: toastDetail.backgroundColor == null
-              ? null
-              : ToastHelper.createMaterialColor(
-                  toastDetail.backgroundColor!,
-                ),
-          foregroundColor: toastDetail.foregroundColor,
-          icon: toastDetail.icon,
-          borderRadius: toastDetail.borderRadius,
-          boxShadow: toastDetail.shadow.shadow,
-          direction: toastDetail.direction,
-          onCloseTap: toastDetail.onCloseTap ?? () {},
-          showCloseButton: toastDetail.showCloseButton,
-          showProgressBar: toastDetail.showProgressBar,
-        );
-      case ToastificationStyle.minimal:
-        return MinimalToastWidget(
-          type: toastDetail.type,
-          title: toastDetail.title,
-          description: toastDetail.description,
-          backgroundColor: toastDetail.backgroundColor == null
-              ? null
-              : ToastHelper.createMaterialColor(
-                  toastDetail.backgroundColor!,
-                ),
-          foregroundColor: toastDetail.foregroundColor,
-          icon: toastDetail.icon,
-          borderRadius: toastDetail.borderRadius,
-          boxShadow: toastDetail.shadow.shadow,
-          direction: toastDetail.direction,
-          onCloseTap: toastDetail.onCloseTap ?? () {},
-          showCloseButton: toastDetail.showCloseButton,
-          showProgressBar: toastDetail.showProgressBar,
-        );
-    }
+  BuiltInToastBuilder _buildToastWidget(ToastDetail toastDetail) {
+    return BuiltInToastBuilder(
+      style: toastDetail.style,
+      type: toastDetail.type,
+      title: toastDetail.title,
+      description: toastDetail.description,
+      primaryColor: toastDetail.primaryColor,
+      foregroundColor: toastDetail.foregroundColor,
+      backgroundColor: toastDetail.backgroundColor,
+      icon: toastDetail.icon,
+      borderRadius: toastDetail.borderRadius,
+      boxShadow: toastDetail.shadow.shadow,
+      direction: toastDetail.direction,
+      onCloseTap: toastDetail.onCloseTap ?? () {},
+      showProgressBar: toastDetail.showProgressBar,
+      closeButtonShowType: toastDetail.closeButtonShowType,
+    );
   }
 }
 
