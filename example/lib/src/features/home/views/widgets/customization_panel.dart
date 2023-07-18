@@ -544,6 +544,7 @@ class _SystemSection extends ConsumerWidget {
                         Expanded(
                           child: Text(
                             item.title,
+                            overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               height: 1.1,
                               color: isSelected
@@ -633,6 +634,7 @@ class _CloseSection extends ConsumerWidget {
                         Expanded(
                           child: Text(
                             item.title,
+                            overflow: TextOverflow.ellipsis,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               height: 1.1,
                               color: isSelected
