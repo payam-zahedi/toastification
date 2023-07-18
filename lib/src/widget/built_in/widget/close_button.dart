@@ -15,25 +15,29 @@ class ToastCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Offstage(
-      offstage: !showCloseButton,
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(5),
-        child: Builder(builder: (context) {
-          return InkWell(
-            onTap: onCloseTap,
-            borderRadius: BorderRadius.circular(5),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                defaultStyle.closeIcon(context),
-                color: defaultStyle.closeIconColor(context),
-                size: 18,
+    return IgnorePointer(
+      ignoring: !showCloseButton,
+      child: AnimatedOpacity(
+        opacity: showCloseButton ? 1 : 0,
+        duration: const Duration(milliseconds: 200),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(5),
+          child: Builder(builder: (context) {
+            return InkWell(
+              onTap: onCloseTap,
+              borderRadius: BorderRadius.circular(5),
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Icon(
+                  defaultStyle.closeIcon(context),
+                  color: defaultStyle.closeIconColor(context),
+                  size: 18,
+                ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }
