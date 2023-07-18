@@ -23,6 +23,11 @@ enum CloseButtonShowType {
   const CloseButtonShowType(this.title);
 
   final String title;
+
+  @override
+  String toString() => title;
+
+  String toValueString() => '$CloseButtonShowType.$name';
 }
 
 class BuiltInContent extends StatelessWidget {

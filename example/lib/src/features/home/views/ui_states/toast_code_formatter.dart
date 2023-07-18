@@ -80,8 +80,10 @@ class ToastCodeFormatter {
       code.writeln('\tdirection: ${toastDetail.direction},');
     }
 
-    if (toastDetail.showCloseButton == false) {
-      code.writeln('\tshowCloseButton: ${toastDetail.showCloseButton},');
+    if (toastDetail.closeButtonShowType != null) {
+      code.writeln(
+        '\tcloseButtonShowType: ${toastDetail.closeButtonShowType!.toValueString()},',
+      );
     }
 
     if (toastDetail.closeOnClick == false) {

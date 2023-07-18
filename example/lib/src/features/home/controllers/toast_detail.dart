@@ -79,8 +79,8 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(showProgressBar: showProgressBar);
   }
 
-  void changeShowCloseButton(bool showCloseButton) {
-    state = state.copyWith(showCloseButton: showCloseButton);
+  void changeCloseButtonShowType(CloseButtonShowType closeButtonShowType) {
+    state = state.copyWith(closeButtonShowType: closeButtonShowType);
   }
 
   void changeCloseOnClick(bool closeOnClick) {
