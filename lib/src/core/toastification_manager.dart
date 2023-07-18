@@ -114,7 +114,9 @@ class ToastificationManager {
           (BuildContext context, Animation<double> animation) {
             return ToastHolderWidget(
               item: removedItem,
-              child: _createAnimationBuilder(context, animation, removedItem),
+              animation: animation,
+              alignment: alignment,
+              transformerBuilder: _toastAnimationBuilder(removedItem),
             );
           },
           duration: _createAnimationDuration(removedItem),
@@ -214,7 +216,9 @@ class ToastificationManager {
                 final item = _notifications[index];
                 return ToastHolderWidget(
                   item: item,
-                  child: _createAnimationBuilder(context, animation, item),
+                  animation: animation,
+                  alignment: alignment,
+                  transformerBuilder: _toastAnimationBuilder(item),
                 );
               },
             ),
@@ -226,28 +230,11 @@ class ToastificationManager {
     );
   }
 
-  Widget _createAnimationBuilder(
-    BuildContext context,
-    Animation<double> animation,
+  ToastificationAnimationBuilder _toastAnimationBuilder(
     ToastificationItem item,
-  ) {
-    return item.animationBuilder?.call(
-          context,
-          animation,
-          alignment,
-          item.builder(context, item),
-        ) ??
-        config.animationBuilder(
-          context,
-          animation,
-          alignment,
-          item.builder(context, item),
-        );
-  }
+  ) =>
+      item.animationBuilder ?? config.animationBuilder;
 
-  Duration _createAnimationDuration(
-    ToastificationItem item,
-  ) {
-    return item.animationDuration ?? config.animationDuration;
-  }
+  Duration _createAnimationDuration(ToastificationItem item) =>
+      item.animationDuration ?? config.animationDuration;
 }

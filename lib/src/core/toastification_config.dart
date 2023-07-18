@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 const _defaultAlignment = AlignmentDirectional.topEnd;
-const _itemAnimationDuration = Duration(milliseconds: 300);
+const _itemAnimationDuration = Duration(milliseconds: 600);
 
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
 ///
