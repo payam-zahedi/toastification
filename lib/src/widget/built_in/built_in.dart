@@ -15,6 +15,16 @@ enum ToastificationType {
   error,
 }
 
+enum CloseButtonShowType {
+  always('Always'),
+  onHover('On Hover'),
+  none('None');
+
+  const CloseButtonShowType(this.title);
+
+  final String title;
+}
+
 class BuiltInContent extends StatelessWidget {
   const BuiltInContent({
     super.key,
