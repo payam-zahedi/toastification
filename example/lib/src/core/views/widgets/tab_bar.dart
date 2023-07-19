@@ -113,27 +113,28 @@ class TabTypeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(10.0),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        height: 40,
-        decoration: BoxDecoration(
-          color:
-              selected ? color.withOpacity(.1) : theme.colorScheme.background,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(
-            color: selected ? color : theme.colorScheme.outline,
-            width: 1.5,
-          ),
+    return Material(
+      animationDuration: const Duration(milliseconds: 500),
+      color: selected ? color.withOpacity(.1) : theme.colorScheme.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        side: BorderSide(
+          color: selected ? color : theme.colorScheme.outline,
+          width: 1.5,
         ),
-        child: Center(
-          child: Text(
-            title,
-            style: theme.textTheme.titleSmall?.copyWith(
-              height: 1,
-              fontWeight: FontWeight.w500,
+      ),
+      child: SizedBox(
+        height: 40,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10.0),
+          child: Center(
+            child: Text(
+              title,
+              style: theme.textTheme.titleSmall?.copyWith(
+                height: 1,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ),
