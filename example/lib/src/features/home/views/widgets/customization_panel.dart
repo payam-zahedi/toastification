@@ -158,7 +158,7 @@ class _ContentAndStyleHolder extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _ContentSection(),
-            SizedBox(height: 18),
+            SizedBox(height: 20),
             _StyleSection(),
           ],
         ),
@@ -179,8 +179,11 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
         body: Column(
           children: [
             const _SystemSection(),
+            SizedBox(height: 20),
             const _CloseSection(),
+            SizedBox(height: 20),
             const _ProgressBarSection(),
+            SizedBox(height: 20),
             ResponsiveRowColumn(
               rowSpacing: 10,
               columnSpacing: 10,
