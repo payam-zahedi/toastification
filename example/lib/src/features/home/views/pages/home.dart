@@ -55,7 +55,7 @@ class _HorizontalSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final sideHeaderWidth = screenWidth * 0.42;
+    final sideHeaderWidth = screenWidth * 0.38;
     final previewPanelPadding = screenWidth * 0.04;
 
     return SliverPadding(

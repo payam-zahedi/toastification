@@ -36,7 +36,7 @@ class ToastificationApp extends StatelessWidget {
             const ResponsiveBreakpoint.resize(1100, name: DESKTOP),
           ],
           background: Container(
-            color: const Color(0xFFF9F9F9),
+            color: Theme.of(context).colorScheme.background,
           ),
         );
       },

@@ -27,7 +27,7 @@ class ToastHeader extends StatelessWidget {
       ),
       child: Center(
         child: SizedBox(
-          width: 600,
+          width: 800,
           child: Column(
             children: [
               const ColoredTag(
@@ -35,32 +35,36 @@ class ToastHeader extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Nostrum sequi beatae\nsed excepturi voly.',
+                'Make your app more engaging with our customizable toast notifications',
                 style: theme.textTheme.displayLarge?.copyWith(
                   fontSize: context.responsiveValue(
-                    desktop: 56,
-                    tablet: 48,
+                    desktop: 44,
+                    tablet: 36,
                     mobile: 32,
                   ),
                   fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onBackground,
+                  height: 1.4,
+                  color: theme.colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: 3,
               ),
               const SizedBox(height: 24),
-              Text(
-                'Ullam possimus vitae eos maiores enim y.A sunt ducimus consequuntur ducimus qut.In cum esse beatae id laborum dolores l.Commodi at qui reiciendis. Eos sunt eot.Maiores sed sequi nulla quas asperiorex.',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontSize: context.responsiveValue(
-                    desktop: 18,
-                    tablet: 16,
-                    mobile: 14,
+              SizedBox(
+                width: 650,
+                child: Text(
+                  'With Toastification, you can add and manage multiple toast messages simultaneously with ease. Additionally, we\'ve included some predefined toast widgets that can help you show the state of your application.',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontSize: context.responsiveValue(
+                      desktop: 18,
+                      tablet: 16,
+                      mobile: 14,
+                    ),
+                    fontWeight: FontWeight.w400,
+                    color: theme.colorScheme.onSurface.withOpacity(.7),
                   ),
-                  fontWeight: FontWeight.w100,
-                  color: theme.colorScheme.onBackground,
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: context.responsiveValue(
