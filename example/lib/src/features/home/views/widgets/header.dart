@@ -1,11 +1,10 @@
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 class ToastHeader extends StatelessWidget {
   const ToastHeader({super.key});
@@ -38,10 +37,7 @@ class ToastHeader extends StatelessWidget {
                 'Make your app more engaging with our customizable toast notifications',
                 style: theme.textTheme.displayLarge?.copyWith(
                   fontSize: context.responsiveValue(
-                    desktop: 44,
-                    tablet: 36,
-                    mobile: 32,
-                  ),
+                      desktop: 40, tablet: 34, mobile: 28, smallMobile: 22),
                   fontWeight: FontWeight.w500,
                   height: 1.4,
                   color: theme.colorScheme.onSurface,
@@ -59,6 +55,7 @@ class ToastHeader extends StatelessWidget {
                       desktop: 18,
                       tablet: 16,
                       mobile: 14,
+                      smallMobile: 12,
                     ),
                     fontWeight: FontWeight.w400,
                     color: theme.colorScheme.onSurface.withOpacity(.7),
@@ -103,7 +100,7 @@ class ToastHeader extends StatelessWidget {
                     label: const Text('Give a Star'),
                     icon: const Icon(Iconsax.star_copy, size: 24),
                   ),
-                  if (ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) ...[
+                  if (context.isInMobileZone) ...[
                     const Padding(
                       padding: EdgeInsets.only(top: 85, bottom: 24),
                       child: CustomizeTitle(),

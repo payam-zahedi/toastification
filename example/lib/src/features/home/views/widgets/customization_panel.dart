@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
@@ -29,8 +29,7 @@ class CustomizationPanel extends ConsumerWidget {
     return SliverList(
       delegate: SliverChildListDelegate.fixed(
         [
-          if (!ResponsiveWrapper.of(context).isSmallerThan(MOBILE))
-            const CustomizeTitle(),
+          if (!context.isInMobileZone) const CustomizeTitle(),
           const SizedBox(height: 24),
           ToastTypeTabBar(
             onTypeChanged: (value) {

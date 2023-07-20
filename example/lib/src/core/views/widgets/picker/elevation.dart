@@ -1,4 +1,4 @@
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';

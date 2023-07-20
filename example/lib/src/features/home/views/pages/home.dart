@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bottom_navigation.dart';
 import 'package:example/src/features/home/views/widgets/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
@@ -7,7 +8,6 @@ import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:responsive_framework/responsive_framework.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -36,9 +36,7 @@ class CustomizationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isVertical = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-
-    if (!isVertical) {
+    if (context.isInDesktopZone) {
       return const _HorizontalSection();
     }
 
