@@ -97,53 +97,53 @@ class ToastificationManager {
   }) {
     final index = _notifications.indexOf(notification);
 
-    if (index != -1) {
-      notification = _notifications[index];
+    if (index == -1) return;
 
-      if (notification.isRunning) {
-        notification.stop();
-      }
+    notification = _notifications[index];
 
-      final removedItem = _notifications.removeAt(index);
+    if (notification.isRunning) {
+      notification.stop();
+    }
 
-      /// if the [showRemoveAnimation] is true, we will show the remove animation
-      /// of the notification.
-      if (showRemoveAnimation) {
-        _listGlobalKey.currentState?.removeItem(
-          index,
-          (BuildContext context, Animation<double> animation) {
-            return ToastHolderWidget(
-              item: removedItem,
-              animation: animation,
-              alignment: alignment,
-              transformerBuilder: _toastAnimationBuilder(removedItem),
-            );
-          },
-          duration: _createAnimationDuration(removedItem),
-        );
+    final removedItem = _notifications.removeAt(index);
 
-        /// if the [showRemoveAnimation] is false, we will remove the notification
-        /// without showing the remove animation.
-      } else {
-        _listGlobalKey.currentState?.removeItem(
-          index,
-          (BuildContext context, Animation<double> animation) {
-            return const SizedBox.shrink();
-          },
-        );
-      }
+    /// if the [showRemoveAnimation] is true, we will show the remove animation
+    /// of the notification.
+    if (showRemoveAnimation) {
+      _listGlobalKey.currentState?.removeItem(
+        index,
+        (BuildContext context, Animation<double> animation) {
+          return ToastHolderWidget(
+            item: removedItem,
+            animation: animation,
+            alignment: alignment,
+            transformerBuilder: _toastAnimationBuilder(removedItem),
+          );
+        },
+        duration: _createAnimationDuration(removedItem),
+      );
 
-      /// we will remove the [_overlayEntry] if there are no notifications
-      Future.delayed(
-        removedItem.animationDuration ?? config.animationDuration,
-        () {
-          if (_notifications.isEmpty) {
-            _overlayEntry?.remove();
-            _overlayEntry = null;
-          }
+      /// if the [showRemoveAnimation] is false, we will remove the notification
+      /// without showing the remove animation.
+    } else {
+      _listGlobalKey.currentState?.removeItem(
+        index,
+        (BuildContext context, Animation<double> animation) {
+          return const SizedBox.shrink();
         },
       );
     }
+
+    /// we will remove the [_overlayEntry] if there are no notifications
+    Future.delayed(
+      removedItem.animationDuration ?? config.animationDuration,
+      () {
+        if (_notifications.isEmpty) {
+          _overlayEntry?.remove();
+          _overlayEntry = null;
+        }
+      },
+    );
   }
 
   /// This function dismisses all the notifications in the [_notifications] list.
@@ -151,11 +151,11 @@ class ToastificationManager {
   /// When true, it adds a delay for better animation.
   void dismissAll({bool delayForAnimation = true}) async {
     // Creates a new list cloneList that has all the notifications from the _notifications list, but in reverse order.
-    final cloneList = _notifications.toList(growable: false).reversed;
+    final reversedList = _notifications.reversed;
 
     // For each cloned "toastItem" notification in "cloneList",
     // we will remove it and then pause for a duration if delayForAnimation is true.
-    for (final toastItem in cloneList) {
+    for (final toastItem in reversedList) {
       /// If the item is still in the [_notification] list, we will remove it
       if (findToastificationItem(toastItem.id) != null) {
         // Dismiss the current notification item
