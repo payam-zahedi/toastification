@@ -63,29 +63,20 @@ class BuiltInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Text(
-      title,
-      style: style.titleTextStyle(context)?.copyWith(
-            color: foregroundColor,
-          ),
-    );
-
     final showColumn =
         description?.isNotEmpty == true || showProgressBar == true;
 
     if (showColumn) {
-      content = Column(
+      return Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          content,
+          buildTitle(context),
           if (description?.isNotEmpty == true) ...[
             const SizedBox(height: 4),
             Text(
               description!,
-              style: style.descriptionTextStyle(context)?.copyWith(
-                    color: foregroundColor?.withOpacity(.7),
-                  ),
+              style: style.descriptionTextStyle(context),
             ),
           ],
           if (showProgressBar) ...[
@@ -101,6 +92,15 @@ class BuiltInContent extends StatelessWidget {
       );
     }
 
-    return content;
+    return buildTitle(context);
+  }
+
+  Text buildTitle(BuildContext context) {
+    return Text(
+      title,
+      style: style.titleTextStyle(context)?.copyWith(
+            color: foregroundColor,
+          ),
+    );
   }
 }
