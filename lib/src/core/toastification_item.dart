@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:uuid/uuid.dart';
 
@@ -45,7 +46,7 @@ typedef ToastificationAnimationBuilder = Widget Function(
 ///
 /// you can also use this class to control the toastification items
 ///
-class ToastificationItem {
+class ToastificationItem implements Equatable {
   ToastificationItem({
     required this.builder,
     required this.alignment,
@@ -156,21 +157,13 @@ class ToastificationItem {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-    if (other.runtimeType != runtimeType) {
-      return false;
-    }
-    return other is ToastificationItem && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
-
-  @override
   String toString() {
     return 'id: $id, timerDuration: $originalDuration, elapsedDuration: $elapsedDuration';
   }
+
+  @override
+  List<Object?> get props => [id];
+
+  @override
+  bool? get stringify => false;
 }
