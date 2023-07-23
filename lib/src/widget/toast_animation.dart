@@ -33,19 +33,15 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
   @override
   void didUpdateWidget(covariant ToastTimerAnimationBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     if (widget.item != oldWidget.item) {
-      controller.dispose();
-      widget.item.removeListenerOnTimeStatus(_timeStatusListener);
-
+      _disposeAnimation();
       _initAnimation();
     }
   }
 
   @override
   void dispose() {
-    controller.dispose();
-    widget.item.removeListenerOnTimeStatus(_timeStatusListener);
+    _disposeAnimation();
 
     super.dispose();
   }
@@ -59,6 +55,11 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
         return widget.builder(context, controller.value, child);
       },
     );
+  }
+
+  void _disposeAnimation() {
+    controller.dispose();
+    widget.item.removeListenerOnTimeStatus(_timeStatusListener);
   }
 
   void _initAnimation() {
