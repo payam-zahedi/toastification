@@ -1,4 +1,4 @@
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 
 class ColoredTag extends StatelessWidget {

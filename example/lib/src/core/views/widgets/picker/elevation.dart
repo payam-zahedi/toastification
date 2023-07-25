@@ -1,6 +1,8 @@
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 final elevationValues = {
   'None': 0.0,
@@ -23,13 +25,22 @@ class ElevationPicker extends StatelessWidget {
     final selectedElevation =
         this.selectedElevation ?? elevationValues.values.first;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ResponsiveRowColumn(
+      rowSpacing: 10,
+      columnSpacing: 10,
+      columnMainAxisSize: MainAxisSize.min,
+      layout: context.responsiveValue(
+        desktop: ResponsiveRowColumnType.ROW,
+        tablet: ResponsiveRowColumnType.ROW,
+        mobile: ResponsiveRowColumnType.COLUMN,
+      ),
       children: elevationValues.entries.map((e) {
         final name = e.key;
         final value = e.value;
 
-        return Expanded(
+        return ResponsiveRowColumnItem(
+          rowFit: FlexFit.tight,
+          columnFit: FlexFit.loose,
           child: BorderedContainer(
             height: 48,
             elevation: value,
@@ -74,13 +85,22 @@ class ShadowPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedShadow = this.selectedShadow;
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ResponsiveRowColumn(
+      rowSpacing: 10,
+      columnSpacing: 10,
+      columnMainAxisSize: MainAxisSize.min,
+      layout: context.responsiveValue(
+        desktop: ResponsiveRowColumnType.ROW,
+        tablet: ResponsiveRowColumnType.ROW,
+        mobile: ResponsiveRowColumnType.COLUMN,
+      ),
       children: ShadowOptions.values.map((e) {
         final name = e.title;
         final value = e;
 
-        return Expanded(
+        return ResponsiveRowColumnItem(
+          rowFit: FlexFit.tight,
+          columnFit: FlexFit.loose,
           child: ShadowContainer(
             height: 48,
             boxShadow: e.shadow,

@@ -1,3 +1,4 @@
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/code/code_viewer.dart';
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
@@ -7,7 +8,6 @@ import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:toastification/toastification.dart';
 
 class PreviewPanel extends StatelessWidget {
@@ -36,8 +36,6 @@ class ToastPreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
     return Material(
@@ -51,7 +49,7 @@ class ToastPreview extends ConsumerWidget {
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 maxWidth: 350,
-                minHeight: isTablet ? 120 : 132,
+                minHeight: context.isInMobileZone ? 120 : 132,
               ),
               child: Center(child: _buildToastWidget(toastDetail)),
             ),
@@ -86,9 +84,7 @@ class CodePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isTablet = ResponsiveWrapper.of(context).isSmallerThan(TABLET);
-
-    if (isTablet) {
+    if (!context.isInDesktopZone) {
       return const ExpandableCodePreview();
     }
 

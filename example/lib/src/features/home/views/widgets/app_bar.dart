@@ -1,9 +1,8 @@
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 class ToastAppBar extends StatelessWidget {
   const ToastAppBar({super.key});
@@ -18,7 +17,7 @@ class ToastAppBar extends StatelessWidget {
       tablet: 32.0,
     );
 
-    if (!ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) {
+    if (!context.isInMobileZone) {
       return Padding(
         padding: EdgeInsetsDirectional.fromSTEB(
           sidePaddings,

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
@@ -29,8 +29,7 @@ class CustomizationPanel extends ConsumerWidget {
     return SliverList(
       delegate: SliverChildListDelegate.fixed(
         [
-          if (!ResponsiveWrapper.of(context).isSmallerThan(MOBILE))
-            const CustomizeTitle(),
+          if (!context.isInMobileZone) const CustomizeTitle(),
           const SizedBox(height: 24),
           ToastTypeTabBar(
             onTypeChanged: (value) {
@@ -158,7 +157,7 @@ class _ContentAndStyleHolder extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _ContentSection(),
-            SizedBox(height: 18),
+            SizedBox(height: 20),
             _StyleSection(),
           ],
         ),
@@ -179,8 +178,11 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
         body: Column(
           children: [
             const _SystemSection(),
+            SizedBox(height: 20),
             const _CloseSection(),
+            SizedBox(height: 20),
             const _ProgressBarSection(),
+            SizedBox(height: 20),
             ResponsiveRowColumn(
               rowSpacing: 10,
               columnSpacing: 10,
@@ -287,59 +289,6 @@ class _ContentSection extends ConsumerWidget {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: const [
-                        BorderedContainer(
-                          width: 48,
-                          height: 48,
-                          child: Icon(Iconsax.info_circle_copy),
-                        ),
-                        SoonWidget()
-                      ],
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Type the title text here..',
-                        ),
-                        onChanged: (value) {
-                          ref
-                              .read(toastDetailControllerProvider.notifier)
-                              .changeTitle(value);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  height: 106,
-                  child: TextField(
-                    expands: true,
-                    maxLines: null,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: InputDecoration(
-                      hintText: 'Type the body text here..',
-                    ),
-                    onChanged: (value) {
-                      ref
-                          .read(toastDetailControllerProvider.notifier)
-                          .changeDescription(value);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
           SizedBox(
             width: 164,
             child: Column(
@@ -410,9 +359,106 @@ class _ContentSection extends ConsumerWidget {
                 ),
               ],
             ),
-          )
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Type the title text here..',
+                        ),
+                        onChanged: (value) {
+                          ref
+                              .read(toastDetailControllerProvider.notifier)
+                              .changeTitle(value);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    IconPicker(),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 106,
+                  child: TextField(
+                    expands: true,
+                    maxLines: null,
+                    textAlignVertical: TextAlignVertical.top,
+                    decoration: InputDecoration(
+                      hintText: 'Type the body text here..',
+                    ),
+                    onChanged: (value) {
+                      ref
+                          .read(toastDetailControllerProvider.notifier)
+                          .changeDescription(value);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
+    );
+  }
+}
+
+class IconPicker extends ConsumerWidget {
+  const IconPicker({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final type = ref.watch(
+      toastDetailControllerProvider.select((value) => value.type),
+    );
+    final style = ref.watch(
+      toastDetailControllerProvider.select((value) => value.style),
+    );
+
+    final defaultStyle = switch (style) {
+      ToastificationStyle.minimal => MinimalStyle(type),
+      ToastificationStyle.fillColored => FilledStyle(type),
+      ToastificationStyle.flatColored => FlatColoredStyle(type),
+      ToastificationStyle.flat => FlatStyle(type),
+    };
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        BorderedContainer(
+          width: 120,
+          height: 48,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Iconsax.tick_circle_copy,
+                color: defaultStyle.iconColor(context),
+              ),
+              const SizedBox(width: 8),
+              const Text('Icon'),
+              const SizedBox(width: 4),
+              const Icon(
+                Icons.keyboard_arrow_down,
+                size: 20,
+              ),
+            ],
+          ),
+        ),
+        Positioned.directional(
+          textDirection: Directionality.of(context),
+          start: 12,
+          child: SoonWidget(),
+        ),
+      ],
     );
   }
 }

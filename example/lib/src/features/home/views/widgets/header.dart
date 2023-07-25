@@ -1,11 +1,10 @@
-import 'package:example/src/core/usecase/extension/responsive.dart';
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 class ToastHeader extends StatelessWidget {
   const ToastHeader({super.key});
@@ -27,7 +26,7 @@ class ToastHeader extends StatelessWidget {
       ),
       child: Center(
         child: SizedBox(
-          width: 600,
+          width: 800,
           child: Column(
             children: [
               const ColoredTag(
@@ -35,32 +34,34 @@ class ToastHeader extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Nostrum sequi beatae\nsed excepturi voly.',
+                'Make your app more engaging with our customizable toast notifications',
                 style: theme.textTheme.displayLarge?.copyWith(
                   fontSize: context.responsiveValue(
-                    desktop: 56,
-                    tablet: 48,
-                    mobile: 32,
-                  ),
+                      desktop: 40, tablet: 34, mobile: 28, smallMobile: 22),
                   fontWeight: FontWeight.w500,
-                  color: theme.colorScheme.onBackground,
+                  height: 1.4,
+                  color: theme.colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: 3,
               ),
               const SizedBox(height: 24),
-              Text(
-                'Ullam possimus vitae eos maiores enim y.A sunt ducimus consequuntur ducimus qut.In cum esse beatae id laborum dolores l.Commodi at qui reiciendis. Eos sunt eot.Maiores sed sequi nulla quas asperiorex.',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontSize: context.responsiveValue(
-                    desktop: 18,
-                    tablet: 16,
-                    mobile: 14,
+              SizedBox(
+                width: 650,
+                child: Text(
+                  'With Toastification, you can add and manage multiple toast messages simultaneously with ease. Additionally, we\'ve included some predefined toast widgets that can help you show the state of your application.',
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontSize: context.responsiveValue(
+                      desktop: 18,
+                      tablet: 16,
+                      mobile: 14,
+                      smallMobile: 12,
+                    ),
+                    fontWeight: FontWeight.w400,
+                    color: theme.colorScheme.onSurface.withOpacity(.7),
                   ),
-                  fontWeight: FontWeight.w100,
-                  color: theme.colorScheme.onBackground,
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: context.responsiveValue(
@@ -99,7 +100,7 @@ class ToastHeader extends StatelessWidget {
                     label: const Text('Give a Star'),
                     icon: const Icon(Iconsax.star_copy, size: 24),
                   ),
-                  if (ResponsiveWrapper.of(context).isSmallerThan(MOBILE)) ...[
+                  if (context.isInMobileZone) ...[
                     const Padding(
                       padding: EdgeInsets.only(top: 85, bottom: 24),
                       child: CustomizeTitle(),
