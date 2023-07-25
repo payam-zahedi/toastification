@@ -32,8 +32,8 @@ class ToastDetail with _$ToastDetail {
     @Default(ToastificationStyle.flat) ToastificationStyle style,
     // placement
     @Default(Alignment.topRight) AlignmentGeometry alignment,
-    @Default('Toast Title') String title,
-    @Default('Toast Description') String description,
+    @Default('Component updates available.') String title,
+    @Default('Component updates available.') String description,
     Widget? icon,
     Color? primaryColor,
     Color? backgroundColor,

@@ -106,7 +106,7 @@ class MinimalToastWidget extends StatelessWidget {
                         size: 24,
                         color: iconColor,
                       ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: BuiltInContent(
                       style: defaultStyle,
@@ -121,7 +121,7 @@ class MinimalToastWidget extends StatelessWidget {
                       progressIndicatorTheme: progressIndicatorTheme,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 8),
                   ToastCloseButton(
                     showCloseButton: showCloseButton,
                     onCloseTap: onCloseTap,

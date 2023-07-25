@@ -29,7 +29,8 @@ abstract class BuiltInStyle {
 
   final ToastificationType type;
 
-  EdgeInsetsGeometry padding(BuildContext context);
+  EdgeInsetsGeometry padding(BuildContext context) =>
+      const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16);
 
   MaterialColor primaryColor(BuildContext context);
   MaterialColor onPrimaryColor(BuildContext context);
@@ -54,8 +55,21 @@ abstract class BuiltInStyle {
 
   BorderRadiusGeometry borderRadius(BuildContext context);
 
-  TextStyle? titleTextStyle(BuildContext context);
-  TextStyle? descriptionTextStyle(BuildContext context);
+  TextStyle? titleTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleSmall?.copyWith(
+            color: foregroundColor(context),
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            height: 1.2,
+          );
+
+  TextStyle? descriptionTextStyle(BuildContext context) =>
+      Theme.of(context).textTheme.titleSmall?.copyWith(
+            color: foregroundColor(context).withOpacity(.7),
+            fontSize: 14,
+            fontWeight: FontWeight.w300,
+            height: 1.2,
+          );
 
   double elevation(BuildContext context) => 0.0;
   List<BoxShadow> boxShadow(BuildContext context) => const [];

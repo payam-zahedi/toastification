@@ -218,7 +218,7 @@ class _ItemHolder extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return SizedBox(
-      height: 88,
+      height: 98,
       child: Stack(
         children: [
           Positioned.fill(
