@@ -5,11 +5,6 @@ class FlatColoredStyle extends BuiltInStyle {
   const FlatColoredStyle(ToastificationType type) : super(type);
 
   @override
-  EdgeInsetsGeometry padding(BuildContext context) {
-    return const EdgeInsets.symmetric(horizontal: 20, vertical: 16);
-  }
-
-  @override
   MaterialColor primaryColor(BuildContext context) {
     final color = switch (type) {
       ToastificationType.info => infoColor,
@@ -48,7 +43,7 @@ class FlatColoredStyle extends BuiltInStyle {
 
   @override
   Color closeIconColor(BuildContext context) {
-    return Colors.black26;
+    return foregroundColor(context).withOpacity(.3);
   }
 
   @override
@@ -62,26 +57,6 @@ class FlatColoredStyle extends BuiltInStyle {
   @override
   BorderRadiusGeometry borderRadius(BuildContext context) {
     return const BorderRadius.all(Radius.circular(12));
-  }
-
-  @override
-  TextStyle? titleTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.titleSmall?.copyWith(
-          color: foregroundColor(context),
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          height: 1.4,
-        );
-  }
-
-  @override
-  TextStyle? descriptionTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.bodySmall?.copyWith(
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: foregroundColor(context).withOpacity(.7),
-          height: 1.3,
-        );
   }
 
   @override

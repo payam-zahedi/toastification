@@ -80,7 +80,7 @@ class BuiltInContent extends StatelessWidget {
         children: [
           content,
           if (description?.isNotEmpty == true) ...[
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Text(
               description!,
               style: style.descriptionTextStyle(context)?.copyWith(

@@ -5,11 +5,6 @@ class MinimalStyle extends BuiltInStyle {
   const MinimalStyle(ToastificationType type) : super(type);
 
   @override
-  EdgeInsetsGeometry padding(BuildContext context) {
-    return const EdgeInsets.symmetric(horizontal: 20, vertical: 16);
-  }
-
-  @override
   MaterialColor primaryColor(BuildContext context) {
     final color = switch (type) {
       ToastificationType.info => infoColor,
@@ -52,7 +47,7 @@ class MinimalStyle extends BuiltInStyle {
 
   @override
   Color closeIconColor(BuildContext context) {
-    return primaryColor(context).shade100;
+    return foregroundColor(context).withOpacity(.3);
   }
 
   @override
@@ -85,26 +80,6 @@ class MinimalStyle extends BuiltInStyle {
         maximum: const Radius.circular(30),
       ),
     );
-  }
-
-  @override
-  TextStyle? titleTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.titleSmall?.copyWith(
-          color: foregroundColor(context),
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          height: 1.4,
-        );
-  }
-
-  @override
-  TextStyle? descriptionTextStyle(BuildContext context) {
-    return Theme.of(context).textTheme.bodySmall?.copyWith(
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: foregroundColor(context).withOpacity(.7),
-          height: 1.3,
-        );
   }
 
   @override
