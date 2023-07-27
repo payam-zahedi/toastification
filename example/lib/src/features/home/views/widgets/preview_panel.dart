@@ -187,7 +187,7 @@ class _ExpandableCodePreviewState extends State<ExpandableCodePreview> {
                     style: theme.textTheme.titleSmall!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
-                      color: theme.colorScheme.onBackground,
+                      color: theme.colorScheme.onPrimaryContainer,
                     ),
                   ),
                 ),

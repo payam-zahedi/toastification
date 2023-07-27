@@ -44,7 +44,7 @@ class ToastAppBar extends StatelessWidget {
             FilledButton.icon(
               style: FilledButton.styleFrom(
                 backgroundColor: Colors.black12,
-                foregroundColor: colorScheme.onBackground,
+                foregroundColor: colorScheme.onPrimaryContainer,
               ),
               onPressed: () {
                 openGithub(context);

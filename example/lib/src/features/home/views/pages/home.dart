@@ -18,12 +18,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const DefaultStickyHeaderController(
       child: Scaffold(
+        extendBody: true,
         bottomNavigationBar: BottomNavigationView(),
         body: CustomScrollView(
+          primary: true,
           slivers: [
             SliverToBoxAdapter(child: ToastAppBar()),
             SliverToBoxAdapter(child: ToastHeader()),
-            CustomizationSection()
+            CustomizationSection(),
+            SliverToBoxAdapter(child: SizedBox(height: 64)),
           ],
         ),
       ),
