@@ -12,14 +12,14 @@ class SoonWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 4,
-          vertical: 2,
+          horizontal: 6,
+          vertical: 3,
         ),
         child: Text(
           'SOON',
           style: theme.textTheme.titleSmall?.copyWith(
             color: theme.colorScheme.onError,
-            fontSize: 8,
+            fontSize: 10,
             fontWeight: FontWeight.w700,
             height: 1,
           ),

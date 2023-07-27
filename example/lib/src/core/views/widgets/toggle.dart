@@ -55,7 +55,7 @@ class RoundToggle extends StatelessWidget {
         this.backgroundRadius ?? const BorderRadius.all(Radius.circular(8));
 
     final backgroundColor = value
-        ? enabledTrackColor ?? theme.focusColor
+        ? enabledTrackColor ?? theme.colorScheme.primary
         : disabledTrackColor ?? theme.disabledColor;
 
     return InkWell(
