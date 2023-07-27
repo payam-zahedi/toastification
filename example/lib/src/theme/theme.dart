@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-const _primary = Color(0xff605CFF);
+const _primary = Color(0xff3F5EFF);
 const _onPrimary = Color(0xffFFFFFF);
 const _onPrimaryContainer = Color(0xff303030);
 const _secondary = Color(0xffFFCE51);
-const _onSecondary = Color(0xff000000);
+const _onSecondary = Color(0xff474648);
 const _background = Color(0xffffffff);
 const _onBackground = Color(0xff000000);
 const _surface = Color(0xffF4F6F8);
@@ -18,7 +18,7 @@ const _outline = Color(0xffF2F2F2);
 const _tagBackgroundColor = Color(0xffEDFBFE);
 const _tagTextColor = Color(0xff21C9EE);
 
-const _switchActiveColor = Color(0xff605CFF);
+const _switchActiveColor = _primary;
 const _switchInActiveColor = Color(0xffC5CCD7);
 
 const _cardColor = Color(0xffFAFAFA);
@@ -58,8 +58,13 @@ ThemeData _themeBuilder() {
     brightness: Brightness.light,
     colorScheme: scheme,
     dividerColor: scheme.outline,
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(_switchActiveColor),
+      trackColor: MaterialStateProperty.all(_switchInActiveColor),
+      splashRadius: 16,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ),
     disabledColor: _switchInActiveColor,
-    focusColor: _switchActiveColor,
     textTheme: textTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
