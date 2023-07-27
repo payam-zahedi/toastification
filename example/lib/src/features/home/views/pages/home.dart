@@ -23,44 +23,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultStickyHeaderController(
-      child: Scaffold(
-        bottomNavigationBar: const BottomNavigationView(),
-        body: Stack(
-          children: [
-            NotificationListener<ScrollUpdateNotification>(
-              onNotification: _toggleIsWithBorderBasedOnScroll,
-              child: const CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(child: ToastHeader()),
-                  CustomizationSection()
-                ],
-              ),
-            ),
-            ToastAppBar(
-              isWithBorder: isWithBorder,
-            ),
-          ],
-        ),
+    return const Scaffold(
+      bottomNavigationBar: BottomNavigationView(),
+      body: CustomScrollView(
+        slivers: [
+          ToastAppBar(),
+          SliverToBoxAdapter(child: ToastHeader()),
+          CustomizationSection()
+        ],
       ),
     );
-  }
-
-  bool _toggleIsWithBorderBasedOnScroll(ScrollUpdateNotification notification) {
-    if (notification.metrics.pixels > 100) {
-      if (!isWithBorder) {
-        setState(() {
-          isWithBorder = true;
-        });
-      }
-      return true;
-    }
-    if (isWithBorder) {
-      setState(() {
-        isWithBorder = false;
-      });
-    }
-    return true;
   }
 }
 

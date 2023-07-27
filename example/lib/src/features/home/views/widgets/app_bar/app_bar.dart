@@ -5,17 +5,33 @@ import 'package:example/src/features/home/views/widgets/app_bar/app_bar_text_but
 import 'package:flutter/material.dart';
 
 class ToastAppBar extends StatelessWidget {
-  final bool isWithBorder;
-  const ToastAppBar({
-    super.key,
-    required this.isWithBorder,
-  });
+  const ToastAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return const SliverPersistentHeader(
+      delegate: AppBarDelegate(),
+      pinned: true,
+    );
+  }
+}
+
+class AppBarDelegate extends SliverPersistentHeaderDelegate {
+  const AppBarDelegate();
+  final maxHeight = 72.0;
+
+  @override
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
+    final shrinkPercentage = shrinkOffset / maxExtent;
+
     if (context.isInDesktopZone) {
       return AppBarContainer(
-        isWithBorder: isWithBorder,
+        topMargin: 6,
+        shrinkPercentage: shrinkPercentage,
         child: Row(
           children: [
             const AppBarLogo(),
@@ -49,8 +65,9 @@ class ToastAppBar extends StatelessWidget {
         ),
       );
     }
+
     return AppBarContainer(
-      isWithBorder: false,
+      shrinkPercentage: 0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -63,5 +80,16 @@ class ToastAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  double get minExtent => maxHeight;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

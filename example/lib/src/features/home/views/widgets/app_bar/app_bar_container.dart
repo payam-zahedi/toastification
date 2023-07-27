@@ -1,14 +1,15 @@
-import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 
 class AppBarContainer extends StatelessWidget {
   final Widget child;
-  final bool isWithBorder;
+  final double shrinkPercentage;
+  final double topMargin;
 
   const AppBarContainer({
     super.key,
-    required this.isWithBorder,
+    required this.shrinkPercentage,
     required this.child,
+    this.topMargin = 0,
   });
 
   @override
@@ -16,42 +17,42 @@ class AppBarContainer extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final sidePaddings = context.responsiveValue(
-      desktop: 12.0,
-      tablet: 6.0,
-    );
-
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 800),
-      margin: EdgeInsetsDirectional.fromSTEB(
-        isWithBorder ? sidePaddings : 0,
-        isWithBorder ? 12 : 0,
-        isWithBorder ? sidePaddings : 0,
-        0,
+      duration: const Duration(milliseconds: 700),
+      margin: EdgeInsetsDirectional.lerp(
+        EdgeInsetsDirectional.fromSTEB(0, topMargin, 0, 0),
+        EdgeInsetsDirectional.fromSTEB(12, topMargin, 12, 0),
+        shrinkPercentage,
       ),
-      padding: EdgeInsetsDirectional.fromSTEB(
-        sidePaddings,
-        12,
-        sidePaddings,
-        12,
-      ),
+      padding: const EdgeInsetsDirectional.all(12),
       decoration: BoxDecoration(
-        border: isWithBorder
-            ? Border.all(
-                color: colorScheme.onBackground.withAlpha(40),
-                width: 1,
-              )
-            : null,
+        border: Border.lerp(
+          Border.all(
+            width: 0,
+            color: Colors.transparent,
+          ),
+          Border.all(
+            color: colorScheme.onBackground.withAlpha(40),
+            width: 1,
+          ),
+          shrinkPercentage,
+        ),
         color: colorScheme.background,
-        boxShadow: isWithBorder
-            ? [
-                BoxShadow(
-                  color: colorScheme.onBackground.withOpacity(.1),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                )
-              ]
-            : null,
+        boxShadow: [
+          BoxShadow.lerp(
+            const BoxShadow(
+              color: Colors.transparent,
+              blurRadius: 1,
+              offset: Offset(0, 0),
+            ),
+            BoxShadow(
+              color: colorScheme.onBackground.withOpacity(.1),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+            shrinkPercentage,
+          )!,
+        ],
         borderRadius: BorderRadius.circular(24),
       ),
       child: child,
