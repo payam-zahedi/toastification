@@ -5,41 +5,148 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-class BottomNavigationView extends ConsumerWidget {
+class BottomNavigationView extends ConsumerStatefulWidget {
   const BottomNavigationView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final sidePaddings = context.responsiveValue(
-      desktop: 58.0,
-      tablet: 32.0,
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _BottomNavigationViewState();
+}
+
+class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
+    with SingleTickerProviderStateMixin {
+  ScrollNotificationObserverState? _scrollNotificationObserver;
+
+  late final AnimationController controller;
+  late final Animation<Offset> animation;
+  bool show = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 600),
     );
+
+    animation = Tween<Offset>(
+      begin: const Offset(0, 1),
+      end: const Offset(0, 0),
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.easeOutCubic,
+      ),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scrollNotificationObserver?.removeListener(_handleScrollNotification);
+    _scrollNotificationObserver = ScrollNotificationObserver.maybeOf(context);
+    _scrollNotificationObserver?.addListener(_handleScrollNotification);
+  }
+
+  @override
+  void dispose() {
+    if (_scrollNotificationObserver != null) {
+      _scrollNotificationObserver!.removeListener(_handleScrollNotification);
+      _scrollNotificationObserver = null;
+    }
+
+    controller.dispose();
+    super.dispose();
+  }
+
+  void _handleScrollNotification(ScrollNotification notification) {
+    /// depth 0 is for root scroll child
+    if (notification is ScrollUpdateNotification && notification.depth < 1) {
+      final ScrollMetrics metrics = notification.metrics;
+
+      const threshold = 64.0;
+      bool slideIn = show;
+
+      switch (metrics.axisDirection) {
+        case AxisDirection.up:
+          // Scroll view is reversed
+          slideIn = metrics.extentAfter > threshold;
+        case AxisDirection.down:
+          slideIn = metrics.extentBefore > threshold;
+        case AxisDirection.right:
+        case AxisDirection.left:
+          break;
+      }
+
+      if (slideIn != show) {
+        show = slideIn;
+        if (show) {
+          controller.forward();
+        } else {
+          controller.reverse();
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final size = context.responsiveValue(
-      desktop: const Size.square(56),
-      tablet: const Size.square(56),
-      mobile: const Size.square(48),
-    );
+
+    const size = Size.square(48);
 
     final edgeInsets = context.responsiveValue(
-      desktop: const EdgeInsets.symmetric(horizontal: 32),
-      tablet: const EdgeInsets.symmetric(horizontal: 16),
+      desktop: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      tablet: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
     );
 
-    final filledButton = context.responsiveValue(
-      desktop: FilledButton.icon(
-        style: FilledButton.styleFrom(
+    final containerPadding = context.responsiveValue(
+      desktop: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      tablet: const EdgeInsets.all(12),
+      mobile: const EdgeInsets.all(12),
+    );
+
+    final previewButton = context.responsiveValue(
+      desktop: OutlinedButton.icon(
+        style: OutlinedButton.styleFrom(
           padding: edgeInsets,
           minimumSize: size,
-          backgroundColor: theme.colorScheme.onSurfaceVariant,
-          foregroundColor: theme.colorScheme.onSurface,
+        ),
+        onPressed: () {
+          final toastDetail = ref.read(toastDetailControllerProvider);
+
+          showCurrentToast(context, toastDetail);
+        },
+        icon: const Icon(Iconsax.monitor_copy, size: 20),
+        label: const Text('Preview on Screen'),
+      ),
+      tablet: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.all(0),
+          minimumSize: size,
+        ),
+        onPressed: () {
+          final toastDetail = ref.read(toastDetailControllerProvider);
+
+          showCurrentToast(context, toastDetail);
+        },
+        child: const Icon(Iconsax.mobile_copy, size: 20),
+      ),
+    );
+
+    final saveToastButton = context.responsiveValue(
+      desktop: TextButton.icon(
+        style: TextButton.styleFrom(
+          padding: edgeInsets,
+          minimumSize: size,
         ),
         onPressed: () {},
         label: const Text('Save My Toast'),
-        icon: const Icon(Iconsax.save_add_copy),
+        icon: const Icon(Iconsax.save_add_copy, size: 20),
       ),
-      tablet: FilledButton(
-        style: FilledButton.styleFrom(
+      tablet: TextButton(
+        style: TextButton.styleFrom(
           padding: const EdgeInsets.all(0),
           minimumSize: size,
           backgroundColor: theme.colorScheme.surface,
@@ -50,7 +157,7 @@ class BottomNavigationView extends ConsumerWidget {
       ),
     );
 
-    final filledButton2 = context.responsiveValue(
+    final copyCodeButton = context.responsiveValue(
       desktop: FilledButton.icon(
         style: FilledButton.styleFrom(
           padding: edgeInsets,
@@ -60,7 +167,7 @@ class BottomNavigationView extends ConsumerWidget {
           copyCode(context, ref.read(toastDetailControllerProvider));
         },
         label: const Text('Copy Code'),
-        icon: const Icon(Iconsax.document_copy_copy),
+        icon: const Icon(Iconsax.document_copy_copy, size: 20),
       ),
       tablet: FilledButton(
         style: FilledButton.styleFrom(
@@ -73,45 +180,37 @@ class BottomNavigationView extends ConsumerWidget {
         child: const Icon(Iconsax.document_copy_copy, size: 20),
       ),
     );
-    return Container(
-      height: 80,
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: sidePaddings),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.background,
-        border: Border(
-          top: BorderSide(width: 1, color: theme.colorScheme.onSurfaceVariant),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.onSurface.withOpacity(.05),
-            blurRadius: 92,
-            offset: const Offset(0, -52),
-            spreadRadius: -24,
-          )
-        ],
-      ),
-      child: Row(
-        children: [
-          FilledButton(
-            style: FilledButton.styleFrom(
-              padding: edgeInsets,
-              minimumSize: size,
-              backgroundColor: theme.colorScheme.onSurfaceVariant,
-              foregroundColor: theme.colorScheme.onSurface,
-            ),
-            onPressed: () {
-              final toastDetail = ref.read(toastDetailControllerProvider);
 
-              showCurrentToast(context, toastDetail);
-            },
-            child: const Text('Preview on My Screen'),
+    return SlideTransition(
+      position: animation,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 32),
+          padding: containerPadding,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.black.withOpacity(.15)),
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.onSurface.withOpacity(.1),
+                blurRadius: 48,
+                offset: const Offset(0, 24),
+              )
+            ],
           ),
-          const Spacer(),
-          filledButton,
-          const SizedBox(width: 16, height: 16),
-          filledButton2,
-        ],
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              previewButton,
+              const SizedBox(width: 16),
+              saveToastButton,
+              const SizedBox(width: 16),
+              copyCodeButton,
+            ],
+          ),
+        ),
       ),
     );
   }

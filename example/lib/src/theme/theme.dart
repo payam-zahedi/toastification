@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-const _primary = Color(0xff605CFF);
+const _primary = Color(0xff3F5EFF);
 const _onPrimary = Color(0xffFFFFFF);
+const _onPrimaryContainer = Color(0xff303030);
 const _secondary = Color(0xffFFCE51);
-const _onSecondary = Color(0xff000000);
+const _onSecondary = Color(0xff474648);
 const _background = Color(0xffffffff);
-const _onBackground = Color(0xff303030);
-const _surface = Color(0xffe2ecf4);
+const _onBackground = Color(0xff000000);
+const _surface = Color(0xffF4F6F8);
 const _onSurface = Color(0xff111111);
 const _error = Color(0xffFF5740);
 const _onError = Color(0xffffffff);
@@ -17,7 +18,7 @@ const _outline = Color(0xffF2F2F2);
 const _tagBackgroundColor = Color(0xffEDFBFE);
 const _tagTextColor = Color(0xff21C9EE);
 
-const _switchActiveColor = Color(0xff605CFF);
+const _switchActiveColor = _primary;
 const _switchInActiveColor = Color(0xffC5CCD7);
 
 const _cardColor = Color(0xffFAFAFA);
@@ -40,6 +41,7 @@ ThemeData _themeBuilder() {
     onSurface: _onSurface,
     surfaceVariant: _cardColor,
     onSurfaceVariant: _cardBorderColor,
+    onPrimaryContainer: _onPrimaryContainer,
     error: _error,
     onError: _onError,
     outline: _outline,
@@ -56,12 +58,17 @@ ThemeData _themeBuilder() {
     brightness: Brightness.light,
     colorScheme: scheme,
     dividerColor: scheme.outline,
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(_switchActiveColor),
+      trackColor: MaterialStateProperty.all(_switchInActiveColor),
+      splashRadius: 16,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ),
     disabledColor: _switchInActiveColor,
-    focusColor: _switchActiveColor,
     textTheme: textTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        minimumSize: const Size(100, 62),
+        minimumSize: const Size(100, 48),
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
         textStyle: textTheme.bodyLarge?.copyWith(
@@ -69,15 +76,49 @@ ThemeData _themeBuilder() {
         ),
         elevation: 0,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
           side: BorderSide(width: 1, color: Colors.black12),
         ),
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 28),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      ),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        minimumSize: const Size(100, 48),
+        backgroundColor: scheme.surface,
+        foregroundColor: scheme.onSurface,
+        textStyle: textTheme.bodyLarge?.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+        elevation: 0,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        minimumSize: const Size(100, 48),
+        backgroundColor: scheme.background,
+        foregroundColor: scheme.onBackground,
+        textStyle: textTheme.bodyLarge?.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+        elevation: 0,
+        side: BorderSide(
+          width: 1,
+          color: scheme.onBackground.withOpacity(.1),
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
       ),
     ),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
-        foregroundColor: scheme.onBackground,
+        foregroundColor: scheme.onPrimaryContainer,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),

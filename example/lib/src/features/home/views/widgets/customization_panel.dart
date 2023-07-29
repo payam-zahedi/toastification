@@ -595,7 +595,7 @@ class _SystemSection extends ConsumerWidget {
                               height: 1.1,
                               color: isSelected
                                   ? theme.colorScheme.onSurface
-                                  : theme.colorScheme.onBackground,
+                                  : theme.colorScheme.onPrimaryContainer,
                               fontWeight: isSelected
                                   ? FontWeight.w600
                                   : FontWeight.w400,
@@ -685,7 +685,7 @@ class _CloseSection extends ConsumerWidget {
                               height: 1.1,
                               color: isSelected
                                   ? theme.colorScheme.onSurface
-                                  : theme.colorScheme.onBackground,
+                                  : theme.colorScheme.onPrimaryContainer,
                               fontWeight: isSelected
                                   ? FontWeight.w600
                                   : FontWeight.w400,
