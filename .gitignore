@@ -31,3 +31,5 @@ build/
 
 # fvm 
 .fvm/flutter_sdk
+
+.vscode
