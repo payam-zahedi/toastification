@@ -16,29 +16,25 @@ class AppBarTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final buttonStyle = TextButton.styleFrom(
+      foregroundColor: colorScheme.onBackground,
+      backgroundColor: colorScheme.background,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 8,
+        vertical: 0,
+      ),
+    );
 
     if (icon == null) {
       return TextButton(
-        style: TextButton.styleFrom(
-          foregroundColor: colorScheme.onBackground,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8,
-            vertical: 0,
-          ),
-        ),
+        style: buttonStyle,
         onPressed: onPressed,
         child: label,
       );
     }
 
     return TextButton.icon(
-      style: TextButton.styleFrom(
-        foregroundColor: colorScheme.onBackground,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 8,
-          vertical: 0,
-        ),
-      ),
+      style: buttonStyle,
       onPressed: onPressed,
       icon: icon!,
       label: label,

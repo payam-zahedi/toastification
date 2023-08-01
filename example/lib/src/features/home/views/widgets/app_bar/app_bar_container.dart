@@ -18,6 +18,7 @@ class AppBarContainer extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return AnimatedContainer(
+      height: 72,
       duration: const Duration(milliseconds: 700),
       margin: EdgeInsetsDirectional.lerp(
         EdgeInsetsDirectional.fromSTEB(0, topMargin, 0, 0),

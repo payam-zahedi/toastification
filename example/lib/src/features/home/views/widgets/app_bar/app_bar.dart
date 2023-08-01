@@ -27,6 +27,7 @@ class AppBarDelegate extends SliverPersistentHeaderDelegate {
     bool overlapsContent,
   ) {
     final shrinkPercentage = shrinkOffset / maxExtent;
+    const gap = SizedBox(width: 8.0);
 
     if (context.isInDesktopZone) {
       return AppBarContainer(
@@ -41,16 +42,19 @@ class AppBarDelegate extends SliverPersistentHeaderDelegate {
               icon: const Icon(Icons.abc),
               label: const Text('Github Source'),
             ),
+            gap,
             AppBarTextButton(
               onPressed: () {},
               icon: const Icon(Icons.face),
               label: const Text('Report an Issue'),
             ),
+            gap,
             AppBarTextButton(
               onPressed: () {},
               icon: const Icon(Icons.ac_unit_rounded),
               label: const Text('Pull Request'),
             ),
+            gap,
             AppBarTextButton(
               onPressed: () {},
               label: const Text('About Us'),
