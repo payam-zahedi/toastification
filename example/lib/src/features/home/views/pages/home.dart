@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:example/src/core/usecase/responsive/responsive.dart';
-import 'package:example/src/core/views/widgets/bottom_navigation.dart';
 import 'package:example/src/features/home/views/widgets/app_bar/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
@@ -24,13 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      bottomNavigationBar: BottomNavigationView(),
-      body: CustomScrollView(
-        slivers: [
-          ToastAppBar(),
-          SliverToBoxAdapter(child: ToastHeader()),
-          CustomizationSection()
-        ],
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            ToastAppBar(),
+            SliverToBoxAdapter(child: ToastHeader()),
+            CustomizationSection()
+          ],
+        ),
       ),
     );
   }
