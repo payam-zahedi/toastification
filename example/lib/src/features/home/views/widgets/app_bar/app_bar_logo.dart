@@ -13,10 +13,13 @@ class AppBarLogo extends StatelessWidget {
           'assets/img/logo-black.png',
           width: 54,
         ),
-        const SizedBox(width: 5),
+        const SizedBox(width: 12),
         Text(
           "Toastification",
-          style: titleMedium?.copyWith(fontWeight: FontWeight.w800),
+          style: titleMedium?.copyWith(
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+          ),
         ),
       ],
     );

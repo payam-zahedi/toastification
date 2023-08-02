@@ -31,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
         slivers: [
           ToastAppBar(),
           SliverToBoxAdapter(child: ToastHeader()),
-          CustomizationSection()
+          CustomizationSection(),
+          SliverToBoxAdapter(child: SizedBox(height: 64)),
         ],
       ),
     );

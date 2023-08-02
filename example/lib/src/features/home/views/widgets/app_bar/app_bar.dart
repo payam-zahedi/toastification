@@ -16,9 +16,12 @@ class ToastAppBar extends StatelessWidget {
   }
 }
 
+const _height = 72.0;
+const _topMargin = 6.0;
+const _totalHeight = _height + _topMargin;
+
 class AppBarDelegate extends SliverPersistentHeaderDelegate {
   const AppBarDelegate();
-  final maxHeight = 72.0;
 
   @override
   Widget build(
@@ -31,12 +34,13 @@ class AppBarDelegate extends SliverPersistentHeaderDelegate {
 
     if (context.isInDesktopZone) {
       return AppBarContainer(
-        topMargin: 6,
-        shrinkPercentage: shrinkPercentage,
+        height: _height,
+        topMargin: _topMargin,
+        isElevated: shrinkPercentage >= 0.8,
         child: Row(
           children: [
             const AppBarLogo(),
-            const SizedBox(width: 12),
+            const SizedBox(width: 46),
             AppBarTextButton(
               onPressed: () {},
               icon: const Icon(Icons.abc),
@@ -70,27 +74,32 @@ class AppBarDelegate extends SliverPersistentHeaderDelegate {
       );
     }
 
-    return AppBarContainer(
-      shrinkPercentage: 0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const AppBarLogo(),
-          FilledButton(
-            style: FilledButton.styleFrom(),
-            onPressed: () {},
-            child: const Text('Give us a Star'),
-          ),
-        ],
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: AppBarContainer(
+        isElevated: false,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const AppBarLogo(),
+            FilledButton(
+              style: FilledButton.styleFrom(),
+              onPressed: () {},
+              child: const Text('Give us a Star'),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   @override
-  double get maxExtent => maxHeight;
+  double get maxExtent => _totalHeight;
 
   @override
-  double get minExtent => maxHeight;
+  double get minExtent => _totalHeight;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
