@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_config.dart';
-import 'package:toastification/src/core/toastification_config_provider.dart';
+import 'package:toastification/src/widget/toastification_config_provider.dart';
 import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';

@@ -4,7 +4,7 @@ library toastification;
 export 'src/core/toastification.dart';
 export 'src/core/toastification_item.dart';
 export 'src/core/toastification_config.dart';
-export 'src/core/toastification_config_provider.dart';
+export 'src/widget/toastification_config_provider.dart';
 
 // holder
 export 'src/widget/toast_animation.dart';
