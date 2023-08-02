@@ -8,6 +8,7 @@ import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:toastification/toastification.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       extendBody: true,
-      bottomNavigationBar: BottomNavigationView(),
+      bottomNavigationBar: ToastificationConfigProvider(
+        config: ToastificationConfig(alignment: Alignment.bottomLeft),
+        child: BottomNavigationView(),
+      ),
       body: CustomScrollView(
         primary: true,
         slivers: [
