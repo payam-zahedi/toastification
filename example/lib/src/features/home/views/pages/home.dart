@@ -2,33 +2,38 @@ import 'dart:math';
 
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bottom_navigation.dart';
-import 'package:example/src/features/home/views/widgets/app_bar.dart';
+import 'package:example/src/features/home/views/widgets/app_bar/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static const route = '/';
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  bool isWithBorder = false;
+
+  @override
   Widget build(BuildContext context) {
-    return const DefaultStickyHeaderController(
-      child: Scaffold(
-        extendBody: true,
-        bottomNavigationBar: BottomNavigationView(),
-        body: CustomScrollView(
-          primary: true,
-          slivers: [
-            SliverToBoxAdapter(child: ToastAppBar()),
-            SliverToBoxAdapter(child: ToastHeader()),
-            CustomizationSection(),
-            SliverToBoxAdapter(child: SizedBox(height: 64)),
-          ],
-        ),
+    return const Scaffold(
+      extendBody: true,
+      bottomNavigationBar: BottomNavigationView(),
+      body: CustomScrollView(
+        primary: true,
+        slivers: [
+          ToastAppBar(),
+          SliverToBoxAdapter(child: ToastHeader()),
+          CustomizationSection(),
+          SliverToBoxAdapter(child: SizedBox(height: 64)),
+        ],
       ),
     );
   }
