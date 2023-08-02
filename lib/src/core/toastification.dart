@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_config.dart';
+import 'package:toastification/src/core/toastification_config_provider.dart';
 import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
@@ -133,14 +134,17 @@ class Toastification {
     OverlayState? overlayState,
   }) {
     direction ??= Directionality.of(context);
+    config = ToastificationConfigProvider.maybeOf(context)?.config ?? config;
 
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
 
     final manager = _managers.putIfAbsent(
       effectiveAlignment,
-      () =>
-          ToastificationManager(alignment: effectiveAlignment, config: config),
+      () => ToastificationManager(
+        alignment: effectiveAlignment,
+        config: config,
+      ),
     );
 
     return manager.showCustom(
