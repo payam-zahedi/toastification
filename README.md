@@ -32,9 +32,10 @@ before we dive into the details, you should know that you can use Toastification
 
 you can either use the 'toastification' instance or 'Toastification()' constructor to access the methods.
 
-``` dart
 
 ### Show Method
+by using the `show` method, you can show predefined toast messages. you can use the `ToastificationType` enum to choose the type and `ToastificationStyle` enum to choose the style of the toast message.
+
 
 <p align="center">
 <img src="doc\image\types.png?raw=true" width="100%" alt="Riverpod" />
