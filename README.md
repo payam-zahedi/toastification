@@ -97,6 +97,15 @@ toastification.show(
 );
 ```
 
+#### ToastificationStyle
+
+we have 4 predefined styles for toast messages:
+
+<p align="left">
+<img src="doc\image\styles.png?raw=true" width="100%" alt="Riverpod" />
+</p>
+
+
 
 ### ShowCustom Method
 
