@@ -14,6 +14,7 @@ class ToastificationApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Toastification',
       theme: lightTheme,
