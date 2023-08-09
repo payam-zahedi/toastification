@@ -83,30 +83,6 @@ class Toastification {
 
   final Map<Alignment, ToastificationManager> _managers = {};
 
-  /// the default configuration for the toastification
-  ///
-  /// when you are using [show] or [showCustom] methods,
-  /// if some of the parameters are not provided,
-  /// [Toastification] will use this class to get the default values.
-  ///
-  /// update this value to change the default configuration of the toastification package
-  ///
-  /// example :
-  ///
-  /// ```dart
-  /// toastification.config = ToastificationConfig(
-  ///   alignment: Alignment.topRight,
-  ///   animationDuration: const Duration(milliseconds: 500),
-  ///   animationBuilder: (context, animation,alignment, child) {
-  ///     return FadeTransition(
-  ///       opacity: animation,
-  ///       child: child,
-  ///     );
-  ///   },
-  /// );
-  /// ```
-  ToastificationConfig config = const ToastificationConfig();
-
   /// shows a custom notification
   /// you should create your own widget and pass it to the [builder] parameter
   ///
@@ -134,7 +110,9 @@ class Toastification {
     OverlayState? overlayState,
   }) {
     direction ??= Directionality.of(context);
-    config = ToastificationConfigProvider.maybeOf(context)?.config ?? config;
+
+    final config = ToastificationConfigProvider.maybeOf(context)?.config ??
+        const ToastificationConfig();
 
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
