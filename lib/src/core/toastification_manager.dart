@@ -198,9 +198,9 @@ class ToastificationManager {
         Widget overlay = Align(
           alignment: alignment,
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 32),
-            constraints: const BoxConstraints.tightFor(
-              width: 400,
+            margin: config.margin,
+            constraints: BoxConstraints.tightFor(
+              width: config.itemWidth,
             ),
             child: AnimatedList(
               key: _listGlobalKey,
@@ -214,6 +214,7 @@ class ToastificationManager {
                 Animation<double> animation,
               ) {
                 final item = _notifications[index];
+
                 return ToastHolderWidget(
                   item: item,
                   animation: animation,
