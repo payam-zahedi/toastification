@@ -6,23 +6,13 @@ One of the advantages of the Toastification package is its ability to handle mul
 
 Overall, Toastification is a useful package for Flutter developers who want to add toast notifications to their apps without having to write the code from scratch.
 
-| Example Video with custom animations | 
-| :------------: | 
-| <video width="100%" src="https://user-images.githubusercontent.com/47558577/230992882-d09e35fb-704f-4980-9b36-2a1f53b700e8.mp4" alt="Flutter Example test"></video> |
-
-
-| Web Example | Mobile Example  |
-| :------------: | :------------: |
-| ![](https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/usecase/web.gif) |  ![](https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/usecase/mobile.gif) |
-
-
 ## Installation
 
 To use Toastification, you need to add it to your pubspec.yaml file:
 
 ``` yaml
 dependencies:
-  toastification: ^0.0.2
+  toastification: latest_version
 ```
 
 Then, run `flutter pub get` to install the package.
