@@ -24,7 +24,22 @@ To use Toastification in your Flutter app, first import the package:
 ``` dart
 import 'package:toastification/toastification.dart';
 ```
-Call the show method to display a toast notification:
+
+before we dive into the details, you should know that you can use Toastification in two different way:
+
+`toastification.show` Method: to show predefined toast messages with predefined styles.
+`toastification.showCustom` Method: to show custom toast messages with custom styles.
+
+you can either use the 'toastification' instance or 'Toastification()' constructor to access the methods.
+
+``` dart
+
+### Show Method
+
+<p align="center">
+<img src="doc\image\types.png?raw=true" width="100%" alt="Riverpod" />
+</p>
+
 
 ```dart
 toastification.show(
@@ -33,17 +48,6 @@ toastification.show(
   autoCloseDuration: const Duration(seconds: 5),
 );
 ```
-Alternatively, you can use Constructor of the Toastification class and call the show method:
-
-```dart
-Toastification().show(
-  context: context,
-  title: 'Hello, world!',
-  autoCloseDuration: const Duration(seconds: 5),
-);
-```
-
-Both methods have the same behavior:
 
 This will display a toast message with the text "Hello, world!".
 
@@ -52,112 +56,48 @@ You can customize the appearance of the toast message by passing in additional p
 ``` dart
 toastification.show(
   context: context,
+  type: ToastificationType.success,
+  style: ToastificationStyle.flat,
   autoCloseDuration: const Duration(seconds: 5),
   title: 'Hello, World!',
   description: 'This is a sample toast message.',
-  animationDuration: const Duration(milliseconds: 300), 
-  animationBuilder: (context, animation, child) {
-    return RotationTransition(
+  alignment: Alignment.topRight,
+  direction: TextDirection.ltr,
+  animationDuration: const Duration(milliseconds: 300),
+  animationBuilder: (context, animation, alignment, child) {
+    return FadeTransition(
       turns: animation,
       child: child,
     );
   },
-  icon: Icon(Icons.check),
-  backgroundColor: const Color(0xff1976d2),
-  foregroundColor: Colors.white,
-  brightness: Brightness.light,
-  padding: const EdgeInsets.all(16),
+  icon: const Icon(Icons.check),
+  primaryColor: Colors.green,
+  backgroundColor: Colors.white,
+  foregroundColor: Colors.black,
+  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
   margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-  borderRadius: BorderRadius.circular(8),
-  elevation: 4,
+  borderRadius: BorderRadius.circular(12),
+  boxShadow: const [
+    BoxShadow(
+      color: Color(0x07000000),
+      blurRadius: 16,
+      offset: Offset(0, 16),
+      spreadRadius: 0,
+    )
+  ],
   onCloseTap: () {
     // Do something when the toast is closed
   },
   showProgressBar: true,
-  showCloseButton: true,
+  closeButtonShowType: CloseButtonShowType.onHover,
   closeOnClick: false,
   pauseOnHover: true,
+  dragToClose: true,
 );
 ```
-- `autoCloseDuration` (optional): A Duration object that specifies how long the toast message should be displayed before automatically closing. If this parameter is not provided, the default duration of 2 seconds will be used.
-- `overlayState` (optional): An OverlayState object that represents the state of the overlay where the toast message will be displayed. If this parameter is not provided, a new OverlayState object will be created.
-`title` (required): A string that represents the main message of the toast notification.
-- `description` (optional): A string that represents a secondary message of the toast notification, displayed below the main message.
-- `icon` (optional): A widget that represents an icon to be displayed in the toast notification.
-- `animationDuration`(optional): A Duration for the custom animation. Default is null (no custom animation).
-- `animationBuilder` (optional): A custom animation builder function that takes a `BuildContext`, an `Animation` object, and a `child widget` as arguments. Default is null (no custom animation). you can create your custom transition by providing this field.
-- `backgroundColor` (optional): A Color object that represents the background color of the toast notification. By default, the background color is set to Colors.grey[700].
-- `foregroundColor` (optional): A Color object that represents the foreground (text) color of the toast notification. By default, the foreground color is set to white.
-- `brightness` (optional): A Brightness object that represents the brightness of the toast notification. By default, the brightness is set to Brightness.dark.
-- `padding` (optional): An EdgeInsetsGeometry object that specifies the padding of the toast notification.
-- `margin` (optional): An EdgeInsetsGeometry object that specifies the margin of the toast notification.
-- `borderRadius` (optional): A BorderRadiusGeometry object that specifies the border radius of the toast notification.
-- `elevation` (optional): A double value that specifies the elevation of the toast notification.
-- `onCloseTap` (optional): A VoidCallback function that will be called when the user taps on the close button of the toast notification.
-- `showProgressBar` (optional): A boolean value that indicates whether to display a progress bar on the toast notification. By default, the progress bar is hidden.
-- `showCloseButton` (optional): A boolean value that indicates whether to display a close button on the toast notification. By default, the close button is shown.
-- `closeOnClick` (optional): A boolean value that indicates whether the toast notification should be closed when clicked. By default, the toast notification will not be closed when clicked.
-- `pauseOnHover` (optional): A boolean value that indicates whether the toast notification should be paused when the mouse pointer hovers over it. By default, the toast notification will not be paused on hover.
-
-### Other Predefined Styles methods
-
-The Toastification package also provides four predefined methods to quickly create and display toast messages with different styles, depending on the type of message being displayed:
-
-- `showSuccess`: displays a success message with a green background and a checkmark icon.
-- `showError`: displays an error message with a red background and an error icon.
-- `showInfo`: displays an information message with a blue background and an information icon.
-- `showWarning`: displays a warning message with a yellow background and a warning icon.
-
-All four of these methods accept the same set of parameters as the show() method, allowing you to customize the appearance and behavior of the toast message as needed.
 
 
-### Here are examples of using each of the predefined methods:
-
-#### showSuccess()
-
-Displays a success message with a green background and a checkmark icon.
-
-```dart
-toastification.showSuccess(
-  context: context,
-  title: 'Success!',
-  autoCloseDuration: const Duration(seconds: 5),
-);
-```
-#### showError()
-
-Displays an error message with a red background and an error icon.
-
-```dart
-toastification.showError(
-  context: context,
-  title: 'Error!',
-  autoCloseDuration: const Duration(seconds: 5),
-);
-```
-#### showInfo()
-
-Displays an information message with a blue background and an information icon.
-
-```dart
-toastification.showInfo(
-  context: context,
-  title: 'Info',
-  autoCloseDuration: const Duration(seconds: 5),
-);
-```
-#### showWarning()
-
-Displays a warning message with a yellow background and a warning icon.
-
-```dart
-toastification.showWarning(
-  context: context,
-  title: 'Warning!',
-  autoCloseDuration: const Duration(seconds: 5),
-);
-```
-### Create Your Own Toast Style with showCustom()
+### ShowCustom Method
 
 If you are looking for even more control over the appearance and behavior of your toast messages, you can use the showCustom() method to create a completely custom toast message. This method lets you pass in a builder function that returns the widget you want to display, giving you complete control over the toast's layout, styling, and interactivity.
 
@@ -168,6 +108,8 @@ Here's an example of how to use showCustom() to create a custom toast message wi
 ```dart
 toastification.showCustom(
   context: context,
+  autoCloseDuration: const Duration(seconds: 5),
+  alignment: Alignment.topRight,
   builder: (BuildContext context, ToastificationItem holder) {
     return Container(
       decoration: BoxDecoration(
@@ -175,40 +117,47 @@ toastification.showCustom(
         color: Colors.blue,
       ),
       padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Custom Toast', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
-          Text('This is a custom toast message!', style: TextStyle(color: Colors.white)),
-          SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: () {
-              // Perform an action when the button is pressed
-            },
-            child: Text('Do Something'),
+          const Text('Custom Toast',
+              style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 8),
+          const Text('This is a custom toast message!',
+              style: TextStyle(color: Colors.white)),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  // Perform an action when the button is pressed
+                },
+                child: const Text('Do Something'),
+              ),
+            ],
           ),
         ],
       ),
     );
   },
-  autoCloseDuration: const Duration(seconds: 5),
 );
 ```
 With showCustom(), you're only limited by your imagination. Create a toast message that stands out from the crowd and adds a touch of personality to your app!
 
 
-### Custom Animation
+### Custom Animations
 
 You can customize the animation of the toast notification by providing a Duration for the animation duration and implementing your own animation builder function using the animationBuilder parameter. Here's an example of how to use custom animations:
 
 ```dart
 toastification.show(
   context: context,
-  title: 'Default',
+  title: 'Hello, world!',
   // .... Other parameters
   animationDuration: const Duration(milliseconds: 300),
-  animationBuilder: (context, animation, child) {
+  animationBuilder: (context, animation, alignment, child) {
     return RotationTransition(
       turns: animation,
       child: child,
@@ -216,8 +165,10 @@ toastification.show(
   },
 );
 ```
+### Global/Default Configuration
 
-## Manage Your Notifications
+
+### Manage Your Notifications
 
 In addition to displaying toast messages, the Toastification package also provides methods for managing and dismissing existing notifications. Here are the available methods:
 
@@ -228,20 +179,20 @@ In addition to displaying toast messages, the Toastification package also provid
 Find a notification with the given ID
 
 ```dart
-final notification = Toastification().findToastificationItem('my_notification');
+final notification = toastification.findToastificationItem('my_notification');
 ```
 #### Dismiss a Notification
 
 Remove a specific notification from the screen.
 
 ```dart
-final notification = Toastification().show(
+final notification = toastification.show(
   context: context,
   title: 'Hello',
   autoCloseDuration: const Duration(seconds: 5),
 );
 
-Toastification().dismiss(notification);
+toastification.dismiss(notification);
 ```
 
 #### Dismiss a Notification by ID
@@ -249,7 +200,7 @@ Toastification().dismiss(notification);
 Remove a notification with the given ID from the screen.
 
 ``` dart
-Toastification().dismissById('my_notification_id');
+toastification.dismissById('my_notification_id');
 ```
 
 #### Dismiss the First Notification
@@ -257,7 +208,7 @@ Toastification().dismissById('my_notification_id');
 Remove the first notification that was shown from the screen.
 
 ```dart
-Toastification().dismissFirst();
+toastification.dismissFirst();
 ```
 
 
@@ -266,7 +217,7 @@ Toastification().dismissFirst();
 Remove the last notification that was shown from the screen.
 
 ```dart
-Toastification().dismissLast();
+toastification.dismissLast();
 ```
 
 
