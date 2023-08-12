@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class RoundToggle extends StatelessWidget {
   const RoundToggle({
     Key? key,
-    required this.onChanged,
     required this.value,
+    this.onChanged,
     this.enabledThumbColor,
     this.enabledTrackColor,
     this.disabledTrackColor,
@@ -39,11 +39,13 @@ class RoundToggle extends StatelessWidget {
   final bool value;
 
   /// Called when the user toggles the switch on or off.
-  final ValueChanged<bool?> onChanged;
+  final ValueChanged<bool?>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    bool enabled = onChanged != null;
 
     final thumbColor = value
         ? enabledThumbColor ?? theme.colorScheme.onPrimary
@@ -54,14 +56,14 @@ class RoundToggle extends StatelessWidget {
     final backgroundRadius =
         this.backgroundRadius ?? const BorderRadius.all(Radius.circular(8));
 
-    final backgroundColor = value
+    final backgroundColor = value && enabled
         ? enabledTrackColor ?? theme.colorScheme.primary
         : disabledTrackColor ?? theme.disabledColor;
 
     return InkWell(
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       onTap: () {
-        onChanged(!value);
+        onChanged?.call(!value);
       },
       child: AnimatedContainer(
         duration: duration,

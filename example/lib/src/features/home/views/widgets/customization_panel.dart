@@ -317,17 +317,10 @@ class _ContentSection extends ConsumerWidget {
             child: Column(
               // three bordered containers
               children: [
-                FilledButton(
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(200, 56),
-                    padding: const EdgeInsets.symmetric(horizontal: 17),
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1,
-                    ),
-                  ),
-                  onPressed: () {},
+                BorderedContainer(
+                  height: 48,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  enabled: false,
                   child: const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -459,6 +452,7 @@ class IconPicker extends ConsumerWidget {
         BorderedContainer(
           width: 120,
           height: 48,
+          enabled: false,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

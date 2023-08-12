@@ -4,6 +4,7 @@ class BorderedContainer extends StatelessWidget {
   const BorderedContainer({
     super.key,
     this.active = false,
+    this.enabled = true,
     this.height = 48,
     this.width,
     this.elevation = 0,
@@ -14,6 +15,7 @@ class BorderedContainer extends StatelessWidget {
   });
 
   final bool active;
+  final bool enabled;
   final double? height;
   final double? width;
 
@@ -30,18 +32,28 @@ class BorderedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final backgroundColor = active
+    final background = active
         ? theme.colorScheme.primary.withOpacity(.1)
         : theme.colorScheme.background;
+
+    final disableBackground = theme.colorScheme.onSurface.withOpacity(.05);
 
     final foreground = active
         ? theme.colorScheme.primary
         : theme.colorScheme.onPrimaryContainer;
 
+    final disableForeground = theme.colorScheme.onSurface.withOpacity(.35);
+
     final borderColor =
         active ? theme.colorScheme.primary : theme.colorScheme.outline;
 
-    final borderSize = active ? 1.5 : 1.0;
+    final disableBorderColor = theme.colorScheme.onSurface.withOpacity(.05);
+
+    final borderSize = enabled
+        ? active
+            ? 1.5
+            : 1.0
+        : 1.0;
     return Padding(
       padding: margin ?? EdgeInsets.zero,
       child: SizedBox(
@@ -49,11 +61,14 @@ class BorderedContainer extends StatelessWidget {
         width: width,
         child: Material(
           animationDuration: const Duration(milliseconds: 400),
-          color: backgroundColor,
+          color: enabled ? background : disableBackground,
           elevation: elevation,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
-            side: BorderSide(color: borderColor, width: borderSize),
+            side: BorderSide(
+              color: enabled ? borderColor : disableBorderColor,
+              width: borderSize,
+            ),
           ),
           child: InkWell(
             onTap: onTap,
@@ -65,13 +80,13 @@ class BorderedContainer extends StatelessWidget {
                   duration: const Duration(milliseconds: 10),
                   style: theme.textTheme.titleSmall!.copyWith(
                     fontSize: 14,
-                    fontWeight: active ? FontWeight.w500 : FontWeight.w400,
-                    color: foreground,
+                    fontWeight: FontWeight.w500,
+                    color: enabled ? foreground : disableForeground,
                   ),
                   child: IconTheme.merge(
                     data: IconThemeData(
                       size: 24,
-                      color: foreground,
+                      color: enabled ? foreground : disableForeground,
                     ),
                     child: child ?? const SizedBox(),
                   ),

@@ -19,8 +19,8 @@ class SoonWidget extends StatelessWidget {
           'SOON',
           style: theme.textTheme.titleSmall?.copyWith(
             color: theme.colorScheme.onError,
-            fontSize: 10,
-            fontWeight: FontWeight.w700,
+            fontSize: 9,
+            fontWeight: FontWeight.w500,
             height: 1,
           ),
         ),
