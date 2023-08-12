@@ -11,11 +11,11 @@ import 'package:example/src/core/views/widgets/picker/border_radius.dart';
 import 'package:example/src/core/views/widgets/picker/color.dart';
 import 'package:example/src/core/views/widgets/picker/elevation.dart';
 import 'package:example/src/core/views/widgets/picker/toast_style.dart';
-import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
+import 'package:example/src/features/home/views/widgets/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -155,24 +155,35 @@ class _PositionHolder extends StatelessWidget {
     return TitledSection(
       title: 'Position',
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        ResponsiveRowColumn(
+          rowCrossAxisAlignment: CrossAxisAlignment.start,
+          layout: context.responsiveValue(
+            mobile: ResponsiveRowColumnType.COLUMN,
+            tablet: ResponsiveRowColumnType.ROW,
+            desktop: ResponsiveRowColumnType.ROW,
+          ),
           children: [
-            const Expanded(
-              flex: 10,
+            const ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              rowFlex: 10,
               child: _AlignmentSection(),
             ),
-            Spacer(
-              flex: context.responsiveValue(
-                mobile: 1,
+            ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              rowFlex: context.responsiveValue(
                 tablet: 1,
                 desktop: 3,
               ),
+              child: SizedBox(height: 24),
             ),
-            const Expanded(flex: 7, child: _BorderSection()),
+            const ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              rowFlex: 7,
+              child: _BorderSection(),
+            ),
           ],
         ),
-        const SizedBox(height: 42),
+        const SizedBox(height: 24),
         const _ElevationSection(),
         const SizedBox(height: 18),
       ],
@@ -299,128 +310,14 @@ class _ElevationSection extends ConsumerWidget {
   }
 }
 
-class _ContentSection extends ConsumerWidget {
+class _ContentSection extends StatelessWidget {
   const _ContentSection();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final textDirection = ref.watch(toastDetailControllerProvider).direction ??
-        Directionality.of(context);
-
+  Widget build(BuildContext context) {
     return SubSection(
       title: 'CONTENT',
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 164,
-            child: Column(
-              // three bordered containers
-              children: [
-                BorderedContainer(
-                  height: 48,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  enabled: false,
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Add Section'),
-                      // soon to be icon
-                      SoonWidget(),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                BorderedContainer(
-                  height: 48,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  onTap: () {
-                    ref
-                        .read(toastDetailControllerProvider.notifier)
-                        .changeDirection(TextDirection.ltr);
-                  },
-                  active: textDirection == TextDirection.ltr,
-                  child: Row(
-                    children: [
-                      const Expanded(child: Text('LTR layout')),
-                      Offstage(
-                        offstage: textDirection != TextDirection.ltr,
-                        child: const Icon(Icons.check),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                BorderedContainer(
-                  height: 48,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  onTap: () {
-                    ref
-                        .read(toastDetailControllerProvider.notifier)
-                        .changeDirection(TextDirection.rtl);
-                  },
-                  active: textDirection == TextDirection.rtl,
-                  child: Row(
-                    children: [
-                      const Expanded(child: Text('RTL layout')),
-                      Offstage(
-                        offstage: textDirection != TextDirection.rtl,
-                        child: const Icon(Icons.check),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Type the title text here..',
-                        ),
-                        onChanged: (value) {
-                          ref
-                              .read(toastDetailControllerProvider.notifier)
-                              .changeTitle(value);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    IconPicker(),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  height: 106,
-                  child: TextField(
-                    expands: true,
-                    maxLines: null,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: InputDecoration(
-                      hintText: 'Type the body text here..',
-                    ),
-                    onChanged: (value) {
-                      ref
-                          .read(toastDetailControllerProvider.notifier)
-                          .changeDescription(value);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: ContentWidget(),
     );
   }
 }
@@ -446,36 +343,25 @@ class IconPicker extends ConsumerWidget {
       ToastificationStyle.flat => FlatStyle(type),
     };
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        BorderedContainer(
-          width: 120,
-          height: 48,
-          enabled: false,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Iconsax.tick_circle_copy,
-                color: defaultStyle.iconColor(context),
-              ),
-              const SizedBox(width: 8),
-              const Text('Icon'),
-              const SizedBox(width: 4),
-              const Icon(
-                Icons.keyboard_arrow_down,
-                size: 20,
-              ),
-            ],
+    return BorderedContainer(
+      width: 120,
+      height: 48,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Iconsax.tick_circle_copy,
+            color: defaultStyle.iconColor(context),
           ),
-        ),
-        Positioned.directional(
-          textDirection: Directionality.of(context),
-          start: 12,
-          child: SoonWidget(),
-        ),
-      ],
+          const SizedBox(width: 8),
+          const Text('Icon'),
+          const SizedBox(width: 4),
+          const Icon(
+            Icons.keyboard_arrow_down,
+            size: 20,
+          ),
+        ],
+      ),
     );
   }
 }
