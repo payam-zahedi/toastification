@@ -36,7 +36,9 @@ class ToastStylePickerState extends State<ToastStylePicker> {
           padding: const EdgeInsetsDirectional.only(start: 4.0),
           child: Text(
             'Toast style',
-            style: theme.textTheme.titleMedium,
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
         const SizedBox(height: 14),

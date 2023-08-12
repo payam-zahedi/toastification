@@ -63,6 +63,40 @@ class CustomizationPanel extends ConsumerWidget {
   }
 }
 
+class TitledSection extends StatelessWidget {
+  const TitledSection({
+    super.key,
+    required this.title,
+    required this.children,
+  });
+
+  TitledSection.single({
+    super.key,
+    required this.title,
+    required Widget child,
+  }) : children = [child];
+
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        const SizedBox(height: 12),
+        ...children,
+      ],
+    );
+  }
+}
+
 class CustomizeTitle extends StatelessWidget {
   const CustomizeTitle({super.key});
 
@@ -118,32 +152,30 @@ class _PositionHolder extends StatelessWidget {
   const _PositionHolder();
   @override
   Widget build(BuildContext context) {
-    return ExpandableSection(
+    return TitledSection(
       title: 'Position',
-      body: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Expanded(
-                flex: 10,
-                child: _AlignmentSection(),
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Expanded(
+              flex: 10,
+              child: _AlignmentSection(),
+            ),
+            Spacer(
+              flex: context.responsiveValue(
+                mobile: 1,
+                tablet: 1,
+                desktop: 3,
               ),
-              Spacer(
-                flex: context.responsiveValue(
-                  mobile: 1,
-                  tablet: 1,
-                  desktop: 3,
-                ),
-              ),
-              const Expanded(flex: 7, child: _BorderSection()),
-            ],
-          ),
-          const SizedBox(height: 42),
-          const _ElevationSection(),
-          const SizedBox(height: 18),
-        ],
-      ),
+            ),
+            const Expanded(flex: 7, child: _BorderSection()),
+          ],
+        ),
+        const SizedBox(height: 42),
+        const _ElevationSection(),
+        const SizedBox(height: 18),
+      ],
     );
   }
 }
@@ -152,16 +184,13 @@ class _ContentAndStyleHolder extends StatelessWidget {
   const _ContentAndStyleHolder();
   @override
   Widget build(BuildContext context) {
-    return const ExpandableSection(
+    return const TitledSection(
       title: 'Content & Style',
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _ContentSection(),
-          SizedBox(height: 20),
-          _StyleSection(),
-        ],
-      ),
+      children: [
+        _ContentSection(),
+        SizedBox(height: 20),
+        _StyleSection(),
+      ],
     );
   }
 }
@@ -171,40 +200,38 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpandableSection(
+    return TitledSection(
       title: 'Controllers & Interaction',
-      body: Column(
-        children: [
-          const _SystemSection(),
-          SizedBox(height: 20),
-          const _CloseSection(),
-          SizedBox(height: 20),
-          const _ProgressBarSection(),
-          SizedBox(height: 20),
-          ResponsiveRowColumn(
-            rowSpacing: 10,
-            columnSpacing: 10,
-            columnMainAxisSize: MainAxisSize.min,
-            layout: context.responsiveValue(
-              mobile: ResponsiveRowColumnType.COLUMN,
-              tablet: ResponsiveRowColumnType.ROW,
-              desktop: ResponsiveRowColumnType.ROW,
-            ),
-            children: const [
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                columnFit: FlexFit.loose,
-                child: _PauseSection(),
-              ),
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                columnFit: FlexFit.loose,
-                child: _DragSection(),
-              ),
-            ],
+      children: [
+        const _SystemSection(),
+        const SizedBox(height: 20),
+        const _CloseSection(),
+        const SizedBox(height: 20),
+        const _ProgressBarSection(),
+        const SizedBox(height: 20),
+        ResponsiveRowColumn(
+          rowSpacing: 10,
+          columnSpacing: 10,
+          columnMainAxisSize: MainAxisSize.min,
+          layout: context.responsiveValue(
+            mobile: ResponsiveRowColumnType.COLUMN,
+            tablet: ResponsiveRowColumnType.ROW,
+            desktop: ResponsiveRowColumnType.ROW,
           ),
-        ],
-      ),
+          children: const [
+            ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              columnFit: FlexFit.loose,
+              child: _PauseSection(),
+            ),
+            ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              columnFit: FlexFit.loose,
+              child: _DragSection(),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
