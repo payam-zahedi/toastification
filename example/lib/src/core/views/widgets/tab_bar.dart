@@ -1,3 +1,4 @@
+import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +27,17 @@ class ToastTypeTabBar extends ConsumerWidget {
         Padding(
           padding: const EdgeInsetsDirectional.only(start: 4.0),
           child: Text(
-            'Choose toast type',
-            style: theme.textTheme.titleMedium,
+            'Toast Type',
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
-        const SizedBox(height: 14),
+        const SizedBox(height: 24),
         Row(
           children: [
             Expanded(
+              flex: 4,
               child: TabTypeItem(
                 selected: type == ToastificationType.success,
                 title: 'Success',
@@ -47,6 +51,7 @@ class ToastTypeTabBar extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             Expanded(
+              flex: 4,
               child: TabTypeItem(
                 selected: type == ToastificationType.info,
                 title: 'Info',
@@ -60,6 +65,7 @@ class ToastTypeTabBar extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             Expanded(
+              flex: 4,
               child: TabTypeItem(
                 selected: type == ToastificationType.warning,
                 title: 'Warning',
@@ -73,6 +79,7 @@ class ToastTypeTabBar extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             Expanded(
+              flex: 4,
               child: TabTypeItem(
                 selected: type == ToastificationType.error,
                 title: 'Error',
@@ -86,6 +93,7 @@ class ToastTypeTabBar extends ConsumerWidget {
             ),
             const SizedBox(width: 8),
             const Expanded(
+              flex: 5,
               child: CustomTabItem(),
             ),
           ],
@@ -117,7 +125,7 @@ class TabTypeItem extends StatelessWidget {
       animationDuration: const Duration(milliseconds: 500),
       color: selected ? color.withOpacity(.1) : theme.colorScheme.background,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(8.0),
         side: BorderSide(
           color: selected ? color : theme.colorScheme.outline,
           width: 1.5,
@@ -189,33 +197,17 @@ class CustomTabItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+    return const BorderedContainer(
       height: 37,
-      decoration: BoxDecoration(
-        color: theme.colorScheme.primary,
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(
-          color: theme.colorScheme.onSurface.withOpacity(.1),
-          width: 1.5,
-        ),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
+      enabled: false,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             'Custom',
-            style: theme.textTheme.titleSmall?.copyWith(
-              color: theme.colorScheme.onPrimary,
-              height: 1,
-              fontWeight: FontWeight.w500,
-            ),
           ),
-          const Align(
-            alignment: AlignmentDirectional(.4, .1),
-            child: SoonWidget(),
-          )
+          SizedBox(width: 8),
+          SoonWidget()
         ],
       ),
     );

@@ -35,14 +35,26 @@ class BorderedDropDown<T> extends StatelessWidget {
         isExpanded: isExpanded,
         borderRadius: BorderRadius.circular(10),
         decoration: InputDecoration(
-          prefixIcon: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
-            child: icon,
-          ),
+          prefixIcon: icon == null
+              ? null
+              : Padding(
+                  padding:
+                      const EdgeInsetsDirectional.symmetric(horizontal: 12),
+                  child: icon,
+                ),
           prefixIconColor: theme.colorScheme.onSurface.withOpacity(.2),
           hintText: hint,
           hintStyle: theme.textTheme.bodyMedium?.copyWith(
             height: 1.1,
+          ),
+          enabled: available,
+          filled: !available,
+          fillColor: theme.colorScheme.onBackground.withOpacity(.05),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: theme.colorScheme.onBackground.withOpacity(.05),
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
@@ -50,7 +62,6 @@ class BorderedDropDown<T> extends StatelessWidget {
               color: theme.colorScheme.outline,
             ),
           ),
-          filled: false,
         ),
         hint: !available
             ? Row(

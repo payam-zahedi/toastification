@@ -19,7 +19,7 @@ class TopBorderHolder extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: Theme.of(context).colorScheme.outline,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24),
@@ -47,15 +47,15 @@ class MiddleBorderHolder extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 1,
-            color: Theme.of(context).colorScheme.outline,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           right: BorderSide(
             width: 1,
-            color: Theme.of(context).colorScheme.outline,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
           bottom: BorderSide(
             width: 1,
-            color: Theme.of(context).colorScheme.outline,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
       ),
@@ -79,7 +79,7 @@ class BottomBorderHolder extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: Theme.of(context).colorScheme.outline,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(24),

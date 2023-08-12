@@ -30,6 +30,7 @@ class ToggleTile extends StatelessWidget {
               onChanged(!value);
             }
           : null,
+      enabled: !soon,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       height: 48,
       child: Row(
@@ -43,7 +44,7 @@ class ToggleTile extends StatelessWidget {
           const Spacer(),
           RoundToggle(
             value: value,
-            onChanged: !soon ? onChanged : (v) {},
+            onChanged: !soon ? onChanged : null,
           ),
         ],
       ),
