@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:example/src/core/usecase/responsive/responsive.dart';
+import 'package:example/src/core/views/widgets/border_holder.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
@@ -29,28 +30,33 @@ class CustomizationPanel extends ConsumerWidget {
     return SliverList(
       delegate: SliverChildListDelegate.fixed(
         [
-          if (!context.isInMobileZone) const CustomizeTitle(),
-          const SizedBox(height: 24),
-          ToastTypeTabBar(
-            onTypeChanged: (value) {
-              ref
-                  .read(toastDetailControllerProvider.notifier)
-                  .changeType(value);
-            },
+          SizedBox(height: 24),
+          TopBorderHolder(
+            child: ToastTypeTabBar(
+              onTypeChanged: (value) {
+                ref
+                    .read(toastDetailControllerProvider.notifier)
+                    .changeType(value);
+              },
+            ),
           ),
-          const SizedBox(height: 32),
-          ToastStylePicker(
-            type: ref.watch(toastDetailControllerProvider).type,
-            initialStyle: ToastificationStyle.flat,
-            onStyleChanged: (style) {
-              ref
-                  .read(toastDetailControllerProvider.notifier)
-                  .changeStyle(style);
-            },
+          MiddleBorderHolder(
+            child: ToastStylePicker(
+              type: ref.watch(toastDetailControllerProvider).type,
+              initialStyle: ToastificationStyle.flat,
+              onStyleChanged: (style) {
+                ref
+                    .read(toastDetailControllerProvider.notifier)
+                    .changeStyle(style);
+              },
+            ),
           ),
-          const _PositionHolder(),
-          const _ContentAndStyleHolder(),
-          const _ControllersAndInteractionsHolder(),
+          const MiddleBorderHolder(child: _PositionHolder()),
+          const MiddleBorderHolder(child: _ContentAndStyleHolder()),
+          const BottomBorderHolder(
+            child: _ControllersAndInteractionsHolder(),
+          ),
+          SizedBox(height: 24),
         ],
       ),
     );
@@ -112,34 +118,31 @@ class _PositionHolder extends StatelessWidget {
   const _PositionHolder();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 32),
-      child: ExpandableSection(
-        title: 'Position',
-        body: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 10,
-                  child: _AlignmentSection(),
+    return ExpandableSection(
+      title: 'Position',
+      body: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(
+                flex: 10,
+                child: _AlignmentSection(),
+              ),
+              Spacer(
+                flex: context.responsiveValue(
+                  mobile: 1,
+                  tablet: 1,
+                  desktop: 3,
                 ),
-                Spacer(
-                  flex: context.responsiveValue(
-                    mobile: 1,
-                    tablet: 1,
-                    desktop: 3,
-                  ),
-                ),
-                const Expanded(flex: 7, child: _BorderSection()),
-              ],
-            ),
-            const SizedBox(height: 42),
-            const _ElevationSection(),
-            const SizedBox(height: 18),
-          ],
-        ),
+              ),
+              const Expanded(flex: 7, child: _BorderSection()),
+            ],
+          ),
+          const SizedBox(height: 42),
+          const _ElevationSection(),
+          const SizedBox(height: 18),
+        ],
       ),
     );
   }
@@ -149,18 +152,15 @@ class _ContentAndStyleHolder extends StatelessWidget {
   const _ContentAndStyleHolder();
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 32),
-      child: ExpandableSection(
-        title: 'Content & Style',
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _ContentSection(),
-            SizedBox(height: 20),
-            _StyleSection(),
-          ],
-        ),
+    return const ExpandableSection(
+      title: 'Content & Style',
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _ContentSection(),
+          SizedBox(height: 20),
+          _StyleSection(),
+        ],
       ),
     );
   }
@@ -171,43 +171,39 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 32),
-      child: ExpandableSection(
-        title: 'Controllers & Interaction',
-        body: Column(
-          children: [
-            const _SystemSection(),
-            SizedBox(height: 20),
-            const _CloseSection(),
-            SizedBox(height: 20),
-            const _ProgressBarSection(),
-            SizedBox(height: 20),
-            ResponsiveRowColumn(
-              rowSpacing: 10,
-              columnSpacing: 10,
-              columnMainAxisSize: MainAxisSize.min,
-              layout: context.responsiveValue(
-                mobile: ResponsiveRowColumnType.COLUMN,
-                tablet: ResponsiveRowColumnType.ROW,
-                desktop: ResponsiveRowColumnType.ROW,
-              ),
-              children: const [
-                ResponsiveRowColumnItem(
-                  rowFit: FlexFit.tight,
-                  columnFit: FlexFit.loose,
-                  child: _PauseSection(),
-                ),
-                ResponsiveRowColumnItem(
-                  rowFit: FlexFit.tight,
-                  columnFit: FlexFit.loose,
-                  child: _DragSection(),
-                ),
-              ],
+    return ExpandableSection(
+      title: 'Controllers & Interaction',
+      body: Column(
+        children: [
+          const _SystemSection(),
+          SizedBox(height: 20),
+          const _CloseSection(),
+          SizedBox(height: 20),
+          const _ProgressBarSection(),
+          SizedBox(height: 20),
+          ResponsiveRowColumn(
+            rowSpacing: 10,
+            columnSpacing: 10,
+            columnMainAxisSize: MainAxisSize.min,
+            layout: context.responsiveValue(
+              mobile: ResponsiveRowColumnType.COLUMN,
+              tablet: ResponsiveRowColumnType.ROW,
+              desktop: ResponsiveRowColumnType.ROW,
             ),
-            const SizedBox(height: 16),
-          ],
-        ),
+            children: const [
+              ResponsiveRowColumnItem(
+                rowFit: FlexFit.tight,
+                columnFit: FlexFit.loose,
+                child: _PauseSection(),
+              ),
+              ResponsiveRowColumnItem(
+                rowFit: FlexFit.tight,
+                columnFit: FlexFit.loose,
+                child: _DragSection(),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
