@@ -5,6 +5,7 @@ import 'package:example/src/core/views/widgets/bottom_navigation.dart';
 import 'package:example/src/features/home/views/widgets/app_bar/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
+import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -20,7 +21,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isWithBorder = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  void getImages() {
+    precacheImage(headerImage, context);
+    precacheImage(logoImage, context);
+  }
 
   @override
   Widget build(BuildContext context) {

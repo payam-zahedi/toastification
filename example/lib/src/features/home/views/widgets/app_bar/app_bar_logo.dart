@@ -1,4 +1,5 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
+import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:flutter/material.dart';
 
 class AppBarLogo extends StatelessWidget {
@@ -10,8 +11,8 @@ class AppBarLogo extends StatelessWidget {
 
     return Row(
       children: [
-        Image.asset(
-          'assets/img/logo-black.png',
+        const Image(
+          image: logoImage,
           width: 54,
         ),
         const SizedBox(width: 12),

@@ -1,5 +1,6 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
+import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,8 +20,9 @@ class ToastHeader extends ConsumerWidget {
       tablet: false,
       mobile: false,
     );
-    final imageWidget = Image.asset(
-      'assets/img/header.png',
+
+    const imageWidget = Image(
+      image: headerImage,
     );
     const informationWidget = _InformationWidget();
 
@@ -49,7 +51,7 @@ class ToastHeader extends ConsumerWidget {
                 Positioned.fill(
                   top: -165,
                   right: -context.fractionalSize(.05),
-                  child: FractionallySizedBox(
+                  child: const FractionallySizedBox(
                     widthFactor: .5,
                     alignment: Alignment.topRight,
                     child: imageWidget,
