@@ -53,6 +53,10 @@ extension ResponsiveContext on BuildContext {
     }
   }
 
+  double fractionalSize(double value) {
+    return ResponsiveWrapper.of(this).screenWidth * value;
+  }
+
   void responsiveLog() {
     log(name: 'ResponsiveLog:', 'isInMobileZone: $isInMobileZone');
     log(name: 'ResponsiveLog:', 'isMobile: $isMobile');

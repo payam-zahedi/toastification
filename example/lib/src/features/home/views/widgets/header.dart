@@ -19,8 +19,8 @@ class ToastHeader extends ConsumerWidget {
       tablet: false,
       mobile: false,
     );
-    final imageWidget = Container(
-      color: Colors.grey,
+    final imageWidget = Image.asset(
+      'assets/img/header.png',
     );
     const informationWidget = _InformationWidget();
 
@@ -48,7 +48,7 @@ class ToastHeader extends ConsumerWidget {
                 ),
                 Positioned.fill(
                   top: -165,
-                  right: 0,
+                  right: -context.fractionalSize(.05),
                   child: FractionallySizedBox(
                     widthFactor: .5,
                     alignment: Alignment.topRight,
@@ -78,8 +78,9 @@ class ToastHeader extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             informationWidget,
-            SizedBox(
-              height: 300,
+            Container(
+              transform: Matrix4.translationValues(0.0, -60.0, 0.0),
+              constraints: const BoxConstraints(maxWidth: 600),
               child: imageWidget,
             ),
           ],

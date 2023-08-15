@@ -1,3 +1,4 @@
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 
 class AppBarLogo extends StatelessWidget {
@@ -14,13 +15,14 @@ class AppBarLogo extends StatelessWidget {
           width: 54,
         ),
         const SizedBox(width: 12),
-        Text(
-          "Toastification",
-          style: titleMedium?.copyWith(
-            fontSize: 20,
-            fontWeight: FontWeight.w800,
+        if (!context.isInMobileZone)
+          Text(
+            "Toastification",
+            style: titleMedium?.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+            ),
           ),
-        ),
       ],
     );
   }

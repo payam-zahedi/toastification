@@ -14,14 +14,13 @@ class ToastificationApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Toastification',
       theme: lightTheme,
       builder: (context, child) {
         return ResponsiveWrapper.builder(
           child,
-          maxWidth: 1400,
+          maxWidth: 1300,
           minWidth: 300,
           defaultScale: false,
           breakpoints: [
