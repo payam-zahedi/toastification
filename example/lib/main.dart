@@ -3,9 +3,11 @@ import 'package:example/src/features/home/views/pages/home.dart';
 import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const ProviderScope(child: ToastificationApp()));
 }
 
