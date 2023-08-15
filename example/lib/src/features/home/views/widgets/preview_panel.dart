@@ -38,21 +38,20 @@ class ToastPreview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
+    final edgeInsets = context.isInMobileZone
+        ? const EdgeInsets.fromLTRB(10, 12, 10, 12)
+        : const EdgeInsets.fromLTRB(12, 14, 12, 14);
     return Material(
       shape: Theme.of(context).cardTheme.shape,
       color: Theme.of(context).cardTheme.color,
       child: SizedBox(
-        width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 350,
-                minHeight: context.isInMobileZone ? 120 : 132,
-              ),
-              child: Center(child: _buildToastWidget(toastDetail)),
+          padding: edgeInsets,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 400,
             ),
+            child: Center(child: _buildToastWidget(toastDetail)),
           ),
         ),
       ),
@@ -84,11 +83,19 @@ class CodePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget child;
     if (!context.isInDesktopZone) {
-      return const ExpandableCodePreview();
+      child = const ExpandableCodePreview();
+    } else {
+      child = const _RawCodePreview();
     }
 
-    return const _RawCodePreview();
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        maxWidth: 436,
+      ),
+      child: Center(child: child),
+    );
   }
 }
 
