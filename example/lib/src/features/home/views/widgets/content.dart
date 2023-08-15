@@ -162,13 +162,21 @@ class _ContentMobile extends ConsumerWidget {
                 height: 48,
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 enabled: false,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(
                   children: [
-                    Text('Add Section'),
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        'Add Section',
+                        overflow: TextOverflow.clip,
+                      ),
+                    ),
+
                     // soon to be icon
-                    SoonWidget(),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: SoonWidget(),
+                    ),
                   ],
                 ),
               ),

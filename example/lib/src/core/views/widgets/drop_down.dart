@@ -70,6 +70,7 @@ class BorderedDropDown<T> extends StatelessWidget {
                     hint,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       height: 1.1,
+                      color: theme.colorScheme.onSurface.withOpacity(.35),
                     ),
                   ),
                   const SizedBox(width: 4),

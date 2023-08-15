@@ -141,7 +141,7 @@ ThemeData _themeBuilder() {
     cardTheme: CardTheme(
       color: scheme.surfaceVariant,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(
           color: scheme.onSurfaceVariant,
           width: 1,
