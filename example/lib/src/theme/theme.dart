@@ -15,8 +15,8 @@ const _onError = Color(0xffffffff);
 // border color
 const _outline = Color(0xffF2F2F2);
 
-const _tagBackgroundColor = Color(0xffEDFBFE);
-const _tagTextColor = Color(0xff21C9EE);
+const _tagBackgroundColor = Color(0x194BAE43);
+const _tagTextColor = Color(0xff309528);
 
 const _switchActiveColor = _primary;
 const _switchInActiveColor = Color(0xffC5CCD7);
@@ -50,7 +50,7 @@ ThemeData _themeBuilder() {
   final textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
         fontFamily: 'PlusJakartaDisplay',
         bodyColor: scheme.onSurface,
-        displayColor: scheme.onSurface,
+        displayColor: scheme.onBackground,
       );
 
   return ThemeData(
@@ -68,7 +68,7 @@ ThemeData _themeBuilder() {
     textTheme: textTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        minimumSize: const Size(100, 48),
+        minimumSize: const Size(80, 48),
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
         textStyle: textTheme.bodyLarge?.copyWith(
@@ -84,7 +84,7 @@ ThemeData _themeBuilder() {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        minimumSize: const Size(100, 48),
+        minimumSize: const Size(80, 48),
         backgroundColor: scheme.surface,
         foregroundColor: scheme.onSurface,
         textStyle: textTheme.bodyLarge?.copyWith(
@@ -99,7 +99,7 @@ ThemeData _themeBuilder() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(100, 48),
+        minimumSize: const Size(80, 48),
         backgroundColor: scheme.background,
         foregroundColor: scheme.onBackground,
         textStyle: textTheme.bodyLarge?.copyWith(
@@ -141,7 +141,7 @@ ThemeData _themeBuilder() {
     cardTheme: CardTheme(
       color: scheme.surfaceVariant,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(
           color: scheme.onSurfaceVariant,
           width: 1,

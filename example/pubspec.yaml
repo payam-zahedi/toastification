@@ -3,13 +3,15 @@ description: A new Flutter project.
 
 publish_to: "none" 
 
-version: 0.0.8+8
+version: 0.0.13+13
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_web_plugins:
     sdk: flutter
   toastification:
     path: ../
