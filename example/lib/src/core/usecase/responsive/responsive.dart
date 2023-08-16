@@ -76,4 +76,9 @@ extension ResponsiveContext on BuildContext {
         name: 'ResponsiveLog:',
         'scaledWidth: ${ResponsiveWrapper.of(this).scaledWidth}');
   }
+
+  double get cardsBorderRadiusValue => isInDesktopZone ? 24 : 16;
+
+  BorderRadius get cardsBorderRadius =>
+      BorderRadius.circular(cardsBorderRadiusValue);
 }

@@ -8,7 +8,7 @@ class CodeViewer extends StatelessWidget {
     required this.source,
     this.language,
     this.theme = const {},
-    this.padding,
+    this.padding = EdgeInsets.zero,
     this.textStyle,
     this.tabSize = 8,
   });
@@ -31,7 +31,7 @@ class CodeViewer extends StatelessWidget {
   final Map<String, TextStyle> theme;
 
   /// Padding
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry padding;
 
   /// Text styles
   ///
@@ -90,14 +90,16 @@ class CodeViewer extends StatelessWidget {
       style = style.merge(textStyle);
     }
 
-    return Container(
+    return ColoredBox(
       color: theme[_rootKey]?.backgroundColor ?? _defaultBackgroundColor,
-      padding: padding,
-      child: SelectableText.rich(
-        TextSpan(
-          style: style,
-          children:
-              _convert(highlight.parse(content, language: language).nodes!),
+      child: Padding(
+        padding: padding,
+        child: Text.rich(
+          TextSpan(
+            style: style,
+            children:
+                _convert(highlight.parse(content, language: language).nodes!),
+          ),
         ),
       ),
     );
