@@ -1,3 +1,4 @@
+import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 
 const topHolderPadding = EdgeInsets.fromLTRB(40, 40, 40, 32);
@@ -21,9 +22,9 @@ class TopBorderHolder extends StatelessWidget {
           width: 1,
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(context.cardsBorderRadiusValue),
+          topRight: Radius.circular(context.cardsBorderRadiusValue),
         ),
       ),
       child: child,
@@ -81,9 +82,9 @@ class BottomBorderHolder extends StatelessWidget {
           width: 1,
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         ),
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(24),
-          bottomRight: Radius.circular(24),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(context.cardsBorderRadiusValue),
+          bottomRight: Radius.circular(context.cardsBorderRadiusValue),
         ),
       ),
       child: child,

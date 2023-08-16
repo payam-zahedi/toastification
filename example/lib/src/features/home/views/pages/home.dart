@@ -74,14 +74,14 @@ class _HorizontalSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final sideHeaderWidth = screenWidth * 0.38;
-    final previewPanelPadding = screenWidth * 0.04;
+    final sideHeaderWidth = context.isUltra ? 430.0 : 380.0;
+    const previewPanelPadding = 16.0;
 
     return SliverPadding(
-      padding:
-          EdgeInsets.symmetric(horizontal: previewPanelPadding, vertical: 64),
+      padding: const EdgeInsets.symmetric(
+        horizontal: previewPanelPadding,
+        vertical: 64,
+      ),
       sliver: SliverStickyHeader(
         overlapsContent: true,
         header: Align(
@@ -119,7 +119,7 @@ class _VerticalSection extends StatelessWidget {
       sliver: SliverStickyHeader(
         header: const PreviewPanel(),
         sliver: const SliverPadding(
-          padding: EdgeInsetsDirectional.fromSTEB(8, 32, 8, 8),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 8),
           sliver: CustomizationPanel(),
         ),
       ),

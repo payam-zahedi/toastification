@@ -21,7 +21,7 @@ const _tagTextColor = Color(0xff309528);
 const _switchActiveColor = _primary;
 const _switchInActiveColor = Color(0xffC5CCD7);
 
-const _cardColor = Color(0xffFAFAFA);
+const _cardColor = Color(0xffEDF1F5);
 const _cardBorderColor = Color(0xffEBEBEB);
 
 final lightTheme = _themeBuilder();

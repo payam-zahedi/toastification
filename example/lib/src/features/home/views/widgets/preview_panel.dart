@@ -6,6 +6,7 @@ import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/ui_states/toast_code_formatter.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
@@ -38,21 +39,19 @@ class ToastPreview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
+    final edgeInsets = context.isInMobileZone
+        ? const EdgeInsets.fromLTRB(10, 12, 10, 12)
+        : const EdgeInsets.fromLTRB(12, 14, 12, 14);
     return Material(
-      shape: Theme.of(context).cardTheme.shape,
+      shape: RoundedRectangleBorder(
+        borderRadius: context.cardsBorderRadius,
+      ),
       color: Theme.of(context).cardTheme.color,
       child: SizedBox(
-        width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: edgeInsets,
           child: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: 350,
-                minHeight: context.isInMobileZone ? 120 : 132,
-              ),
-              child: Center(child: _buildToastWidget(toastDetail)),
-            ),
+            child: _buildToastWidget(toastDetail),
           ),
         ),
       ),
@@ -87,7 +86,6 @@ class CodePreview extends StatelessWidget {
     if (!context.isInDesktopZone) {
       return const ExpandableCodePreview();
     }
-
     return const _RawCodePreview();
   }
 }
@@ -131,8 +129,10 @@ class _RawCodePreview extends StatelessWidget {
     }
 
     return Material(
-      shape: Theme.of(context).cardTheme.shape,
-      color: Theme.of(context).cardTheme.color,
+      shape: RoundedRectangleBorder(
+        borderRadius: context.cardsBorderRadius,
+      ),
+      color: const Color(0xffFBFCFD),
       child: ConstrainedBox(
         constraints: const BoxConstraints(
           minWidth: double.infinity,
@@ -167,6 +167,7 @@ class _ExpandableCodePreviewState extends State<ExpandableCodePreview> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ExpandableWidget(
+      borderRadius: context.cardsBorderRadius,
       borderSide: BorderSide(color: theme.colorScheme.outline),
       expansionCallback: (isExpanded) {
         setState(() {
@@ -225,12 +226,12 @@ class CodePreviewer extends ConsumerWidget {
 
     final code = ToastCodeFormatter.format(toastDetail);
 
-    final codeTheme = Map<String, TextStyle>.from(defaultTheme);
+    final codeTheme = Map<String, TextStyle>.from(githubTheme);
 
     codeTheme.update(
       'root',
       (value) => value.copyWith(
-        backgroundColor: Theme.of(context).cardTheme.color,
+        backgroundColor: const Color(0xffFBFCFD),
       ),
     );
 
@@ -247,8 +248,8 @@ class CodePreviewer extends ConsumerWidget {
       theme: codeTheme,
 
       // Specify padding
-      padding: const EdgeInsets.all(0),
-      tabSize: 8,
+      padding: const EdgeInsets.all(8),
+      tabSize: 2,
       // Specify text style
       textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.9),
     );
