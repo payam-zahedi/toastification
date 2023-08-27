@@ -131,6 +131,7 @@ class _RawCodePreview extends StatelessWidget {
     return Material(
       shape: RoundedRectangleBorder(
         borderRadius: context.cardsBorderRadius,
+        side: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
       ),
       color: const Color(0xffFBFCFD),
       child: ConstrainedBox(
