@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const _primary = Color(0xff3F5EFF);
 const _onPrimary = Color(0xffFFFFFF);
@@ -24,9 +25,12 @@ const _switchInActiveColor = Color(0xffC5CCD7);
 const _cardColor = Color(0xffEDF1F5);
 const _cardBorderColor = Color(0xffEBEBEB);
 
-final lightTheme = _themeBuilder();
+const plusJakartaDisplayName = 'PlusJakartaDisplay';
 
-ThemeData _themeBuilder() {
+final lightInterTheme = _themeBuilder();
+final lightJakartaTheme = _themeBuilder(useInterFont: false);
+
+ThemeData _themeBuilder({bool useInterFont = true}) {
   final scheme = ColorScheme.fromSeed(
     seedColor: _primary,
     primary: _primary,
@@ -47,11 +51,20 @@ ThemeData _themeBuilder() {
     outline: _outline,
   );
 
-  final textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
-        fontFamily: 'PlusJakartaDisplay',
-        bodyColor: scheme.onSurface,
-        displayColor: scheme.onBackground,
-      );
+  final TextTheme textTheme;
+
+  if (useInterFont) {
+    textTheme = GoogleFonts.interTextTheme().apply(
+      bodyColor: scheme.onSurface,
+      displayColor: scheme.onBackground,
+    );
+  } else {
+    textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
+          fontFamily: 'PlusJakartaDisplay',
+          bodyColor: scheme.onSurface,
+          displayColor: scheme.onBackground,
+        );
+  }
 
   return ThemeData(
     useMaterial3: true,

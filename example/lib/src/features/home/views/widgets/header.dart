@@ -1,3 +1,4 @@
+import 'package:example/main.dart';
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
@@ -142,7 +143,9 @@ class _InformationWidget extends ConsumerWidget {
         children: [
           GestureDetector(
             onDoubleTap: () {
-              ref.read(_bigStyleProvider.notifier).state = !isBig;
+              // ref.read(_bigStyleProvider.notifier).state = !isBig;
+              ref.read(themeVariantProvider.notifier).state =
+                  !ref.read(themeVariantProvider);
             },
             child: const ColoredTag(
               icon: FontAwesomeIcons.github,
