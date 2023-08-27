@@ -9,6 +9,81 @@ class ToastAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const gap = SizedBox(width: 8.0);
+    final Widget appBar;
+    if (context.isInDesktopZone) {
+      appBar = AppBarContainer(
+        height: _height,
+        topMargin: _topMargin,
+        isElevated: false,
+        child: Row(
+          children: [
+            const AppBarLogo(),
+            const SizedBox(width: 46),
+            AppBarTextButton(
+              onPressed: () {},
+              icon: const Icon(Icons.abc),
+              label: const Text('Github Source'),
+            ),
+            gap,
+            AppBarTextButton(
+              onPressed: () {},
+              icon: const Icon(Icons.face),
+              label: const Text('Report an Issue'),
+            ),
+            gap,
+            AppBarTextButton(
+              onPressed: () {},
+              icon: const Icon(Icons.ac_unit_rounded),
+              label: const Text('Pull Request'),
+            ),
+            gap,
+            AppBarTextButton(
+              onPressed: () {},
+              label: const Text('About Us'),
+            ),
+            const Spacer(),
+            FilledButton(
+              style: FilledButton.styleFrom(),
+              onPressed: () {},
+              child: const Text('Give us a Star'),
+            )
+          ],
+        ),
+      );
+    } else {
+      appBar = Container(
+        color: Theme.of(context).colorScheme.background,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: AppBarContainer(
+          isElevated: false,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const AppBarLogo(),
+              FilledButton(
+                style: FilledButton.styleFrom(),
+                onPressed: () {},
+                child: const Text('Give us a Star'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return SliverToBoxAdapter(
+      child: appBar,
+    );
+  }
+}
+
+class PinnedToastAppBar extends StatelessWidget {
+  const PinnedToastAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return const SliverPersistentHeader(
       delegate: AppBarDelegate(),
       pinned: true,
