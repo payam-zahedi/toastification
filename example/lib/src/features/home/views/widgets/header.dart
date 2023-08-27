@@ -1,5 +1,6 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/core.dart';
+import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -181,7 +182,9 @@ class _InformationWidget extends ConsumerWidget {
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  openGithubPullRequests(context);
+                },
                 icon: Icon(
                   Iconsax.programming_arrow_copy,
                   size: 18,
@@ -194,7 +197,9 @@ class _InformationWidget extends ConsumerWidget {
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  openGithub(context);
+                },
                 icon: const Icon(
                   Icons.star_rounded,
                   size: 18,

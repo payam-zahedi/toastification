@@ -89,6 +89,7 @@ ThemeData _themeBuilder() {
         foregroundColor: scheme.onSurface,
         textStyle: textTheme.bodyLarge?.copyWith(
           fontWeight: FontWeight.w500,
+          height: 1,
         ),
         elevation: 0,
         shape: const RoundedRectangleBorder(
