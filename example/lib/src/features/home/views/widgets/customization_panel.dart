@@ -11,7 +11,7 @@ import 'package:example/src/core/views/widgets/picker/border_radius.dart';
 import 'package:example/src/core/views/widgets/picker/color.dart';
 import 'package:example/src/core/views/widgets/picker/elevation.dart';
 import 'package:example/src/core/views/widgets/picker/toast_style.dart';
-import 'package:example/src/core/views/widgets/tab_bar.dart';
+import 'package:example/src/core/views/widgets/toast_type_tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
