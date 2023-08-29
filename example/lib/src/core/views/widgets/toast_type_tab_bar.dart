@@ -66,6 +66,7 @@ class ToastTypeTabBar extends ConsumerWidget {
                         .read(toastDetailControllerProvider.notifier)
                         .changeType(ToastificationType.success);
                   },
+                  height: itemHeight,
                 ),
               ),
               StaggeredGridTile.fit(
@@ -79,6 +80,7 @@ class ToastTypeTabBar extends ConsumerWidget {
                         .read(toastDetailControllerProvider.notifier)
                         .changeType(ToastificationType.info);
                   },
+                  height: itemHeight,
                 ),
               ),
               StaggeredGridTile.fit(
@@ -92,6 +94,7 @@ class ToastTypeTabBar extends ConsumerWidget {
                         .read(toastDetailControllerProvider.notifier)
                         .changeType(ToastificationType.warning);
                   },
+                  height: itemHeight,
                 ),
               ),
               StaggeredGridTile.fit(
@@ -105,11 +108,14 @@ class ToastTypeTabBar extends ConsumerWidget {
                         .read(toastDetailControllerProvider.notifier)
                         .changeType(ToastificationType.error);
                   },
+                  height: itemHeight,
                 ),
               ),
               StaggeredGridTile.fit(
                 crossAxisCellCount: lastItemCountCell,
-                child: const CustomTabItem(),
+                child: const CustomTabItem(
+                  height: itemHeight,
+                ),
               ),
             ],
           ),
@@ -126,12 +132,14 @@ class TabTypeItem extends StatelessWidget {
     required this.title,
     required this.color,
     required this.onTap,
+    required this.height,
   });
 
   final bool selected;
   final String title;
   final Color color;
   final VoidCallback onTap;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +156,7 @@ class TabTypeItem extends StatelessWidget {
         ),
       ),
       child: SizedBox(
-        height: 40,
+        height: height,
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(10.0),
@@ -168,14 +176,19 @@ class TabTypeItem extends StatelessWidget {
 }
 
 class CustomTabItem extends StatelessWidget {
-  const CustomTabItem({super.key});
+  const CustomTabItem({
+    super.key,
+    required this.height,
+  });
+
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return const BorderedContainer(
-      height: 40,
+    return BorderedContainer(
+      height: height,
       enabled: false,
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
