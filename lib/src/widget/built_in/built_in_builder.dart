@@ -30,6 +30,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.closeOnClick,
     this.dragToClose,
     this.pauseOnHover,
+    required this.showCloseButton,
     required this.closeIcon,
   });
 
@@ -72,6 +73,7 @@ class BuiltInBuilder extends StatelessWidget {
   final bool? dragToClose;
 
   final bool? pauseOnHover;
+  final bool showCloseButton;
 
   final IconData closeIcon;
 
@@ -119,6 +121,7 @@ class BuiltInBuilder extends StatelessWidget {
         progressBarTheme: progressBarTheme,
         closeButtonShowType: closeButtonShowType,
         closeIcon: closeIcon,
+        showCloseButton: showCloseButton,
       ),
     );
   }
@@ -166,6 +169,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.showProgressBar,
     this.progressBarTheme,
     this.closeButtonShowType,
+    required this.showCloseButton,
     required this.closeIcon,
   });
 
@@ -198,6 +202,7 @@ class BuiltInToastBuilder extends StatelessWidget {
   final VoidCallback onCloseTap;
 
   final bool? showProgressBar;
+  final bool showCloseButton;
 
   final ProgressIndicatorThemeData? progressBarTheme;
 
@@ -234,8 +239,8 @@ class BuiltInToastBuilder extends StatelessWidget {
     return OnHoverShow(
       enabled: closeButtonType == CloseButtonShowType.onHover,
       childBuilder: (context, showWidget) {
-        final showCloseButton =
-            (closeButtonType != CloseButtonShowType.none) && showWidget;
+        // final showCloseButton =
+        //     (closeButtonType != CloseButtonShowType.none) && showWidget;
 
         return switch (style) {
           ToastificationStyle.flat => FlatToastWidget(

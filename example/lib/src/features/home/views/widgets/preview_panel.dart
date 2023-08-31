@@ -75,6 +75,7 @@ class ToastPreview extends ConsumerWidget {
       showProgressBar: toastDetail.showProgressBar,
       closeIcon: Icons.run_circle,
       closeButtonShowType: toastDetail.closeButtonShowType,
+      showCloseButton: true,
     );
   }
 }
