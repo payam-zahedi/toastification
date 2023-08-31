@@ -240,6 +240,7 @@ class BuiltInToastBuilder extends StatelessWidget {
         return switch (style) {
           ToastificationStyle.flat => FlatToastWidget(
               type: type,
+              item: item,
               title: title,
               description: description,
               primaryColor: primaryColor,
@@ -261,6 +262,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           ToastificationStyle.flatColored => FlatColoredToastWidget(
               type: type,
               title: title,
+              item: item,
               description: description,
               primaryColor: primaryColor,
               backgroundColor: backgroundColor,
@@ -281,6 +283,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           ToastificationStyle.fillColored => FilledToastWidget(
               type: type,
               title: title,
+              item: item,
               description: description,
               primaryColor: primaryColor,
               backgroundColor: backgroundColor,
@@ -301,6 +304,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           ToastificationStyle.minimal => MinimalToastWidget(
               type: type,
               title: title,
+              item: item,
               description: description,
               primaryColor: primaryColor,
               backgroundColor: backgroundColor,

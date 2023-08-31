@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
-
-import 'minimal_style.dart';
+import 'package:toastification/toastification.dart';
 
 class MinimalToastWidget extends StatelessWidget {
   const MinimalToastWidget({
     super.key,
     required this.type,
+    this.item,
     required this.title,
     this.description,
     this.primaryColor,
@@ -29,7 +28,7 @@ class MinimalToastWidget extends StatelessWidget {
   });
 
   final ToastificationType type;
-
+  final ToastificationItem? item;
   final String title;
   final String? description;
 
@@ -96,11 +95,15 @@ class MinimalToastWidget extends StatelessWidget {
             child: GestureDetector(
               onTap: onCloseTap == null
                   ? () {
-                 
+                      if (item != null) {
+                        toastification.dismiss(item!);
+                      }
                     }
                   : () {
-         
                       onCloseTap!();
+                      if (item != null) {
+                        toastification.dismiss(item!);
+                      }
                     },
               child: Container(
                 decoration: BoxDecoration(
