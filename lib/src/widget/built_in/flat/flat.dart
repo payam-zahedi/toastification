@@ -82,46 +82,52 @@ class FlatToastWidget extends StatelessWidget {
       textDirection: direction,
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 64),
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: borderRadius,
-            border: Border.fromBorderSide(borderSide),
-            boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-          ),
-          padding: padding ?? defaultStyle.padding(context),
-          child: Row(
-            children: [
-              icon ??
-                  Icon(
-                    defaultStyle.icon(context),
-                    size: 24,
-                    color: iconColor,
+        child: GestureDetector(
+          onTap: onCloseTap == null
+              ? null
+              : () {
+                  onCloseTap!();
+                },
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 64),
+            decoration: BoxDecoration(
+              color: background,
+              borderRadius: borderRadius,
+              border: Border.fromBorderSide(borderSide),
+              boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+            ),
+            padding: padding ?? defaultStyle.padding(context),
+            child: Row(
+              children: [
+                icon ??
+                    Icon(
+                      defaultStyle.icon(context),
+                      size: 24,
+                      color: iconColor,
+                    ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: BuiltInContent(
+                    style: defaultStyle,
+                    title: title,
+                    description: description,
+                    primaryColor: primaryColor,
+                    foregroundColor: foregroundColor,
+                    backgroundColor: backgroundColor,
+                    showProgressBar: showProgressBar,
+                    progressBarValue: progressBarValue,
+                    progressBarWidget: progressBarWidget,
+                    progressIndicatorTheme: progressIndicatorTheme,
                   ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: BuiltInContent(
-                  style: defaultStyle,
-                  title: title,
-                  description: description,
-                  primaryColor: primaryColor,
-                  foregroundColor: foregroundColor,
-                  backgroundColor: backgroundColor,
-                  showProgressBar: showProgressBar,
-                  progressBarValue: progressBarValue,
-                  progressBarWidget: progressBarWidget,
-                  progressIndicatorTheme: progressIndicatorTheme,
                 ),
-              ),
-              const SizedBox(width: 8),
-              ToastCloseButton(
-                showCloseButton: showCloseButton,
-                onCloseTap: onCloseTap,
-                defaultStyle: defaultStyle,
-                closeIcon: closeIcon,
-              ),
-            ],
+                const SizedBox(width: 8),
+                ToastCloseButton(
+                  showCloseButton: showCloseButton,
+                  defaultStyle: defaultStyle,
+                  closeIcon: closeIcon,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -222,7 +222,11 @@ class BuiltInToastBuilder extends StatelessWidget {
         ? ToastTimerAnimationBuilder(
             item: item!,
             builder: (context, value, _) {
-              return LinearProgressIndicator(value: value);
+              return LinearProgressIndicator(
+                value: value,
+                color: Colors.grey,
+                backgroundColor: Colors.white,
+              );
             },
           )
         : null;
@@ -271,7 +275,8 @@ class BuiltInToastBuilder extends StatelessWidget {
               showCloseButton: showCloseButton,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,          closeIcon: closeIcon,
+              progressBarWidget: progressBarWidget,
+              closeIcon: closeIcon,
             ),
           ToastificationStyle.fillColored => FilledToastWidget(
               type: type,
@@ -290,7 +295,8 @@ class BuiltInToastBuilder extends StatelessWidget {
               showCloseButton: showCloseButton,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,          closeIcon: closeIcon,
+              progressBarWidget: progressBarWidget,
+              closeIcon: closeIcon,
             ),
           ToastificationStyle.minimal => MinimalToastWidget(
               type: type,
@@ -309,7 +315,8 @@ class BuiltInToastBuilder extends StatelessWidget {
               showCloseButton: showCloseButton,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,          closeIcon: closeIcon,
+              progressBarWidget: progressBarWidget,
+              closeIcon: closeIcon,
             ),
         };
       },
