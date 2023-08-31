@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 import 'package:toastification/toastification.dart';
 
+// ignore: must_be_immutable
 class FlatToastWidget extends StatelessWidget {
-  const FlatToastWidget({
+  FlatToastWidget({
     super.key,
     required this.type,
     required this.title,
@@ -19,7 +20,7 @@ class FlatToastWidget extends StatelessWidget {
     this.boxShadow,
     this.direction,
     this.onCloseTap,
-    this.showCloseButton,
+    this.showCloseButton = false,
     this.showProgressBar = false,
     this.progressBarValue,
     this.progressBarWidget,
@@ -53,7 +54,7 @@ class FlatToastWidget extends StatelessWidget {
 
   final VoidCallback? onCloseTap;
 
-  final bool? showCloseButton;
+  late bool showCloseButton;
   final IconData closeIcon;
 
   final bool showProgressBar;
@@ -70,7 +71,7 @@ class FlatToastWidget extends StatelessWidget {
 
     final background = backgroundColor ?? defaultStyle.backgroundColor(context);
 
-    final showCloseButton = this.showCloseButton ?? true;
+    final showCloseButton = this.showCloseButton;
 
     final borderRadius =
         this.borderRadius ?? defaultStyle.borderRadius(context);
