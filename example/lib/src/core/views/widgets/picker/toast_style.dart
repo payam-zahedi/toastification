@@ -108,6 +108,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                             ToastificationType.info,
                                         title: 'The Title',
                                         description: 'The Description',
+                                        closeIcon: Icons.run_circle,
                                       ),
                                       onTap: () {
                                         widget.onStyleChanged(
@@ -124,6 +125,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                         type: widget.type ??
                                             ToastificationType.info,
                                         title: 'The Title',
+                                        closeIcon: Icons.run_circle,
                                         description: 'The Description',
                                       ),
                                       onTap: () {
@@ -145,6 +147,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                         type: widget.type ??
                                             ToastificationType.info,
                                         title: 'The Title',
+                                        closeIcon: Icons.run_circle,
                                         description: 'The Description',
                                       ),
                                       onTap: () {
@@ -162,6 +165,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                         type: widget.type ??
                                             ToastificationType.info,
                                         title: 'The Title',
+                                        closeIcon: Icons.run_circle,
                                         description: 'The Description',
                                       ),
                                       onTap: () {

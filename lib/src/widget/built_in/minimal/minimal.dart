@@ -25,6 +25,7 @@ class MinimalToastWidget extends StatelessWidget {
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
+    required this.closeIcon,
   });
 
   final ToastificationType type;
@@ -59,6 +60,8 @@ class MinimalToastWidget extends StatelessWidget {
   final Widget? progressBarWidget;
 
   final ProgressIndicatorThemeData? progressIndicatorTheme;
+
+  final IconData closeIcon;
 
   MinimalStyle get defaultStyle => MinimalStyle(type);
 
@@ -126,6 +129,7 @@ class MinimalToastWidget extends StatelessWidget {
                     showCloseButton: showCloseButton,
                     onCloseTap: onCloseTap,
                     defaultStyle: defaultStyle,
+                    closeIcon: closeIcon,
                   ),
                 ],
               ),
