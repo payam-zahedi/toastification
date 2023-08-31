@@ -28,7 +28,7 @@ class ToastCloseButton extends StatelessWidget {
             child: Builder(builder: (context) {
               return Icon(
                 closeIcon,
-                color: defaultStyle.closeIconColor(context),
+                color: Colors.white,
                 size: 25,
               );
             }),
