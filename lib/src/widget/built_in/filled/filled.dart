@@ -24,6 +24,7 @@ class FilledToastWidget extends StatelessWidget {
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
+    required this.closeIcon,
   });
 
   final ToastificationType type;
@@ -56,6 +57,7 @@ class FilledToastWidget extends StatelessWidget {
   final bool showProgressBar;
   final double? progressBarValue;
   final Widget? progressBarWidget;
+  final IconData closeIcon;
 
   final ProgressIndicatorThemeData? progressIndicatorTheme;
 
@@ -117,6 +119,7 @@ class FilledToastWidget extends StatelessWidget {
                 showCloseButton: showCloseButton,
                 onCloseTap: onCloseTap,
                 defaultStyle: defaultStyle,
+                closeIcon: closeIcon,
               ),
             ],
           ),
