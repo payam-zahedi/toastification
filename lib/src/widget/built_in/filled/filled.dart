@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
-import 'package:toastification/src/widget/built_in/filled/filled_style.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
+import 'package:toastification/toastification.dart';
 
 class FilledToastWidget extends StatelessWidget {
   const FilledToastWidget({
@@ -13,6 +12,7 @@ class FilledToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
+    this.item,
     this.brightness,
     this.padding,
     this.borderRadius,
@@ -28,6 +28,7 @@ class FilledToastWidget extends StatelessWidget {
   });
 
   final ToastificationType type;
+  final ToastificationItem? item;
 
   final String title;
   final String? description;
@@ -84,9 +85,16 @@ class FilledToastWidget extends StatelessWidget {
         data: Theme.of(context).primaryIconTheme,
         child: GestureDetector(
           onTap: onCloseTap == null
-              ? () {}
+              ? () {
+                  if (item != null) {
+                    toastification.dismiss(item!);
+                  }
+                }
               : () {
                   onCloseTap!();
+                  if (item != null) {
+                    toastification.dismiss(item!);
+                  }
                 },
           child: Container(
             constraints: const BoxConstraints(minHeight: 64),
