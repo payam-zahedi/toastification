@@ -84,7 +84,7 @@ class FlatToastWidget extends StatelessWidget {
         data: Theme.of(context).primaryIconTheme,
         child: GestureDetector(
           onTap: onCloseTap == null
-              ? null
+              ? () {}
               : () {
                   onCloseTap!();
                 },

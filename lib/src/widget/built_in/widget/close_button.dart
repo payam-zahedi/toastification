@@ -5,14 +5,12 @@ class ToastCloseButton extends StatelessWidget {
   const ToastCloseButton({
     super.key,
     this.showCloseButton = true,
-    this.onCloseTap,
     required this.defaultStyle,
     required this.closeIcon,
   });
 
   final bool showCloseButton;
   final IconData closeIcon;
-  final VoidCallback? onCloseTap;
   final BuiltInStyle defaultStyle;
 
   @override
@@ -29,7 +27,6 @@ class ToastCloseButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             child: Builder(builder: (context) {
               return InkWell(
-                onTap: onCloseTap,
                 borderRadius: BorderRadius.circular(5),
                 child: Icon(
                   closeIcon,
