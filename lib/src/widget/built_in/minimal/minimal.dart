@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
-
-import 'minimal_style.dart';
+import 'package:toastification/toastification.dart';
 
 class MinimalToastWidget extends StatelessWidget {
   const MinimalToastWidget({
     super.key,
     required this.type,
+    this.item,
     required this.title,
     this.description,
     this.primaryColor,
@@ -25,10 +24,11 @@ class MinimalToastWidget extends StatelessWidget {
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
+    required this.closeIcon,
   });
 
   final ToastificationType type;
-
+  final ToastificationItem? item;
   final String title;
   final String? description;
 
@@ -60,6 +60,8 @@ class MinimalToastWidget extends StatelessWidget {
 
   final ProgressIndicatorThemeData? progressIndicatorTheme;
 
+  final IconData closeIcon;
+
   MinimalStyle get defaultStyle => MinimalStyle(type);
 
   @override
@@ -90,44 +92,60 @@ class MinimalToastWidget extends StatelessWidget {
                 width: 3,
               ),
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: background,
-                borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
-                border: Border.fromBorderSide(defaultStyle.borderSide(context)),
-                boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-              ),
-              padding: padding ?? defaultStyle.padding(context),
-              child: Row(
-                children: [
-                  icon ??
-                      Icon(
-                        defaultStyle.icon(context),
-                        size: 24,
-                        color: iconColor,
+            child: GestureDetector(
+              onTap: onCloseTap == null
+                  ? () {
+                      if (item != null) {
+                        toastification.dismiss(item!);
+                      }
+                    }
+                  : () {
+                      onCloseTap!();
+                      if (item != null) {
+                        toastification.dismiss(item!);
+                      }
+                    },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: background,
+                  borderRadius:
+                      defaultStyle.effectiveBorderRadius(borderRadius),
+                  border:
+                      Border.fromBorderSide(defaultStyle.borderSide(context)),
+                  boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+                ),
+                padding: padding ?? defaultStyle.padding(context),
+                child: Row(
+                  children: [
+                    icon ??
+                        Icon(
+                          defaultStyle.icon(context),
+                          size: 24,
+                          color: iconColor,
+                        ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: BuiltInContent(
+                        style: defaultStyle,
+                        title: title,
+                        description: description,
+                        primaryColor: primaryColor,
+                        foregroundColor: foregroundColor,
+                        backgroundColor: backgroundColor,
+                        showProgressBar: showProgressBar,
+                        progressBarValue: progressBarValue,
+                        progressBarWidget: progressBarWidget,
+                        progressIndicatorTheme: progressIndicatorTheme,
                       ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: BuiltInContent(
-                      style: defaultStyle,
-                      title: title,
-                      description: description,
-                      primaryColor: primaryColor,
-                      foregroundColor: foregroundColor,
-                      backgroundColor: backgroundColor,
-                      showProgressBar: showProgressBar,
-                      progressBarValue: progressBarValue,
-                      progressBarWidget: progressBarWidget,
-                      progressIndicatorTheme: progressIndicatorTheme,
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  ToastCloseButton(
-                    showCloseButton: showCloseButton,
-                    onCloseTap: onCloseTap,
-                    defaultStyle: defaultStyle,
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    ToastCloseButton(
+                      showCloseButton: showCloseButton,
+                      defaultStyle: defaultStyle,
+                      closeIcon: closeIcon,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

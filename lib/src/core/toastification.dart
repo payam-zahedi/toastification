@@ -215,6 +215,8 @@ class Toastification {
     bool? closeOnClick,
     bool? dragToClose,
     bool? pauseOnHover,
+    IconData? closeIcon,
+    bool? showCloseButton,
   }) {
     return showCustom(
       context: context,
@@ -245,6 +247,8 @@ class Toastification {
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
           pauseOnHover: pauseOnHover,
+          closeIcon: closeIcon ?? Icons.cancel,
+          showCloseButton: showCloseButton ?? true,
         );
       },
       animationBuilder: animationBuilder,
