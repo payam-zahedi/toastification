@@ -12,7 +12,7 @@ class SoonWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(10),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 6,
+          horizontal: 4,
           vertical: 3,
         ),
         child: Text(
