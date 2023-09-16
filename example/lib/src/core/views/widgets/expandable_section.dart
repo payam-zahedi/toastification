@@ -37,7 +37,9 @@ class _ExpandableSectionState extends State<ExpandableSection> {
       padding: const EdgeInsetsDirectional.only(start: 2),
       child: Text(
         widget.title,
-        style: theme.textTheme.titleMedium,
+        style: theme.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
 
@@ -93,7 +95,7 @@ class SubSection extends StatelessWidget {
           child: Text(
             title,
             style: theme.textTheme.titleMedium?.copyWith(
-              fontSize: 12,
+              fontSize: 14,
               fontWeight: FontWeight.w500,
               color: theme.colorScheme.onSurface.withOpacity(.4),
             ),

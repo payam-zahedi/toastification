@@ -3,24 +3,32 @@ import 'package:example/src/features/home/views/pages/home.dart';
 import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+final themeVariantProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
 void main() {
+  usePathUrlStrategy();
   runApp(const ProviderScope(child: ToastificationApp()));
 }
 
-class ToastificationApp extends StatelessWidget {
+class ToastificationApp extends ConsumerWidget {
   const ToastificationApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final useInterFont = ref.watch(themeVariantProvider);
+
     return MaterialApp(
       title: 'Toastification',
-      theme: lightTheme,
+      theme: useInterFont ? lightInterTheme : lightJakartaTheme,
       builder: (context, child) {
         return ResponsiveWrapper.builder(
           child,
-          maxWidth: 1400,
+          maxWidth: 1350,
           minWidth: 300,
           defaultScale: false,
           breakpoints: [

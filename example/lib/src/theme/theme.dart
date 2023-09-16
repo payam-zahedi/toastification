@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const _primary = Color(0xff3F5EFF);
 const _onPrimary = Color(0xffFFFFFF);
@@ -15,22 +16,26 @@ const _onError = Color(0xffffffff);
 // border color
 const _outline = Color(0xffF2F2F2);
 
-const _tagBackgroundColor = Color(0xffEDFBFE);
-const _tagTextColor = Color(0xff21C9EE);
+const _tagBackgroundColor = Color(0x194BAE43);
+const _tagTextColor = Color(0xff309528);
 
 const _switchActiveColor = _primary;
 const _switchInActiveColor = Color(0xffC5CCD7);
 
-const _cardColor = Color(0xffFAFAFA);
+const _cardColor = Color(0xffEDF1F5);
 const _cardBorderColor = Color(0xffEBEBEB);
 
-final lightTheme = _themeBuilder();
+const plusJakartaDisplayName = 'PlusJakartaDisplay';
 
-ThemeData _themeBuilder() {
+final lightInterTheme = _themeBuilder();
+final lightJakartaTheme = _themeBuilder(useInterFont: false);
+
+ThemeData _themeBuilder({bool useInterFont = true}) {
   final scheme = ColorScheme.fromSeed(
     seedColor: _primary,
     primary: _primary,
     onPrimary: _onPrimary,
+    onPrimaryContainer: _onPrimaryContainer,
     secondary: _secondary,
     onSecondary: _onSecondary,
     tertiary: _tagBackgroundColor,
@@ -41,17 +46,25 @@ ThemeData _themeBuilder() {
     onSurface: _onSurface,
     surfaceVariant: _cardColor,
     onSurfaceVariant: _cardBorderColor,
-    onPrimaryContainer: _onPrimaryContainer,
     error: _error,
     onError: _onError,
     outline: _outline,
   );
 
-  final textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
-        fontFamily: 'PlusJakartaDisplay',
-        bodyColor: scheme.onSurface,
-        displayColor: scheme.onSurface,
-      );
+  final TextTheme textTheme;
+
+  if (useInterFont) {
+    textTheme = GoogleFonts.interTextTheme().apply(
+      bodyColor: scheme.onSurface,
+      displayColor: scheme.onBackground,
+    );
+  } else {
+    textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
+          fontFamily: 'PlusJakartaDisplay',
+          bodyColor: scheme.onSurface,
+          displayColor: scheme.onBackground,
+        );
+  }
 
   return ThemeData(
     useMaterial3: true,
@@ -68,7 +81,7 @@ ThemeData _themeBuilder() {
     textTheme: textTheme,
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        minimumSize: const Size(100, 48),
+        minimumSize: const Size(80, 48),
         backgroundColor: scheme.primary,
         foregroundColor: scheme.onPrimary,
         textStyle: textTheme.bodyLarge?.copyWith(
@@ -84,11 +97,12 @@ ThemeData _themeBuilder() {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        minimumSize: const Size(100, 48),
+        minimumSize: const Size(80, 48),
         backgroundColor: scheme.surface,
         foregroundColor: scheme.onSurface,
         textStyle: textTheme.bodyLarge?.copyWith(
           fontWeight: FontWeight.w500,
+          height: 1,
         ),
         elevation: 0,
         shape: const RoundedRectangleBorder(
@@ -99,7 +113,7 @@ ThemeData _themeBuilder() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(100, 48),
+        minimumSize: const Size(80, 48),
         backgroundColor: scheme.background,
         foregroundColor: scheme.onBackground,
         textStyle: textTheme.bodyLarge?.copyWith(
@@ -141,7 +155,7 @@ ThemeData _themeBuilder() {
     cardTheme: CardTheme(
       color: scheme.surfaceVariant,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(24),
         side: BorderSide(
           color: scheme.onSurfaceVariant,
           width: 1,

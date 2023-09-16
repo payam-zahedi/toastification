@@ -36,7 +36,12 @@ class AppBarTextButton extends StatelessWidget {
     return TextButton.icon(
       style: buttonStyle,
       onPressed: onPressed,
-      icon: icon!,
+      icon: IconTheme(
+        data: const IconThemeData(
+          size: 20,
+        ),
+        child: icon!,
+      ),
       label: label,
     );
   }

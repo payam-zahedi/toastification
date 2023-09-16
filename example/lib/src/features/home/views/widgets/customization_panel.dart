@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:example/src/core/usecase/responsive/responsive.dart';
+import 'package:example/src/core/views/widgets/border_holder.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
@@ -10,11 +11,11 @@ import 'package:example/src/core/views/widgets/picker/border_radius.dart';
 import 'package:example/src/core/views/widgets/picker/color.dart';
 import 'package:example/src/core/views/widgets/picker/elevation.dart';
 import 'package:example/src/core/views/widgets/picker/toast_style.dart';
-import 'package:example/src/core/views/widgets/soon.dart';
-import 'package:example/src/core/views/widgets/tab_bar.dart';
+import 'package:example/src/core/views/widgets/toast_type_tab_bar.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
+import 'package:example/src/features/home/views/widgets/content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -29,30 +30,69 @@ class CustomizationPanel extends ConsumerWidget {
     return SliverList(
       delegate: SliverChildListDelegate.fixed(
         [
-          if (!context.isInMobileZone) const CustomizeTitle(),
-          const SizedBox(height: 24),
-          ToastTypeTabBar(
-            onTypeChanged: (value) {
-              ref
-                  .read(toastDetailControllerProvider.notifier)
-                  .changeType(value);
-            },
+          SizedBox(height: 24),
+          TopBorderHolder(
+            child: ToastTypeTabBar(
+              onTypeChanged: (value) {
+                ref
+                    .read(toastDetailControllerProvider.notifier)
+                    .changeType(value);
+              },
+            ),
           ),
-          const SizedBox(height: 32),
-          ToastStylePicker(
-            type: ref.watch(toastDetailControllerProvider).type,
-            initialStyle: ToastificationStyle.flat,
-            onStyleChanged: (style) {
-              ref
-                  .read(toastDetailControllerProvider.notifier)
-                  .changeStyle(style);
-            },
+          MiddleBorderHolder(
+            child: ToastStylePicker(
+              type: ref.watch(toastDetailControllerProvider).type,
+              initialStyle: ToastificationStyle.flat,
+              onStyleChanged: (style) {
+                ref
+                    .read(toastDetailControllerProvider.notifier)
+                    .changeStyle(style);
+              },
+            ),
           ),
-          const _PositionHolder(),
-          const _ContentAndStyleHolder(),
-          const _ControllersAndInteractionsHolder(),
+          const MiddleBorderHolder(child: _PositionHolder()),
+          const MiddleBorderHolder(child: _ContentAndStyleHolder()),
+          const BottomBorderHolder(
+            child: _ControllersAndInteractionsHolder(),
+          ),
+          SizedBox(height: 24),
         ],
       ),
+    );
+  }
+}
+
+class TitledSection extends StatelessWidget {
+  const TitledSection({
+    super.key,
+    required this.title,
+    required this.children,
+  });
+
+  TitledSection.single({
+    super.key,
+    required this.title,
+    required Widget child,
+  }) : children = [child];
+
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        const SizedBox(height: 12),
+        ...children,
+      ],
     );
   }
 }
@@ -112,35 +152,41 @@ class _PositionHolder extends StatelessWidget {
   const _PositionHolder();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 32),
-      child: ExpandableSection(
-        title: 'Position',
-        body: Column(
+    return TitledSection(
+      title: 'Position',
+      children: [
+        ResponsiveRowColumn(
+          rowCrossAxisAlignment: CrossAxisAlignment.start,
+          layout: context.responsiveValue(
+            mobile: ResponsiveRowColumnType.COLUMN,
+            tablet: ResponsiveRowColumnType.ROW,
+            desktop: ResponsiveRowColumnType.ROW,
+          ),
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Expanded(
-                  flex: 10,
-                  child: _AlignmentSection(),
-                ),
-                Spacer(
-                  flex: context.responsiveValue(
-                    mobile: 1,
-                    tablet: 1,
-                    desktop: 3,
-                  ),
-                ),
-                const Expanded(flex: 7, child: _BorderSection()),
-              ],
+            const ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              rowFlex: 10,
+              child: _AlignmentSection(),
             ),
-            const SizedBox(height: 42),
-            const _ElevationSection(),
-            const SizedBox(height: 18),
+            ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              rowFlex: context.responsiveValue(
+                tablet: 1,
+                desktop: 3,
+              ),
+              child: SizedBox(height: 24),
+            ),
+            const ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              rowFlex: 7,
+              child: _BorderSection(),
+            ),
           ],
         ),
-      ),
+        const SizedBox(height: 24),
+        const _ElevationSection(),
+        const SizedBox(height: 18),
+      ],
     );
   }
 }
@@ -149,19 +195,13 @@ class _ContentAndStyleHolder extends StatelessWidget {
   const _ContentAndStyleHolder();
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(top: 32),
-      child: ExpandableSection(
-        title: 'Content & Style',
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _ContentSection(),
-            SizedBox(height: 20),
-            _StyleSection(),
-          ],
-        ),
-      ),
+    return const TitledSection(
+      title: 'Content & Style',
+      children: [
+        _ContentSection(),
+        SizedBox(height: 20),
+        _StyleSection(),
+      ],
     );
   }
 }
@@ -171,44 +211,38 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 32),
-      child: ExpandableSection(
-        title: 'Controllers & Interaction',
-        body: Column(
-          children: [
-            const _SystemSection(),
-            SizedBox(height: 20),
-            const _CloseSection(),
-            SizedBox(height: 20),
-            const _ProgressBarSection(),
-            SizedBox(height: 20),
-            ResponsiveRowColumn(
-              rowSpacing: 10,
-              columnSpacing: 10,
-              columnMainAxisSize: MainAxisSize.min,
-              layout: context.responsiveValue(
-                mobile: ResponsiveRowColumnType.COLUMN,
-                tablet: ResponsiveRowColumnType.ROW,
-                desktop: ResponsiveRowColumnType.ROW,
-              ),
-              children: const [
-                ResponsiveRowColumnItem(
-                  rowFit: FlexFit.tight,
-                  columnFit: FlexFit.loose,
-                  child: _PauseSection(),
-                ),
-                ResponsiveRowColumnItem(
-                  rowFit: FlexFit.tight,
-                  columnFit: FlexFit.loose,
-                  child: _DragSection(),
-                ),
-              ],
+    return TitledSection(
+      title: 'Controllers & Interaction',
+      children: [
+        const _SystemSection(),
+        const SizedBox(height: 20),
+        const _CloseSection(),
+        const SizedBox(height: 20),
+        const _ProgressBarSection(),
+        const SizedBox(height: 20),
+        ResponsiveRowColumn(
+          rowSpacing: 10,
+          columnSpacing: 10,
+          columnMainAxisSize: MainAxisSize.min,
+          layout: context.responsiveValue(
+            mobile: ResponsiveRowColumnType.COLUMN,
+            tablet: ResponsiveRowColumnType.ROW,
+            desktop: ResponsiveRowColumnType.ROW,
+          ),
+          children: const [
+            ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              columnFit: FlexFit.loose,
+              child: _PauseSection(),
             ),
-            const SizedBox(height: 16),
+            ResponsiveRowColumnItem(
+              rowFit: FlexFit.tight,
+              columnFit: FlexFit.loose,
+              child: _DragSection(),
+            ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
@@ -276,135 +310,14 @@ class _ElevationSection extends ConsumerWidget {
   }
 }
 
-class _ContentSection extends ConsumerWidget {
+class _ContentSection extends StatelessWidget {
   const _ContentSection();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final textDirection = ref.watch(toastDetailControllerProvider).direction ??
-        Directionality.of(context);
-
+  Widget build(BuildContext context) {
     return SubSection(
       title: 'CONTENT',
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 164,
-            child: Column(
-              // three bordered containers
-              children: [
-                FilledButton(
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(200, 56),
-                    padding: const EdgeInsets.symmetric(horizontal: 17),
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      height: 1,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Add Section'),
-                      // soon to be icon
-                      SoonWidget(),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                BorderedContainer(
-                  height: 48,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  onTap: () {
-                    ref
-                        .read(toastDetailControllerProvider.notifier)
-                        .changeDirection(TextDirection.ltr);
-                  },
-                  active: textDirection == TextDirection.ltr,
-                  child: Row(
-                    children: [
-                      const Expanded(child: Text('LTR layout')),
-                      Offstage(
-                        offstage: textDirection != TextDirection.ltr,
-                        child: const Icon(Icons.check),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                BorderedContainer(
-                  height: 48,
-                  elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  onTap: () {
-                    ref
-                        .read(toastDetailControllerProvider.notifier)
-                        .changeDirection(TextDirection.rtl);
-                  },
-                  active: textDirection == TextDirection.rtl,
-                  child: Row(
-                    children: [
-                      const Expanded(child: Text('RTL layout')),
-                      Offstage(
-                        offstage: textDirection != TextDirection.rtl,
-                        child: const Icon(Icons.check),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Type the title text here..',
-                        ),
-                        onChanged: (value) {
-                          ref
-                              .read(toastDetailControllerProvider.notifier)
-                              .changeTitle(value);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    IconPicker(),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  height: 106,
-                  child: TextField(
-                    expands: true,
-                    maxLines: null,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: InputDecoration(
-                      hintText: 'Type the body text here..',
-                    ),
-                    onChanged: (value) {
-                      ref
-                          .read(toastDetailControllerProvider.notifier)
-                          .changeDescription(value);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: ContentWidget(),
     );
   }
 }
@@ -430,35 +343,25 @@ class IconPicker extends ConsumerWidget {
       ToastificationStyle.flat => FlatStyle(type),
     };
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        BorderedContainer(
-          width: 120,
-          height: 48,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Iconsax.tick_circle_copy,
-                color: defaultStyle.iconColor(context),
-              ),
-              const SizedBox(width: 8),
-              const Text('Icon'),
-              const SizedBox(width: 4),
-              const Icon(
-                Icons.keyboard_arrow_down,
-                size: 20,
-              ),
-            ],
+    return BorderedContainer(
+      width: 120,
+      height: 48,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Iconsax.tick_circle_copy,
+            color: defaultStyle.iconColor(context),
           ),
-        ),
-        Positioned.directional(
-          textDirection: Directionality.of(context),
-          start: 12,
-          child: SoonWidget(),
-        ),
-      ],
+          const SizedBox(width: 8),
+          const Text('Icon'),
+          const SizedBox(width: 4),
+          const Icon(
+            Icons.keyboard_arrow_down,
+            size: 20,
+          ),
+        ],
+      ),
     );
   }
 }

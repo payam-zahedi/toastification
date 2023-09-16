@@ -5,6 +5,7 @@ import 'package:example/src/core/views/widgets/bottom_navigation.dart';
 import 'package:example/src/features/home/views/widgets/app_bar/app_bar.dart';
 import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:example/src/features/home/views/widgets/header.dart';
+import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -20,13 +21,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isWithBorder = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  void getImages() {
+    precacheImage(headerImage, context);
+    precacheImage(logoImage, context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return const ToastificationConfigProvider(
       config: ToastificationConfig(
-        margin: EdgeInsets.fromLTRB(0, 100, 0, 110),
+        margin: EdgeInsets.fromLTRB(0, 16, 0, 110),
       ),
       child: Scaffold(
         extendBody: true,
@@ -65,23 +74,24 @@ class _HorizontalSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    final sideHeaderWidth = screenWidth * 0.38;
-    final previewPanelPadding = screenWidth * 0.04;
+    final sideHeaderWidth = context.isUltra ? 430.0 : 380.0;
+    const previewPanelPadding = 16.0;
 
     return SliverPadding(
-      padding:
-          EdgeInsets.symmetric(horizontal: previewPanelPadding, vertical: 64),
+      padding: const EdgeInsets.symmetric(
+        horizontal: previewPanelPadding,
+        vertical: 64,
+      ),
       sliver: SliverStickyHeader(
         overlapsContent: true,
         header: Align(
           alignment: AlignmentDirectional.centerEnd,
           child: SizedBox(
             width: sideHeaderWidth,
+            height: MediaQuery.sizeOf(context).height - 64,
             child: const Padding(
               padding: EdgeInsetsDirectional.fromSTEB(30, 16, 0, 16),
-              child: PreviewPanel(),
+              child: PreviewPanel(expanded: true),
             ),
           ),
         ),
@@ -110,7 +120,7 @@ class _VerticalSection extends StatelessWidget {
       sliver: SliverStickyHeader(
         header: const PreviewPanel(),
         sliver: const SliverPadding(
-          padding: EdgeInsetsDirectional.fromSTEB(8, 32, 8, 8),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 8),
           sliver: CustomizationPanel(),
         ),
       ),

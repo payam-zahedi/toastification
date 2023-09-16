@@ -1,15 +1,17 @@
 name: example
 description: A new Flutter project.
 
-publish_to: "none" 
+publish_to: "none"
 
-version: 0.0.8+8
+version: 0.0.20+20
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_web_plugins:
     sdk: flutter
   toastification:
     path: ../
@@ -19,11 +21,13 @@ dependencies:
   flutter_sticky_header: ^0.6.5
   highlight: ^0.7.0
   flutter_highlight: ^0.7.0
-  responsive_framework: ^0.2.0 
+  responsive_framework: ^0.2.0
   flutter_riverpod: ^2.3.6
   freezed_annotation: ^2.2.0
   iconsax_flutter: ^1.0.0
   url_launcher: ^6.1.12
+  google_fonts: ^5.1.0
+  flutter_staggered_grid_view: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +49,6 @@ flutter:
           weight: 500
         - asset: fonts/PlusJakartaDisplay-Bold.otf
           weight: 700
- 
+
   assets:
     - assets/img/

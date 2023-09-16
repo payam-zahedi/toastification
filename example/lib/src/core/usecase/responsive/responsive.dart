@@ -53,6 +53,10 @@ extension ResponsiveContext on BuildContext {
     }
   }
 
+  double fractionalSize(double value) {
+    return ResponsiveWrapper.of(this).screenWidth * value;
+  }
+
   void responsiveLog() {
     log(name: 'ResponsiveLog:', 'isInMobileZone: $isInMobileZone');
     log(name: 'ResponsiveLog:', 'isMobile: $isMobile');
@@ -72,4 +76,9 @@ extension ResponsiveContext on BuildContext {
         name: 'ResponsiveLog:',
         'scaledWidth: ${ResponsiveWrapper.of(this).scaledWidth}');
   }
+
+  double get cardsBorderRadiusValue => isInDesktopZone ? 24 : 16;
+
+  BorderRadius get cardsBorderRadius =>
+      BorderRadius.circular(cardsBorderRadiusValue);
 }

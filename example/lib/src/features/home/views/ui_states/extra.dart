@@ -58,6 +58,38 @@ void openGithub(BuildContext context) async {
   }
 }
 
+void openGithubIssues(BuildContext context) async {
+  const url = 'https://github.com/payam-zahedi/toastification/issues';
+  if (!await launchUrl(Uri.parse(url))) {
+    if (context.mounted) {
+      toastification.show(
+        context: context,
+        type: ToastificationType.error,
+        style: ToastificationStyle.flat,
+        title: 'Ops!',
+        description: 'Something went wrong',
+        autoCloseDuration: const Duration(seconds: 4),
+      );
+    }
+  }
+}
+
+void openGithubPullRequests(BuildContext context) async {
+  const url = 'https://github.com/payam-zahedi/toastification/pulls';
+  if (!await launchUrl(Uri.parse(url))) {
+    if (context.mounted) {
+      toastification.show(
+        context: context,
+        type: ToastificationType.error,
+        style: ToastificationStyle.flat,
+        title: 'Ops!',
+        description: 'Something went wrong',
+        autoCloseDuration: const Duration(seconds: 4),
+      );
+    }
+  }
+}
+
 void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
   toastification.show(
     context: context,
