@@ -35,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return const ToastificationConfigProvider(
       config: ToastificationConfig(
-        margin: EdgeInsets.fromLTRB(0, 100, 0, 110),
+        margin: EdgeInsets.fromLTRB(0, 16, 0, 110),
       ),
       child: Scaffold(
         extendBody: true,
