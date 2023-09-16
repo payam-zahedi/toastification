@@ -12,19 +12,27 @@ import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
 
 class PreviewPanel extends StatelessWidget {
-  const PreviewPanel({super.key});
+  const PreviewPanel({
+    super.key,
+    this.expanded = false,
+  });
+
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
       color: Theme.of(context).colorScheme.background,
-      child: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Column(
           children: [
-            ToastPreview(),
-            SizedBox(height: 16),
-            CodePreview(),
+            const ToastPreview(),
+            const SizedBox(height: 16),
+            if (expanded)
+              const Expanded(child: CodePreview())
+            else
+              const CodePreview(),
           ],
         ),
       ),
@@ -86,12 +94,17 @@ class CodePreview extends StatelessWidget {
     if (!context.isInDesktopZone) {
       return const ExpandableCodePreview();
     }
-    return const _RawCodePreview();
+    return const _RawCodePreview(expanded: true);
   }
 }
 
 class _RawCodePreview extends StatelessWidget {
-  const _RawCodePreview({this.showCopyButton = true});
+  const _RawCodePreview({
+    this.showCopyButton = true,
+    this.expanded = false,
+  });
+
+  final bool expanded;
 
   final bool showCopyButton;
   @override
@@ -128,18 +141,22 @@ class _RawCodePreview extends StatelessWidget {
       );
     }
 
-    return Material(
-      shape: RoundedRectangleBorder(
-        borderRadius: context.cardsBorderRadius,
-        side: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
-      ),
-      color: const Color(0xffFBFCFD),
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(
-          minWidth: double.infinity,
-          maxHeight: 380,
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: context.cardsBorderRadius,
+          side: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
         ),
-        child: child,
+        color: const Color(0xffFBFCFD),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: double.infinity,
+            minHeight: 380,
+            maxHeight: expanded ? double.infinity : 380,
+          ),
+          child: child,
+        ),
       ),
     );
   }

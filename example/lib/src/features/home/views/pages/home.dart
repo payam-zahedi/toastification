@@ -88,9 +88,10 @@ class _HorizontalSection extends StatelessWidget {
           alignment: AlignmentDirectional.centerEnd,
           child: SizedBox(
             width: sideHeaderWidth,
+            height: MediaQuery.sizeOf(context).height - 64,
             child: const Padding(
               padding: EdgeInsetsDirectional.fromSTEB(30, 16, 0, 16),
-              child: PreviewPanel(),
+              child: PreviewPanel(expanded: true),
             ),
           ),
         ),
