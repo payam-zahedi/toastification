@@ -1,11 +1,11 @@
 {
-    "name": "example",
-    "short_name": "example",
+    "name": "Flutter Toastification",
+    "short_name": "Toastification",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "theme_color": "#3F5EFF",
+    "description": "Toastification is a Flutter package that allows you to easily show toast messages in your application.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
