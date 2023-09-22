@@ -108,6 +108,7 @@ class Toastification {
     required Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
+    VoidCallback? onAutoCompleteCompleted,
   }) {
     direction ??= Directionality.of(context);
 
@@ -132,6 +133,7 @@ class Toastification {
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
+      onAutoCompleteCompleted: onAutoCompleteCompleted,
     );
   }
 
@@ -217,6 +219,7 @@ class Toastification {
     bool? pauseOnHover,
     IconData? closeIcon,
     bool? showCloseButton,
+    VoidCallback? onAutoCompleteCompleted,
   }) {
     return showCustom(
       context: context,
