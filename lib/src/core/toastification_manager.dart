@@ -34,6 +34,7 @@ class ToastificationManager {
     required Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
+    VoidCallback? onAutoCompleteCompleted,
   }) {
     final item = ToastificationItem(
       builder: builder,
@@ -43,6 +44,7 @@ class ToastificationManager {
       autoCloseDuration: autoCloseDuration,
       onAutoCompleteCompleted: (holder) {
         dismiss(holder);
+        onAutoCompleteCompleted?.call();
       },
     );
 
