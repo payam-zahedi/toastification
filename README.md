@@ -185,10 +185,65 @@ toastification.show(
   },
 );
 ```
-### Global/Default Configuration
+## Global/Default Configuration
 
+Global configuration allows you to change the default behavior of Toastification across your entire application or in a specific page. To achieve this, you can provide your own `ToastificationConfig` using the `ToastificationConfigProvider` widget.
 
-### Manage Your Notifications
+The `ToastificationConfigProvider` is an inherited widget, which means the provided configuration will be available to all child widgets in the widget tree. This allows you to maintain consistent toast notification behavior throughout your app.
+
+#### Applying Global Configuration for the Whole App
+
+To apply global configuration for the entire application, use `builder` parameter of the `MaterialApp` widget to wrap your pages with `ToastificationConfigProvider` and provide an instance of `ToastificationConfig`. Here's an example:
+
+```dart
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Toastification',
+      builder: (context, child) {
+        return ToastificationConfigProvider(
+          config: const ToastificationConfig(
+            margin: EdgeInsets.fromLTRB(0, 16, 0, 110),
+            alignment: Alignment.center,
+            itemWidth: 440,
+            animationDuration: Duration(milliseconds: 500),
+          ),
+          child: child!,
+        );
+      },
+    );
+  }
+}
+```
+
+#### Applying Global Configuration for a Specific Page
+To apply global configuration for a specific page, you can wrap the widget tree of that page with `ToastificationConfigProvider` and provide an instance of `ToastificationConfig`. Here's an example:
+
+```dart
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const ToastificationConfigProvider(
+      config: ToastificationConfig(
+        margin: EdgeInsets.fromLTRB(0, 16, 0, 110),
+        alignment: Alignment.center,
+        itemWidth: 440,
+        animationDuration: Duration(milliseconds: 500),
+      ),
+      child: Scaffold(
+        body: HomeBody(),
+      ),
+    );
+  }
+}
+```
+
+## Manage Your Notifications
 
 In addition to displaying toast messages, the Toastification package also provides methods for managing and dismissing existing notifications. Here are the available methods:
 
