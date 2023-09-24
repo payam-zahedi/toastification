@@ -11,6 +11,11 @@ One of the advantages of the Toastification package is its ability to handle mul
 
 Overall, Toastification is a useful package for Flutter developers who want to add toast notifications to their apps without having to write the code from scratch.
 
+## [Toast Builder](https://payamzahedi.com/toastification/)
+
+Don't want to dive into the whole documentation? No problem!
+Just head over to our [Toast Builder Website](https://payamzahedi.com/toastification/), where you can effortlessly customize your toast notifications, copy the generated code, and seamlessly integrate them into your project. It's the quickest way to get started with Toastification!
+
 ## Installation
 
 To use Toastification, you need to add it to your pubspec.yaml file:
@@ -38,7 +43,7 @@ before we dive into the details, you should know that you can use Toastification
 you can either use the 'toastification' instance or 'Toastification()' constructor to access the methods.
 
 
-### Show Method
+## Show Method
 by using the `show` method, you can show predefined toast messages. you can use the `ToastificationType` enum to choose the type and `ToastificationStyle` enum to choose the style of the toast message.
 
 
@@ -102,7 +107,7 @@ toastification.show(
 );
 ```
 
-#### ToastificationStyle
+### ToastificationStyle
 
 we have 4 predefined styles for toast messages:
 
@@ -112,7 +117,7 @@ we have 4 predefined styles for toast messages:
 
 
 
-### ShowCustom Method
+## ShowCustom Method
 
 If you are looking for even more control over the appearance and behavior of your toast messages, you can use the showCustom() method to create a completely custom toast message. This method lets you pass in a builder function that returns the widget you want to display, giving you complete control over the toast's layout, styling, and interactivity.
 
@@ -162,7 +167,7 @@ toastification.showCustom(
 With showCustom(), you're only limited by your imagination. Create a toast message that stands out from the crowd and adds a touch of personality to your app!
 
 
-### Custom Animations
+## Custom Animations
 
 You can customize the animation of the toast notification by providing a Duration for the animation duration and implementing your own animation builder function using the animationBuilder parameter. Here's an example of how to use custom animations:
 
@@ -194,7 +199,7 @@ In addition to displaying toast messages, the Toastification package also provid
 Find a notification with the given ID
 
 ```dart
-final notification = toastification.findToastificationItem('my_notification');
+final notification = toastification.findToastificationItem('my_notification_id');
 ```
 #### Dismiss a Notification
 
@@ -218,23 +223,6 @@ Remove a notification with the given ID from the screen.
 toastification.dismissById('my_notification_id');
 ```
 
-#### Dismiss the First Notification
-
-Remove the first notification that was shown from the screen.
-
-```dart
-toastification.dismissFirst();
-```
-
-
-#### Dismiss the Last Notification
-
-Remove the last notification that was shown from the screen.
-
-```dart
-toastification.dismissLast();
-```
-
 
 ## Contributions
 
@@ -247,5 +235,6 @@ If you would like to contribute to the project, please read the [CONTRIBUTING.md
 
 Toastification is released under the `BSD-3-Clause` License. You can find the full text of the license in the LICENSE file in the root of the repository.
 
+---
 
 #### * Written with the help of Chat GPT
