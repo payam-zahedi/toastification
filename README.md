@@ -1,5 +1,10 @@
 # Toastification  [![pub package](https://img.shields.io/pub/v/toastification?color=blue&style=plastic)](https://pub.dartlang.org/packages/toastification)
 
+
+<p align="left">
+<img src="doc\image\intro.png?raw=true" width="100%" alt="Styles" />
+</p>
+
 Toastification is a Flutter package that allows developers to easily display toast notifications in their apps. Toast notifications are a type of pop-up message that typically appear on the screen and disappear after a short amount of time. They are commonly used to display information, alerts, or confirmations to the user.
 
 One of the advantages of the Toastification package is its ability to handle multiple toast messages. With Toastification, developers can display multiple toast notifications at once and display them in a queue. This means that if multiple notifications are triggered at the same time, they will be displayed one after the other, rather than overlapping on the screen.
@@ -38,7 +43,7 @@ by using the `show` method, you can show predefined toast messages. you can use 
 
 
 <p align="center">
-<img src="doc\image\types.png?raw=true" width="100%" alt="Riverpod" />
+<img src="doc\image\types.png?raw=true" width="100%" alt="Types" />
 </p>
 
 
@@ -102,7 +107,7 @@ toastification.show(
 we have 4 predefined styles for toast messages:
 
 <p align="left">
-<img src="doc\image\styles.png?raw=true" width="100%" alt="Riverpod" />
+<img src="doc\image\styles.png?raw=true" width="100%" alt="Styles" />
 </p>
 
 
