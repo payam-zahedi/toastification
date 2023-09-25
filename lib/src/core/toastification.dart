@@ -227,6 +227,7 @@ class Toastification {
       direction: direction,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
+      onAutoCompleteCompleted: onAutoCompleteCompleted,
       builder: (context, holder) {
         return BuiltInBuilder(
           item: holder,
