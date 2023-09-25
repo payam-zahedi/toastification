@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in_style.dart';
 
+/// enum to define the style of the built-in toastification
 enum ToastificationStyle {
   minimal,
   fillColored,
@@ -8,19 +9,33 @@ enum ToastificationStyle {
   flat,
 }
 
+/// enum to define the type of the built-in toastification
 enum ToastificationType {
+  /// info toast to show some information - blue color - icon: info
   info,
+
+  /// warning toast to show some warning - yellow color - icon: warning
   warning,
+
+  /// error toast to show some error - red color - icon: error
   success,
+
+  /// success toast to show some success - green color - icon: success
   error,
 }
 
+/// Using this enum you can define the behavior of the toast close button
 enum CloseButtonShowType {
-  always('Always'),
-  onHover('On Hover'),
-  none('None');
+  /// [always] - show the close button always
+  always._('Always'),
 
-  const CloseButtonShowType(this.title);
+  /// [onHover] - show the close button only when the mouse is hovering the toast
+  onHover._('On Hover'),
+
+  /// [none] - do not show the close button
+  none._('None');
+
+  const CloseButtonShowType._(this.title);
 
   final String title;
 
@@ -30,6 +45,9 @@ enum CloseButtonShowType {
   String toValueString() => '$CloseButtonShowType.$name';
 }
 
+/// Creates the built-in toastification content - title, description, progress bar
+/// 
+/// This widget is used by the built-in toastification widgets
 class BuiltInContent extends StatelessWidget {
   const BuiltInContent({
     super.key,

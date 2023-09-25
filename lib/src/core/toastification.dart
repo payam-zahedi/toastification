@@ -6,6 +6,8 @@ import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 
+// TODO(payam): add navigator observer
+
 /// This is the main singleton class instance of the package.
 /// You can use this instance to show and manage your notifications.
 ///
@@ -19,7 +21,7 @@ import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 ///   title: 'Hello World',
 ///   description: 'This is a notification',
 ///   type: ToastificationType.info,
-///   style: ToastificationStyle.floating,
+///   style: ToastificationStyle.flat,
 ///   autoCloseDuration: Duration(seconds: 3),
 /// );
 /// ```
@@ -54,7 +56,7 @@ final toastification = Toastification();
 ///   title: 'Hello World',
 ///   description: 'This is a notification',
 ///   type: ToastificationType.info,
-///   style: ToastificationStyle.floating,
+///   style: ToastificationStyle.flat,
 ///   autoCloseDuration: Duration(seconds: 3),
 /// );
 /// ```
@@ -84,8 +86,14 @@ class Toastification {
   final Map<Alignment, ToastificationManager> _managers = {};
 
   /// shows a custom notification
-  /// you should create your own widget and pass it to the [builder] parameter
   ///
+  /// you should create your own widget and pass it to the [builder] parameter
+  /// in the [builder] parameter you have the access to [ToastificationItem]
+  /// so you may want to use that to create your widget.
+  ///
+  /// the return value is a [ToastificationItem] that you can use to dismiss the notification
+  /// or find the notification details by its [id]
+  /// 
   /// example :
   ///
   /// ```dart
@@ -138,6 +146,10 @@ class Toastification {
   /// using this method you can show a notification by using the [navigator] overlay
   /// you should create your own widget and pass it to the [builder] parameter
   ///
+  ///
+  /// the return value is a [ToastificationItem] that you can use to dismiss the notification
+  /// or find the notification details by its [id]
+  ///
   /// ```dart
   /// toastification.showWithNavigatorState(
   ///   navigator: navigatorState or Navigator.of(context),
@@ -172,7 +184,12 @@ class Toastification {
     );
   }
 
-  /// shows a built-in notification with the given parameters
+  /// shows a predefined toast widget base on the parameters
+  ///
+  /// you can use this method to show a built-in toasts
+  ///
+  /// the return value is a [ToastificationItem] that you can use to dismiss the notification
+  /// or find the notification details by its [id]
   ///
   /// example :
   ///
@@ -183,11 +200,10 @@ class Toastification {
   ///   title: 'Hello World',
   ///   description: 'This is a notification',
   ///   type: ToastificationType.info,
-  ///   style: ToastificationStyle.floating,
+  ///   style: ToastificationStyle.flat,
   ///   autoCloseDuration: Duration(seconds: 3),
   /// );
   /// ```
-  // TODO(payam): add brightness and dark mode items
   ToastificationItem show({
     required BuildContext context,
     AlignmentGeometry? alignment,

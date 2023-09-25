@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 class FlatColoredStyle extends BuiltInStyle {

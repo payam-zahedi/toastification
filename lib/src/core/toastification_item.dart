@@ -4,7 +4,7 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:uuid/uuid.dart';
 
 const _uuid = Uuid();
-
+ 
 /// enum to define the status of the timer of the toastification item
 /// [init] : the timer is not started yet
 /// [started] : the timer is started
@@ -13,10 +13,20 @@ const _uuid = Uuid();
 /// [finished] : the timer is finished
 ///
 enum ToastTimeStatus {
+
+  /// the timer is not started yet
   init,
+
+  /// the timer is started
   started,
+
+  /// the timer is paused
   paused,
+
+  /// the timer is stopped
   stopped,
+
+  /// the timer is completed
   finished,
 }
 
@@ -93,8 +103,10 @@ class ToastificationItem implements Equatable {
   /// the animation duration of the toastification item animation
   final Duration? animationDuration;
 
+  /// the timer of the toastification item
   late final PausableTimer? _timer;
 
+  /// the status notifier of the timer
   final ValueNotifier<ToastTimeStatus> _timeStatus =
       ValueNotifier(ToastTimeStatus.init);
 

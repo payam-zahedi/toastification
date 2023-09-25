@@ -13,7 +13,11 @@ const _defaultMargin = EdgeInsets.symmetric(vertical: 32);
 /// if some of the parameters are not provided,
 ///
 /// [Toastification] will use this class to get the default values.
-///
+/// 
+/// to provide the [ToastificationConfig] to the widget tree you can use
+/// the [ToastificationConfigProvider] widget.
+/// 
+/// 
 class ToastificationConfig extends Equatable {
   const ToastificationConfig({
     this.alignment = _defaultAlignment,

@@ -15,6 +15,7 @@ const lowModeShadow = [
     spreadRadius: 0,
   )
 ];
+
 const highModeShadow = [
   BoxShadow(
     color: Color(0x14000000),

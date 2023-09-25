@@ -23,10 +23,6 @@ class ToastificationManager {
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
 
-  /// using this method you can show a notification
-  /// if there is no notification in the notification list,
-  /// we will animate in the overlay
-  /// otherwise we will just add the notification to the list
   ToastificationItem showCustom({
     required BuildContext context,
     required ToastificationBuilder builder,
@@ -82,7 +78,7 @@ class ToastificationManager {
     }
   }
 
-  /// using this method you can remove a notification
+  /// using this method you can remove a notification item
   /// if there is no notification in the notification list,
   /// we will remove the overlay entry
   ///
@@ -147,8 +143,8 @@ class ToastificationManager {
   }
 
   /// This function dismisses all the notifications in the [_notifications] list.
-  /// The delayForAnimation parameter is optional and defaults to true.
-  /// When true, it adds a delay for better animation.
+  /// The [delayForAnimation] parameter is optional and defaults to true.
+  /// When it is true, it adds a delay for better animation.
   void dismissAll({bool delayForAnimation = true}) async {
     // Creates a new list cloneList that has all the notifications from the _notifications list, but in reverse order.
     final cloneList = _notifications.toList(growable: false).reversed;
