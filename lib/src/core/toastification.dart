@@ -104,8 +104,8 @@ class Toastification {
     AlignmentGeometry? alignment,
     TextDirection? direction,
     required ToastificationBuilder builder,
-    required ToastificationAnimationBuilder? animationBuilder,
-    required Duration? animationDuration,
+    ToastificationAnimationBuilder? animationBuilder,
+    Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
   }) {
