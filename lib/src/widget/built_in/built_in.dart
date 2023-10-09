@@ -67,7 +67,7 @@ class BuiltInContent extends StatelessWidget {
       title,
       style: style.titleTextStyle(context)?.copyWith(
             color: foregroundColor,
-            fontSize: 30,
+            fontSize: 28,
           ),
     );
 
