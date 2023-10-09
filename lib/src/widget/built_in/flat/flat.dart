@@ -100,7 +100,7 @@ class FlatToastWidget extends StatelessWidget {
             child: Stack(
               children: [
                 Container(
-                  constraints: const BoxConstraints(minHeight: 250),
+                  constraints: const BoxConstraints(minHeight: 100),
                   decoration: BoxDecoration(
                     color: background,
                     borderRadius: borderRadius,
