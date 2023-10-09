@@ -29,7 +29,7 @@ class ToastCloseButton extends StatelessWidget {
               return Icon(
                 closeIcon,
                 color: Colors.white,
-                size: 25,
+                size: 35,
               );
             }),
           ),
