@@ -113,7 +113,7 @@ class FlatToastWidget extends StatelessWidget {
                       icon ??
                           Icon(
                             defaultStyle.icon(context),
-                            size: 24,
+                            size: 28,
                             color: iconColor,
                           ),
                       const SizedBox(width: 12),
