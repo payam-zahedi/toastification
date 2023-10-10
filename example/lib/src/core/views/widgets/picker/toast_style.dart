@@ -60,7 +60,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                       child: Align(
                         alignment: AlignmentDirectional.topStart,
                         child: Container(
-                          width: 800,
+                          width: _currentSize?.width ?? 200,
                           margin: const EdgeInsets.only(top: 2),
                           padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
