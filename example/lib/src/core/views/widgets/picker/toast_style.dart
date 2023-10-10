@@ -28,7 +28,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    _currentSize;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -60,7 +60,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                       child: Align(
                         alignment: AlignmentDirectional.topStart,
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          width: 800,
                           margin: const EdgeInsets.only(top: 2),
                           padding: const EdgeInsets.all(16),
                           decoration: ShapeDecoration(
