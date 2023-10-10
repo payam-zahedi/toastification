@@ -58,7 +58,7 @@ class BorderedContainer extends StatelessWidget {
       padding: margin ?? EdgeInsets.zero,
       child: SizedBox(
         height: height,
-        width: width,
+        width: MediaQuery.of(context).size.width * .7,
         child: Material(
           animationDuration: const Duration(milliseconds: 400),
           color: enabled ? background : disableBackground,
