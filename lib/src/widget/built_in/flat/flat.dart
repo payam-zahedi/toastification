@@ -100,7 +100,6 @@ class FlatToastWidget extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                width: MediaQuery.of(context).size.width * .8,
                 constraints: const BoxConstraints(minHeight: 100),
                 decoration: BoxDecoration(
                   color: background,
