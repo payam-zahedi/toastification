@@ -135,24 +135,6 @@ class FlatToastWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      toastification.dismiss(item!);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: ToastCloseButton(
-                        showCloseButton: showCloseButton,
-                        defaultStyle: defaultStyle,
-                        closeIcon: closeIcon,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
