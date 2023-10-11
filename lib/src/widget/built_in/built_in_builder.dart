@@ -31,6 +31,8 @@ class BuiltInBuilder extends StatelessWidget {
     this.dragToClose,
     this.pauseOnHover,
     required this.showCloseButton,
+    this.loaderBackgroundColor,
+    this.loaderColor,
     required this.closeIcon,
   });
 
@@ -48,6 +50,8 @@ class BuiltInBuilder extends StatelessWidget {
   final Color? primaryColor;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Color? loaderBackgroundColor;
+  final Color? loaderColor;
 
   final Brightness? brightness;
 
@@ -122,6 +126,8 @@ class BuiltInBuilder extends StatelessWidget {
         closeButtonShowType: closeButtonShowType,
         closeIcon: closeIcon,
         showCloseButton: showCloseButton,
+        loaderBackgroundColor: loaderBackgroundColor,
+        loaderColor: loaderColor,
       ),
     );
   }
@@ -171,6 +177,8 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.closeButtonShowType,
     required this.showCloseButton,
     required this.closeIcon,
+    this.loaderBackgroundColor,
+    this.loaderColor,
   });
 
   final ToastificationItem? item;
@@ -186,6 +194,8 @@ class BuiltInToastBuilder extends StatelessWidget {
 
   final Color? primaryColor;
   final Color? backgroundColor;
+  final Color? loaderBackgroundColor;
+  final Color? loaderColor;
   final Color? foregroundColor;
 
   final Brightness? brightness;
@@ -229,8 +239,9 @@ class BuiltInToastBuilder extends StatelessWidget {
             builder: (context, value, _) {
               return LinearProgressIndicator(
                 value: value,
-                color: Colors.grey,
-                backgroundColor: Colors.white,
+                color: loaderColor ?? Colors.grey,
+                backgroundColor: loaderBackgroundColor ?? Colors.white,
+                minHeight: 5,
               );
             },
           )

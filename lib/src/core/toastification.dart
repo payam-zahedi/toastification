@@ -220,6 +220,8 @@ class Toastification {
     IconData? closeIcon,
     bool? showCloseButton,
     VoidCallback? onAutoCompleteCompleted,
+    Color? loaderBackgroundColor,
+    Color? loaderColor,
   }) {
     return showCustom(
       context: context,
@@ -253,6 +255,8 @@ class Toastification {
           pauseOnHover: pauseOnHover,
           closeIcon: closeIcon ?? Icons.cancel,
           showCloseButton: showCloseButton ?? true,
+          loaderBackgroundColor: loaderBackgroundColor,
+          loaderColor: loaderColor,
         );
       },
       animationBuilder: animationBuilder,
