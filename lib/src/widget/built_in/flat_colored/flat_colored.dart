@@ -145,8 +145,8 @@ class FlatColoredToastWidget extends StatelessWidget {
                   defaultStyle: defaultStyle,
                   closeIcon: closeIcon,
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
