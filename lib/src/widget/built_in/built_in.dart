@@ -63,12 +63,16 @@ class BuiltInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Text(
-      title,
-      style: style.titleTextStyle(context)?.copyWith(
-            color: foregroundColor,
-            fontSize: 28,
-          ),
+    Widget content = Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: Text(
+        title,
+        style: style.titleTextStyle(context)?.copyWith(
+              color: foregroundColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+            ),
+      ),
     );
 
     final showColumn =
