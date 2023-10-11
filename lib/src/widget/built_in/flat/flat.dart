@@ -110,12 +110,16 @@ class FlatToastWidget extends StatelessWidget {
                 padding: padding ?? defaultStyle.padding(context),
                 child: Row(
                   children: [
-                    icon ??
-                        Icon(
-                          defaultStyle.icon(context),
-                          size: 35,
-                          color: iconColor,
-                        ),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: icon ??
+                          Icon(
+                            defaultStyle.icon(context),
+                            size: 40,
+                            color: iconColor,
+                          ),
+                    ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: BuiltInContent(
@@ -145,10 +149,18 @@ class FlatToastWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
                   ],
                 ),
               ),
+              Positioned(
+                top: 8,
+                right: 13,
+                child: ToastCloseButton(
+                  showCloseButton: showCloseButton,
+                  defaultStyle: defaultStyle,
+                  closeIcon: closeIcon,
+                ),
+              )
             ],
           ),
         ),
