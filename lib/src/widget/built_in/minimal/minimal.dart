@@ -105,47 +105,58 @@ class MinimalToastWidget extends StatelessWidget {
                         toastification.dismiss(item!);
                       }
                     },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: background,
-                  borderRadius:
-                      defaultStyle.effectiveBorderRadius(borderRadius),
-                  border:
-                      Border.fromBorderSide(defaultStyle.borderSide(context)),
-                  boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-                ),
-                padding: padding ?? defaultStyle.padding(context),
-                child: Row(
-                  children: [
-                    icon ??
-                        Icon(
-                          defaultStyle.icon(context),
-                          size: 24,
-                          color: iconColor,
-                        ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: BuiltInContent(
-                        style: defaultStyle,
-                        title: title,
-                        description: description,
-                        primaryColor: primaryColor,
-                        foregroundColor: foregroundColor,
-                        backgroundColor: backgroundColor,
-                        showProgressBar: showProgressBar,
-                        progressBarValue: progressBarValue,
-                        progressBarWidget: progressBarWidget,
-                        progressIndicatorTheme: progressIndicatorTheme,
-                      ),
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: background,
+                      borderRadius:
+                          defaultStyle.effectiveBorderRadius(borderRadius),
+                      border: Border.fromBorderSide(
+                          defaultStyle.borderSide(context)),
+                      boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
                     ),
-                    const SizedBox(width: 8),
-                    ToastCloseButton(
+                    padding: padding ?? defaultStyle.padding(context),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: icon ??
+                              Icon(
+                                defaultStyle.icon(context),
+                                size: 40,
+                                color: iconColor,
+                              ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: BuiltInContent(
+                            style: defaultStyle,
+                            title: title,
+                            description: description,
+                            primaryColor: primaryColor,
+                            foregroundColor: foregroundColor,
+                            backgroundColor: backgroundColor,
+                            showProgressBar: showProgressBar,
+                            progressBarValue: progressBarValue,
+                            progressBarWidget: progressBarWidget,
+                            progressIndicatorTheme: progressIndicatorTheme,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 13,
+                    child: ToastCloseButton(
                       showCloseButton: showCloseButton,
                       defaultStyle: defaultStyle,
                       closeIcon: closeIcon,
                     ),
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ),
