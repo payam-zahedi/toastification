@@ -135,30 +135,21 @@ class FlatToastWidget extends StatelessWidget {
                         progressIndicatorTheme: progressIndicatorTheme,
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    GestureDetector(
-                      onTap: () {
-                        toastification.dismiss(item!);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: ToastCloseButton(
-                          showCloseButton: showCloseButton,
-                          defaultStyle: defaultStyle,
-                          closeIcon: closeIcon,
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
               Positioned(
                 top: 8,
                 right: 13,
-                child: ToastCloseButton(
-                  showCloseButton: showCloseButton,
-                  defaultStyle: defaultStyle,
-                  closeIcon: closeIcon,
+                child: GestureDetector(
+                  onTap: () {
+                    toastification.dismiss(item!);
+                  },
+                  child: ToastCloseButton(
+                    showCloseButton: showCloseButton,
+                    defaultStyle: defaultStyle,
+                    closeIcon: closeIcon,
+                  ),
                 ),
               )
             ],
