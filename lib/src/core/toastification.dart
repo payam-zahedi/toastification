@@ -204,6 +204,7 @@ class Toastification {
   ///   autoCloseDuration: Duration(seconds: 3),
   /// );
   /// ```
+  /// TODO(payam): add close button icon parameter
   ToastificationItem show({
     required BuildContext context,
     AlignmentGeometry? alignment,

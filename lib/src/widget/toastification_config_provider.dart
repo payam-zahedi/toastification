@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:toastification/src/core/toastification_config.dart';
 
+
 class ToastificationConfigProvider extends InheritedWidget {
   const ToastificationConfigProvider({
     super.key,
