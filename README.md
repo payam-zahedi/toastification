@@ -278,6 +278,16 @@ Remove a notification with the given ID from the screen.
 toastification.dismissById('my_notification_id');
 ```
 
+## Design
+
+Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We want to extend our heartfelt appreciation to Sepide for her exceptional design work, which has made Toastification visually appealing and user-friendly. Special thanks to Sepide for her valuable contributions to this project.
+
+
+<p align="left">
+<img src="doc\image\design_mobile.png?raw=true" width="49%" alt="Styles" />
+<img src="doc\image\design_desktop.png?raw=true" width="49%" alt="Styles" />
+</p>
+
 
 ## Contributions
 
