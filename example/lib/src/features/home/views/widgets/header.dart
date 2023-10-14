@@ -149,7 +149,7 @@ class _InformationWidget extends ConsumerWidget {
             },
             child: const ColoredTag(
               icon: FontAwesomeIcons.github,
-              text: '101 Stars on Github',
+              text: '150 Stars on Github',
             ),
           ),
           const SizedBox(height: 12),

@@ -23,19 +23,27 @@ void copyCode(BuildContext context, ToastDetail detail) async {
         toastification.show(
           context: context,
           type: ToastificationType.success,
-          style: ToastificationStyle.flat,
+          style: ToastificationStyle.flatColored,
           title: 'Clipboard',
           description: 'Code copied to clipboard',
           autoCloseDuration: const Duration(seconds: 4),
+          alignment: detail.alignment,
+          animationDuration: detail.animationDuration,
+          animationBuilder: detail.animationType.builder,
+          boxShadow: detail.shadow.shadow,
         );
       } else {
         toastification.show(
           context: context,
           type: ToastificationType.error,
-          style: ToastificationStyle.flat,
+          style: ToastificationStyle.flatColored,
           title: 'Ops!',
           description: 'Something went wrong',
           autoCloseDuration: const Duration(seconds: 4),
+          alignment: detail.alignment,
+          animationDuration: detail.animationDuration,
+          animationBuilder: detail.animationType.builder,
+          boxShadow: detail.shadow.shadow,
         );
       }
     },

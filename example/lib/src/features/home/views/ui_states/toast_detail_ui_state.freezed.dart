@@ -385,7 +385,7 @@ class _$_ToastDetail implements _ToastDetail {
   _$_ToastDetail(
       {this.type = ToastificationType.success,
       this.style = ToastificationStyle.flat,
-      this.alignment = Alignment.topRight,
+      this.alignment = Alignment.topLeft,
       this.title = 'Component updates available.',
       this.description = 'Component updates available.',
       this.icon,
