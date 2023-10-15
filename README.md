@@ -2,7 +2,7 @@
 
 
 <p align="left">
-<img src="doc\image\intro.png?raw=true" width="100%" alt="Styles" />
+<img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/intro.png?raw=true" width="100%" alt="Styles" />
 </p>
 
 Toastification is a Flutter package that allows developers to easily display toast notifications in their apps. Toast notifications are a type of pop-up message that typically appear on the screen and disappear after a short amount of time. They are commonly used to display information, alerts, or confirmations to the user.
@@ -48,7 +48,7 @@ by using the `show` method, you can show predefined toast messages. you can use 
 
 
 <p align="center">
-<img src="doc\image\types.png?raw=true" width="100%" alt="Types" />
+<img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/types.png?raw=true" width="100%" alt="Types" />
 </p>
 
 
@@ -112,7 +112,7 @@ toastification.show(
 we have 4 predefined styles for toast messages:
 
 <p align="left">
-<img src="doc\image\styles.png?raw=true" width="100%" alt="Styles" />
+<img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/styles.png?raw=true" width="100%" alt="Styles" />
 </p>
 
 
@@ -284,12 +284,21 @@ Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We w
 
 
 <p align="left">
-<img src="doc\image\design_mobile.png?raw=true" width="49%" alt="Styles" />
-<img src="doc\image\design_desktop.png?raw=true" width="49%" alt="Styles" />
+<img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/design_mobile.png?raw=true" width="49%" alt="Styles" />
+<img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/design_desktop.png?raw=true" width="49%" alt="Styles" />
 </p>
 
 
-## Contributions
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 Contributions are always welcome! If you have any suggestions, bug reports, or feature requests, please open an issue on the GitHub repository.
 
