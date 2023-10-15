@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "benyaminbeyzaie",
+      "name": "Benyamin Beyzaie",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29250042?v=4",
+      "profile": "http://mrbenyamin.blog.ir",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "toastification",
+  "projectOwner": "payam-zahedi"
+}
