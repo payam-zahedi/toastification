@@ -13,49 +13,48 @@ const _defaultMargin = EdgeInsets.symmetric(vertical: 32);
 /// if some of the parameters are not provided,
 ///
 /// [Toastification] will use this class to get the default values.
-/// 
+///
 /// to provide the [ToastificationConfig] to the widget tree you can use
 /// the [ToastificationConfigProvider] widget.
-/// 
-/// 
+///
 class ToastificationConfig extends Equatable {
   const ToastificationConfig({
     this.alignment = _defaultAlignment,
+    this.itemWidth = _defaultWidth,
     this.animationDuration = _itemAnimationDuration,
     this.animationBuilder = _defaultAnimationBuilderConfig,
-    this.itemWidth = _defaultWidth,
-    this.margin = _defaultMargin,
+    this.marginBuilder = _defaultMarginBuilder,
   });
 
   final AlignmentGeometry alignment;
+  final double itemWidth;
   final Duration animationDuration;
   final ToastificationAnimationBuilder animationBuilder;
-  final double itemWidth;
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry Function(AlignmentGeometry alignment) marginBuilder;
 
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
     AlignmentGeometry? alignment,
+    double? itemWidth,
     Duration? animationDuration,
     ToastificationAnimationBuilder? animationBuilder,
-    double? itemWidth,
-    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry Function(AlignmentGeometry alignment)? marginBuilder,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
+      itemWidth: itemWidth ?? this.itemWidth,
       animationDuration: animationDuration ?? this.animationDuration,
       animationBuilder: animationBuilder ?? this.animationBuilder,
-      itemWidth: itemWidth ?? this.itemWidth,
-      margin: margin ?? this.margin,
+      marginBuilder: marginBuilder ?? this.marginBuilder,
     );
   }
 
   @override
   List<Object?> get props => [
         alignment,
-        animationDuration,
         itemWidth,
-        margin,
+        animationDuration,
+        marginBuilder,
       ];
 }
 
@@ -70,4 +69,8 @@ Widget _defaultAnimationBuilderConfig(
     alignment: alignment,
     child: child,
   );
+}
+
+EdgeInsetsGeometry _defaultMarginBuilder(AlignmentGeometry alignment) {
+  return _defaultMargin;
 }
