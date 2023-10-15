@@ -1,6 +1,6 @@
 name: toastification
 description: Toastification is a Flutter package that allows you to easily show toast and notification messages in your application.
-version: 0.0.3
+version: 1.0.0
 homepage: https://payamzahedi.com/toastification/
 repository: https://github.com/payam-zahedi/toastification
 

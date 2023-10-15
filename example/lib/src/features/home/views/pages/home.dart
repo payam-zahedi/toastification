@@ -37,17 +37,19 @@ class _HomeScreenState extends State<HomeScreen> {
       config: ToastificationConfig(
         marginBuilder: (alignment) => const EdgeInsets.fromLTRB(0, 16, 0, 110),
       ),
-      child: const Scaffold(
-        extendBody: true,
-        bottomNavigationBar: BottomNavigationView(),
-        body: CustomScrollView(
-          primary: true,
-          slivers: [
-            ToastAppBar(),
-            SliverToBoxAdapter(child: ToastHeader()),
-            CustomizationSection(),
-            SliverToBoxAdapter(child: SizedBox(height: 64)),
-          ],
+      child: const Scrollbar(
+        child: Scaffold(
+          extendBody: true,
+          bottomNavigationBar: BottomNavigationView(),
+          body: CustomScrollView(
+            primary: true,
+            slivers: [
+              ToastAppBar(),
+              SliverToBoxAdapter(child: ToastHeader()),
+              CustomizationSection(),
+              SliverToBoxAdapter(child: SizedBox(height: 64)),
+            ],
+          ),
         ),
       ),
     );
