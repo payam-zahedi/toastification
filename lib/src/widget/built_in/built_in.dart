@@ -46,7 +46,7 @@ enum CloseButtonShowType {
 }
 
 /// Creates the built-in toastification content - title, description, progress bar
-/// 
+///
 /// This widget is used by the built-in toastification widgets
 class BuiltInContent extends StatelessWidget {
   const BuiltInContent({

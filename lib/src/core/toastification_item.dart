@@ -4,7 +4,7 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:uuid/uuid.dart';
 
 const _uuid = Uuid();
- 
+
 /// enum to define the status of the timer of the toastification item
 /// [init] : the timer is not started yet
 /// [started] : the timer is started
@@ -13,7 +13,6 @@ const _uuid = Uuid();
 /// [finished] : the timer is finished
 ///
 enum ToastTimeStatus {
-
   /// the timer is not started yet
   init,
 

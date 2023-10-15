@@ -93,7 +93,7 @@ class Toastification {
   ///
   /// the return value is a [ToastificationItem] that you can use to dismiss the notification
   /// or find the notification details by its [id]
-  /// 
+  ///
   /// example :
   ///
   /// ```dart
