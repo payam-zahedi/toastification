@@ -4,6 +4,11 @@ import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 
+/// This class is responsible for managing the [Toastification] items
+/// we have several ToastificationManagers for each [Alignment] object
+///
+/// You don't need to use [ToastificationManager] directly
+/// [Toastification] will handle them internally
 class ToastificationManager {
   ToastificationManager({
     required this.alignment,
@@ -23,6 +28,10 @@ class ToastificationManager {
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
 
+  /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
+  /// 
+  /// if the [_notifications] list is empty, we will create the [_overlayEntry]
+  /// otherwise we will just add the [item] to the [_notifications] list.
   ToastificationItem showCustom({
     required BuildContext context,
     required ToastificationBuilder builder,
@@ -69,6 +78,7 @@ class ToastificationManager {
     return item;
   }
 
+  /// Finds the [ToastificationItem] with the given [id].
   ToastificationItem? findToastificationItem(String id) {
     try {
       return _notifications

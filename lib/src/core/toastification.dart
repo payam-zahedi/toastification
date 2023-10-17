@@ -79,10 +79,15 @@ final toastification = Toastification();
 class Toastification {
   static final Toastification _instance = Toastification._internal();
 
+  /// Private constructor for the singleton class
   Toastification._internal();
 
+  /// returns the singleton instance of the class
   factory Toastification() => _instance;
 
+  /// list of managers for each [Alignment] object
+  /// 
+  /// for each [Alignment] object we will create a [ToastificationManager]
   final Map<Alignment, ToastificationManager> _managers = {};
 
   /// shows a custom notification

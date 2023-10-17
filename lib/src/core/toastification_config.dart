@@ -58,6 +58,7 @@ class ToastificationConfig extends Equatable {
       ];
 }
 
+/// Default animation builder for [Toastification]
 Widget _defaultAnimationBuilderConfig(
   BuildContext context,
   Animation<double> animation,
@@ -71,6 +72,7 @@ Widget _defaultAnimationBuilderConfig(
   );
 }
 
+/// Default margin builder for [Toastification]
 EdgeInsetsGeometry _defaultMarginBuilder(AlignmentGeometry alignment) {
   return _defaultMargin;
 }
