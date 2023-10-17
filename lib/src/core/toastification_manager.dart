@@ -29,7 +29,7 @@ class ToastificationManager {
   final List<ToastificationItem> _notifications = [];
 
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
-  /// 
+  ///
   /// if the [_notifications] list is empty, we will create the [_overlayEntry]
   /// otherwise we will just add the [item] to the [_notifications] list.
   ToastificationItem showCustom({

@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:toastification/src/core/toastification_config.dart';
 
-/// This class is responsible for providing the [ToastificationConfig] to the 
+/// This class is responsible for providing the [ToastificationConfig] to the
 /// widget tree
-/// 
+///
 /// so you can access it using [ToastificationConfigProvider.of(context)] in the above widgets
-/// 
-/// 
+///
+///
 class ToastificationConfigProvider extends InheritedWidget {
   const ToastificationConfigProvider({
     super.key,

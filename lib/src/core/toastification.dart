@@ -86,7 +86,7 @@ class Toastification {
   factory Toastification() => _instance;
 
   /// list of managers for each [Alignment] object
-  /// 
+  ///
   /// for each [Alignment] object we will create a [ToastificationManager]
   final Map<Alignment, ToastificationManager> _managers = {};
 
