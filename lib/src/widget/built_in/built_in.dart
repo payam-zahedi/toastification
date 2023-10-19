@@ -42,7 +42,7 @@ enum CloseButtonShowType {
   @override
   String toString() => title;
 
-  String toValueString() => '$CloseButtonShowType.$name';
+  String toValueString() => 'CloseButtonShowType.$name';
 }
 
 /// Creates the built-in toastification content - title, description, progress bar
