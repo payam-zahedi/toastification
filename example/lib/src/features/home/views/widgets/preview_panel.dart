@@ -243,7 +243,6 @@ class CodePreviewer extends ConsumerWidget {
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
     final code = ToastCodeFormatter.format(toastDetail);
-
     final codeTheme = Map<String, TextStyle>.from(githubTheme);
 
     codeTheme.update(
