@@ -54,6 +54,26 @@ class ColoredTag extends StatelessWidget {
       );
     }
 
+    return TagContainer(child: child);
+  }
+}
+
+class TagContainer extends StatelessWidget {
+  const TagContainer({
+    super.key,
+    required this.child,
+    this.background,
+    this.foreground,
+  });
+
+  final Widget child;
+  final Color? background;
+  final Color? foreground;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
       decoration: BoxDecoration(

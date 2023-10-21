@@ -32,14 +32,15 @@ class ToastificationManager {
   ///
   /// if the [_notifications] list is empty, we will create the [_overlayEntry]
   /// otherwise we will just add the [item] to the [_notifications] list.
-  ToastificationItem showCustom(
-      {required BuildContext context,
-      required ToastificationBuilder builder,
-      required ToastificationAnimationBuilder? animationBuilder,
-      required Duration? animationDuration,
-      Duration? autoCloseDuration,
-      OverlayState? overlayState,
-      VoidCallback? onAutoCompleteCompleted}) {
+  ToastificationItem showCustom({
+    required BuildContext context,
+    required ToastificationBuilder builder,
+    required ToastificationAnimationBuilder? animationBuilder,
+    required Duration? animationDuration,
+    Duration? autoCloseDuration,
+    OverlayState? overlayState,
+    VoidCallback? onAutoCompleteCompleted,
+  }) {
     final item = ToastificationItem(
       builder: builder,
       alignment: alignment,
