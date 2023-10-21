@@ -134,7 +134,9 @@ class _AppBar extends StatelessWidget {
             const AppBarLogo(),
             FilledButton(
               style: FilledButton.styleFrom(),
-              onPressed: () {},
+              onPressed: () {
+                openGithub(context);
+              },
               child: const Text('Give us a Star'),
             ),
           ],
