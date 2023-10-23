@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
+import 'package:toastification/src/widget/built_in/simple/simple.dart';
+import 'package:toastification/src/widget/built_in/simple/simple_style.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -121,6 +123,7 @@ class BuiltInBuilder extends StatelessWidget {
   }
 
   BuiltInStyle toastDefaultStyle() {
+    // TODO : [MAHMOUD] Check here to change default style for the simple toast
     final type = this.type ?? ToastificationType.info;
 
     final style = this.style ?? ToastificationStyle.fillColored;
@@ -130,6 +133,7 @@ class BuiltInBuilder extends StatelessWidget {
       ToastificationStyle.fillColored => FilledStyle(type),
       ToastificationStyle.flatColored => FlatColoredStyle(type),
       ToastificationStyle.flat => FlatStyle(type),
+      ToastificationStyle.simple => SimpleStyle(type),
     };
   }
 
@@ -303,6 +307,19 @@ class BuiltInToastBuilder extends StatelessWidget {
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
+            ),
+          // TODO : [Mahmoud] check here to return a SimpleToastWidget
+          ToastificationStyle.simple => SimpleToastWidget(
+              type: type,
+              title: title,
+              primaryColor: primaryColor,
+              backgroundColor: backgroundColor,
+              foregroundColor: foregroundColor,
+              brightness: brightness,
+              padding: padding,
+              borderRadius: borderRadius,
+              boxShadow: boxShadow,
+              direction: direction,
             ),
         };
       },

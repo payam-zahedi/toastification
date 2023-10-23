@@ -7,6 +7,7 @@ enum ToastificationStyle {
   fillColored,
   flatColored,
   flat,
+  simple,
 }
 
 /// enum to define the type of the built-in toastification
