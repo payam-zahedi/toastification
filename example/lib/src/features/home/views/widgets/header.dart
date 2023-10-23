@@ -1,7 +1,7 @@
 import 'package:example/main.dart';
 import 'package:example/src/core/usecase/responsive/responsive.dart';
-import 'package:example/src/core/views/widgets/core.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
+import 'package:example/src/features/home/views/widgets/github_stars.dart';
 import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -147,10 +147,7 @@ class _InformationWidget extends ConsumerWidget {
               ref.read(themeVariantProvider.notifier).state =
                   !ref.read(themeVariantProvider);
             },
-            child: const ColoredTag(
-              icon: FontAwesomeIcons.github,
-              text: '150 Stars on Github',
-            ),
+            child: const GithubStars(),
           ),
           const SizedBox(height: 12),
           Text(

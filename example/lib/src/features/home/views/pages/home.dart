@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ToastAppBar(),
               SliverToBoxAdapter(child: ToastHeader()),
               CustomizationSection(),
-              SliverToBoxAdapter(child: SizedBox(height: 64)),
             ],
           ),
         ),
@@ -80,9 +79,11 @@ class _HorizontalSection extends StatelessWidget {
     const previewPanelPadding = 16.0;
 
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: previewPanelPadding,
-        vertical: 64,
+      padding: const EdgeInsets.fromLTRB(
+        previewPanelPadding,
+        64,
+        previewPanelPadding,
+        96,
       ),
       sliver: SliverStickyHeader(
         overlapsContent: true,

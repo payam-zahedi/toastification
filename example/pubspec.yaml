@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: "none"
 
-version: 1.0.0+30
+version: 1.0.3+33
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -28,6 +28,8 @@ dependencies:
   url_launcher: ^6.1.12
   google_fonts: ^5.1.0
   flutter_staggered_grid_view: ^0.7.0
+  flutter_spinkit: ^5.2.0
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

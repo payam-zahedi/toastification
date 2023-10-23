@@ -121,6 +121,7 @@ class Toastification {
     Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
+    VoidCallback? onAutoCompleteCompleted,
   }) {
     direction ??= Directionality.of(context);
 
@@ -145,6 +146,7 @@ class Toastification {
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
+      onAutoCompleteCompleted: onAutoCompleteCompleted,
     );
   }
 
@@ -231,6 +233,7 @@ class Toastification {
     List<BoxShadow>? boxShadow,
     TextDirection? direction,
     VoidCallback? onCloseTap,
+    VoidCallback? onAutoCompleteCompleted,
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
     CloseButtonShowType? closeButtonShowType,
@@ -244,6 +247,7 @@ class Toastification {
       direction: direction,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
+      onAutoCompleteCompleted: onAutoCompleteCompleted,
       builder: (context, holder) {
         return BuiltInBuilder(
           item: holder,
