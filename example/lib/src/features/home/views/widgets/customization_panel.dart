@@ -341,8 +341,7 @@ class IconPicker extends ConsumerWidget {
       ToastificationStyle.fillColored => FilledStyle(type),
       ToastificationStyle.flatColored => FlatColoredStyle(type),
       ToastificationStyle.flat => FlatStyle(type),
-      // TODO: [Mahmoud] Handle this case.
-      ToastificationStyle.simple => FlatStyle(type),
+      ToastificationStyle.simple => SimpleStyle(type),
     };
 
     return BorderedContainer(

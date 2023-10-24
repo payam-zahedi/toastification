@@ -123,7 +123,6 @@ class BuiltInBuilder extends StatelessWidget {
   }
 
   BuiltInStyle toastDefaultStyle() {
-    // TODO : [MAHMOUD] Check here to change default style for the simple toast
     final type = this.type ?? ToastificationType.info;
 
     final style = this.style ?? ToastificationStyle.fillColored;
@@ -308,7 +307,6 @@ class BuiltInToastBuilder extends StatelessWidget {
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
             ),
-          // TODO : [Mahmoud] check here to return a SimpleToastWidget
           ToastificationStyle.simple => SimpleToastWidget(
               type: type,
               title: title,

@@ -55,26 +55,27 @@ class SimpleToastWidget extends StatelessWidget {
       textDirection: direction,
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
-        child: Container(
-          // constraints: const BoxConstraints(minHeight: 64),
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: borderRadius,
-            border: Border.fromBorderSide(borderSide),
-            boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-          ),
-          padding: padding ?? defaultStyle.padding(context),
-          child: BuiltInContent(
-            style: defaultStyle,
-            title: title,
-            description: null,
-            primaryColor: primaryColor,
-            foregroundColor: foregroundColor,
-            backgroundColor: backgroundColor,
-            showProgressBar: false,
-            progressBarValue: null,
-            progressBarWidget: null,
-            progressIndicatorTheme: null,
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              color: background,
+              borderRadius: borderRadius,
+              border: Border.fromBorderSide(borderSide),
+              boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+            ),
+            padding: padding ?? defaultStyle.padding(context),
+            child: BuiltInContent(
+              style: defaultStyle,
+              title: title,
+              description: null,
+              primaryColor: primaryColor,
+              foregroundColor: foregroundColor,
+              backgroundColor: backgroundColor,
+              showProgressBar: false,
+              progressBarValue: null,
+              progressBarWidget: null,
+              progressIndicatorTheme: null,
+            ),
           ),
         ),
       ),
