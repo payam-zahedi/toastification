@@ -6,6 +6,11 @@ import '../../../helper/toast_helper.dart';
 class SimpleStyle extends BuiltInStyle {
   const SimpleStyle(ToastificationType type) : super(type);
   @override
+  EdgeInsetsGeometry padding(BuildContext context) {
+    return const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 16);
+  }
+
+  @override
   MaterialColor primaryColor(BuildContext context) {
     final color = switch (type) {
       ToastificationType.info => infoColor,
