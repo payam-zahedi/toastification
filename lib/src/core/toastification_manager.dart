@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:toastification/src/core/toastification_config.dart';
-import 'package:toastification/src/core/toastification_item.dart';
-import 'package:toastification/src/widget/toast_builder.dart';
+import 'package:toastification/toastification.dart';
 
 /// This class is responsible for managing the [Toastification] items
 /// we have several ToastificationManagers for each [Alignment] object
@@ -37,9 +35,9 @@ class ToastificationManager {
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
+    required ToastificationCallbacks callbacks,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
-    VoidCallback? onAutoCompleteCompleted,
   }) {
     final item = ToastificationItem(
       builder: builder,
@@ -47,9 +45,9 @@ class ToastificationManager {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
-      onAutoCompleteCompleted: (holder) {
-        dismiss(holder);
-        onAutoCompleteCompleted?.call();
+      onAutoCompleteCompleted: (toastItem) {
+        dismiss(toastItem);
+        callbacks.onAutoCompleteCompleted?.call(toastItem);
       },
     );
 

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/toastification_config.dart';
-import 'package:toastification/src/widget/toastification_config_provider.dart';
-import 'package:toastification/src/core/toastification_item.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
-import 'package:toastification/src/widget/built_in/built_in_builder.dart';
+import 'package:toastification/toastification.dart';
 
 // TODO(payam): add navigator observer
 
@@ -121,7 +117,7 @@ class Toastification {
     Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
-    VoidCallback? onAutoCompleteCompleted,
+    ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     direction ??= Directionality.of(context);
 
@@ -146,7 +142,7 @@ class Toastification {
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState,
-      onAutoCompleteCompleted: onAutoCompleteCompleted,
+      callbacks: callbacks,
     );
   }
 
@@ -176,6 +172,7 @@ class Toastification {
     ToastificationAnimationBuilder? animationBuilder,
     Duration? animationDuration,
     Duration? autoCloseDuration,
+    ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     final context = navigator.context;
 
@@ -188,6 +185,7 @@ class Toastification {
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
       overlayState: navigator.overlay,
+      callbacks: callbacks,
     );
   }
 
@@ -232,22 +230,23 @@ class Toastification {
     BorderRadiusGeometry? borderRadius,
     List<BoxShadow>? boxShadow,
     TextDirection? direction,
-    VoidCallback? onCloseTap,
-    VoidCallback? onAutoCompleteCompleted,
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
     CloseButtonShowType? closeButtonShowType,
     bool? closeOnClick,
     bool? dragToClose,
     bool? pauseOnHover,
+    ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     return showCustom(
       context: context,
+      overlayState: overlayState,
       alignment: alignment,
       direction: direction,
       autoCloseDuration: autoCloseDuration,
-      overlayState: overlayState,
-      onAutoCompleteCompleted: onAutoCompleteCompleted,
+      animationBuilder: animationBuilder,
+      animationDuration: animationDuration,
+      callbacks: callbacks,
       builder: (context, holder) {
         return BuiltInBuilder(
           item: holder,
@@ -264,17 +263,15 @@ class Toastification {
           borderRadius: borderRadius,
           boxShadow: boxShadow,
           direction: direction,
-          onCloseTap: onCloseTap,
           showProgressBar: showProgressBar,
           progressBarTheme: progressBarTheme,
           closeButtonShowType: closeButtonShowType,
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
           pauseOnHover: pauseOnHover,
+          callbacks: callbacks,
         );
       },
-      animationBuilder: animationBuilder,
-      animationDuration: animationDuration,
     );
   }
 
