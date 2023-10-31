@@ -20,8 +20,8 @@ mixin _$ToastDetail {
   ToastificationStyle get style =>
       throw _privateConstructorUsedError; // placement
   AlignmentGeometry get alignment => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  Widget? get title => throw _privateConstructorUsedError;
+  Widget? get description => throw _privateConstructorUsedError;
   Widget? get icon => throw _privateConstructorUsedError;
   Color? get primaryColor => throw _privateConstructorUsedError;
   Color? get backgroundColor => throw _privateConstructorUsedError;
@@ -56,8 +56,8 @@ abstract class $ToastDetailCopyWith<$Res> {
       {ToastificationType type,
       ToastificationStyle style,
       AlignmentGeometry alignment,
-      String title,
-      String description,
+      Widget? title,
+      Widget? description,
       Widget? icon,
       Color? primaryColor,
       Color? backgroundColor,
@@ -93,8 +93,8 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? type = null,
     Object? style = null,
     Object? alignment = null,
-    Object? title = null,
-    Object? description = null,
+    Object? title = freezed,
+    Object? description = freezed,
     Object? icon = freezed,
     Object? primaryColor = freezed,
     Object? backgroundColor = freezed,
@@ -126,14 +126,14 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.alignment
           : alignment // ignore: cast_nullable_to_non_nullable
               as AlignmentGeometry,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as Widget?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Widget?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -218,8 +218,8 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       {ToastificationType type,
       ToastificationStyle style,
       AlignmentGeometry alignment,
-      String title,
-      String description,
+      Widget? title,
+      Widget? description,
       Widget? icon,
       Color? primaryColor,
       Color? backgroundColor,
@@ -253,8 +253,8 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? type = null,
     Object? style = null,
     Object? alignment = null,
-    Object? title = null,
-    Object? description = null,
+    Object? title = freezed,
+    Object? description = freezed,
     Object? icon = freezed,
     Object? primaryColor = freezed,
     Object? backgroundColor = freezed,
@@ -286,14 +286,14 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.alignment
           : alignment // ignore: cast_nullable_to_non_nullable
               as AlignmentGeometry,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as Widget?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Widget?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -373,8 +373,8 @@ class _$ToastDetailImpl implements _ToastDetail {
       {this.type = ToastificationType.success,
       this.style = ToastificationStyle.flat,
       this.alignment = Alignment.topLeft,
-      this.title = 'Component updates available.',
-      this.description = 'Component updates available.',
+      this.title = const Text('Component updates available.'),
+      this.description = const Text('Component updates available.'),
       this.icon,
       this.primaryColor,
       this.backgroundColor,
@@ -405,10 +405,10 @@ class _$ToastDetailImpl implements _ToastDetail {
   final AlignmentGeometry alignment;
   @override
   @JsonKey()
-  final String title;
+  final Widget? title;
   @override
   @JsonKey()
-  final String description;
+  final Widget? description;
   @override
   final Widget? icon;
   @override
@@ -543,8 +543,8 @@ abstract class _ToastDetail implements ToastDetail {
       {final ToastificationType type,
       final ToastificationStyle style,
       final AlignmentGeometry alignment,
-      final String title,
-      final String description,
+      final Widget? title,
+      final Widget? description,
       final Widget? icon,
       final Color? primaryColor,
       final Color? backgroundColor,
@@ -570,9 +570,9 @@ abstract class _ToastDetail implements ToastDetail {
   @override // placement
   AlignmentGeometry get alignment;
   @override
-  String get title;
+  Widget? get title;
   @override
-  String get description;
+  Widget? get description;
   @override
   Widget? get icon;
   @override

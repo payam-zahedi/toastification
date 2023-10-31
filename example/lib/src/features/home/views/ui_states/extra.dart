@@ -102,8 +102,8 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
   toastification.show(
     context: context,
     alignment: toastDetail.alignment,
-    title: Text(toastDetail.title),
-    description: Text(toastDetail.description),
+    title: toastDetail.title,
+    description: toastDetail.description,
     type: toastDetail.type,
     style: toastDetail.style,
     autoCloseDuration: toastDetail.autoCloseDuration,

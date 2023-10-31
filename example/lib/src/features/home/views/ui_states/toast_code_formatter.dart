@@ -18,7 +18,7 @@ class ToastCodeFormatter {
     title: '${toastDetail.title}',
   ''');
 
-    if (toastDetail.description.isNotEmpty) {
+    if (toastDetail.description != null) {
       code.writeln('\tdescription: \'${toastDetail.description}\',');
     }
 

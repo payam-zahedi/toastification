@@ -70,8 +70,8 @@ class ToastPreview extends ConsumerWidget {
     return BuiltInToastBuilder(
       style: toastDetail.style,
       type: toastDetail.type,
-      title: Text(toastDetail.title),
-      description: Text(toastDetail.description),
+      title: toastDetail.title,
+      description: toastDetail.description,
       primaryColor: toastDetail.primaryColor,
       foregroundColor: toastDetail.foregroundColor,
       backgroundColor: toastDetail.backgroundColor,
