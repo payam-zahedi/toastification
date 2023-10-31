@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
-import 'package:toastification/src/widget/built_in/simple/simple.dart';
-import 'package:toastification/src/widget/built_in/simple/simple_style.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
 

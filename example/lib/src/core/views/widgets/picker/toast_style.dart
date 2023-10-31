@@ -49,134 +49,148 @@ class ToastStylePickerState extends State<ToastStylePicker> {
             child: OverlayPortal(
               controller: _tooltipController,
               overlayChildBuilder: (BuildContext context) {
-                return GestureDetector(
-                  onTap: _tooltipController.hide,
-                  child: Container(
-                    color: Colors.white10,
-                    child: CompositedTransformFollower(
-                      link: _link,
-                      targetAnchor: Alignment.bottomLeft,
-                      showWhenUnlinked: false,
-                      child: Align(
-                        alignment: AlignmentDirectional.topStart,
-                        child: Container(
-                          width: _currentSize?.width ?? 200,
-                          margin: const EdgeInsets.only(top: 2),
-                          padding: const EdgeInsets.all(16),
-                          decoration: ShapeDecoration(
-                            color: theme.colorScheme.background,
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                width: 1.5,
-                                color: theme.colorScheme.outline,
-                              ),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            shadows: const [
-                              BoxShadow(
-                                color: Color(0x11000000),
-                                blurRadius: 32,
-                                offset: Offset(0, 20),
-                                spreadRadius: -8,
-                              ),
-                            ],
+                return CompositedTransformFollower(
+                  link: _link,
+                  targetAnchor: Alignment.bottomLeft,
+                  showWhenUnlinked: false,
+                  child: Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Container(
+                      width: _currentSize?.width ?? 200,
+                      margin: const EdgeInsets.only(top: 2),
+                      padding: const EdgeInsets.all(16),
+                      decoration: ShapeDecoration(
+                        color: theme.colorScheme.background,
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1.5,
+                            color: theme.colorScheme.outline,
                           ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        shadows: const [
+                          BoxShadow(
+                            color: Color(0x11000000),
+                            blurRadius: 32,
+                            offset: Offset(0, 20),
+                            spreadRadius: -8,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(start: 4),
+                            child: Text(
+                              'STYLE',
+                              style: theme.textTheme.titleMedium?.copyWith(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color:
+                                    theme.colorScheme.onSurface.withOpacity(.4),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.only(start: 4),
-                                child: Text(
-                                  'STYLE',
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: theme.colorScheme.onSurface
-                                        .withOpacity(.4),
+                              Expanded(
+                                child: _ItemHolder(
+                                  toast: FilledToastWidget(
+                                    type:
+                                        widget.type ?? ToastificationType.info,
+                                    title: 'The Title',
+                                    description: 'The Description',
                                   ),
+                                  onTap: () {
+                                    widget.onStyleChanged(
+                                      ToastificationStyle.fillColored,
+                                    );
+                                    _tooltipController.hide();
+                                  },
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: _ItemHolder(
-                                      toast: FilledToastWidget(
-                                        type: widget.type ??
-                                            ToastificationType.info,
-                                        title: 'The Title',
-                                        description: 'The Description',
-                                      ),
-                                      onTap: () {
-                                        widget.onStyleChanged(
-                                          ToastificationStyle.fillColored,
-                                        );
-                                        _tooltipController.hide();
-                                      },
-                                    ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _ItemHolder(
+                                  toast: FlatToastWidget(
+                                    type:
+                                        widget.type ?? ToastificationType.info,
+                                    title: 'The Title',
+                                    description: 'The Description',
                                   ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: _ItemHolder(
-                                      toast: FlatToastWidget(
-                                        type: widget.type ??
-                                            ToastificationType.info,
-                                        title: 'The Title',
-                                        description: 'The Description',
-                                      ),
-                                      onTap: () {
-                                        widget.onStyleChanged(
-                                          ToastificationStyle.flat,
-                                        );
-                                        _tooltipController.hide();
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: _ItemHolder(
-                                      toast: FlatColoredToastWidget(
-                                        type: widget.type ??
-                                            ToastificationType.info,
-                                        title: 'The Title',
-                                        description: 'The Description',
-                                      ),
-                                      onTap: () {
-                                        widget.onStyleChanged(
-                                          ToastificationStyle.flatColored,
-                                        );
-                                        _tooltipController.hide();
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: _ItemHolder(
-                                      toast: MinimalToastWidget(
-                                        type: widget.type ??
-                                            ToastificationType.info,
-                                        title: 'The Title',
-                                        description: 'The Description',
-                                      ),
-                                      onTap: () {
-                                        widget.onStyleChanged(
-                                          ToastificationStyle.minimal,
-                                        );
-                                        _tooltipController.hide();
-                                      },
-                                    ),
-                                  ),
-                                ],
+                                  onTap: () {
+                                    widget.onStyleChanged(
+                                      ToastificationStyle.flat,
+                                    );
+                                    _tooltipController.hide();
+                                  },
+                                ),
                               ),
                             ],
                           ),
-                        ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _ItemHolder(
+                                  toast: FlatColoredToastWidget(
+                                    type:
+                                        widget.type ?? ToastificationType.info,
+                                    title: 'The Title',
+                                    description: 'The Description',
+                                  ),
+                                  onTap: () {
+                                    widget.onStyleChanged(
+                                      ToastificationStyle.flatColored,
+                                    );
+                                    _tooltipController.hide();
+                                  },
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: _ItemHolder(
+                                  toast: MinimalToastWidget(
+                                    type:
+                                        widget.type ?? ToastificationType.info,
+                                    title: 'The Title',
+                                    description: 'The Description',
+                                  ),
+                                  onTap: () {
+                                    widget.onStyleChanged(
+                                      ToastificationStyle.minimal,
+                                    );
+                                    _tooltipController.hide();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _ItemHolder(
+                                  isCenter: true,
+                                  toast: SimpleToastWidget(
+                                    type:
+                                        widget.type ?? ToastificationType.info,
+                                    title: 'Simple Title Toast',
+                                  ),
+                                  onTap: () {
+                                    widget.onStyleChanged(
+                                      ToastificationStyle.simple,
+                                    );
+                                    _tooltipController.hide();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -209,16 +223,33 @@ class ToastStylePickerState extends State<ToastStylePicker> {
 
 class _ItemHolder extends StatelessWidget {
   const _ItemHolder({
+    this.isCenter = false,
     required this.toast,
     required this.onTap,
   });
 
+  final bool isCenter;
   final VoidCallback onTap;
   final Widget toast;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    Widget child = toast;
+
+    if (isCenter) {
+      child = Center(
+        child: child,
+      );
+    } else {
+      child = Positioned(
+        top: 12,
+        left: 30,
+        right: -40,
+        child: child,
+      );
+    }
     return SizedBox(
       height: 98,
       child: Stack(
@@ -235,12 +266,7 @@ class _ItemHolder extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 12,
-            left: 30,
-            right: -40,
-            child: toast,
-          ),
+          child,
           Positioned.fill(
             child: Material(
               borderRadius: BorderRadius.circular(12),
