@@ -14,8 +14,8 @@ import 'package:toastification/toastification.dart';
 /// toastification.show(
 ///   context: context,
 ///   alignment: Alignment.topRight,
-///   title: 'Hello World',
-///   description: 'This is a notification',
+///   title: Text('Hello World'),
+///   description: Text('This is a notification'),
 ///   type: ToastificationType.info,
 ///   style: ToastificationStyle.flat,
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -49,8 +49,8 @@ final toastification = Toastification();
 /// Toastification().show(
 ///   context: context,
 ///   alignment: Alignment.topRight,
-///   title: 'Hello World',
-///   description: 'This is a notification',
+///   title: Text('Hello World'),
+///   description: Text('This is a notification'),
 ///   type: ToastificationType.info,
 ///   style: ToastificationStyle.flat,
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -202,8 +202,8 @@ class Toastification {
   /// toastification.show(
   ///   context: context,
   ///   alignment: Alignment.topRight,
-  ///   title: 'Hello World',
-  ///   description: 'This is a notification',
+  ///   title: Text('Hello World'),
+  ///   description: Text('This is a notification'),
   ///   type: ToastificationType.info,
   ///   style: ToastificationStyle.flat,
   ///   autoCloseDuration: Duration(seconds: 3),
