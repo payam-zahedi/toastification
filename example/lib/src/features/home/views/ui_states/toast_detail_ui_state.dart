@@ -45,7 +45,6 @@ class ToastDetail with _$ToastDetail {
     @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
     Duration? animationDuration,
     @Default(BounceAnimationType()) AnimationType animationType,
-    VoidCallback? onCloseTap,
     @Default(CloseButtonShowType.always)
     CloseButtonShowType closeButtonShowType,
     @Default(true) bool newestOnTop,

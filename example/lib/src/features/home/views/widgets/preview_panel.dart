@@ -79,7 +79,7 @@ class ToastPreview extends ConsumerWidget {
       borderRadius: toastDetail.borderRadius,
       boxShadow: toastDetail.shadow.shadow,
       direction: toastDetail.direction,
-      onCloseTap: toastDetail.onCloseTap ?? () {},
+      onCloseTap: () {},
       showProgressBar: toastDetail.showProgressBar,
       closeButtonShowType: toastDetail.closeButtonShowType,
     );

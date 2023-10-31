@@ -117,7 +117,6 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     direction: toastDetail.direction,
     closeOnClick: toastDetail.closeOnClick,
     dragToClose: toastDetail.dragToClose,
-    onCloseTap: toastDetail.onCloseTap,
     pauseOnHover: toastDetail.pauseOnHover,
     showProgressBar: toastDetail.showProgressBar,
   );
