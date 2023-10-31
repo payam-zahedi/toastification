@@ -55,7 +55,7 @@ class BuiltInContent extends StatelessWidget {
   const BuiltInContent({
     super.key,
     required this.style,
-    required this.title,
+    this.title,
     this.description,
     this.primaryColor,
     this.foregroundColor,
@@ -68,9 +68,8 @@ class BuiltInContent extends StatelessWidget {
 
   final BuiltInStyle style;
 
-  final String title;
-
-  final String? description;
+  final Widget? title;
+  final Widget? description;
 
   final Color? primaryColor;
   final Color? foregroundColor;
@@ -84,44 +83,32 @@ class BuiltInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Text(
-      title,
-      style: style.titleTextStyle(context)?.copyWith(
-            color: foregroundColor,
-          ),
-    );
+    Widget? content = title ?? const SizedBox();
 
-    final showColumn =
-        description?.isNotEmpty == true || showProgressBar == true;
-
-    if (showColumn) {
-      content = Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          content,
-          if (description?.isNotEmpty == true) ...[
-            const SizedBox(height: 6),
-            Text(
-              description!,
-              style: style.descriptionTextStyle(context)?.copyWith(
-                    color: foregroundColor?.withOpacity(.7),
-                  ),
-            ),
-          ],
-          if (showProgressBar) ...[
-            const SizedBox(height: 10),
-            ProgressIndicatorTheme(
-              data: progressIndicatorTheme ??
-                  style.progressIndicatorTheme(context),
-              child: progressBarWidget ??
-                  LinearProgressIndicator(value: progressBarValue),
-            ),
-          ],
-        ],
-      );
+    final showColumn = description != null || showProgressBar == true;
+    if (!showColumn) {
+      return content;
     }
 
-    return content;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        content,
+        if (description != null) ...[
+          const SizedBox(height: 6),
+          description!,
+        ],
+        if (showProgressBar) ...[
+          const SizedBox(height: 10),
+          ProgressIndicatorTheme(
+            data:
+                progressIndicatorTheme ?? style.progressIndicatorTheme(context),
+            child: progressBarWidget ??
+                LinearProgressIndicator(value: progressBarValue),
+          ),
+        ],
+      ],
+    );
   }
 }

@@ -7,7 +7,7 @@ class FilledToastWidget extends StatelessWidget {
   const FilledToastWidget({
     super.key,
     required this.type,
-    required this.title,
+    this.title,
     this.description,
     this.primaryColor,
     this.backgroundColor,
@@ -28,8 +28,8 @@ class FilledToastWidget extends StatelessWidget {
 
   final ToastificationType type;
 
-  final String title;
-  final String? description;
+  final Widget? title;
+  final Widget? description;
 
   final Widget? icon;
 
