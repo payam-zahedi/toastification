@@ -24,8 +24,8 @@ void copyCode(BuildContext context, ToastDetail detail) async {
           context: context,
           type: ToastificationType.success,
           style: ToastificationStyle.flatColored,
-          title: 'Clipboard',
-          description: 'Code copied to clipboard',
+          title: const Text('Clipboard'),
+          description: const Text('Code copied to clipboard'),
           autoCloseDuration: const Duration(seconds: 4),
           alignment: detail.alignment,
           animationDuration: detail.animationDuration,
@@ -37,8 +37,8 @@ void copyCode(BuildContext context, ToastDetail detail) async {
           context: context,
           type: ToastificationType.error,
           style: ToastificationStyle.flatColored,
-          title: 'Ops!',
-          description: 'Something went wrong',
+          title: const Text('Ops!'),
+          description: const Text('Something went wrong'),
           autoCloseDuration: const Duration(seconds: 4),
           alignment: detail.alignment,
           animationDuration: detail.animationDuration,
@@ -58,8 +58,8 @@ void openGithub(BuildContext context) async {
         context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
-        title: 'Ops!',
-        description: 'Something went wrong',
+        title: const Text('Ops!'),
+        description: const Text('Something went wrong'),
         autoCloseDuration: const Duration(seconds: 4),
       );
     }
@@ -74,8 +74,8 @@ void openGithubIssues(BuildContext context) async {
         context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
-        title: 'Ops!',
-        description: 'Something went wrong',
+        title: const Text('Ops!'),
+        description: const Text('Something went wrong'),
         autoCloseDuration: const Duration(seconds: 4),
       );
     }
@@ -90,8 +90,8 @@ void openGithubPullRequests(BuildContext context) async {
         context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
-        title: 'Ops!',
-        description: 'Something went wrong',
+        title: const Text('Ops!'),
+        description: const Text('Something went wrong'),
         autoCloseDuration: const Duration(seconds: 4),
       );
     }
@@ -102,8 +102,8 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
   toastification.show(
     context: context,
     alignment: toastDetail.alignment,
-    title: toastDetail.title,
-    description: toastDetail.description,
+    title: Text(toastDetail.title),
+    description: Text(toastDetail.description),
     type: toastDetail.type,
     style: toastDetail.style,
     autoCloseDuration: toastDetail.autoCloseDuration,
