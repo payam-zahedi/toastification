@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/simple/simple_style.dart';
 
-import '../../../../toastification.dart';
+import 'package:toastification/toastification.dart';
 
 class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({

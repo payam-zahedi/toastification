@@ -4,6 +4,7 @@ library toastification;
 export 'src/core/toastification.dart';
 export 'src/core/toastification_item.dart';
 export 'src/core/toastification_config.dart';
+export 'src/core/toastification_callbacks.dart';
 export 'src/widget/toastification_config_provider.dart';
 
 // holder

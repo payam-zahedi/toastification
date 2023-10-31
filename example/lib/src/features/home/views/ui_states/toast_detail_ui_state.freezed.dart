@@ -384,7 +384,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
 class _$ToastDetailImpl implements _ToastDetail {
   _$ToastDetailImpl(
       {this.type = ToastificationType.success,
-      this.style = ToastificationStyle.simple,
+      this.style = ToastificationStyle.flat,
       this.alignment = Alignment.topLeft,
       this.title = 'Component updates available.',
       this.description = 'Component updates available.',
