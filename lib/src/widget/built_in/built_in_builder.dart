@@ -81,17 +81,9 @@ class BuiltInBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
-    final defaultStyle = toastDefaultStyle();
-
-    final foreground = foregroundColor ?? defaultStyle.foregroundColor(context);
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
-
     return BuiltInContainer(
       item: item,
-      background: background,
-      foreground: foreground,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      borderRadius: borderRadius ?? defaultStyle.borderRadius(context),
       showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
       dragToClose: dragToClose,
@@ -109,7 +101,6 @@ class BuiltInBuilder extends StatelessWidget {
         icon: icon,
         brightness: brightness,
         padding: padding,
-        margin: margin,
         borderRadius: borderRadius,
         boxShadow: boxShadow,
         onCloseTap: buildOnCloseTap(),
@@ -157,7 +148,6 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.icon,
     this.brightness,
     this.padding,
-    this.margin,
     this.borderRadius,
     this.boxShadow,
     required this.onCloseTap,
@@ -184,7 +174,6 @@ class BuiltInToastBuilder extends StatelessWidget {
   final Brightness? brightness;
 
   final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
@@ -340,10 +329,7 @@ class BuiltInContainer extends StatelessWidget {
   const BuiltInContainer({
     super.key,
     required this.item,
-    this.background,
-    this.foreground,
     required this.margin,
-    required this.borderRadius,
     required this.showProgressBar,
     required this.closeOnClick,
     required this.pauseOnHover,
@@ -355,12 +341,7 @@ class BuiltInContainer extends StatelessWidget {
 
   final Widget child;
 
-  final Color? background;
-  final Color? foreground;
-
   final EdgeInsetsGeometry margin;
-
-  final BorderRadiusGeometry borderRadius;
 
   final bool showProgressBar;
 
