@@ -1,9 +1,16 @@
+## 1.1.0
+
+* add new toast style (ToastificationStyle.simple) by @mahmoud-eslami
+* add toastification callbacks by @payam-zahedi
+
 ## 1.0.2
+
 * Fix the code preview section issue by @mahmoud-eslami
 * onAutoCompleteCompleted Callback exposed to user by @Shery573
 * Add github stars section by @payam-zahedi
 
 ## 1.0.1
+
 * update README.me by @payam-zahedi 
 
 ## 1.0.0
