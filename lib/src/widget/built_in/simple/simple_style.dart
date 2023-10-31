@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/toastification.dart';
-
 import 'package:toastification/src/helper/toast_helper.dart';
+import 'package:toastification/toastification.dart';
 
 class SimpleStyle extends BuiltInStyle {
   const SimpleStyle(ToastificationType type) : super(type);

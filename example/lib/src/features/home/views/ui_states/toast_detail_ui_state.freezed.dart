@@ -33,7 +33,6 @@ mixin _$ToastDetail {
   Duration? get autoCloseDuration => throw _privateConstructorUsedError;
   Duration? get animationDuration => throw _privateConstructorUsedError;
   AnimationType get animationType => throw _privateConstructorUsedError;
-  VoidCallback? get onCloseTap => throw _privateConstructorUsedError;
   CloseButtonShowType get closeButtonShowType =>
       throw _privateConstructorUsedError;
   bool get newestOnTop => throw _privateConstructorUsedError;
@@ -70,7 +69,6 @@ abstract class $ToastDetailCopyWith<$Res> {
       Duration? autoCloseDuration,
       Duration? animationDuration,
       AnimationType animationType,
-      VoidCallback? onCloseTap,
       CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
@@ -108,7 +106,6 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
     Object? animationType = null,
-    Object? onCloseTap = freezed,
     Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
@@ -181,10 +178,6 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.animationType
           : animationType // ignore: cast_nullable_to_non_nullable
               as AnimationType,
-      onCloseTap: freezed == onCloseTap
-          ? _value.onCloseTap
-          : onCloseTap // ignore: cast_nullable_to_non_nullable
-              as VoidCallback?,
       closeButtonShowType: null == closeButtonShowType
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
@@ -238,7 +231,6 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       Duration? autoCloseDuration,
       Duration? animationDuration,
       AnimationType animationType,
-      VoidCallback? onCloseTap,
       CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
@@ -274,7 +266,6 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
     Object? animationType = null,
-    Object? onCloseTap = freezed,
     Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
@@ -347,10 +338,6 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.animationType
           : animationType // ignore: cast_nullable_to_non_nullable
               as AnimationType,
-      onCloseTap: freezed == onCloseTap
-          ? _value.onCloseTap
-          : onCloseTap // ignore: cast_nullable_to_non_nullable
-              as VoidCallback?,
       closeButtonShowType: null == closeButtonShowType
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
@@ -399,7 +386,6 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.autoCloseDuration = const Duration(seconds: 4),
       this.animationDuration,
       this.animationType = const BounceAnimationType(),
-      this.onCloseTap,
       this.closeButtonShowType = CloseButtonShowType.always,
       this.newestOnTop = true,
       this.showProgressBar = false,
@@ -449,8 +435,6 @@ class _$ToastDetailImpl implements _ToastDetail {
   @JsonKey()
   final AnimationType animationType;
   @override
-  final VoidCallback? onCloseTap;
-  @override
   @JsonKey()
   final CloseButtonShowType closeButtonShowType;
   @override
@@ -471,7 +455,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, onCloseTap: $onCloseTap, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
   }
 
   @override
@@ -506,8 +490,6 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.animationDuration == animationDuration) &&
             (identical(other.animationType, animationType) ||
                 other.animationType == animationType) &&
-            (identical(other.onCloseTap, onCloseTap) ||
-                other.onCloseTap == onCloseTap) &&
             (identical(other.closeButtonShowType, closeButtonShowType) ||
                 other.closeButtonShowType == closeButtonShowType) &&
             (identical(other.newestOnTop, newestOnTop) ||
@@ -541,7 +523,6 @@ class _$ToastDetailImpl implements _ToastDetail {
         autoCloseDuration,
         animationDuration,
         animationType,
-        onCloseTap,
         closeButtonShowType,
         newestOnTop,
         showProgressBar,
@@ -575,7 +556,6 @@ abstract class _ToastDetail implements ToastDetail {
       final Duration? autoCloseDuration,
       final Duration? animationDuration,
       final AnimationType animationType,
-      final VoidCallback? onCloseTap,
       final CloseButtonShowType closeButtonShowType,
       final bool newestOnTop,
       final bool showProgressBar,
@@ -615,8 +595,6 @@ abstract class _ToastDetail implements ToastDetail {
   Duration? get animationDuration;
   @override
   AnimationType get animationType;
-  @override
-  VoidCallback? get onCloseTap;
   @override
   CloseButtonShowType get closeButtonShowType;
   @override

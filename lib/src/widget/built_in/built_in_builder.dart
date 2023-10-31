@@ -102,7 +102,6 @@ class BuiltInBuilder extends StatelessWidget {
         icon: icon,
         brightness: brightness,
         padding: padding,
-        margin: margin,
         borderRadius: borderRadius,
         boxShadow: boxShadow,
         onCloseTap: _onCloseButtonTap(),
@@ -155,7 +154,6 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.icon,
     this.brightness,
     this.padding,
-    this.margin,
     this.borderRadius,
     this.boxShadow,
     required this.onCloseTap,
@@ -182,7 +180,6 @@ class BuiltInToastBuilder extends StatelessWidget {
   final Brightness? brightness;
 
   final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 

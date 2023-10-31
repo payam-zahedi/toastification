@@ -72,10 +72,6 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(animationType: animationType);
   }
 
-  void changeOnCloseTap(VoidCallback? onCloseTap) {
-    state = state.copyWith(onCloseTap: onCloseTap);
-  }
-
   void changeNewestOnTop(bool newestOnTop) {
     state = state.copyWith(newestOnTop: newestOnTop);
   }
