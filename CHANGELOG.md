@@ -1,32 +1,24 @@
-## 1.1.1
+#### How to migrate:
 
-- You can now provide any Widget instead of a simple text for your title and description.
-- **BREAKING CHANGE:**
+OLD WAY:
 
-  - title: property is now an optional Widget instead of a String.
-  - description: property is now an optional Widget instead of a String.
+```dart
+toastification.show(
+title: 'Component updates available.',
+description: 'Component updates available.',
+...
+);
+```
 
-  #### How to migrate:
+NEW WAY:
 
-  OLD WAY:
-
-  ```dart
-  toastification.show(
-  title: 'Component updates available.',
-  description: 'Component updates available.',
-  ...
-  );
-  ```
-
-  NEW WAY:
-
-  ```dart
-  toastification.show(
-  title: Text('Component updates available.', style: customTextStyle),
-  description: Text('Component updates available.', style: customTextStyle),
-  ...
-  );
-  ```
+```dart
+toastification.show(
+title: Text('Component updates available.', style: customTextStyle),
+description: Text('Component updates available.', style: customTextStyle),
+...
+);
+```
 
 ## 1.1.0
 
