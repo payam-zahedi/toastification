@@ -4,6 +4,7 @@ library toastification;
 export 'src/core/toastification.dart';
 export 'src/core/toastification_item.dart';
 export 'src/core/toastification_config.dart';
+export 'src/core/toastification_callbacks.dart';
 export 'src/widget/toastification_config_provider.dart';
 
 // holder
@@ -20,5 +21,7 @@ export 'src/widget/built_in/filled/filled.dart';
 export 'src/widget/built_in/filled/filled_style.dart';
 export 'src/widget/built_in/flat/flat.dart';
 export 'src/widget/built_in/flat/flat_style.dart';
+export 'src/widget/built_in/simple/simple.dart';
+export 'src/widget/built_in/simple/simple_style.dart';
 export 'src/widget/built_in/flat_colored/flat_colored.dart';
 export 'src/widget/built_in/flat_colored/flat_colored_style.dart';

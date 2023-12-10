@@ -7,6 +7,9 @@ enum ToastificationStyle {
   fillColored,
   flatColored,
   flat,
+
+  /// a simple toast message just show the given title without any icon or extra widget
+  simple,
 }
 
 /// enum to define the type of the built-in toastification

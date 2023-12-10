@@ -24,13 +24,13 @@ class BuiltInBuilder extends StatelessWidget {
     this.margin,
     this.borderRadius,
     this.boxShadow,
-    this.onCloseTap,
     this.showProgressBar,
     this.progressBarTheme,
     this.closeButtonShowType,
     this.closeOnClick,
     this.dragToClose,
     this.pauseOnHover,
+    this.callbacks = const ToastificationCallbacks(),
   });
 
   final ToastificationItem item;
@@ -59,8 +59,6 @@ class BuiltInBuilder extends StatelessWidget {
 
   final TextDirection? direction;
 
-  final VoidCallback? onCloseTap;
-
   final bool? showProgressBar;
 
   final ProgressIndicatorThemeData? progressBarTheme;
@@ -73,6 +71,8 @@ class BuiltInBuilder extends StatelessWidget {
 
   final bool? pauseOnHover;
 
+  final ToastificationCallbacks callbacks;
+
   @override
   Widget build(BuildContext context) {
     final showProgressBar = (this.showProgressBar ?? true);
@@ -81,21 +81,14 @@ class BuiltInBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
-    final defaultStyle = toastDefaultStyle();
-
-    final foreground = foregroundColor ?? defaultStyle.foregroundColor(context);
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
-
     return BuiltInContainer(
       item: item,
-      background: background,
-      foreground: foreground,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      borderRadius: borderRadius ?? defaultStyle.borderRadius(context),
       showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
       dragToClose: dragToClose,
       pauseOnHover: pauseOnHover,
+      callbacks: callbacks,
       child: BuiltInToastBuilder(
         item: item,
         type: type,
@@ -109,10 +102,9 @@ class BuiltInBuilder extends StatelessWidget {
         icon: icon,
         brightness: brightness,
         padding: padding,
-        margin: margin,
         borderRadius: borderRadius,
         boxShadow: boxShadow,
-        onCloseTap: buildOnCloseTap(),
+        onCloseTap: _onCloseButtonTap(),
         showProgressBar: showProgressBar,
         progressBarTheme: progressBarTheme,
         closeButtonShowType: closeButtonShowType,
@@ -130,14 +122,20 @@ class BuiltInBuilder extends StatelessWidget {
       ToastificationStyle.fillColored => FilledStyle(type),
       ToastificationStyle.flatColored => FlatColoredStyle(type),
       ToastificationStyle.flat => FlatStyle(type),
+      ToastificationStyle.simple => SimpleStyle(type),
     };
   }
 
-  VoidCallback buildOnCloseTap() {
-    return onCloseTap ??
-        () {
-          Toastification().dismiss(item);
-        };
+  VoidCallback _onCloseButtonTap() {
+    return () {
+      callbacks.onCloseButtonTap != null
+          ? callbacks.onCloseButtonTap?.call(item)
+          : _defaultCloseButtonTap();
+    };
+  }
+
+  void _defaultCloseButtonTap() {
+    Toastification().dismiss(item);
   }
 }
 
@@ -156,7 +154,6 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.icon,
     this.brightness,
     this.padding,
-    this.margin,
     this.borderRadius,
     this.boxShadow,
     required this.onCloseTap,
@@ -183,7 +180,6 @@ class BuiltInToastBuilder extends StatelessWidget {
   final Brightness? brightness;
 
   final EdgeInsetsGeometry? padding;
-  final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
 
@@ -304,6 +300,18 @@ class BuiltInToastBuilder extends StatelessWidget {
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
             ),
+          ToastificationStyle.simple => SimpleToastWidget(
+              type: type,
+              title: title,
+              primaryColor: primaryColor,
+              backgroundColor: backgroundColor,
+              foregroundColor: foregroundColor,
+              brightness: brightness,
+              padding: padding,
+              borderRadius: borderRadius,
+              boxShadow: boxShadow,
+              direction: direction,
+            ),
         };
       },
     );
@@ -327,27 +335,18 @@ class BuiltInContainer extends StatelessWidget {
   const BuiltInContainer({
     super.key,
     required this.item,
-    this.background,
-    this.foreground,
     required this.margin,
-    required this.borderRadius,
     required this.showProgressBar,
     required this.closeOnClick,
     required this.pauseOnHover,
     required this.dragToClose,
+    required this.callbacks,
     required this.child,
   });
 
   final ToastificationItem item;
 
-  final Widget child;
-
-  final Color? background;
-  final Color? foreground;
-
   final EdgeInsetsGeometry margin;
-
-  final BorderRadiusGeometry borderRadius;
 
   final bool showProgressBar;
 
@@ -356,6 +355,11 @@ class BuiltInContainer extends StatelessWidget {
   final bool dragToClose;
 
   final bool pauseOnHover;
+
+  final ToastificationCallbacks callbacks;
+
+  final Widget child;
+
   @override
   Widget build(BuildContext context) {
     final hasTimeout = item.hasTimer;
@@ -377,21 +381,26 @@ class BuiltInContainer extends StatelessWidget {
       );
     }
 
-    if (closeOnClick) {
-      toast = GestureDetector(
-        onTap: closeOnClick
-            ? () {
-                toastification.dismiss(item);
-              }
-            : null,
-        child: toast,
-      );
-    }
+    toast = GestureDetector(
+      onTap: () {
+        // if close on click is enabled dismiss the toast
+        if (closeOnClick) toastification.dismiss(item);
+
+        // call the onTap callback
+        callbacks.onTap?.call(item);
+      },
+      child: toast,
+    );
 
     if (dragToClose) {
       toast = _FadeDismissible(
         item: item,
         pauseOnHover: pauseOnHover,
+        onDismissed: callbacks.onDismissed == null
+            ? null
+            : () {
+                callbacks.onDismissed?.call(item);
+              },
         child: toast,
       );
     }
@@ -404,11 +413,13 @@ class _FadeDismissible extends StatefulWidget {
   const _FadeDismissible({
     required this.item,
     required this.pauseOnHover,
+    this.onDismissed,
     required this.child,
   });
 
   final ToastificationItem item;
   final bool pauseOnHover;
+  final VoidCallback? onDismissed;
   final Widget child;
 
   @override
@@ -436,6 +447,9 @@ class _FadeDismissibleState extends State<_FadeDismissible> {
         },
         behavior: HitTestBehavior.deferToChild,
         onDismissed: (direction) {
+          // call the onDismissed callback
+          widget.onDismissed?.call();
+
           toastification.dismiss(widget.item, showRemoveAnimation: false);
         },
         child: Opacity(

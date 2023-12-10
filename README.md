@@ -16,6 +16,8 @@ Overall, Toastification is a useful package for Flutter developers who want to a
 Don't want to dive into the whole documentation? No problem!
 Just head over to our [Toast Builder Website](https://payamzahedi.com/toastification/), where you can effortlessly customize your toast notifications, copy the generated code, and seamlessly integrate them into your project. It's the quickest way to get started with Toastification!
 
+https://github.com/payam-zahedi/toastification/assets/47558577/0e40aefd-b768-4d13-b982-eeeefb2256e9
+
 ## Installation
 
 To use Toastification, you need to add it to your pubspec.yaml file:
@@ -96,14 +98,17 @@ toastification.show(
       spreadRadius: 0,
     )
   ],
-  onCloseTap: () {
-    // Do something when the toast is closed
-  },
   showProgressBar: true,
   closeButtonShowType: CloseButtonShowType.onHover,
   closeOnClick: false,
   pauseOnHover: true,
   dragToClose: true,
+  callbacks: ToastificationCallbacks(
+    onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
+    onCloseButtonTap: (toastItem) => print('Toast ${toastItem.id} close button tapped'),
+    onAutoCompleteCompleted: (toastItem) => print('Toast ${toastItem.id} auto complete completed'),
+    onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
+  ),
 );
 ```
 
@@ -115,7 +120,7 @@ we have 4 predefined styles for toast messages:
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/styles.png?raw=true" width="100%" alt="Styles" />
 </p>
 
-
+additionally, we added a `ToastificationStyle.simple` style to show a simple toast message with a single line of text. 
 
 ## ShowCustom Method
 
