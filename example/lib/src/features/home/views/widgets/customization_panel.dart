@@ -392,7 +392,7 @@ class _StyleSection extends ConsumerWidget {
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
+                child: CustomColorPicker(
                   title: 'Background',
                   selectedColor: theme.colorScheme.surfaceVariant,
                 ),
@@ -400,7 +400,7 @@ class _StyleSection extends ConsumerWidget {
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
+                child: CustomColorPicker(
                   title: 'Icon',
                   selectedColor: theme.colorScheme.onSurfaceVariant,
                 ),
@@ -408,7 +408,7 @@ class _StyleSection extends ConsumerWidget {
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
+                child: CustomColorPicker(
                   title: 'Text',
                   selectedColor: theme.colorScheme.onSurface,
                 ),
