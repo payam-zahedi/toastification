@@ -19,149 +19,130 @@ class CustomColorPicker extends StatefulWidget {
 }
 
 class _CustomColorPickerState extends State<CustomColorPicker> {
-  final OverlayPortalController _tooltipController = OverlayPortalController();
-  final _link = LayerLink();
+  final GlobalKey _menuKey = GlobalKey();
 
-  Size? _currentSize;
-
-  void onTap() {
-    _currentSize = context.size;
-
-    _tooltipController.toggle();
+  void openPopup() {
+    dynamic state = _menuKey.currentState;
+    state.showButtonMenu();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return CompositedTransformTarget(
-      link: _link,
+
+    return PopupMenuButton(
+      key: _menuKey,
+      tooltip: "",
+      clipBehavior: Clip.hardEdge,
+      position: PopupMenuPosition.under,
+      elevation: 0,
+      padding: EdgeInsets.zero,
+      enabled: true,
+      color: Theme.of(context).colorScheme.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(
+          color: Theme.of(context).colorScheme.outline,
+          width: 1.5,
+        ),
+      ),
       child: BorderedContainer(
         height: null,
-        onTap: onTap,
-        child: OverlayPortal(
-          controller: _tooltipController,
-          overlayChildBuilder: (BuildContext context) {
-            return CompositedTransformFollower(
-              link: _link,
-              targetAnchor: Alignment.bottomLeft,
-              showWhenUnlinked: false,
-              child: Align(
-                alignment: AlignmentDirectional.topStart,
-                child: Container(
-                  width: _currentSize?.width ?? 200,
-                  margin: const EdgeInsets.only(top: 2),
-                  padding: const EdgeInsets.all(16),
-                  decoration: ShapeDecoration(
-                    color: theme.colorScheme.background,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                        width: 1.5,
-                        color: theme.colorScheme.outline,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x11000000),
-                        blurRadius: 32,
-                        offset: Offset(0, 20),
-                        spreadRadius: -8,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ColorPicker(
-                        color: widget.selectedColor,
-                        pickersEnabled: const <ColorPickerType, bool>{
-                          ColorPickerType.both: false,
-                          ColorPickerType.primary: false,
-                          ColorPickerType.accent: false,
-                          ColorPickerType.bw: false,
-                          ColorPickerType.custom: false,
-                          ColorPickerType.wheel: true,
-                        },
-                        wheelDiameter: 120,
-                        wheelWidth: 10,
-                        padding: EdgeInsets.zero,
-                        colorCodeHasColor: true,
-                        showColorCode: true,
-                        onColorChanged: (Color value) {},
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-          child: BorderedContainer(
-            height: null,
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
-            ),
-            onTap: onTap,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 12,
+        ),
+        onTap: openPopup,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                widget.title,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  height: 1.18,
-                                ),
-                              ),
+                        Expanded(
+                          child: Text(
+                            widget.title,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.18,
                             ),
-                            const Icon(Icons.keyboard_arrow_down),
-                          ],
+                          ),
                         ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Material(
-                                color: widget.selectedColor,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                  side: BorderSide(
-                                    color: Colors.black.withOpacity(.05),
-                                  ),
-                                ),
+                        const Icon(Icons.keyboard_arrow_down),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Material(
+                            color: widget.selectedColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                              side: BorderSide(
+                                color: Colors.black.withOpacity(.05),
                               ),
                             ),
-                            const SizedBox(width: 9),
-                            Expanded(
-                              child: Text(
-                                widget.selectedColor.hex,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  height: 1.18,
-                                ),
-                              ),
+                          ),
+                        ),
+                        const SizedBox(width: 9),
+                        Expanded(
+                          child: Text(
+                            widget.selectedColor.hex,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              height: 1.18,
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          onTap: null,
+          enabled: false,
+          padding: EdgeInsets.zero,
+          child: Center(
+            child: ColorPicker(
+              color: widget.selectedColor,
+              hasBorder: true,
+              width: 25,
+              height: 25,
+              heading: Text("Select the ${widget.title} Color"),
+              showColorName: true,
+              pickersEnabled: const <ColorPickerType, bool>{
+                ColorPickerType.both: false,
+                ColorPickerType.primary: false,
+                ColorPickerType.accent: false,
+                ColorPickerType.bw: false,
+                ColorPickerType.custom: false,
+                ColorPickerType.wheel: true,
+              },
+              wheelDiameter: 150,
+              wheelWidth: 10,
+              wheelSquarePadding: 20,
+              padding: const EdgeInsets.all(20),
+              colorCodeHasColor: true,
+              showColorCode: true,
+              onColorChanged: (value) => widget.onChanged,
+            ),
+          ),
+        )
+      ],
     );
   }
 }
