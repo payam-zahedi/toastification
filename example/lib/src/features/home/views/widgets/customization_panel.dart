@@ -373,6 +373,14 @@ class _StyleSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    Color backgroundColor =
+        ref.watch(toastDetailControllerProvider).backgroundColor ??
+            theme.colorScheme.surfaceVariant;
+    Color iconColor = ref.watch(toastDetailControllerProvider).iconColor ??
+        theme.colorScheme.onSurfaceVariant;
+    Color foregroundColor =
+        ref.watch(toastDetailControllerProvider).foregroundColor ??
+            theme.colorScheme.onSurface;
 
     return SubSection(
       title: 'STYLE',
@@ -394,7 +402,12 @@ class _StyleSection extends ConsumerWidget {
                 columnFit: FlexFit.loose,
                 child: CustomColorPicker(
                   title: 'Background',
-                  selectedColor: theme.colorScheme.surfaceVariant,
+                  selectedColor: backgroundColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeBackgroundColor(value);
+                  },
                 ),
               ),
               ResponsiveRowColumnItem(
@@ -402,7 +415,12 @@ class _StyleSection extends ConsumerWidget {
                 columnFit: FlexFit.loose,
                 child: CustomColorPicker(
                   title: 'Icon',
-                  selectedColor: theme.colorScheme.onSurfaceVariant,
+                  selectedColor: iconColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeIconColor(value);
+                  },
                 ),
               ),
               ResponsiveRowColumnItem(
@@ -410,7 +428,12 @@ class _StyleSection extends ConsumerWidget {
                 columnFit: FlexFit.loose,
                 child: CustomColorPicker(
                   title: 'Text',
-                  selectedColor: theme.colorScheme.onSurface,
+                  selectedColor: foregroundColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeForegroundColor(value);
+                  },
                 ),
               ),
             ],

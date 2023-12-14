@@ -138,7 +138,7 @@ class _CustomColorPickerState extends State<CustomColorPicker> {
               padding: const EdgeInsets.all(20),
               colorCodeHasColor: true,
               showColorCode: true,
-              onColorChanged: (value) => widget.onChanged,
+              onColorChanged: widget.onChanged ?? (value) {},
             ),
           ),
         )
