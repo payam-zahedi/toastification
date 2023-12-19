@@ -12,6 +12,7 @@ class FilledToastWidget extends StatelessWidget {
     this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
+    this.iconColor,
     this.icon,
     this.brightness,
     this.padding,
@@ -38,6 +39,7 @@ class FilledToastWidget extends StatelessWidget {
   final MaterialColor? backgroundColor;
 
   final Color? foregroundColor;
+  final Color? iconColor;
 
   final Brightness? brightness;
 
@@ -63,7 +65,7 @@ class FilledToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = defaultStyle.iconColor(context);
+    final iconPrimaryColor = iconColor ?? defaultStyle.iconColor(context);
 
     final background = backgroundColor ?? defaultStyle.backgroundColor(context);
 
@@ -95,7 +97,7 @@ class FilledToastWidget extends StatelessWidget {
                   Icon(
                     defaultStyle.icon(context),
                     size: 24,
-                    color: iconColor,
+                    color: iconPrimaryColor,
                   ),
               const SizedBox(width: 12),
               Expanded(

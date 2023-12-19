@@ -18,6 +18,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
+    this.iconColor,
     this.icon,
     this.brightness,
     this.padding,
@@ -47,6 +48,7 @@ class BuiltInBuilder extends StatelessWidget {
   final Color? primaryColor;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Color? iconColor;
 
   final Brightness? brightness;
 
@@ -99,6 +101,7 @@ class BuiltInBuilder extends StatelessWidget {
         primaryColor: primaryColor,
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
+        iconColor: iconColor,
         icon: icon,
         brightness: brightness,
         padding: padding,
@@ -151,6 +154,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
+    this.iconColor,
     this.icon,
     this.brightness,
     this.padding,
@@ -176,6 +180,7 @@ class BuiltInToastBuilder extends StatelessWidget {
   final Color? primaryColor;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Color? iconColor;
 
   final Brightness? brightness;
 
@@ -232,6 +237,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               icon: icon,
+              iconColor: iconColor,
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
@@ -251,6 +257,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               icon: icon,
+              iconColor: iconColor,
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
@@ -269,6 +276,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               primaryColor: primaryColor,
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
+              iconColor: iconColor,
               icon: icon,
               brightness: brightness,
               padding: padding,
@@ -289,6 +297,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               icon: icon,
+              iconColor: iconColor,
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,

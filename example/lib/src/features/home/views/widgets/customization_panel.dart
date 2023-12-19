@@ -336,6 +336,8 @@ class IconPicker extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
+    final iconColor = ref.watch(toastDetailControllerProvider).iconColor;
+
     final defaultStyle = switch (style) {
       ToastificationStyle.minimal => MinimalStyle(type),
       ToastificationStyle.fillColored => FilledStyle(type),
@@ -352,7 +354,7 @@ class IconPicker extends ConsumerWidget {
         children: [
           Icon(
             Iconsax.tick_circle_copy,
-            color: defaultStyle.iconColor(context),
+            color: iconColor ?? defaultStyle.iconColor(context),
           ),
           const SizedBox(width: 8),
           const Text('Icon'),
