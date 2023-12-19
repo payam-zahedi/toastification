@@ -336,7 +336,7 @@ class IconPicker extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
-    final iconColor = ref.watch(toastDetailControllerProvider).iconColor;
+    final iconColor = ref.watch(toastDetailControllerProvider).primaryColor;
 
     final defaultStyle = switch (style) {
       ToastificationStyle.minimal => MinimalStyle(type),
@@ -403,6 +403,19 @@ class _StyleSection extends ConsumerWidget {
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
                 child: CustomColorPicker(
+                  title: 'Primary',
+                  selectedColor: iconColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changePrimary(value);
+                  },
+                ),
+              ),
+              ResponsiveRowColumnItem(
+                rowFit: FlexFit.tight,
+                columnFit: FlexFit.loose,
+                child: CustomColorPicker(
                   title: 'Background',
                   selectedColor: backgroundColor,
                   onChanged: (value) {
@@ -416,20 +429,7 @@ class _StyleSection extends ConsumerWidget {
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
                 child: CustomColorPicker(
-                  title: 'Icon',
-                  selectedColor: iconColor,
-                  onChanged: (value) {
-                    ref
-                        .read(toastDetailControllerProvider.notifier)
-                        .changeIconColor(value);
-                  },
-                ),
-              ),
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                columnFit: FlexFit.loose,
-                child: CustomColorPicker(
-                  title: 'Text',
+                  title: 'Foreground',
                   selectedColor: foregroundColor,
                   onChanged: (value) {
                     ref

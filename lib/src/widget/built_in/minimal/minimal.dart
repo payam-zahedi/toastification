@@ -13,7 +13,6 @@ class MinimalToastWidget extends StatelessWidget {
     this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
-    this.iconColor,
     this.icon,
     this.brightness,
     this.padding,
@@ -41,8 +40,6 @@ class MinimalToastWidget extends StatelessWidget {
 
   final Color? foregroundColor;
 
-  final Color? iconColor;
-
   final Brightness? brightness;
 
   final EdgeInsetsGeometry? padding;
@@ -67,10 +64,8 @@ class MinimalToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary =
-        primaryColor ?? defaultStyle.primaryColor(context);
-    final iconPrimaryColor =
-        iconColor ?? primaryColor ?? defaultStyle.iconColor(context);
+    final primary = primaryColor ?? defaultStyle.primaryColor(context);
+    final iconColor = primaryColor ?? defaultStyle.iconColor(context);
 
     final background = backgroundColor ?? defaultStyle.backgroundColor(context);
 
@@ -109,7 +104,7 @@ class MinimalToastWidget extends StatelessWidget {
                       Icon(
                         defaultStyle.icon(context),
                         size: 24,
-                        color: iconPrimaryColor,
+                        color: iconColor,
                       ),
                   const SizedBox(width: 12),
                   Expanded(
