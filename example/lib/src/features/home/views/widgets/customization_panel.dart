@@ -378,8 +378,9 @@ class _StyleSection extends ConsumerWidget {
     Color backgroundColor =
         ref.watch(toastDetailControllerProvider).backgroundColor ??
             theme.colorScheme.surfaceVariant;
-    Color iconColor = ref.watch(toastDetailControllerProvider).iconColor ??
-        theme.colorScheme.onSurfaceVariant;
+    Color primaryColor =
+        ref.watch(toastDetailControllerProvider).primaryColor ??
+            theme.colorScheme.onSurfaceVariant;
     Color foregroundColor =
         ref.watch(toastDetailControllerProvider).foregroundColor ??
             theme.colorScheme.onSurface;
@@ -404,7 +405,7 @@ class _StyleSection extends ConsumerWidget {
                 columnFit: FlexFit.loose,
                 child: CustomColorPicker(
                   title: 'Primary',
-                  selectedColor: iconColor,
+                  selectedColor: primaryColor,
                   onChanged: (value) {
                     ref
                         .read(toastDetailControllerProvider.notifier)

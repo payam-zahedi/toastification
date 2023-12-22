@@ -1,6 +1,6 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
-import 'package:flutter/material.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:flutter/material.dart';
 
 class CustomColorPicker extends StatefulWidget {
   const CustomColorPicker({
@@ -138,6 +138,20 @@ class _CustomColorPickerState extends State<CustomColorPicker> {
               padding: const EdgeInsets.all(20),
               colorCodeHasColor: true,
               showColorCode: true,
+              showRecentColors: true,
+              enableShadesSelection: false,
+              maxRecentColors: 13,
+              recentColors: const [
+                Color(0xFF000000),
+                Color(0xFFFF0000),
+                Color(0xFF03D8F3),
+                Color(0xFF562EA2),
+                Color(0xFFFFD700),
+                Color(0xFF4682B4),
+                Color(0xFFFF1493),
+                Color(0xFFFF7F50),
+                Color(0xFF199F19),
+              ],
               onColorChanged: widget.onChanged ?? (value) {},
             ),
           ),
