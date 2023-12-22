@@ -99,4 +99,13 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   void changePauseOnHover(bool pauseOnHover) {
     state = state.copyWith(pauseOnHover: pauseOnHover);
   }
+
+  void resetColors() {
+    state = state.copyWith(
+      primaryColor: null,
+      backgroundColor: null,
+      foregroundColor: null,
+      iconColor: null,
+    );
+  }
 }
