@@ -28,6 +28,19 @@ const highModeShadow = [
 abstract class BuiltInStyle {
   const BuiltInStyle(this.type);
 
+  factory BuiltInStyle.fromToastificationStyle(
+    ToastificationStyle style,
+    ToastificationType type,
+  ) {
+    return switch (style) {
+      ToastificationStyle.minimal => MinimalStyle(type),
+      ToastificationStyle.fillColored => FilledStyle(type),
+      ToastificationStyle.flatColored => FlatColoredStyle(type),
+      ToastificationStyle.flat => FlatStyle(type),
+      ToastificationStyle.simple => SimpleStyle(type),
+    };
+  }
+
   final ToastificationType type;
 
   EdgeInsetsGeometry padding(BuildContext context) =>

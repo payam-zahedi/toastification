@@ -117,13 +117,7 @@ class BuiltInBuilder extends StatelessWidget {
 
     final style = this.style ?? ToastificationStyle.fillColored;
 
-    return switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
-    };
+    return BuiltInStyle.fromToastificationStyle(style, type);
   }
 
   VoidCallback _onCloseButtonTap() {

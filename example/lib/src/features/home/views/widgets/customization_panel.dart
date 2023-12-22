@@ -338,13 +338,7 @@ class IconPicker extends ConsumerWidget {
 
     final iconColor = ref.watch(toastDetailControllerProvider).primaryColor;
 
-    final defaultStyle = switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
-    };
+    final defaultStyle = BuiltInStyle.fromToastificationStyle(style, type);
 
     return BorderedContainer(
       width: 120,
@@ -374,16 +368,24 @@ class _StyleSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    Color backgroundColor =
-        ref.watch(toastDetailControllerProvider).backgroundColor ??
-            theme.colorScheme.surfaceVariant;
-    Color primaryColor =
-        ref.watch(toastDetailControllerProvider).primaryColor ??
-            theme.colorScheme.onSurfaceVariant;
-    Color foregroundColor =
-        ref.watch(toastDetailControllerProvider).foregroundColor ??
-            theme.colorScheme.onSurface;
+    final type = ref.watch(
+      toastDetailControllerProvider.select((value) => value.type),
+    );
+    final style = ref.watch(
+      toastDetailControllerProvider.select((value) => value.style),
+    );
+
+    final builtInStyle = BuiltInStyle.fromToastificationStyle(style, type);
+
+    Color primaryColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.primaryColor)) ??
+        builtInStyle.primaryColor(context);
+    Color backgroundColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.backgroundColor)) ??
+        builtInStyle.backgroundColor(context);
+    Color foregroundColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.foregroundColor)) ??
+        builtInStyle.foregroundColor(context);
 
     return SubSection(
       title: 'STYLE',
