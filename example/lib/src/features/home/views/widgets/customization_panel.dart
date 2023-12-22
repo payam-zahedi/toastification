@@ -336,6 +336,8 @@ class IconPicker extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
+    final iconColor = ref.watch(toastDetailControllerProvider).primaryColor;
+
     final defaultStyle = switch (style) {
       ToastificationStyle.minimal => MinimalStyle(type),
       ToastificationStyle.fillColored => FilledStyle(type),
@@ -352,7 +354,7 @@ class IconPicker extends ConsumerWidget {
         children: [
           Icon(
             Iconsax.tick_circle_copy,
-            color: defaultStyle.iconColor(context),
+            color: iconColor ?? defaultStyle.iconColor(context),
           ),
           const SizedBox(width: 8),
           const Text('Icon'),
@@ -373,6 +375,15 @@ class _StyleSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    Color backgroundColor =
+        ref.watch(toastDetailControllerProvider).backgroundColor ??
+            theme.colorScheme.surfaceVariant;
+    Color primaryColor =
+        ref.watch(toastDetailControllerProvider).primaryColor ??
+            theme.colorScheme.onSurfaceVariant;
+    Color foregroundColor =
+        ref.watch(toastDetailControllerProvider).foregroundColor ??
+            theme.colorScheme.onSurface;
 
     return SubSection(
       title: 'STYLE',
@@ -392,25 +403,40 @@ class _StyleSection extends ConsumerWidget {
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
+                child: CustomColorPicker(
+                  title: 'Primary',
+                  selectedColor: primaryColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changePrimary(value);
+                  },
+                ),
+              ),
+              ResponsiveRowColumnItem(
+                rowFit: FlexFit.tight,
+                columnFit: FlexFit.loose,
+                child: CustomColorPicker(
                   title: 'Background',
-                  selectedColor: theme.colorScheme.surfaceVariant,
+                  selectedColor: backgroundColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeBackgroundColor(value);
+                  },
                 ),
               ),
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
-                  title: 'Icon',
-                  selectedColor: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                columnFit: FlexFit.loose,
-                child: ColorPicker(
-                  title: 'Text',
-                  selectedColor: theme.colorScheme.onSurface,
+                child: CustomColorPicker(
+                  title: 'Foreground',
+                  selectedColor: foregroundColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeForegroundColor(value);
+                  },
                 ),
               ),
             ],
