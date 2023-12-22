@@ -72,7 +72,8 @@ class FlatColoredToastWidget extends StatelessWidget {
     final borderRadius =
         this.borderRadius ?? defaultStyle.borderRadius(context);
 
-    final borderSide = defaultStyle.borderSide(context);
+    final borderSide =
+        defaultStyle.borderSide(context).copyWith(color: primaryColor);
 
     final direction = this.direction ?? Directionality.of(context);
 
