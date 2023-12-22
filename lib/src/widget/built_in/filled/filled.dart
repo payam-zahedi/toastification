@@ -63,9 +63,9 @@ class FilledToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = primaryColor ?? defaultStyle.iconColor(context);
+    final iconColor = foregroundColor ?? defaultStyle.iconColor(context);
 
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
+    final background = primaryColor ?? defaultStyle.backgroundColor(context);
 
     final showCloseButton = this.showCloseButton ?? true;
 
@@ -116,7 +116,9 @@ class FilledToastWidget extends StatelessWidget {
               ToastCloseButton(
                 showCloseButton: showCloseButton,
                 onCloseTap: onCloseTap,
-                defaultStyle: defaultStyle,
+                icon: defaultStyle.closeIcon(context),
+                iconColor: foregroundColor?.withOpacity(.6) ??
+                    defaultStyle.closeIconColor(context),
               ),
             ],
           ),

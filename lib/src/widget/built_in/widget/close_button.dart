@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/toastification.dart';
 
 class ToastCloseButton extends StatelessWidget {
   const ToastCloseButton({
     super.key,
     this.showCloseButton = true,
+    required this.icon,
+    required this.iconColor,
     this.onCloseTap,
-    required this.defaultStyle,
   });
 
   final bool showCloseButton;
   final VoidCallback? onCloseTap;
-  final BuiltInStyle defaultStyle;
+  final IconData icon;
+  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +31,8 @@ class ToastCloseButton extends StatelessWidget {
                 onTap: onCloseTap,
                 borderRadius: BorderRadius.circular(5),
                 child: Icon(
-                  defaultStyle.closeIcon(context),
-                  color: defaultStyle.closeIconColor(context),
+                  icon,
+                  color: iconColor,
                   size: 18,
                 ),
               );

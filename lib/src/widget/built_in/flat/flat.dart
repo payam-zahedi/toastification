@@ -116,7 +116,9 @@ class FlatToastWidget extends StatelessWidget {
               ToastCloseButton(
                 showCloseButton: showCloseButton,
                 onCloseTap: onCloseTap,
-                defaultStyle: defaultStyle,
+                icon: defaultStyle.closeIcon(context),
+                iconColor: foregroundColor?.withOpacity(.3) ??
+                    defaultStyle.closeIconColor(context),
               ),
             ],
           ),
