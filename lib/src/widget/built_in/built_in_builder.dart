@@ -90,6 +90,7 @@ class BuiltInBuilder extends StatelessWidget {
       showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
       dragToClose: dragToClose,
+      dismissDirection: dismissDirection,
       pauseOnHover: pauseOnHover,
       callbacks: callbacks,
       child: BuiltInToastBuilder(
