@@ -29,6 +29,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.closeButtonShowType,
     this.closeOnClick,
     this.dragToClose,
+    this.dismissDirection,
     this.pauseOnHover,
     this.callbacks = const ToastificationCallbacks(),
   });
@@ -69,6 +70,8 @@ class BuiltInBuilder extends StatelessWidget {
 
   final bool? dragToClose;
 
+  final DismissDirection? dismissDirection;
+
   final bool? pauseOnHover;
 
   final ToastificationCallbacks callbacks;
@@ -87,6 +90,7 @@ class BuiltInBuilder extends StatelessWidget {
       showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
       dragToClose: dragToClose,
+      dismissDirection: dismissDirection,
       pauseOnHover: pauseOnHover,
       callbacks: callbacks,
       child: BuiltInToastBuilder(
@@ -334,6 +338,7 @@ class BuiltInContainer extends StatelessWidget {
     required this.closeOnClick,
     required this.pauseOnHover,
     required this.dragToClose,
+    this.dismissDirection,
     required this.callbacks,
     required this.child,
   });
@@ -347,6 +352,8 @@ class BuiltInContainer extends StatelessWidget {
   final bool closeOnClick;
 
   final bool dragToClose;
+
+  final DismissDirection? dismissDirection;
 
   final bool pauseOnHover;
 
@@ -390,6 +397,7 @@ class BuiltInContainer extends StatelessWidget {
       toast = _FadeDismissible(
         item: item,
         pauseOnHover: pauseOnHover,
+        dismissDirection: dismissDirection,
         onDismissed: callbacks.onDismissed == null
             ? null
             : () {
@@ -408,12 +416,14 @@ class _FadeDismissible extends StatefulWidget {
     required this.item,
     required this.pauseOnHover,
     this.onDismissed,
+    this.dismissDirection,
     required this.child,
   });
 
   final ToastificationItem item;
   final bool pauseOnHover;
   final VoidCallback? onDismissed;
+  final DismissDirection? dismissDirection;
   final Widget child;
 
   @override
@@ -439,6 +449,7 @@ class _FadeDismissibleState extends State<_FadeDismissible> {
             currentOpacity = details.progress;
           });
         },
+        direction: widget.dismissDirection ?? DismissDirection.horizontal,
         behavior: HitTestBehavior.deferToChild,
         onDismissed: (direction) {
           // call the onDismissed callback
