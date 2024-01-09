@@ -86,6 +86,7 @@ class FlatColoredToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
         child: ClipRRect(
+          borderRadius: borderRadius,
           child: BackdropFilter(
             filter: isBlur
                 ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)

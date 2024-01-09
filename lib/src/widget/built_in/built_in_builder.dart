@@ -243,6 +243,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
+              isBlur: isBlur ?? false,
             ),
           ToastificationStyle.flatColored => FlatColoredToastWidget(
               type: type,
@@ -282,6 +283,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
+              isBlur: isBlur ?? false,
             ),
           ToastificationStyle.minimal => MinimalToastWidget(
               type: type,
@@ -301,6 +303,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
+              isBlur: isBlur ?? false,
             ),
           ToastificationStyle.simple => SimpleToastWidget(
               type: type,
@@ -313,6 +316,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               borderRadius: borderRadius,
               boxShadow: boxShadow,
               direction: direction,
+              isBlur: isBlur ?? false,
             ),
         };
       },

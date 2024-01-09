@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
@@ -14,6 +16,7 @@ class SimpleToastWidget extends StatelessWidget {
     this.borderRadius,
     this.boxShadow,
     this.direction,
+    this.isBlur = false,
   });
 
   final ToastificationType type;
@@ -36,6 +39,8 @@ class SimpleToastWidget extends StatelessWidget {
 
   final TextDirection? direction;
 
+  final bool isBlur;
+
   SimpleStyle get defaultStyle => SimpleStyle(type);
 
   @override
@@ -54,25 +59,32 @@ class SimpleToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
         child: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: background,
-              borderRadius: borderRadius,
-              border: Border.fromBorderSide(borderSide),
-              boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-            ),
-            padding: padding ?? defaultStyle.padding(context),
-            child: BuiltInContent(
-              style: defaultStyle,
-              title: title,
-              description: null,
-              primaryColor: primaryColor,
-              foregroundColor: foregroundColor,
-              backgroundColor: backgroundColor,
-              showProgressBar: false,
-              progressBarValue: null,
-              progressBarWidget: null,
-              progressIndicatorTheme: null,
+          child: ClipRRect(
+            borderRadius: borderRadius,
+            child: BackdropFilter(
+              filter: isBlur
+                  ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
+                  : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: isBlur ? background.withOpacity(0.5) : background,
+                  border: Border.fromBorderSide(borderSide),
+                  boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+                ),
+                padding: padding ?? defaultStyle.padding(context),
+                child: BuiltInContent(
+                  style: defaultStyle,
+                  title: title,
+                  description: null,
+                  primaryColor: primaryColor,
+                  foregroundColor: foregroundColor,
+                  backgroundColor: backgroundColor,
+                  showProgressBar: false,
+                  progressBarValue: null,
+                  progressBarWidget: null,
+                  progressIndicatorTheme: null,
+                ),
+              ),
             ),
           ),
         ),
