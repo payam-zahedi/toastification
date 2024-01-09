@@ -1,5 +1,9 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/widgets/expandable_section.dart';
+import 'package:example/src/core/views/widgets/toggle_tile.dart';
+import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastStylePicker extends StatefulWidget {
@@ -210,6 +214,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
             ),
           ),
         ),
+        const _IsBlurSection(),
       ],
     );
   }
@@ -218,6 +223,24 @@ class ToastStylePickerState extends State<ToastStylePicker> {
     _currentSize = context.size;
 
     _tooltipController.toggle();
+  }
+}
+
+class _IsBlurSection extends ConsumerWidget {
+  const _IsBlurSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'Blur',
+      body: ToggleTile(
+        title: 'Toast background blur',
+        value: ref.watch(toastDetailControllerProvider).isBlur,
+        onChanged: (value) {
+          ref.read(toastDetailControllerProvider.notifier).changeIsBlur(value!);
+        },
+      ),
+    );
   }
 }
 

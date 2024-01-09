@@ -52,5 +52,6 @@ class ToastDetail with _$ToastDetail {
     @Default(true) bool closeOnClick,
     @Default(true) bool pauseOnHover,
     @Default(false) bool dragToClose,
+    @Default(false) bool isBlur,
   }) = _ToastDetail;
 }

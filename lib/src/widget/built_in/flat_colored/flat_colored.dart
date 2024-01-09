@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/flat_colored/flat_colored_style.dart';
@@ -21,6 +23,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.onCloseTap,
     this.showCloseButton,
     this.showProgressBar = false,
+    this.isBlur = false,
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
@@ -54,6 +57,7 @@ class FlatColoredToastWidget extends StatelessWidget {
   final bool? showCloseButton;
 
   final bool showProgressBar;
+  final bool isBlur;
   final double? progressBarValue;
   final Widget? progressBarWidget;
 
@@ -81,47 +85,54 @@ class FlatColoredToastWidget extends StatelessWidget {
       textDirection: direction,
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 64),
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: borderRadius,
-            border: Border.fromBorderSide(borderSide),
-            boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-          ),
-          padding: padding ?? defaultStyle.padding(context),
-          child: Row(
-            children: [
-              icon ??
-                  Icon(
-                    defaultStyle.icon(context),
-                    size: 24,
-                    color: iconColor,
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: isBlur
+                ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
+                : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 64),
+              decoration: BoxDecoration(
+                color: isBlur ? background.withOpacity(0.5) : background,
+                borderRadius: borderRadius,
+                border: Border.fromBorderSide(borderSide),
+                boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+              ),
+              padding: padding ?? defaultStyle.padding(context),
+              child: Row(
+                children: [
+                  icon ??
+                      Icon(
+                        defaultStyle.icon(context),
+                        size: 24,
+                        color: iconColor,
+                      ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: BuiltInContent(
+                      style: defaultStyle,
+                      title: title,
+                      description: description,
+                      primaryColor: primaryColor,
+                      foregroundColor: foregroundColor,
+                      backgroundColor: backgroundColor,
+                      showProgressBar: showProgressBar,
+                      progressBarValue: progressBarValue,
+                      progressBarWidget: progressBarWidget,
+                      progressIndicatorTheme: progressIndicatorTheme,
+                    ),
                   ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: BuiltInContent(
-                  style: defaultStyle,
-                  title: title,
-                  description: description,
-                  primaryColor: primaryColor,
-                  foregroundColor: foregroundColor,
-                  backgroundColor: backgroundColor,
-                  showProgressBar: showProgressBar,
-                  progressBarValue: progressBarValue,
-                  progressBarWidget: progressBarWidget,
-                  progressIndicatorTheme: progressIndicatorTheme,
-                ),
+                  const SizedBox(width: 8),
+                  ToastCloseButton(
+                    showCloseButton: showCloseButton,
+                    onCloseTap: onCloseTap,
+                    icon: defaultStyle.closeIcon(context),
+                    iconColor: foregroundColor?.withOpacity(.3) ??
+                        defaultStyle.closeIconColor(context),
+                  ),
+                ],
               ),
-              const SizedBox(width: 8),
-              ToastCloseButton(
-                showCloseButton: showCloseButton,
-                onCloseTap: onCloseTap,
-                icon: defaultStyle.closeIcon(context),
-                iconColor: foregroundColor?.withOpacity(.3) ??
-                    defaultStyle.closeIconColor(context),
-              ),
-            ],
+            ),
           ),
         ),
       ),
