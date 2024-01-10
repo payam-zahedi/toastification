@@ -121,6 +121,6 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     pauseOnHover: toastDetail.pauseOnHover,
     showProgressBar: toastDetail.showProgressBar,
     closeButtonShowType: toastDetail.closeButtonShowType,
-    isBlur: toastDetail.isBlur,
+    applyBlurEffect: toastDetail.applyBlurEffect,
   );
 }

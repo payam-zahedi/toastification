@@ -100,8 +100,8 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(pauseOnHover: pauseOnHover);
   }
 
-  void changeIsBlur(bool isBlur) {
-    state = state.copyWith(isBlur: isBlur);
+  void changeApplyBlurEffect(bool applyBlurEffect) {
+    state = state.copyWith(applyBlurEffect: applyBlurEffect);
   }
 
   void resetColors() {

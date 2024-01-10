@@ -27,7 +27,7 @@ class MinimalToastWidget extends StatelessWidget {
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
-    this.isBlur = false,
+    this.applyBlurEffect = false,
   });
 
   final ToastificationType type;
@@ -57,7 +57,7 @@ class MinimalToastWidget extends StatelessWidget {
 
   final bool? showCloseButton;
 
-  final bool isBlur;
+  final bool applyBlurEffect;
 
   final bool showProgressBar;
   final double? progressBarValue;
@@ -98,12 +98,14 @@ class MinimalToastWidget extends StatelessWidget {
             child: ClipRRect(
               borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
               child: BackdropFilter(
-                filter: isBlur
+                filter: applyBlurEffect
                     ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
                     : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: isBlur ? background.withOpacity(0.5) : background,
+                    color: applyBlurEffect
+                        ? background.withOpacity(0.5)
+                        : background,
                     borderRadius:
                         defaultStyle.effectiveBorderRadius(borderRadius),
                     border:

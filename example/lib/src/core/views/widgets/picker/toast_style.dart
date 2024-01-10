@@ -214,7 +214,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
             ),
           ),
         ),
-        const _IsBlurSection(),
+        const _ApplyBlurEffectSection(),
       ],
     );
   }
@@ -226,18 +226,20 @@ class ToastStylePickerState extends State<ToastStylePicker> {
   }
 }
 
-class _IsBlurSection extends ConsumerWidget {
-  const _IsBlurSection();
+class _ApplyBlurEffectSection extends ConsumerWidget {
+  const _ApplyBlurEffectSection();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SubSection(
       title: 'Blur',
       body: ToggleTile(
-        title: 'Toast background blur',
-        value: ref.watch(toastDetailControllerProvider).isBlur,
+        title: 'Apply blur effect',
+        value: ref.watch(toastDetailControllerProvider).applyBlurEffect,
         onChanged: (value) {
-          ref.read(toastDetailControllerProvider.notifier).changeIsBlur(value!);
+          ref
+              .read(toastDetailControllerProvider.notifier)
+              .changeApplyBlurEffect(value!);
         },
       ),
     );

@@ -16,7 +16,7 @@ class SimpleToastWidget extends StatelessWidget {
     this.borderRadius,
     this.boxShadow,
     this.direction,
-    this.isBlur = false,
+    this.applyBlurEffect = false,
   });
 
   final ToastificationType type;
@@ -39,7 +39,7 @@ class SimpleToastWidget extends StatelessWidget {
 
   final TextDirection? direction;
 
-  final bool isBlur;
+  final bool applyBlurEffect;
 
   SimpleStyle get defaultStyle => SimpleStyle(type);
 
@@ -62,12 +62,14 @@ class SimpleToastWidget extends StatelessWidget {
           child: ClipRRect(
             borderRadius: borderRadius,
             child: BackdropFilter(
-              filter: isBlur
+              filter: applyBlurEffect
                   ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
                   : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: isBlur ? background.withOpacity(0.5) : background,
+                  color: applyBlurEffect
+                      ? background.withOpacity(0.5)
+                      : background,
                   border: Border.fromBorderSide(borderSide),
                   boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
                 ),

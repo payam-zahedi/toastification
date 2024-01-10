@@ -23,7 +23,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.onCloseTap,
     this.showCloseButton,
     this.showProgressBar = false,
-    this.isBlur = false,
+    this.applyBlurEffect = false,
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
@@ -57,7 +57,7 @@ class FlatColoredToastWidget extends StatelessWidget {
   final bool? showCloseButton;
 
   final bool showProgressBar;
-  final bool isBlur;
+  final bool applyBlurEffect;
   final double? progressBarValue;
   final Widget? progressBarWidget;
 
@@ -88,13 +88,14 @@ class FlatColoredToastWidget extends StatelessWidget {
         child: ClipRRect(
           borderRadius: borderRadius,
           child: BackdropFilter(
-            filter: isBlur
+            filter: applyBlurEffect
                 ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
                 : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
             child: Container(
               constraints: const BoxConstraints(minHeight: 64),
               decoration: BoxDecoration(
-                color: isBlur ? background.withOpacity(0.5) : background,
+                color:
+                    applyBlurEffect ? background.withOpacity(0.5) : background,
                 borderRadius: borderRadius,
                 border: Border.fromBorderSide(borderSide),
                 boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
