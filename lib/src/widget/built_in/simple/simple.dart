@@ -54,42 +54,66 @@ class SimpleToastWidget extends StatelessWidget {
 
     final direction = this.direction ?? Directionality.of(context);
 
-    return Directionality(
-      textDirection: direction,
-      child: IconTheme(
-        data: Theme.of(context).primaryIconTheme,
-        child: Center(
-          child: ClipRRect(
-            borderRadius: borderRadius,
-            child: BackdropFilter(
-              filter: applyBlurEffect
-                  ? ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0)
-                  : ImageFilter.blur(sigmaX: 0.0, sigmaY: 0.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: applyBlurEffect
-                      ? background.withOpacity(0.5)
-                      : background,
-                  border: Border.fromBorderSide(borderSide),
-                  boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-                ),
-                padding: padding ?? defaultStyle.padding(context),
-                child: BuiltInContent(
-                  style: defaultStyle,
-                  title: title,
-                  description: null,
-                  primaryColor: primaryColor,
-                  foregroundColor: foregroundColor,
-                  backgroundColor: backgroundColor,
-                  showProgressBar: false,
-                  progressBarValue: null,
-                  progressBarWidget: null,
-                  progressIndicatorTheme: null,
+    if (applyBlurEffect) {
+      return Directionality(
+        textDirection: direction,
+        child: IconTheme(
+          data: Theme.of(context).primaryIconTheme,
+          child: Center(
+            child: ClipRRect(
+              borderRadius: borderRadius,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                child: buildContent(
+                  context: context,
+                  background: background.withOpacity(0.5),
+                  borderSide: borderSide,
                 ),
               ),
             ),
           ),
         ),
+      );
+    }
+
+    return Directionality(
+      textDirection: direction,
+      child: IconTheme(
+        data: Theme.of(context).primaryIconTheme,
+        child: Center(
+          child: buildContent(
+            context: context,
+            background: background,
+            borderSide: borderSide,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildContent({
+    required BuildContext context,
+    required Color background,
+    required BorderSide borderSide,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        color: background,
+        border: Border.fromBorderSide(borderSide),
+        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+      ),
+      padding: padding ?? defaultStyle.padding(context),
+      child: BuiltInContent(
+        style: defaultStyle,
+        title: title,
+        description: null,
+        primaryColor: primaryColor,
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
+        showProgressBar: false,
+        progressBarValue: null,
+        progressBarWidget: null,
+        progressIndicatorTheme: null,
       ),
     );
   }
