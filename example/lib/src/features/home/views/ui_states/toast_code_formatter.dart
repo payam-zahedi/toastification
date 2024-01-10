@@ -104,6 +104,10 @@ class ToastCodeFormatter {
       code.writeln('\tpauseOnHover: ${toastDetail.pauseOnHover},');
     }
 
+    if (toastDetail.applyBlurEffect == true) {
+      code.writeln('\tapplyBlurEffect: ${toastDetail.applyBlurEffect},');
+    }
+
     code.write(');');
 
     return _formatter.formatStatement(code.toString());
