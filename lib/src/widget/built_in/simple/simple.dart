@@ -101,6 +101,7 @@ class SimpleToastWidget extends StatelessWidget {
         color: background,
         border: Border.fromBorderSide(borderSide),
         boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+        borderRadius: borderRadius,
       ),
       padding: padding ?? defaultStyle.padding(context),
       child: BuiltInContent(
