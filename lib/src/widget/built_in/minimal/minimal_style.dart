@@ -3,7 +3,7 @@ import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 class MinimalStyle extends BuiltInStyle {
-  const MinimalStyle(ToastificationType type) : super(type);
+  const MinimalStyle(super.type);
 
   @override
   MaterialColor primaryColor(BuildContext context) {

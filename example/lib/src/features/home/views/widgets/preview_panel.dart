@@ -79,9 +79,11 @@ class ToastPreview extends ConsumerWidget {
       borderRadius: toastDetail.borderRadius,
       boxShadow: toastDetail.shadow.shadow,
       direction: toastDetail.direction,
-      onCloseTap: () {},
       showProgressBar: toastDetail.showProgressBar,
+      // TODO(payam): add background image to show blur effect more clearly
+      // applyBlurEffect: toastDetail.applyBlurEffect,
       closeButtonShowType: toastDetail.closeButtonShowType,
+      onCloseTap: () {},
     );
   }
 }

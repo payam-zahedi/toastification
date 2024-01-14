@@ -37,6 +37,7 @@ mixin _$ToastDetail {
       throw _privateConstructorUsedError;
   bool get newestOnTop => throw _privateConstructorUsedError;
   bool get showProgressBar => throw _privateConstructorUsedError;
+  bool get applyBlurEffect => throw _privateConstructorUsedError;
   bool get closeOnClick => throw _privateConstructorUsedError;
   bool get pauseOnHover => throw _privateConstructorUsedError;
   bool get dragToClose => throw _privateConstructorUsedError;
@@ -72,6 +73,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
+      bool applyBlurEffect,
       bool closeOnClick,
       bool pauseOnHover,
       bool dragToClose});
@@ -109,6 +111,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
+    Object? applyBlurEffect = null,
     Object? closeOnClick = null,
     Object? pauseOnHover = null,
     Object? dragToClose = null,
@@ -190,6 +193,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.showProgressBar
           : showProgressBar // ignore: cast_nullable_to_non_nullable
               as bool,
+      applyBlurEffect: null == applyBlurEffect
+          ? _value.applyBlurEffect
+          : applyBlurEffect // ignore: cast_nullable_to_non_nullable
+              as bool,
       closeOnClick: null == closeOnClick
           ? _value.closeOnClick
           : closeOnClick // ignore: cast_nullable_to_non_nullable
@@ -234,6 +241,7 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
+      bool applyBlurEffect,
       bool closeOnClick,
       bool pauseOnHover,
       bool dragToClose});
@@ -269,6 +277,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
+    Object? applyBlurEffect = null,
     Object? closeOnClick = null,
     Object? pauseOnHover = null,
     Object? dragToClose = null,
@@ -350,6 +359,10 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.showProgressBar
           : showProgressBar // ignore: cast_nullable_to_non_nullable
               as bool,
+      applyBlurEffect: null == applyBlurEffect
+          ? _value.applyBlurEffect
+          : applyBlurEffect // ignore: cast_nullable_to_non_nullable
+              as bool,
       closeOnClick: null == closeOnClick
           ? _value.closeOnClick
           : closeOnClick // ignore: cast_nullable_to_non_nullable
@@ -391,7 +404,8 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.showProgressBar = false,
       this.closeOnClick = true,
       this.pauseOnHover = true,
-      this.dragToClose = false});
+      this.dragToClose = false,
+      this.applyBlurEffect = false});
 
   @override
   @JsonKey()
@@ -443,6 +457,8 @@ class _$ToastDetailImpl implements _ToastDetail {
   @override
   @JsonKey()
   final bool showProgressBar;
+  @JsonKey()
+  final bool applyBlurEffect;
   @override
   @JsonKey()
   final bool closeOnClick;
@@ -455,7 +471,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, applyBlurEffect: $applyBlurEffect, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
   }
 
   @override
@@ -496,6 +512,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.newestOnTop == newestOnTop) &&
             (identical(other.showProgressBar, showProgressBar) ||
                 other.showProgressBar == showProgressBar) &&
+            (identical(other.applyBlurEffect, applyBlurEffect) ||
+                other.applyBlurEffect == applyBlurEffect) &&
             (identical(other.closeOnClick, closeOnClick) ||
                 other.closeOnClick == closeOnClick) &&
             (identical(other.pauseOnHover, pauseOnHover) ||
@@ -526,6 +544,7 @@ class _$ToastDetailImpl implements _ToastDetail {
         closeButtonShowType,
         newestOnTop,
         showProgressBar,
+        applyBlurEffect,
         closeOnClick,
         pauseOnHover,
         dragToClose
@@ -559,6 +578,7 @@ abstract class _ToastDetail implements ToastDetail {
       final CloseButtonShowType closeButtonShowType,
       final bool newestOnTop,
       final bool showProgressBar,
+      final bool applyBlurEffect,
       final bool closeOnClick,
       final bool pauseOnHover,
       final bool dragToClose}) = _$ToastDetailImpl;
@@ -601,6 +621,8 @@ abstract class _ToastDetail implements ToastDetail {
   bool get newestOnTop;
   @override
   bool get showProgressBar;
+  @override
+  bool get applyBlurEffect;
   @override
   bool get closeOnClick;
   @override

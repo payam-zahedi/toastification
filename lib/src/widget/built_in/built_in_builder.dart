@@ -25,6 +25,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.borderRadius,
     this.boxShadow,
     this.showProgressBar,
+    this.applyBlurEffect,
     this.progressBarTheme,
     this.closeButtonShowType,
     this.closeOnClick,
@@ -61,6 +62,8 @@ class BuiltInBuilder extends StatelessWidget {
   final TextDirection? direction;
 
   final bool? showProgressBar;
+
+  final bool? applyBlurEffect;
 
   final ProgressIndicatorThemeData? progressBarTheme;
 
@@ -110,6 +113,7 @@ class BuiltInBuilder extends StatelessWidget {
         boxShadow: boxShadow,
         onCloseTap: _onCloseButtonTap(),
         showProgressBar: showProgressBar,
+        applyBlurEffect: applyBlurEffect,
         progressBarTheme: progressBarTheme,
         closeButtonShowType: closeButtonShowType,
       ),
@@ -156,6 +160,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.boxShadow,
     required this.onCloseTap,
     this.showProgressBar,
+    this.applyBlurEffect,
     this.progressBarTheme,
     this.closeButtonShowType,
   });
@@ -188,6 +193,8 @@ class BuiltInToastBuilder extends StatelessWidget {
   final VoidCallback onCloseTap;
 
   final bool? showProgressBar;
+
+  final bool? applyBlurEffect;
 
   final ProgressIndicatorThemeData? progressBarTheme;
 
@@ -240,6 +247,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
+              applyBlurEffect: applyBlurEffect ?? false,
             ),
           ToastificationStyle.flatColored => FlatColoredToastWidget(
               type: type,
@@ -256,6 +264,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               direction: direction,
               onCloseTap: onCloseTap,
               showCloseButton: showCloseButton,
+              applyBlurEffect: applyBlurEffect ?? false,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
@@ -275,6 +284,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               direction: direction,
               onCloseTap: onCloseTap,
               showCloseButton: showCloseButton,
+              applyBlurEffect: applyBlurEffect ?? false,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
@@ -295,6 +305,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               onCloseTap: onCloseTap,
               showCloseButton: showCloseButton,
               showProgressBar: this.showProgressBar == true,
+              applyBlurEffect: applyBlurEffect ?? false,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
             ),
@@ -309,6 +320,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               borderRadius: borderRadius,
               boxShadow: boxShadow,
               direction: direction,
+              applyBlurEffect: applyBlurEffect ?? false,
             ),
         };
       },

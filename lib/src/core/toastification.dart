@@ -238,6 +238,7 @@ class Toastification {
     bool? dragToClose,
     DismissDirection? dismissDirection,
     bool? pauseOnHover,
+    bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     return showCustom(
@@ -272,6 +273,7 @@ class Toastification {
           dragToClose: dragToClose,
           dismissDirection: dismissDirection,
           pauseOnHover: pauseOnHover,
+          applyBlurEffect: applyBlurEffect,
           callbacks: callbacks,
         );
       },
