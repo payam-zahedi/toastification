@@ -1,25 +1,3 @@
-#### How to migrate:
-
-OLD WAY:
-
-```dart
-toastification.show(
-title: 'Component updates available.',
-description: 'Component updates available.',
-...
-);
-```
-
-NEW WAY:
-
-```dart
-toastification.show(
-title: Text('Component updates available.', style: customTextStyle),
-description: Text('Component updates available.', style: customTextStyle),
-...
-);
-```
-
 ## 1.1.0
 
 - add new toast style (ToastificationStyle.simple) by @mahmoud-eslami
