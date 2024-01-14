@@ -9,7 +9,7 @@ class FlatColoredToastWidget extends StatelessWidget {
   const FlatColoredToastWidget({
     super.key,
     required this.type,
-    required this.title,
+    this.title,
     this.description,
     this.primaryColor,
     this.backgroundColor,
@@ -31,8 +31,8 @@ class FlatColoredToastWidget extends StatelessWidget {
 
   final ToastificationType type;
 
-  final String title;
-  final String? description;
+  final Widget? title;
+  final Widget? description;
 
   final Widget? icon;
 

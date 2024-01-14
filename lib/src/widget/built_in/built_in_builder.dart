@@ -13,7 +13,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.type,
     this.style,
     this.direction,
-    required this.title,
+    this.title,
     this.description,
     this.primaryColor,
     this.backgroundColor,
@@ -41,8 +41,8 @@ class BuiltInBuilder extends StatelessWidget {
 
   final ToastificationStyle? style;
 
-  final String title;
-  final String? description;
+  final Widget? title;
+  final Widget? description;
 
   final Widget? icon;
 
@@ -148,7 +148,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     required this.type,
     required this.style,
     required this.direction,
-    required this.title,
+    this.title,
     this.description,
     this.primaryColor,
     this.backgroundColor,
@@ -171,8 +171,8 @@ class BuiltInToastBuilder extends StatelessWidget {
 
   final ToastificationStyle? style;
 
-  final String title;
-  final String? description;
+  final Widget? title;
+  final Widget? description;
 
   final Widget? icon;
 

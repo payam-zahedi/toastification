@@ -15,11 +15,14 @@ class ToastCodeFormatter {
     context: context,
     type: ${toastDetail.type},
     style: ${toastDetail.style},
-    title: '${toastDetail.title}',
   ''');
 
-    if (toastDetail.description.isNotEmpty) {
-      code.writeln('\tdescription: \'${toastDetail.description}\',');
+    if (toastDetail.title != null) {
+      code.writeln('\ttitle: ${toastDetail.title},');
+    }
+
+    if (toastDetail.description != null) {
+      code.writeln('\tdescription: ${toastDetail.description},');
     }
 
     code.writeln('\talignment: ${toastDetail.alignment},');

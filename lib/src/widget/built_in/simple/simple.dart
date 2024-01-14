@@ -7,7 +7,7 @@ class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({
     super.key,
     required this.type,
-    required this.title,
+    this.title,
     this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
@@ -21,7 +21,7 @@ class SimpleToastWidget extends StatelessWidget {
 
   final ToastificationType type;
 
-  final String title;
+  final Widget? title;
 
   final MaterialColor? primaryColor;
 
