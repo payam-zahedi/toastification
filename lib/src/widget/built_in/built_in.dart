@@ -83,7 +83,12 @@ class BuiltInContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget? content = title ?? const SizedBox();
+    Widget content = DefaultTextStyle.merge(
+      style: style.titleTextStyle(context)?.copyWith(
+            color: foregroundColor,
+          ),
+      child: title ?? const SizedBox(),
+    );
 
     final showColumn = description != null || showProgressBar == true;
     if (!showColumn) {
@@ -97,7 +102,12 @@ class BuiltInContent extends StatelessWidget {
         content,
         if (description != null) ...[
           const SizedBox(height: 6),
-          description!,
+          DefaultTextStyle.merge(
+            style: style.descriptionTextStyle(context)?.copyWith(
+                  color: foregroundColor,
+                ),
+            child: description!,
+          ),
         ],
         if (showProgressBar) ...[
           const SizedBox(height: 10),
