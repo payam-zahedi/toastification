@@ -81,57 +81,36 @@ class FlatToastWidget extends StatelessWidget {
 
     final direction = this.direction ?? Directionality.of(context);
 
-    if (applyBlurEffect) {
-      return Directionality(
-        textDirection: direction,
-        child: IconTheme(
-          data: Theme.of(context).primaryIconTheme,
-          child: ClipRRect(
-            borderRadius: borderRadius,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: buildContent(
-                context: context,
-                background: background.withOpacity(0.5),
-                borderRadius: borderRadius,
-                borderSide: borderSide,
-                iconColor: iconColor,
-                showCloseButton: showCloseButton,
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
     return Directionality(
       textDirection: direction,
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
-        child: buildContent(
+        child: buildBody(
           context: context,
           background: background,
           borderRadius: borderRadius,
           borderSide: borderSide,
           iconColor: iconColor,
           showCloseButton: showCloseButton,
+          applyBlurEffect: applyBlurEffect,
         ),
       ),
     );
   }
 
-  Widget buildContent({
+  Widget buildBody({
     required Color background,
     required BorderRadiusGeometry borderRadius,
     required BorderSide borderSide,
     required BuildContext context,
     required Color iconColor,
     required bool showCloseButton,
+    required bool applyBlurEffect,
   }) {
-    return Container(
+    Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: background,
+        color: applyBlurEffect ? background.withOpacity(0.5) : background,
         borderRadius: borderRadius,
         border: Border.fromBorderSide(borderSide),
         boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
@@ -171,5 +150,17 @@ class FlatToastWidget extends StatelessWidget {
         ],
       ),
     );
+
+    if (applyBlurEffect) {
+      body = ClipRRect(
+        borderRadius: borderRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: body,
+        ),
+      );
+    }
+
+    return body;
   }
 }

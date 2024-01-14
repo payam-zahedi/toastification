@@ -82,39 +82,6 @@ class MinimalToastWidget extends StatelessWidget {
         (this.borderRadius ?? defaultStyle.borderRadius(context))
             .resolve(direction);
 
-    if (applyBlurEffect) {
-      return Directionality(
-        textDirection: direction,
-        child: IconTheme(
-          data: Theme.of(context).primaryIconTheme,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 64),
-            child: Material(
-              color: Colors.transparent,
-              shape: LinearBorder.start(
-                side: BorderSide(
-                  color: primary,
-                  width: 3,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                  child: buildContent(
-                    context: context,
-                    background: background.withOpacity(0.5),
-                    borderRadius: borderRadius,
-                    iconColor: iconColor,
-                    showCloseButton: showCloseButton,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
     return Directionality(
       textDirection: direction,
       child: IconTheme(
@@ -129,12 +96,13 @@ class MinimalToastWidget extends StatelessWidget {
                 width: 3,
               ),
             ),
-            child: buildContent(
+            child: buildBody(
               context: context,
               background: background,
               borderRadius: borderRadius,
               iconColor: iconColor,
               showCloseButton: showCloseButton,
+              applyBlurEffect: applyBlurEffect,
             ),
           ),
         ),
@@ -142,16 +110,17 @@ class MinimalToastWidget extends StatelessWidget {
     );
   }
 
-  Widget buildContent({
+  Widget buildBody({
     required BuildContext context,
     required Color background,
     required BorderRadius borderRadius,
     required Color iconColor,
     required bool showCloseButton,
+    required bool applyBlurEffect,
   }) {
-    return Container(
+    Widget body = Container(
       decoration: BoxDecoration(
-        color: background,
+        color: applyBlurEffect ? background.withOpacity(0.5) : background,
         borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
         border: Border.fromBorderSide(defaultStyle.borderSide(context)),
         boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
@@ -191,5 +160,17 @@ class MinimalToastWidget extends StatelessWidget {
         ],
       ),
     );
+
+    if (applyBlurEffect) {
+      body = body = ClipRRect(
+        borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: body,
+        ),
+      );
+    }
+
+    return body;
   }
 }

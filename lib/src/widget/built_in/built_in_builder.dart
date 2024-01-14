@@ -190,11 +190,11 @@ class BuiltInToastBuilder extends StatelessWidget {
 
   final bool? showProgressBar;
 
+  final bool? applyBlurEffect;
+
   final ProgressIndicatorThemeData? progressBarTheme;
 
   final CloseButtonShowType? closeButtonShowType;
-
-  final bool? applyBlurEffect;
 
   @override
   Widget build(BuildContext context) {
@@ -260,10 +260,10 @@ class BuiltInToastBuilder extends StatelessWidget {
               direction: direction,
               onCloseTap: onCloseTap,
               showCloseButton: showCloseButton,
+              applyBlurEffect: applyBlurEffect ?? false,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
-              applyBlurEffect: applyBlurEffect ?? false,
             ),
           ToastificationStyle.fillColored => FilledToastWidget(
               type: type,
@@ -280,10 +280,10 @@ class BuiltInToastBuilder extends StatelessWidget {
               direction: direction,
               onCloseTap: onCloseTap,
               showCloseButton: showCloseButton,
+              applyBlurEffect: applyBlurEffect ?? false,
               showProgressBar: this.showProgressBar == true,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
-              applyBlurEffect: applyBlurEffect ?? false,
             ),
           ToastificationStyle.minimal => MinimalToastWidget(
               type: type,
@@ -301,9 +301,9 @@ class BuiltInToastBuilder extends StatelessWidget {
               onCloseTap: onCloseTap,
               showCloseButton: showCloseButton,
               showProgressBar: this.showProgressBar == true,
+              applyBlurEffect: applyBlurEffect ?? false,
               progressIndicatorTheme: progressBarTheme,
               progressBarWidget: progressBarWidget,
-              applyBlurEffect: applyBlurEffect ?? false,
             ),
           ToastificationStyle.simple => SimpleToastWidget(
               type: type,
