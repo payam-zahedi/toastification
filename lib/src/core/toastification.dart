@@ -117,6 +117,7 @@ class Toastification {
     Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
+    DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     direction ??= Directionality.of(context);
@@ -235,7 +236,9 @@ class Toastification {
     CloseButtonShowType? closeButtonShowType,
     bool? closeOnClick,
     bool? dragToClose,
+    DismissDirection? dismissDirection,
     bool? pauseOnHover,
+    bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     return showCustom(
@@ -268,7 +271,9 @@ class Toastification {
           closeButtonShowType: closeButtonShowType,
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
+          dismissDirection: dismissDirection,
           pauseOnHover: pauseOnHover,
+          applyBlurEffect: applyBlurEffect,
           callbacks: callbacks,
         );
       },

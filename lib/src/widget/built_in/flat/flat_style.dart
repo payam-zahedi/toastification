@@ -3,7 +3,7 @@ import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 class FlatStyle extends BuiltInStyle {
-  const FlatStyle(ToastificationType type) : super(type);
+  const FlatStyle(super.type);
 
   @override
   MaterialColor primaryColor(BuildContext context) {

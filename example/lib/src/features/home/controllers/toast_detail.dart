@@ -36,6 +36,10 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(icon: icon);
   }
 
+  void changePrimary(Color? primaryColor) {
+    state = state.copyWith(primaryColor: primaryColor);
+  }
+
   void changeBackgroundColor(Color? backgroundColor) {
     state = state.copyWith(backgroundColor: backgroundColor);
   }
@@ -94,5 +98,18 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
   void changePauseOnHover(bool pauseOnHover) {
     state = state.copyWith(pauseOnHover: pauseOnHover);
+  }
+
+  void changeApplyBlurEffect(bool applyBlurEffect) {
+    state = state.copyWith(applyBlurEffect: applyBlurEffect);
+  }
+
+  void resetColors() {
+    state = state.copyWith(
+      primaryColor: null,
+      backgroundColor: null,
+      foregroundColor: null,
+      iconColor: null,
+    );
   }
 }

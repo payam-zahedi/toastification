@@ -110,6 +110,7 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     animationDuration: toastDetail.animationDuration,
     animationBuilder: toastDetail.animationType.builder,
     icon: toastDetail.icon,
+    primaryColor: toastDetail.primaryColor,
     foregroundColor: toastDetail.foregroundColor,
     backgroundColor: toastDetail.backgroundColor,
     borderRadius: toastDetail.borderRadius,
@@ -119,6 +120,7 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     dragToClose: toastDetail.dragToClose,
     pauseOnHover: toastDetail.pauseOnHover,
     showProgressBar: toastDetail.showProgressBar,
+    applyBlurEffect: toastDetail.applyBlurEffect,
     closeButtonShowType: toastDetail.closeButtonShowType,
   );
 }

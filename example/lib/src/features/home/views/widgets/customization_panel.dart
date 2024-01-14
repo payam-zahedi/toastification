@@ -336,13 +336,9 @@ class IconPicker extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
-    final defaultStyle = switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
-    };
+    final iconColor = ref.watch(toastDetailControllerProvider).primaryColor;
+
+    final defaultStyle = BuiltInStyle.fromToastificationStyle(style, type);
 
     return BorderedContainer(
       width: 120,
@@ -352,7 +348,7 @@ class IconPicker extends ConsumerWidget {
         children: [
           Icon(
             Iconsax.tick_circle_copy,
-            color: defaultStyle.iconColor(context),
+            color: iconColor ?? defaultStyle.iconColor(context),
           ),
           const SizedBox(width: 8),
           const Text('Icon'),
@@ -372,10 +368,28 @@ class _StyleSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
+    final type = ref.watch(
+      toastDetailControllerProvider.select((value) => value.type),
+    );
+    final style = ref.watch(
+      toastDetailControllerProvider.select((value) => value.style),
+    );
+
+    final builtInStyle = BuiltInStyle.fromToastificationStyle(style, type);
+
+    Color primaryColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.primaryColor)) ??
+        builtInStyle.primaryColor(context);
+    Color backgroundColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.backgroundColor)) ??
+        builtInStyle.backgroundColor(context);
+    Color foregroundColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.foregroundColor)) ??
+        builtInStyle.foregroundColor(context);
 
     return SubSection(
       title: 'STYLE',
+      action: _ResetButton(),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -392,25 +406,40 @@ class _StyleSection extends ConsumerWidget {
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
+                child: CustomColorPicker(
+                  title: 'Primary',
+                  selectedColor: primaryColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changePrimary(value);
+                  },
+                ),
+              ),
+              ResponsiveRowColumnItem(
+                rowFit: FlexFit.tight,
+                columnFit: FlexFit.loose,
+                child: CustomColorPicker(
                   title: 'Background',
-                  selectedColor: theme.colorScheme.surfaceVariant,
+                  selectedColor: backgroundColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeBackgroundColor(value);
+                  },
                 ),
               ),
               ResponsiveRowColumnItem(
                 rowFit: FlexFit.tight,
                 columnFit: FlexFit.loose,
-                child: ColorPicker(
-                  title: 'Icon',
-                  selectedColor: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                columnFit: FlexFit.loose,
-                child: ColorPicker(
-                  title: 'Text',
-                  selectedColor: theme.colorScheme.onSurface,
+                child: CustomColorPicker(
+                  title: 'Foreground',
+                  selectedColor: foregroundColor,
+                  onChanged: (value) {
+                    ref
+                        .read(toastDetailControllerProvider.notifier)
+                        .changeForegroundColor(value);
+                  },
                 ),
               ),
             ],
@@ -436,6 +465,45 @@ class _StyleSection extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ResetButton extends ConsumerWidget {
+  const _ResetButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final primaryColor = ref.watch(
+        toastDetailControllerProvider.select((value) => value.primaryColor));
+    final backgroundColor = ref.watch(
+        toastDetailControllerProvider.select((value) => value.backgroundColor));
+    final foregroundColor = ref.watch(
+        toastDetailControllerProvider.select((value) => value.foregroundColor));
+    final isThereAnyColorSelected = primaryColor != null ||
+        backgroundColor != null ||
+        foregroundColor != null;
+
+    return AnimatedCrossFade(
+      duration: const Duration(milliseconds: 400),
+      reverseDuration: const Duration(milliseconds: 400),
+      alignment: Alignment.centerRight,
+      crossFadeState: isThereAnyColorSelected
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+      firstChild: OutlinedButton.icon(
+        key: const ValueKey('reset'),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          minimumSize: const Size.square(42),
+        ),
+        onPressed: () {
+          ref.read(toastDetailControllerProvider.notifier).resetColors();
+        },
+        icon: const Icon(Iconsax.refresh_copy, size: 20),
+        label: const Text('Reset'),
+      ),
+      secondChild: const SizedBox(key: ValueKey('reset-space')),
     );
   }
 }
