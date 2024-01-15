@@ -1,3 +1,12 @@
+## 1.2.0
+
+- [Website] Adding Color Picker Component by @mahmoud-eslami
+- fix dependency versions in pubspec by @bahiraei
+- fix the color picker issues on builder website by @payam-zahedi
+- Feature: dismiss direction by @sibiramer
+- Add blur effect to all toast styles by @ayoubrajabi
+- Allow Widgets in Toast Title and Description by @callmephil
+
 ## 1.1.0
 
 - add new toast style (ToastificationStyle.simple) by @mahmoud-eslami
