@@ -7,14 +7,13 @@ export 'src/core/toastification_config.dart';
 export 'src/core/toastification_callbacks.dart';
 export 'src/widget/toastification_config_provider.dart';
 
-// holder
+// animation
 export 'src/widget/toast_animation.dart';
-export 'src/widget/toast_builder.dart';
 
-// built-in widget
+// built-in widgets
 export 'src/widget/built_in/built_in.dart';
 export 'src/widget/built_in/built_in_style.dart';
-export 'src/widget/built_in/built_in_builder.dart';
+export 'src/widget/built_in/built_in_builder.dart' hide BuiltInBuilder;
 export 'src/widget/built_in/minimal/minimal.dart';
 export 'src/widget/built_in/minimal/minimal_style.dart';
 export 'src/widget/built_in/filled/filled.dart';

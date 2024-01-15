@@ -232,7 +232,7 @@ class _ApplyBlurEffectSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SubSection(
-      title: 'Blur',
+      title: 'BLUR',
       body: ToggleTile(
         title: 'Apply blur effect',
         value: ref.watch(toastDetailControllerProvider).applyBlurEffect,

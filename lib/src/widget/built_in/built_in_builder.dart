@@ -87,7 +87,7 @@ class BuiltInBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
-    return BuiltInContainer(
+    return _BuiltInContainer(
       item: item,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       showProgressBar: showProgressBar,
@@ -341,9 +341,8 @@ class BuiltInToastBuilder extends StatelessWidget {
 
 /// This widget help you to use the default behavior of the built-in
 /// toastification Items
-class BuiltInContainer extends StatelessWidget {
-  const BuiltInContainer({
-    super.key,
+class _BuiltInContainer extends StatelessWidget {
+  const _BuiltInContainer({
     required this.item,
     required this.margin,
     required this.showProgressBar,

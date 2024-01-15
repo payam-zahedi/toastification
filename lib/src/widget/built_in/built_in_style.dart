@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
 
+/// default style for info toastification
 const infoColor = Color(0xFF47AFFF);
+
+/// default color for success toastification
 const successColor = Color(0xFF32BC32);
+
+/// default color for warning toastification
 const warningColor = Color(0xFFFFB600);
+
+/// default color for error toastification
 const errorColor = Color(0xFFFF3A30);
 
 const lowModeShadow = [
@@ -25,6 +32,7 @@ const highModeShadow = [
   )
 ];
 
+/// Base abstract class for built-in styles
 abstract class BuiltInStyle {
   const BuiltInStyle(this.type);
 

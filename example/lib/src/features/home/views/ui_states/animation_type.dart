@@ -48,7 +48,7 @@ class BounceAnimationType extends AnimationType {
     Alignment alignment,
     Widget child,
   ) {
-    return ToastificationTransition(
+    return DefaultToastificationTransition(
       animation: animation,
       alignment: alignment,
       child: child,
