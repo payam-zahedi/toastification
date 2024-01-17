@@ -2,19 +2,6 @@
 <html>
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/toastification/">
 
   <title>Toastification</title>
@@ -27,12 +14,14 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Toastification">
-  <meta property="og:description" content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
+  <meta property="og:description"
+    content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
   <meta property="og:image"
     content="https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/image/intro.png">
 
   <meta property="twitter:title" content="Toastification">
-  <meta property="twitter:description" content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
+  <meta property="twitter:description"
+    content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
   <meta property="twitter:image"
     content="https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/image/intro.png">
 
@@ -66,11 +55,82 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <!-- Styles for displaying loading -->
+  <style type="text/css">
+    #loading {
+      text-align: center;
+      top: 30%;
+      position: relative;
+    }
+
+    @keyframes ldio-sjek0lafyck {
+      0% {
+        top: 96px;
+        left: 96px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+
+      100% {
+        top: 18px;
+        left: 18px;
+        width: 156px;
+        height: 156px;
+        opacity: 0;
+      }
+    }
+
+    .ldio-sjek0lafyck div {
+      position: absolute;
+      border-width: 4px;
+      border-style: solid;
+      opacity: 1;
+      border-radius: 50%;
+      animation: ldio-sjek0lafyck 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+
+    .ldio-sjek0lafyck div:nth-child(1) {
+      border-color: #93dbe9;
+      animation-delay: 0s;
+    }
+
+    .ldio-sjek0lafyck div:nth-child(2) {
+      border-color: #689cc5;
+      animation-delay: -0.5s;
+    }
+
+    .loadingio-spinner-ripple-zhxk9p1siqo {
+      width: 200px;
+      height: 200px;
+      display: inline-block;
+      overflow: hidden;
+      background: rgba(NaN, NaN, NaN, 0);
+    }
+
+    .ldio-sjek0lafyck {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform: translateZ(0) scale(1);
+      backface-visibility: hidden;
+      transform-origin: 0 0;
+    }
+
+    .ldio-sjek0lafyck div {
+      box-sizing: content-box;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Loading Section -->
+  <div id="loading"></div>
+  
   <script>
     window.addEventListener('load', function (ev) {
+      var loading = document.querySelector('#loading');
+      loading.innerHTML = '<div class="loadingio-spinner-ripple-zhxk9p1siqo"><div class="ldio-sjek0lafyck"><div></div><div></div></div></div>';
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
