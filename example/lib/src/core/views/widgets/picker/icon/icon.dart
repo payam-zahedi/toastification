@@ -1,5 +1,6 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/picker/icon/icon_provider.dart';
+import 'package:example/src/core/views/widgets/picker/icon/icon_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,7 +139,7 @@ class IconPickerWidget extends ConsumerWidget {
               child: GridView.builder(
                 shrinkWrap: false,
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 30,
+                  maxCrossAxisExtent: 50,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                 ),
@@ -146,8 +147,8 @@ class IconPickerWidget extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final item = list[index];
 
-                  return Icon(
-                    item.value,
+                  return IconTile(
+                    item: item,
                   );
                 },
               ),
