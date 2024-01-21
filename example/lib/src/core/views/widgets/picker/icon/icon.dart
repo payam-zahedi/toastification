@@ -82,6 +82,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
             ],
           ),
         ),
+        onCanceled: () => ref.read(searchedIconQuery.notifier).state = "",
         itemBuilder: (context) => [
           PopupMenuItem(
             onTap: null,
