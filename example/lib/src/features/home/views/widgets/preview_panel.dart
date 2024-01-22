@@ -50,11 +50,18 @@ class ToastPreview extends ConsumerWidget {
     final edgeInsets = context.isInMobileZone
         ? const EdgeInsets.fromLTRB(10, 12, 10, 12)
         : const EdgeInsets.fromLTRB(12, 14, 12, 14);
-    return Material(
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
         borderRadius: context.cardsBorderRadius,
+        color: Theme.of(context).cardTheme.color,
+        image: toastDetail.applyBlurEffect
+            ? const DecorationImage(
+                image: AssetImage('assets/img/logo.png'),
+                fit: BoxFit.fitWidth,
+                alignment: Alignment(0.0, -.75),
+              )
+            : null,
       ),
-      color: Theme.of(context).cardTheme.color,
       child: SizedBox(
         child: Padding(
           padding: edgeInsets,
@@ -80,8 +87,7 @@ class ToastPreview extends ConsumerWidget {
       boxShadow: toastDetail.shadow.shadow,
       direction: toastDetail.direction,
       showProgressBar: toastDetail.showProgressBar,
-      // TODO(payam): add background image to show blur effect more clearly
-      // applyBlurEffect: toastDetail.applyBlurEffect,
+      applyBlurEffect: toastDetail.applyBlurEffect,
       closeButtonShowType: toastDetail.closeButtonShowType,
       onCloseTap: () {},
     );
