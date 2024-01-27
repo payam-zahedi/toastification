@@ -20,8 +20,8 @@ mixin _$ToastDetail {
   ToastificationStyle get style =>
       throw _privateConstructorUsedError; // placement
   AlignmentGeometry get alignment => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  Widget? get title => throw _privateConstructorUsedError;
+  Widget? get description => throw _privateConstructorUsedError;
   Widget? get icon => throw _privateConstructorUsedError;
   Color? get primaryColor => throw _privateConstructorUsedError;
   Color? get backgroundColor => throw _privateConstructorUsedError;
@@ -37,6 +37,7 @@ mixin _$ToastDetail {
       throw _privateConstructorUsedError;
   bool get newestOnTop => throw _privateConstructorUsedError;
   bool get showProgressBar => throw _privateConstructorUsedError;
+  bool get applyBlurEffect => throw _privateConstructorUsedError;
   bool get closeOnClick => throw _privateConstructorUsedError;
   bool get pauseOnHover => throw _privateConstructorUsedError;
   bool get dragToClose => throw _privateConstructorUsedError;
@@ -56,8 +57,8 @@ abstract class $ToastDetailCopyWith<$Res> {
       {ToastificationType type,
       ToastificationStyle style,
       AlignmentGeometry alignment,
-      String title,
-      String description,
+      Widget? title,
+      Widget? description,
       Widget? icon,
       Color? primaryColor,
       Color? backgroundColor,
@@ -72,6 +73,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
+      bool applyBlurEffect,
       bool closeOnClick,
       bool pauseOnHover,
       bool dragToClose});
@@ -93,8 +95,8 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? type = null,
     Object? style = null,
     Object? alignment = null,
-    Object? title = null,
-    Object? description = null,
+    Object? title = freezed,
+    Object? description = freezed,
     Object? icon = freezed,
     Object? primaryColor = freezed,
     Object? backgroundColor = freezed,
@@ -109,6 +111,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
+    Object? applyBlurEffect = null,
     Object? closeOnClick = null,
     Object? pauseOnHover = null,
     Object? dragToClose = null,
@@ -126,14 +129,14 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.alignment
           : alignment // ignore: cast_nullable_to_non_nullable
               as AlignmentGeometry,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as Widget?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Widget?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -189,6 +192,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
       showProgressBar: null == showProgressBar
           ? _value.showProgressBar
           : showProgressBar // ignore: cast_nullable_to_non_nullable
+              as bool,
+      applyBlurEffect: null == applyBlurEffect
+          ? _value.applyBlurEffect
+          : applyBlurEffect // ignore: cast_nullable_to_non_nullable
               as bool,
       closeOnClick: null == closeOnClick
           ? _value.closeOnClick
@@ -218,8 +225,8 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       {ToastificationType type,
       ToastificationStyle style,
       AlignmentGeometry alignment,
-      String title,
-      String description,
+      Widget? title,
+      Widget? description,
       Widget? icon,
       Color? primaryColor,
       Color? backgroundColor,
@@ -234,6 +241,7 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       CloseButtonShowType closeButtonShowType,
       bool newestOnTop,
       bool showProgressBar,
+      bool applyBlurEffect,
       bool closeOnClick,
       bool pauseOnHover,
       bool dragToClose});
@@ -253,8 +261,8 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? type = null,
     Object? style = null,
     Object? alignment = null,
-    Object? title = null,
-    Object? description = null,
+    Object? title = freezed,
+    Object? description = freezed,
     Object? icon = freezed,
     Object? primaryColor = freezed,
     Object? backgroundColor = freezed,
@@ -269,6 +277,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? closeButtonShowType = null,
     Object? newestOnTop = null,
     Object? showProgressBar = null,
+    Object? applyBlurEffect = null,
     Object? closeOnClick = null,
     Object? pauseOnHover = null,
     Object? dragToClose = null,
@@ -286,14 +295,14 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.alignment
           : alignment // ignore: cast_nullable_to_non_nullable
               as AlignmentGeometry,
-      title: null == title
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
+              as Widget?,
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Widget?,
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -350,6 +359,10 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.showProgressBar
           : showProgressBar // ignore: cast_nullable_to_non_nullable
               as bool,
+      applyBlurEffect: null == applyBlurEffect
+          ? _value.applyBlurEffect
+          : applyBlurEffect // ignore: cast_nullable_to_non_nullable
+              as bool,
       closeOnClick: null == closeOnClick
           ? _value.closeOnClick
           : closeOnClick // ignore: cast_nullable_to_non_nullable
@@ -373,8 +386,8 @@ class _$ToastDetailImpl implements _ToastDetail {
       {this.type = ToastificationType.success,
       this.style = ToastificationStyle.flat,
       this.alignment = Alignment.topLeft,
-      this.title = 'Component updates available.',
-      this.description = 'Component updates available.',
+      this.title = const Text('Component updates available.'),
+      this.description = const Text('Component updates available.'),
       this.icon,
       this.primaryColor,
       this.backgroundColor,
@@ -391,7 +404,8 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.showProgressBar = false,
       this.closeOnClick = true,
       this.pauseOnHover = true,
-      this.dragToClose = false});
+      this.dragToClose = false,
+      this.applyBlurEffect = false});
 
   @override
   @JsonKey()
@@ -405,10 +419,10 @@ class _$ToastDetailImpl implements _ToastDetail {
   final AlignmentGeometry alignment;
   @override
   @JsonKey()
-  final String title;
+  final Widget? title;
   @override
   @JsonKey()
-  final String description;
+  final Widget? description;
   @override
   final Widget? icon;
   @override
@@ -443,6 +457,8 @@ class _$ToastDetailImpl implements _ToastDetail {
   @override
   @JsonKey()
   final bool showProgressBar;
+  @JsonKey()
+  final bool applyBlurEffect;
   @override
   @JsonKey()
   final bool closeOnClick;
@@ -455,7 +471,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, applyBlurEffect: $applyBlurEffect, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose)';
   }
 
   @override
@@ -496,6 +512,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.newestOnTop == newestOnTop) &&
             (identical(other.showProgressBar, showProgressBar) ||
                 other.showProgressBar == showProgressBar) &&
+            (identical(other.applyBlurEffect, applyBlurEffect) ||
+                other.applyBlurEffect == applyBlurEffect) &&
             (identical(other.closeOnClick, closeOnClick) ||
                 other.closeOnClick == closeOnClick) &&
             (identical(other.pauseOnHover, pauseOnHover) ||
@@ -526,6 +544,7 @@ class _$ToastDetailImpl implements _ToastDetail {
         closeButtonShowType,
         newestOnTop,
         showProgressBar,
+        applyBlurEffect,
         closeOnClick,
         pauseOnHover,
         dragToClose
@@ -543,8 +562,8 @@ abstract class _ToastDetail implements ToastDetail {
       {final ToastificationType type,
       final ToastificationStyle style,
       final AlignmentGeometry alignment,
-      final String title,
-      final String description,
+      final Widget? title,
+      final Widget? description,
       final Widget? icon,
       final Color? primaryColor,
       final Color? backgroundColor,
@@ -559,6 +578,7 @@ abstract class _ToastDetail implements ToastDetail {
       final CloseButtonShowType closeButtonShowType,
       final bool newestOnTop,
       final bool showProgressBar,
+      final bool applyBlurEffect,
       final bool closeOnClick,
       final bool pauseOnHover,
       final bool dragToClose}) = _$ToastDetailImpl;
@@ -570,9 +590,9 @@ abstract class _ToastDetail implements ToastDetail {
   @override // placement
   AlignmentGeometry get alignment;
   @override
-  String get title;
+  Widget? get title;
   @override
-  String get description;
+  Widget? get description;
   @override
   Widget? get icon;
   @override
@@ -601,6 +621,8 @@ abstract class _ToastDetail implements ToastDetail {
   bool get newestOnTop;
   @override
   bool get showProgressBar;
+  @override
+  bool get applyBlurEffect;
   @override
   bool get closeOnClick;
   @override

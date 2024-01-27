@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/flat/flat_style.dart';
@@ -7,7 +9,7 @@ class FlatToastWidget extends StatelessWidget {
   const FlatToastWidget({
     super.key,
     required this.type,
-    required this.title,
+    this.title,
     this.description,
     this.primaryColor,
     this.backgroundColor,
@@ -24,12 +26,13 @@ class FlatToastWidget extends StatelessWidget {
     this.progressBarValue,
     this.progressBarWidget,
     this.progressIndicatorTheme,
+    this.applyBlurEffect = false,
   });
 
   final ToastificationType type;
 
-  final String title;
-  final String? description;
+  final Widget? title;
+  final Widget? description;
 
   final Widget? icon;
 
@@ -52,6 +55,8 @@ class FlatToastWidget extends StatelessWidget {
   final VoidCallback? onCloseTap;
 
   final bool? showCloseButton;
+
+  final bool applyBlurEffect;
 
   final bool showProgressBar;
   final double? progressBarValue;
@@ -80,48 +85,82 @@ class FlatToastWidget extends StatelessWidget {
       textDirection: direction,
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
-        child: Container(
-          constraints: const BoxConstraints(minHeight: 64),
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: borderRadius,
-            border: Border.fromBorderSide(borderSide),
-            boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-          ),
-          padding: padding ?? defaultStyle.padding(context),
-          child: Row(
-            children: [
-              icon ??
-                  Icon(
-                    defaultStyle.icon(context),
-                    size: 24,
-                    color: iconColor,
-                  ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: BuiltInContent(
-                  style: defaultStyle,
-                  title: title,
-                  description: description,
-                  primaryColor: primaryColor,
-                  foregroundColor: foregroundColor,
-                  backgroundColor: backgroundColor,
-                  showProgressBar: showProgressBar,
-                  progressBarValue: progressBarValue,
-                  progressBarWidget: progressBarWidget,
-                  progressIndicatorTheme: progressIndicatorTheme,
-                ),
-              ),
-              const SizedBox(width: 8),
-              ToastCloseButton(
-                showCloseButton: showCloseButton,
-                onCloseTap: onCloseTap,
-                defaultStyle: defaultStyle,
-              ),
-            ],
-          ),
+        child: buildBody(
+          context: context,
+          background: background,
+          borderRadius: borderRadius,
+          borderSide: borderSide,
+          iconColor: iconColor,
+          showCloseButton: showCloseButton,
+          applyBlurEffect: applyBlurEffect,
         ),
       ),
     );
+  }
+
+  Widget buildBody({
+    required Color background,
+    required BorderRadiusGeometry borderRadius,
+    required BorderSide borderSide,
+    required BuildContext context,
+    required Color iconColor,
+    required bool showCloseButton,
+    required bool applyBlurEffect,
+  }) {
+    Widget body = Container(
+      constraints: const BoxConstraints(minHeight: 64),
+      decoration: BoxDecoration(
+        color: applyBlurEffect ? background.withOpacity(0.5) : background,
+        borderRadius: borderRadius,
+        border: Border.fromBorderSide(borderSide),
+        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+      ),
+      padding: padding ?? defaultStyle.padding(context),
+      child: Row(
+        children: [
+          icon ??
+              Icon(
+                defaultStyle.icon(context),
+                size: 24,
+                color: iconColor,
+              ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: BuiltInContent(
+              style: defaultStyle,
+              title: title,
+              description: description,
+              primaryColor: primaryColor,
+              foregroundColor: foregroundColor,
+              backgroundColor: backgroundColor,
+              showProgressBar: showProgressBar,
+              progressBarValue: progressBarValue,
+              progressBarWidget: progressBarWidget,
+              progressIndicatorTheme: progressIndicatorTheme,
+            ),
+          ),
+          const SizedBox(width: 8),
+          ToastCloseButton(
+            showCloseButton: showCloseButton,
+            onCloseTap: onCloseTap,
+            icon: defaultStyle.closeIcon(context),
+            iconColor: foregroundColor?.withOpacity(.3) ??
+                defaultStyle.closeIconColor(context),
+          ),
+        ],
+      ),
+    );
+
+    if (applyBlurEffect) {
+      body = ClipRRect(
+        borderRadius: borderRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: body,
+        ),
+      );
+    }
+
+    return body;
   }
 }

@@ -6,7 +6,6 @@ import 'package:toastification/src/core/toastification_config.dart';
 ///
 /// so you can access it using [ToastificationConfigProvider.of(context)] in the above widgets
 ///
-///
 class ToastificationConfigProvider extends InheritedWidget {
   const ToastificationConfigProvider({
     super.key,
@@ -16,6 +15,7 @@ class ToastificationConfigProvider extends InheritedWidget {
 
   final ToastificationConfig config;
 
+  /// finds the possible nearest [ToastificationConfigProvider] in the upper tree
   static ToastificationConfigProvider? maybeOf(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<ToastificationConfigProvider>();

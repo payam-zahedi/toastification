@@ -2,6 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
+/// This class is responsible for creating the default animation for the toastification
+///
+/// for now, it creates fade and slide animations
+class DefaultToastificationTransition extends AnimatedWidget {
+  const DefaultToastificationTransition({
+    super.key,
+    required Animation<double> animation,
+    required this.alignment,
+    this.child,
+  }) : super(listenable: animation);
+
+  Animation<double> get animation => listenable as Animation<double>;
+
+  final AlignmentGeometry alignment;
+
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final alignment = this.alignment.resolve(Directionality.of(context));
+
+    final isCenter = alignment.x == 0;
+
+    final slideOffset = isCenter
+        ? alignment.y >= 0
+            ? const Offset(0, 1)
+            : const Offset(0, -1)
+        : alignment.x >= 0
+            ? const Offset(1, 0)
+            : const Offset(-1, 0);
+
+    return FadeTransition(
+      opacity: animation,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: slideOffset,
+          end: const Offset(0, 0),
+        ).animate(animation),
+        child: child,
+      ),
+    );
+  }
+}
+
+/// Using this class you can create your own animation for the timer of the toastification
+///
+/// for example, you can create a linear progress indicator which shows the remaining time of the toastification
 class ToastTimerAnimationBuilder extends StatefulWidget {
   const ToastTimerAnimationBuilder({
     super.key,

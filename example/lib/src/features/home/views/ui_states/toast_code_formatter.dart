@@ -15,11 +15,14 @@ class ToastCodeFormatter {
     context: context,
     type: ${toastDetail.type},
     style: ${toastDetail.style},
-    title: '${toastDetail.title}',
   ''');
 
-    if (toastDetail.description.isNotEmpty) {
-      code.writeln('\tdescription: \'${toastDetail.description}\',');
+    if (toastDetail.title != null) {
+      code.writeln('\ttitle: ${toastDetail.title},');
+    }
+
+    if (toastDetail.description != null) {
+      code.writeln('\tdescription: ${toastDetail.description},');
     }
 
     code.writeln('\talignment: ${toastDetail.alignment},');
@@ -102,6 +105,10 @@ class ToastCodeFormatter {
 
     if (toastDetail.pauseOnHover == false) {
       code.writeln('\tpauseOnHover: ${toastDetail.pauseOnHover},');
+    }
+
+    if (toastDetail.applyBlurEffect == true) {
+      code.writeln('\tapplyBlurEffect: ${toastDetail.applyBlurEffect},');
     }
 
     code.write(');');

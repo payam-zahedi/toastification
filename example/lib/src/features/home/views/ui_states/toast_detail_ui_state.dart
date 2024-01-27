@@ -32,8 +32,8 @@ class ToastDetail with _$ToastDetail {
     @Default(ToastificationStyle.flat) ToastificationStyle style,
     // placement
     @Default(Alignment.topLeft) AlignmentGeometry alignment,
-    @Default('Component updates available.') String title,
-    @Default('Component updates available.') String description,
+    @Default(Text('Component updates available.')) Widget? title,
+    @Default(Text('Component updates available.')) Widget? description,
     Widget? icon,
     Color? primaryColor,
     Color? backgroundColor,
@@ -52,5 +52,6 @@ class ToastDetail with _$ToastDetail {
     @Default(true) bool closeOnClick,
     @Default(true) bool pauseOnHover,
     @Default(false) bool dragToClose,
+    @Default(false) bool applyBlurEffect,
   }) = _ToastDetail;
 }
