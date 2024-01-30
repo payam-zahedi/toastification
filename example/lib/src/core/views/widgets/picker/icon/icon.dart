@@ -128,7 +128,7 @@ class IconPickerWidget extends ConsumerWidget {
             ),
             TextFormField(
               decoration: const InputDecoration(
-                label: Text("Search"),
+                hintText: "Search",
               ),
               onChanged: (value) =>
                   ref.read(searchedIconQuery.notifier).state = value,
