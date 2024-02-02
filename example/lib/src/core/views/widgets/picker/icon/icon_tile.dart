@@ -1,3 +1,4 @@
+import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +14,9 @@ class _IconTileState extends ConsumerState<IconTile> {
   bool hovered = false;
 
   void chooseIcon() {
+    ref.read(toastDetailControllerProvider.notifier).changeIcon(
+          Icon(widget.item.value),
+        );
     Navigator.pop(context);
   }
 
