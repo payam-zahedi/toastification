@@ -34,8 +34,8 @@ class _IconTileState extends ConsumerState<IconTile> {
         onTap: chooseIcon,
         child: Theme(
           data: ThemeData(
-            iconTheme: IconThemeData(
-              opacity: hovered ? 1 : .5,
+            iconTheme: const IconThemeData(
+              opacity: 1,
             ),
           ),
           child: Icon(
