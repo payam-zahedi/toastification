@@ -32,6 +32,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
     );
 
     final iconColor = ref.watch(toastDetailControllerProvider).primaryColor;
+    final icon = ref.watch(toastDetailControllerProvider).icon;
 
     final defaultStyle = switch (style) {
       ToastificationStyle.minimal => MinimalStyle(type),
@@ -69,7 +70,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Iconsax.tick_circle_copy,
+                icon ?? Iconsax.tick_circle_copy,
                 color: iconColor ?? defaultStyle.iconColor(context),
               ),
               const SizedBox(width: 8),

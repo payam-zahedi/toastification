@@ -32,7 +32,7 @@ class MinimalToastWidget extends StatelessWidget {
   final String title;
   final String? description;
 
-  final Widget? icon;
+  final IconData? icon;
 
   final MaterialColor? primaryColor;
 
@@ -100,12 +100,11 @@ class MinimalToastWidget extends StatelessWidget {
               padding: padding ?? defaultStyle.padding(context),
               child: Row(
                 children: [
-                  icon ??
-                      Icon(
-                        defaultStyle.icon(context),
-                        size: 24,
-                        color: iconColor,
-                      ),
+                  Icon(
+                    icon ?? defaultStyle.icon(context),
+                    size: 24,
+                    color: iconColor,
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: BuiltInContent(

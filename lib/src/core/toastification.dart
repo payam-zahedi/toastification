@@ -221,7 +221,7 @@ class Toastification {
     required String title,
     Duration? animationDuration,
     String? description,
-    Widget? icon,
+    IconData? icon,
     Color? primaryColor,
     Color? backgroundColor,
     Color? foregroundColor,

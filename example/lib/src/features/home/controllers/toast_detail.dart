@@ -32,7 +32,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(description: description);
   }
 
-  void changeIcon(Widget? icon) {
+  void changeIcon(IconData? icon) {
     state = state.copyWith(icon: icon);
   }
 

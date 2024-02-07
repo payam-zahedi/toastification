@@ -34,7 +34,7 @@ class ToastDetail with _$ToastDetail {
     @Default(Alignment.topLeft) AlignmentGeometry alignment,
     @Default('Component updates available.') String title,
     @Default('Component updates available.') String description,
-    Widget? icon,
+    IconData? icon,
     Color? primaryColor,
     Color? backgroundColor,
     Color? foregroundColor,
