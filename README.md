@@ -1,5 +1,4 @@
-# Toastification  [![pub package](https://img.shields.io/pub/v/toastification?color=blue&style=plastic)](https://pub.dartlang.org/packages/toastification)
-
+# Toastification [![pub package](https://img.shields.io/pub/v/toastification?color=blue&style=plastic)](https://pub.dartlang.org/packages/toastification)
 
 <p align="left">
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/intro.png?raw=true" width="100%" alt="Styles" />
@@ -22,7 +21,7 @@ https://github.com/payam-zahedi/toastification/assets/47558577/0e40aefd-b768-4d1
 
 To use Toastification, you need to add it to your pubspec.yaml file:
 
-``` yaml
+```yaml
 dependencies:
   toastification: latest_version
 ```
@@ -33,7 +32,7 @@ Then, run `flutter pub get` to install the package.
 
 To use Toastification in your Flutter app, first import the package:
 
-``` dart
+```dart
 import 'package:toastification/toastification.dart';
 ```
 
@@ -44,20 +43,18 @@ before we dive into the details, you should know that you can use Toastification
 
 you can either use the 'toastification' instance or 'Toastification()' constructor to access the methods.
 
-
 ## Show Method
-by using the `show` method, you can show predefined toast messages. you can use the `ToastificationType` enum to choose the type and `ToastificationStyle` enum to choose the style of the toast message.
 
+by using the `show` method, you can show predefined toast messages. you can use the `ToastificationType` enum to choose the type and `ToastificationStyle` enum to choose the style of the toast message.
 
 <p align="center">
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/types.png?raw=true" width="100%" alt="Types" />
 </p>
 
-
 ```dart
 toastification.show(
   context: context,
-  title: 'Hello, world!',
+  title: Text('Hello, world!'),
   autoCloseDuration: const Duration(seconds: 5),
 );
 ```
@@ -66,14 +63,15 @@ This will display a toast message with the text "Hello, world!".
 
 You can customize the appearance of the toast message by passing in additional parameters to the `show()` method:
 
-``` dart
+```dart
 toastification.show(
   context: context,
   type: ToastificationType.success,
   style: ToastificationStyle.flat,
   autoCloseDuration: const Duration(seconds: 5),
-  title: 'Hello, World!',
-  description: 'This is a sample toast message.',
+  title: Text('Hello, World!'),
+  // you can also use RichText widget for title and description parameters
+  description: RichText(text: const TextSpan(text: 'This is a sample toast message. ')),
   alignment: Alignment.topRight,
   direction: TextDirection.ltr,
   animationDuration: const Duration(milliseconds: 300),
@@ -103,6 +101,7 @@ toastification.show(
   closeOnClick: false,
   pauseOnHover: true,
   dragToClose: true,
+  applyBlurEffect: true,
   callbacks: ToastificationCallbacks(
     onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
     onCloseButtonTap: (toastItem) => print('Toast ${toastItem.id} close button tapped'),
@@ -120,7 +119,7 @@ we have 4 predefined styles for toast messages:
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/styles.png?raw=true" width="100%" alt="Styles" />
 </p>
 
-additionally, we added a `ToastificationStyle.simple` style to show a simple toast message with a single line of text. 
+additionally, we added a `ToastificationStyle.simple` style to show a simple toast message with a single line of text.
 
 ## ShowCustom Method
 
@@ -169,8 +168,8 @@ toastification.showCustom(
   },
 );
 ```
-With showCustom(), you're only limited by your imagination. Create a toast message that stands out from the crowd and adds a touch of personality to your app!
 
+With showCustom(), you're only limited by your imagination. Create a toast message that stands out from the crowd and adds a touch of personality to your app!
 
 ## Custom Animations
 
@@ -179,7 +178,7 @@ You can customize the animation of the toast notification by providing a Duratio
 ```dart
 toastification.show(
   context: context,
-  title: 'Hello, world!',
+  title: Text('Hello, world!'),
   // .... Other parameters
   animationDuration: const Duration(milliseconds: 300),
   animationBuilder: (context, animation, alignment, child) {
@@ -190,6 +189,7 @@ toastification.show(
   },
 );
 ```
+
 ## Global/Default Configuration
 
 Global configuration allows you to change the default behavior of Toastification across your entire application or in a specific page. To achieve this, you can provide your own `ToastificationConfig` using the `ToastificationConfigProvider` widget.
@@ -225,6 +225,7 @@ class MyApp extends StatelessWidget {
 ```
 
 #### Applying Global Configuration for a Specific Page
+
 To apply global configuration for a specific page, you can wrap the widget tree of that page with `ToastificationConfigProvider` and provide an instance of `ToastificationConfig`. Here's an example:
 
 ```dart
@@ -252,8 +253,6 @@ class HomePage extends StatelessWidget {
 
 In addition to displaying toast messages, the Toastification package also provides methods for managing and dismissing existing notifications. Here are the available methods:
 
-
-
 #### Find a Notification item
 
 Find a notification with the given ID
@@ -261,6 +260,7 @@ Find a notification with the given ID
 ```dart
 final notification = toastification.findToastificationItem('my_notification_id');
 ```
+
 #### Dismiss a Notification
 
 Remove a specific notification from the screen.
@@ -268,7 +268,7 @@ Remove a specific notification from the screen.
 ```dart
 final notification = toastification.show(
   context: context,
-  title: 'Hello',
+  title: Text('Hello'),
   autoCloseDuration: const Duration(seconds: 5),
 );
 
@@ -279,7 +279,7 @@ toastification.dismiss(notification);
 
 Remove a notification with the given ID from the screen.
 
-``` dart
+```dart
 toastification.dismissById('my_notification_id');
 ```
 
@@ -287,12 +287,10 @@ toastification.dismissById('my_notification_id');
 
 Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We want to extend our heartfelt appreciation to Sepide for her exceptional design work, which has made Toastification visually appealing and user-friendly. Special thanks to Sepide for her valuable contributions to this project.
 
-
 <p align="left">
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/design_mobile.png?raw=true" width="49%" alt="Styles" />
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/design_desktop.png?raw=true" width="49%" alt="Styles" />
 </p>
-
 
 ## Contributors
 
@@ -309,11 +307,10 @@ Contributions are always welcome! If you have any suggestions, bug reports, or f
 
 If you would like to contribute to the project, please read the [CONTRIBUTING.md](https://github.com/payam-zahedi/toastification/CONTRIBUTING.md "CONTRIBUTING.md") file for more information on how to contribute.
 
-
 ## License
 
 Toastification is released under the `BSD-3-Clause` License. You can find the full text of the license in the LICENSE file in the root of the repository.
 
 ---
 
-#### * Written with the help of Chat GPT
+#### \* Written with the help of Chat GPT

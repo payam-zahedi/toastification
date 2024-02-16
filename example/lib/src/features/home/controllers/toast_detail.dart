@@ -26,11 +26,11 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   }
 
   void changeTitle(String title) {
-    state = state.copyWith(title: title);
+    state = state.copyWith(title: Text(title));
   }
 
   void changeDescription(String description) {
-    state = state.copyWith(description: description);
+    state = state.copyWith(description: Text(description));
   }
 
   void changeIcon(IconModel? icon) {
@@ -99,5 +99,18 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
   void changePauseOnHover(bool pauseOnHover) {
     state = state.copyWith(pauseOnHover: pauseOnHover);
+  }
+
+  void changeApplyBlurEffect(bool applyBlurEffect) {
+    state = state.copyWith(applyBlurEffect: applyBlurEffect);
+  }
+
+  void resetColors() {
+    state = state.copyWith(
+      primaryColor: null,
+      backgroundColor: null,
+      foregroundColor: null,
+      iconColor: null,
+    );
   }
 }

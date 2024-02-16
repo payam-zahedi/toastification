@@ -77,14 +77,34 @@ class SubSection extends StatelessWidget {
     super.key,
     required this.title,
     required this.body,
+    this.action,
   });
 
   final String title;
   final Widget body;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    Widget titleSection = Text(
+      title,
+      style: theme.textTheme.titleMedium?.copyWith(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: theme.colorScheme.onSurface.withOpacity(.4),
+      ),
+    );
+
+    if (action != null) {
+      titleSection = Row(
+        children: [
+          Expanded(child: titleSection),
+          action!,
+        ],
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,14 +112,7 @@ class SubSection extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 12, bottom: 12),
-          child: Text(
-            title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: theme.colorScheme.onSurface.withOpacity(.4),
-            ),
-          ),
+          child: titleSection,
         ),
         body,
       ],

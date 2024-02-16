@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 import 'dart:math' as math;
 
-class ToastHolderWidget extends StatelessWidget {
+final class ToastHolderWidget extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
   const ToastHolderWidget({
     required this.item,
@@ -89,47 +89,6 @@ class _AnimationTransformer extends AnimatedWidget {
       alignment: axisAlign,
       heightFactor: math.max(slideInAnimation.value, 0.0),
       child: transformerBuilder(context, targetAnimation, alignment, child),
-    );
-  }
-}
-
-class ToastificationTransition extends AnimatedWidget {
-  const ToastificationTransition({
-    super.key,
-    required Animation<double> animation,
-    required this.alignment,
-    this.child,
-  }) : super(listenable: animation);
-
-  Animation<double> get animation => listenable as Animation<double>;
-
-  final AlignmentGeometry alignment;
-
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    final alignment = this.alignment.resolve(Directionality.of(context));
-
-    final isCenter = alignment.x == 0;
-
-    final slideOffset = isCenter
-        ? alignment.y >= 0
-            ? const Offset(0, 1)
-            : const Offset(0, -1)
-        : alignment.x >= 0
-            ? const Offset(1, 0)
-            : const Offset(-1, 0);
-
-    return FadeTransition(
-      opacity: animation,
-      child: SlideTransition(
-        position: Tween<Offset>(
-          begin: slideOffset,
-          end: const Offset(0, 0),
-        ).animate(animation),
-        child: child,
-      ),
     );
   }
 }

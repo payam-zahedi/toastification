@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
@@ -5,7 +7,7 @@ class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({
     super.key,
     required this.type,
-    required this.title,
+    this.title,
     this.primaryColor,
     this.backgroundColor,
     this.foregroundColor,
@@ -14,11 +16,12 @@ class SimpleToastWidget extends StatelessWidget {
     this.borderRadius,
     this.boxShadow,
     this.direction,
+    this.applyBlurEffect = false,
   });
 
   final ToastificationType type;
 
-  final String title;
+  final Widget? title;
 
   final MaterialColor? primaryColor;
 
@@ -35,6 +38,8 @@ class SimpleToastWidget extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
 
   final TextDirection? direction;
+
+  final bool applyBlurEffect;
 
   SimpleStyle get defaultStyle => SimpleStyle(type);
 
@@ -54,29 +59,57 @@ class SimpleToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context).primaryIconTheme,
         child: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: background,
-              borderRadius: borderRadius,
-              border: Border.fromBorderSide(borderSide),
-              boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-            ),
-            padding: padding ?? defaultStyle.padding(context),
-            child: BuiltInContent(
-              style: defaultStyle,
-              title: title,
-              description: null,
-              primaryColor: primaryColor,
-              foregroundColor: foregroundColor,
-              backgroundColor: backgroundColor,
-              showProgressBar: false,
-              progressBarValue: null,
-              progressBarWidget: null,
-              progressIndicatorTheme: null,
-            ),
+          child: buildContent(
+            context: context,
+            background: background,
+            borderSide: borderSide,
+            borderRadius: borderRadius,
+            applyBlurEffect: applyBlurEffect,
           ),
         ),
       ),
     );
+  }
+
+  Widget buildContent({
+    required BuildContext context,
+    required Color background,
+    required BorderSide borderSide,
+    required BorderRadiusGeometry borderRadius,
+    required bool applyBlurEffect,
+  }) {
+    Widget body = Container(
+      decoration: BoxDecoration(
+        color: applyBlurEffect ? background.withOpacity(0.5) : background,
+        border: Border.fromBorderSide(borderSide),
+        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+        borderRadius: borderRadius,
+      ),
+      padding: padding ?? defaultStyle.padding(context),
+      child: BuiltInContent(
+        style: defaultStyle,
+        title: title,
+        description: null,
+        primaryColor: primaryColor,
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
+        showProgressBar: false,
+        progressBarValue: null,
+        progressBarWidget: null,
+        progressIndicatorTheme: null,
+      ),
+    );
+
+    if (applyBlurEffect) {
+      body = ClipRRect(
+        borderRadius: borderRadius,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: body,
+        ),
+      );
+    }
+
+    return body;
   }
 }

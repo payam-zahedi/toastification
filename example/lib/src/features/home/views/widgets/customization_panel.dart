@@ -326,19 +326,28 @@ class _StyleSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    Color backgroundColor =
-        ref.watch(toastDetailControllerProvider).backgroundColor ??
-            theme.colorScheme.surfaceVariant;
-    Color primaryColor =
-        ref.watch(toastDetailControllerProvider).primaryColor ??
-            theme.colorScheme.onSurfaceVariant;
-    Color foregroundColor =
-        ref.watch(toastDetailControllerProvider).foregroundColor ??
-            theme.colorScheme.onSurface;
+    final type = ref.watch(
+      toastDetailControllerProvider.select((value) => value.type),
+    );
+    final style = ref.watch(
+      toastDetailControllerProvider.select((value) => value.style),
+    );
+
+    final builtInStyle = BuiltInStyle.fromToastificationStyle(style, type);
+
+    Color primaryColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.primaryColor)) ??
+        builtInStyle.primaryColor(context);
+    Color backgroundColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.backgroundColor)) ??
+        builtInStyle.backgroundColor(context);
+    Color foregroundColor = ref.watch(toastDetailControllerProvider
+            .select((value) => value.foregroundColor)) ??
+        builtInStyle.foregroundColor(context);
 
     return SubSection(
       title: 'STYLE',
+      action: _ResetButton(),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -414,6 +423,45 @@ class _StyleSection extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _ResetButton extends ConsumerWidget {
+  const _ResetButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final primaryColor = ref.watch(
+        toastDetailControllerProvider.select((value) => value.primaryColor));
+    final backgroundColor = ref.watch(
+        toastDetailControllerProvider.select((value) => value.backgroundColor));
+    final foregroundColor = ref.watch(
+        toastDetailControllerProvider.select((value) => value.foregroundColor));
+    final isThereAnyColorSelected = primaryColor != null ||
+        backgroundColor != null ||
+        foregroundColor != null;
+
+    return AnimatedCrossFade(
+      duration: const Duration(milliseconds: 400),
+      reverseDuration: const Duration(milliseconds: 400),
+      alignment: Alignment.centerRight,
+      crossFadeState: isThereAnyColorSelected
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+      firstChild: OutlinedButton.icon(
+        key: const ValueKey('reset'),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          minimumSize: const Size.square(42),
+        ),
+        onPressed: () {
+          ref.read(toastDetailControllerProvider.notifier).resetColors();
+        },
+        icon: const Icon(Iconsax.refresh_copy, size: 20),
+        label: const Text('Reset'),
+      ),
+      secondChild: const SizedBox(key: ValueKey('reset-space')),
     );
   }
 }

@@ -65,7 +65,7 @@ Widget _defaultAnimationBuilderConfig(
   Alignment alignment,
   Widget child,
 ) {
-  return ToastificationTransition(
+  return DefaultToastificationTransition(
     animation: animation,
     alignment: alignment,
     child: child,

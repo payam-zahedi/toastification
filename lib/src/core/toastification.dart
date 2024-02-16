@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
+import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';
 
 // TODO(payam): add navigator observer
@@ -14,8 +15,8 @@ import 'package:toastification/toastification.dart';
 /// toastification.show(
 ///   context: context,
 ///   alignment: Alignment.topRight,
-///   title: 'Hello World',
-///   description: 'This is a notification',
+///   title: Text('Hello World'),
+///   description: Text('This is a notification'),
 ///   type: ToastificationType.info,
 ///   style: ToastificationStyle.flat,
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -49,8 +50,8 @@ final toastification = Toastification();
 /// Toastification().show(
 ///   context: context,
 ///   alignment: Alignment.topRight,
-///   title: 'Hello World',
-///   description: 'This is a notification',
+///   title: Text('Hello World'),
+///   description: Text('This is a notification'),
 ///   type: ToastificationType.info,
 ///   style: ToastificationStyle.flat,
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -117,6 +118,7 @@ class Toastification {
     Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
+    DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     direction ??= Directionality.of(context);
@@ -202,8 +204,8 @@ class Toastification {
   /// toastification.show(
   ///   context: context,
   ///   alignment: Alignment.topRight,
-  ///   title: 'Hello World',
-  ///   description: 'This is a notification',
+  ///   title: Text('Hello World'),
+  ///   description: Text('This is a notification'),
   ///   type: ToastificationType.info,
   ///   style: ToastificationStyle.flat,
   ///   autoCloseDuration: Duration(seconds: 3),
@@ -218,9 +220,9 @@ class Toastification {
     ToastificationAnimationBuilder? animationBuilder,
     ToastificationType? type,
     ToastificationStyle? style,
-    required String title,
+    Widget? title,
     Duration? animationDuration,
-    String? description,
+    Widget? description,
     Widget? icon,
     Color? primaryColor,
     Color? backgroundColor,
@@ -235,7 +237,9 @@ class Toastification {
     CloseButtonShowType? closeButtonShowType,
     bool? closeOnClick,
     bool? dragToClose,
+    DismissDirection? dismissDirection,
     bool? pauseOnHover,
+    bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     return showCustom(
@@ -268,7 +272,9 @@ class Toastification {
           closeButtonShowType: closeButtonShowType,
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
+          dismissDirection: dismissDirection,
           pauseOnHover: pauseOnHover,
+          applyBlurEffect: applyBlurEffect,
           callbacks: callbacks,
         );
       },

@@ -3,7 +3,8 @@ import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 class SimpleStyle extends BuiltInStyle {
-  const SimpleStyle(ToastificationType type) : super(type);
+  const SimpleStyle(super.type);
+
   @override
   EdgeInsetsGeometry padding(BuildContext context) {
     return const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 16);
