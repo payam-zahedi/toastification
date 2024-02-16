@@ -18,7 +18,7 @@ class _IconTileState extends ConsumerState<IconTile> {
     ref.read(toastDetailControllerProvider.notifier).changeIcon(
           IconModel(
             name: widget.item.key,
-            iconData: Icon(widget.item.value),
+            iconData: widget.item.value,
           ),
         );
     Navigator.pop(context);

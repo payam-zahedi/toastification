@@ -200,10 +200,11 @@ class _InformationWidget extends ConsumerWidget {
                 ),
                 onPressed: () {
                   // openGithub(context);
+                  // TODO(mahmoud) : remove this toast
                   toastification.show(
                     context: context,
                     title: 'asdf',
-                    icon: Icon(Icons.abc),
+                    icon: const Icon(Icons.abc),
                   );
                 },
                 icon: const Icon(

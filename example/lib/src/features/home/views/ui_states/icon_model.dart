@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class IconModel {
   final String? name;
-  final Icon? iconData;
+  final IconData? iconData;
 
   IconModel({
     required this.name,
