@@ -75,7 +75,7 @@ class ToastPreview extends ConsumerWidget {
       primaryColor: toastDetail.primaryColor,
       foregroundColor: toastDetail.foregroundColor,
       backgroundColor: toastDetail.backgroundColor,
-      icon: toastDetail.icon?.data,
+      icon: toastDetail.icon,
       borderRadius: toastDetail.borderRadius,
       boxShadow: toastDetail.shadow.shadow,
       direction: toastDetail.direction,

@@ -42,7 +42,7 @@ class BuiltInBuilder extends StatelessWidget {
   final String title;
   final String? description;
 
-  final IconData? icon;
+  final Widget? icon;
 
   final Color? primaryColor;
   final Color? backgroundColor;
@@ -171,7 +171,7 @@ class BuiltInToastBuilder extends StatelessWidget {
   final String title;
   final String? description;
 
-  final IconData? icon;
+  final Widget? icon;
 
   final Color? primaryColor;
   final Color? backgroundColor;

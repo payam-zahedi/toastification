@@ -31,7 +31,7 @@ class FlatToastWidget extends StatelessWidget {
   final String title;
   final String? description;
 
-  final IconData? icon;
+  final Widget? icon;
 
   final MaterialColor? primaryColor;
 
@@ -91,11 +91,12 @@ class FlatToastWidget extends StatelessWidget {
           padding: padding ?? defaultStyle.padding(context),
           child: Row(
             children: [
-              Icon(
-                icon ?? defaultStyle.icon(context),
-                size: 24,
-                color: iconColor,
-              ),
+              icon ??
+                  Icon(
+                    defaultStyle.icon(context),
+                    size: 24,
+                    color: iconColor,
+                  ),
               const SizedBox(width: 12),
               Expanded(
                 child: BuiltInContent(

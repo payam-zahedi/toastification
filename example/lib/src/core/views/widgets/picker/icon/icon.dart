@@ -70,7 +70,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                icon?.data ?? Iconsax.tick_circle_copy,
+                Iconsax.tick_circle_copy,
                 color: iconColor ?? defaultStyle.iconColor(context),
               ),
               const SizedBox(width: 8),

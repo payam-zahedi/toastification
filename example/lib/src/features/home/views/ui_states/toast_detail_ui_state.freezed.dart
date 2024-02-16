@@ -22,7 +22,7 @@ mixin _$ToastDetail {
   AlignmentGeometry get alignment => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  IconModel? get icon => throw _privateConstructorUsedError;
+  Widget? get icon => throw _privateConstructorUsedError;
   Color? get primaryColor => throw _privateConstructorUsedError;
   Color? get backgroundColor => throw _privateConstructorUsedError;
   Color? get foregroundColor => throw _privateConstructorUsedError;
@@ -58,7 +58,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       AlignmentGeometry alignment,
       String title,
       String description,
-      IconModel? icon,
+      Widget? icon,
       Color? primaryColor,
       Color? backgroundColor,
       Color? foregroundColor,
@@ -137,7 +137,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconModel?,
+              as Widget?,
       primaryColor: freezed == primaryColor
           ? _value.primaryColor
           : primaryColor // ignore: cast_nullable_to_non_nullable
@@ -220,7 +220,7 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       AlignmentGeometry alignment,
       String title,
       String description,
-      IconModel? icon,
+      Widget? icon,
       Color? primaryColor,
       Color? backgroundColor,
       Color? foregroundColor,
@@ -297,7 +297,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
       icon: freezed == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
-              as IconModel?,
+              as Widget?,
       primaryColor: freezed == primaryColor
           ? _value.primaryColor
           : primaryColor // ignore: cast_nullable_to_non_nullable
@@ -410,7 +410,7 @@ class _$ToastDetailImpl implements _ToastDetail {
   @JsonKey()
   final String description;
   @override
-  final IconModel? icon;
+  final Widget? icon;
   @override
   final Color? primaryColor;
   @override
@@ -545,7 +545,7 @@ abstract class _ToastDetail implements ToastDetail {
       final AlignmentGeometry alignment,
       final String title,
       final String description,
-      final IconModel? icon,
+      final Widget? icon,
       final Color? primaryColor,
       final Color? backgroundColor,
       final Color? foregroundColor,
@@ -574,7 +574,7 @@ abstract class _ToastDetail implements ToastDetail {
   @override
   String get description;
   @override
-  IconModel? get icon;
+  Widget? get icon;
   @override
   Color? get primaryColor;
   @override
