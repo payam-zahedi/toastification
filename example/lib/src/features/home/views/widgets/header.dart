@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:toastification/toastification.dart';
 
 final _bigStyleProvider = StateProvider.autoDispose<bool>((ref) {
   return false;
@@ -198,7 +199,12 @@ class _InformationWidget extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
                 onPressed: () {
-                  openGithub(context);
+                  // openGithub(context);
+                  toastification.show(
+                    context: context,
+                    title: 'asdf',
+                    icon: Icon(Icons.abc),
+                  );
                 },
                 icon: const Icon(
                   Icons.star_rounded,

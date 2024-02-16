@@ -109,7 +109,7 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     autoCloseDuration: toastDetail.autoCloseDuration,
     animationDuration: toastDetail.animationDuration,
     animationBuilder: toastDetail.animationType.builder,
-    icon: toastDetail.icon,
+    icon: toastDetail.icon?.iconData,
     primaryColor: toastDetail.primaryColor,
     foregroundColor: toastDetail.foregroundColor,
     backgroundColor: toastDetail.backgroundColor,

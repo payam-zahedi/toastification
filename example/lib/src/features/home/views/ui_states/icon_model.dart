@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class IconModel {
   final String? name;
-  final IconData? data;
+  final Icon? iconData;
 
   IconModel({
     required this.name,
-    required this.data,
+    required this.iconData,
   });
 }

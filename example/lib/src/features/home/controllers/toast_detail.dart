@@ -1,4 +1,5 @@
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
+import 'package:example/src/features/home/views/ui_states/icon_model.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +33,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     state = state.copyWith(description: description);
   }
 
-  void changeIcon(Widget? icon) {
+  void changeIcon(IconModel? icon) {
     state = state.copyWith(icon: icon);
   }
 
