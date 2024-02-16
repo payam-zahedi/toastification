@@ -98,7 +98,8 @@ void openGithubPullRequests(BuildContext context) async {
   }
 }
 
-void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
+void showCurrentToast(
+    BuildContext context, ToastDetail toastDetail, BuiltInStyle defaultStyle) {
   toastification.show(
     context: context,
     alignment: toastDetail.alignment,
@@ -109,7 +110,12 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     autoCloseDuration: toastDetail.autoCloseDuration,
     animationDuration: toastDetail.animationDuration,
     animationBuilder: toastDetail.animationType.builder,
-    icon: Icon(toastDetail.icon?.iconData),
+    icon: toastDetail.icon == null
+        ? null
+        : Icon(
+            toastDetail.icon?.iconData,
+            color: toastDetail.primaryColor ?? defaultStyle.iconColor(context),
+          ),
     primaryColor: toastDetail.primaryColor,
     foregroundColor: toastDetail.foregroundColor,
     backgroundColor: toastDetail.backgroundColor,
