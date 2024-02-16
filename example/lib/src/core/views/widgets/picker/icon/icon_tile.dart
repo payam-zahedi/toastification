@@ -1,4 +1,5 @@
 import 'package:example/src/features/home/controllers/toast_detail.dart';
+import 'package:example/src/features/home/views/ui_states/icon_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,7 +16,10 @@ class _IconTileState extends ConsumerState<IconTile> {
 
   void chooseIcon() {
     ref.read(toastDetailControllerProvider.notifier).changeIcon(
-          widget.item.value,
+          IconModel(
+            name: widget.item.key,
+            data: widget.item.value,
+          ),
         );
     Navigator.pop(context);
   }

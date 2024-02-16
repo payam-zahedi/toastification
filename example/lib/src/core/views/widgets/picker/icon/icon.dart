@@ -70,7 +70,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                icon ?? Iconsax.tick_circle_copy,
+                icon?.data ?? Iconsax.tick_circle_copy,
                 color: iconColor ?? defaultStyle.iconColor(context),
               ),
               const SizedBox(width: 8),
@@ -109,7 +109,6 @@ class IconPickerWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final list = ref.watch(filteredListProvider);
-    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: SizedBox(
@@ -118,15 +117,6 @@ class IconPickerWidget extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Icons",
-              style: textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             TextFormField(
               decoration: const InputDecoration(
                 hintText: "Search",
