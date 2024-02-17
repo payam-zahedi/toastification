@@ -71,7 +71,7 @@ class ToastCodeFormatter {
     }
 
     if (toastDetail.icon != null) {
-      code.writeln('\ticon: ${toastDetail.icon},');
+      code.writeln('\ticon: Icon(Iconsax.${toastDetail.icon?.name}),');
     }
 
     if (toastDetail.borderRadius != null) {

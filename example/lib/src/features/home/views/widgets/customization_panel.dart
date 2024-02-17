@@ -2,7 +2,6 @@
 
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/border_holder.dart';
-import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
 import 'package:example/src/core/views/widgets/drop_down.dart';
 import 'package:example/src/core/views/widgets/expandable_section.dart';
@@ -318,47 +317,6 @@ class _ContentSection extends StatelessWidget {
     return SubSection(
       title: 'CONTENT',
       body: ContentWidget(),
-    );
-  }
-}
-
-class IconPicker extends ConsumerWidget {
-  const IconPicker({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final type = ref.watch(
-      toastDetailControllerProvider.select((value) => value.type),
-    );
-    final style = ref.watch(
-      toastDetailControllerProvider.select((value) => value.style),
-    );
-
-    final iconColor = ref.watch(toastDetailControllerProvider).primaryColor;
-
-    final defaultStyle = BuiltInStyle.fromToastificationStyle(style, type);
-
-    return BorderedContainer(
-      width: 120,
-      height: 48,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Iconsax.tick_circle_copy,
-            color: iconColor ?? defaultStyle.iconColor(context),
-          ),
-          const SizedBox(width: 8),
-          const Text('Icon'),
-          const SizedBox(width: 4),
-          const Icon(
-            Icons.keyboard_arrow_down,
-            size: 20,
-          ),
-        ],
-      ),
     );
   }
 }

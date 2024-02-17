@@ -84,7 +84,7 @@ class FlatToastWidget extends StatelessWidget {
     return Directionality(
       textDirection: direction,
       child: IconTheme(
-        data: Theme.of(context).primaryIconTheme,
+        data: Theme.of(context).primaryIconTheme.copyWith(color: iconColor),
         child: buildBody(
           context: context,
           background: background,

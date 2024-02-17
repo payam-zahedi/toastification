@@ -1,8 +1,8 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
+import 'package:example/src/core/views/widgets/picker/icon/icon.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
-import 'package:example/src/features/home/views/widgets/customization_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

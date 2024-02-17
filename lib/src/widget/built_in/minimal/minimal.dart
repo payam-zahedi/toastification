@@ -85,7 +85,7 @@ class MinimalToastWidget extends StatelessWidget {
     return Directionality(
       textDirection: direction,
       child: IconTheme(
-        data: Theme.of(context).primaryIconTheme,
+        data: Theme.of(context).primaryIconTheme.copyWith(color: iconColor),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 64),
           child: Material(
