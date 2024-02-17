@@ -1,3 +1,6 @@
+## 1.2.1
+* Enhancement: [Website] Adding Icon Picker Component by @mahmoud-eslami
+
 ## 1.2.0
 
 - [Website] Adding Color Picker Component by @mahmoud-eslami
