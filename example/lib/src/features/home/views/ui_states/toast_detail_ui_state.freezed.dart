@@ -12,7 +12,7 @@ part of 'toast_detail_ui_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$ToastDetail {
@@ -77,6 +77,8 @@ abstract class $ToastDetailCopyWith<$Res> {
       bool pauseOnHover,
       bool dragToClose,
       bool applyBlurEffect});
+
+  $IconModelCopyWith<$Res>? get icon;
 }
 
 /// @nodoc
@@ -211,6 +213,18 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
               as bool,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $IconModelCopyWith<$Res>? get icon {
+    if (_value.icon == null) {
+      return null;
+    }
+
+    return $IconModelCopyWith<$Res>(_value.icon!, (value) {
+      return _then(_value.copyWith(icon: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -245,6 +259,9 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       bool pauseOnHover,
       bool dragToClose,
       bool applyBlurEffect});
+
+  @override
+  $IconModelCopyWith<$Res>? get icon;
 }
 
 /// @nodoc

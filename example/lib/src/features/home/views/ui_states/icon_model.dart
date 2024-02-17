@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class IconModel {
-  final String? name;
-  final IconData? iconData;
+part 'icon_model.freezed.dart';
 
-  IconModel({
-    required this.name,
-    required this.iconData,
-  });
+@freezed
+class IconModel with _$IconModel {
+
+  factory IconModel({
+    required String name,
+    required IconData iconData,
+  }) = _IconModel;
 }
