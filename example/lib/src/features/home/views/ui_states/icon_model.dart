@@ -5,7 +5,6 @@ part 'icon_model.freezed.dart';
 
 @freezed
 class IconModel with _$IconModel {
-
   factory IconModel({
     required String name,
     required IconData iconData,
