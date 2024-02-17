@@ -47,21 +47,6 @@ class ToastPreview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
-    final type = ref.watch(
-      toastDetailControllerProvider.select((value) => value.type),
-    );
-    final style = ref.watch(
-      toastDetailControllerProvider.select((value) => value.style),
-    );
-
-    final defaultStyle = switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
-    };
-
     final edgeInsets = context.isInMobileZone
         ? const EdgeInsets.fromLTRB(10, 12, 10, 12)
         : const EdgeInsets.fromLTRB(12, 14, 12, 14);
@@ -81,22 +66,14 @@ class ToastPreview extends ConsumerWidget {
         child: Padding(
           padding: edgeInsets,
           child: Center(
-            child: _buildToastWidget(
-              context,
-              toastDetail,
-              defaultStyle,
-            ),
+            child: _buildToastWidget(toastDetail),
           ),
         ),
       ),
     );
   }
 
-  BuiltInToastBuilder _buildToastWidget(
-    BuildContext context,
-    ToastDetail toastDetail,
-    BuiltInStyle defaultStyle,
-  ) {
+  BuiltInToastBuilder _buildToastWidget(ToastDetail toastDetail) {
     return BuiltInToastBuilder(
       style: toastDetail.style,
       type: toastDetail.type,
@@ -105,13 +82,7 @@ class ToastPreview extends ConsumerWidget {
       primaryColor: toastDetail.primaryColor,
       foregroundColor: toastDetail.foregroundColor,
       backgroundColor: toastDetail.backgroundColor,
-      icon: toastDetail.icon == null
-          ? null
-          : Icon(
-              toastDetail.icon?.iconData,
-              color:
-                  toastDetail.primaryColor ?? defaultStyle.iconColor(context),
-            ),
+      icon: toastDetail.icon == null ? null : Icon(toastDetail.icon?.iconData),
       borderRadius: toastDetail.borderRadius,
       boxShadow: toastDetail.shadow.shadow,
       direction: toastDetail.direction,

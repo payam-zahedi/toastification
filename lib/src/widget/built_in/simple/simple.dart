@@ -56,16 +56,13 @@ class SimpleToastWidget extends StatelessWidget {
 
     return Directionality(
       textDirection: direction,
-      child: IconTheme(
-        data: Theme.of(context).primaryIconTheme,
-        child: Center(
-          child: buildContent(
-            context: context,
-            background: background,
-            borderSide: borderSide,
-            borderRadius: borderRadius,
-            applyBlurEffect: applyBlurEffect,
-          ),
+      child: Center(
+        child: buildContent(
+          context: context,
+          background: background,
+          borderSide: borderSide,
+          borderRadius: borderRadius,
+          applyBlurEffect: applyBlurEffect,
         ),
       ),
     );

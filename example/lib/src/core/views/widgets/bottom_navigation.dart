@@ -4,7 +4,6 @@ import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:toastification/toastification.dart';
 
 class BottomNavigationView extends ConsumerStatefulWidget {
   const BottomNavigationView({super.key});
@@ -108,21 +107,6 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
       mobile: const EdgeInsets.all(12),
     );
 
-    final type = ref.watch(
-      toastDetailControllerProvider.select((value) => value.type),
-    );
-    final style = ref.watch(
-      toastDetailControllerProvider.select((value) => value.style),
-    );
-
-    final defaultStyle = switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
-    };
-
     final previewButton = context.responsiveValue(
       desktop: OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
@@ -132,7 +116,7 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
         onPressed: () {
           final toastDetail = ref.read(toastDetailControllerProvider);
 
-          showCurrentToast(context, toastDetail, defaultStyle);
+          showCurrentToast(context, toastDetail);
         },
         icon: const Icon(Iconsax.monitor_copy, size: 20),
         label: const Text('Preview on Screen'),
@@ -145,7 +129,7 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
         onPressed: () {
           final toastDetail = ref.read(toastDetailControllerProvider);
 
-          showCurrentToast(context, toastDetail, defaultStyle);
+          showCurrentToast(context, toastDetail);
         },
         child: const Icon(Iconsax.mobile_copy, size: 20),
       ),
