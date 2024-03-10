@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:toastification/src/core/toastification_overlay_state.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -32,7 +33,7 @@ class ToastificationManager {
   /// if the [_notifications] list is empty, we will create the [_overlayEntry]
   /// otherwise we will just add the [item] to the [_notifications] list.
   ToastificationItem showCustom({
-    required BuildContext context,
+    BuildContext? context,
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
@@ -57,7 +58,7 @@ class ToastificationManager {
     var delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
-      _createNotificationHolder(context, overlay: overlayState);
+      _createNotificationHolder(context: context, overlay: overlayState);
 
       delay = const Duration(milliseconds: 300);
     }
@@ -186,19 +187,32 @@ class ToastificationManager {
     dismiss(_notifications.last);
   }
 
-  void _createNotificationHolder(
-    BuildContext context, {
+  void _createNotificationHolder({
+    BuildContext? context,
     OverlayState? overlay,
   }) {
-    final overlayState = overlay ?? Overlay.of(context, rootOverlay: true);
+    OverlayState? overlayState;
+    if (context?.mounted == true) {
+      overlayState = overlay ?? Overlay.of(context!, rootOverlay: true);
+    } else {
+      final overlaySupport = findToastificationOverlayState(context: context);
+      overlayState = overlaySupport?.overlayState;
+    }
 
-    _overlayEntry = _createOverlayEntry(context);
+    if (overlayState == null) {
+      assert(() {
+        debugPrint('Unable to find Toastification overlay!');
+        return true;
+      }());
+      return;
+    }
 
+    _overlayEntry = _createOverlayEntry();
     overlayState.insert(_overlayEntry!);
   }
 
   /// create a [OverlayEntry] as holder of the notifications
-  OverlayEntry _createOverlayEntry(BuildContext context) {
+  OverlayEntry _createOverlayEntry() {
     return OverlayEntry(
       opaque: false,
       builder: (context) {

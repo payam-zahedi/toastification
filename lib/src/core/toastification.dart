@@ -110,7 +110,7 @@ class Toastification {
   /// );
   /// ```
   ToastificationItem showCustom({
-    required BuildContext context,
+    BuildContext? context,
     AlignmentGeometry? alignment,
     TextDirection? direction,
     required ToastificationBuilder builder,
@@ -121,10 +121,14 @@ class Toastification {
     DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
-    direction ??= Directionality.of(context);
+    if (context?.mounted == true) {
+      direction ??= Directionality.of(context!);
+    }
 
-    final config = ToastificationConfigProvider.maybeOf(context)?.config ??
-        const ToastificationConfig();
+    // todo: find a way to get config without context
+    // final config = ToastificationConfigProvider.maybeOf(context)?.config ??
+    //     const ToastificationConfig();
+    const config = ToastificationConfig();
 
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
@@ -213,7 +217,7 @@ class Toastification {
   /// ```
   /// TODO(payam): add close button icon parameter
   ToastificationItem show({
-    required BuildContext context,
+    BuildContext? context,
     AlignmentGeometry? alignment,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
