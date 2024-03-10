@@ -21,7 +21,6 @@ void copyCode(BuildContext context, ToastDetail detail) async {
     (result) {
       if (result) {
         toastification.show(
-          context: context,
           type: ToastificationType.success,
           style: ToastificationStyle.flatColored,
           title: const Text('Clipboard'),
@@ -34,7 +33,6 @@ void copyCode(BuildContext context, ToastDetail detail) async {
         );
       } else {
         toastification.show(
-          context: context,
           type: ToastificationType.error,
           style: ToastificationStyle.flatColored,
           title: const Text('Ops!'),
@@ -55,7 +53,6 @@ void openGithub(BuildContext context) async {
   if (!await launchUrl(Uri.parse(url))) {
     if (context.mounted) {
       toastification.show(
-        context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
         title: const Text('Ops!'),
@@ -71,7 +68,6 @@ void openGithubIssues(BuildContext context) async {
   if (!await launchUrl(Uri.parse(url))) {
     if (context.mounted) {
       toastification.show(
-        context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
         title: const Text('Ops!'),
@@ -87,7 +83,6 @@ void openGithubPullRequests(BuildContext context) async {
   if (!await launchUrl(Uri.parse(url))) {
     if (context.mounted) {
       toastification.show(
-        context: context,
         type: ToastificationType.error,
         style: ToastificationStyle.flat,
         title: const Text('Ops!'),
@@ -100,7 +95,6 @@ void openGithubPullRequests(BuildContext context) async {
 
 void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
   toastification.show(
-    context: context,
     alignment: toastDetail.alignment,
     title: toastDetail.title,
     description: toastDetail.description,

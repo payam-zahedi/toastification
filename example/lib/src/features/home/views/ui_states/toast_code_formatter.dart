@@ -12,7 +12,6 @@ class ToastCodeFormatter {
 
     code.write('''
     toastification.show(
-    context: context,
     type: ${toastDetail.type},
     style: ${toastDetail.style},
   ''');
