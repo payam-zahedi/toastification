@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
+import 'package:toastification/src/core/toastification_overlay_state.dart';
 import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -121,14 +122,29 @@ class Toastification {
     DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
-    if (context?.mounted == true) {
-      direction ??= Directionality.of(context!);
+    final contextProvided = context?.mounted == true;
+
+    ToastificationOverlayState? toastificationOverlayState;
+    if (!contextProvided) {
+      toastificationOverlayState = findToastificationOverlayState();
     }
 
-    // todo: find a way to get config without context
-    // final config = ToastificationConfigProvider.maybeOf(context)?.config ??
-    //     const ToastificationConfig();
-    const config = ToastificationConfig();
+    overlayState ??= contextProvided
+        ? Overlay.of(context!, rootOverlay: true)
+        : toastificationOverlayState?.overlayState;
+
+    if (overlayState == null) {
+      assert(() {
+        debugPrint('Unable to find Toastification overlay!');
+        return true;
+      }());
+    }
+
+    /// find the config from the context or use the global config
+    final ToastificationConfig config = (contextProvided
+            ? ToastificationConfigProvider.maybeOf(context!)?.config
+            : toastificationOverlayState?.globalConfig) ??
+        const ToastificationConfig();
 
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
@@ -142,12 +158,11 @@ class Toastification {
     );
 
     return manager.showCustom(
-      context: context,
       builder: builder,
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
-      overlayState: overlayState,
+      overlayState: overlayState!,
       callbacks: callbacks,
     );
   }

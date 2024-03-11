@@ -69,9 +69,9 @@ class ToastificationWrapper extends StatelessWidget {
 }
 
 class _GlobalToastificationOverlay extends StatefulWidget {
-  final Widget child;
-
   _GlobalToastificationOverlay({required this.child}) : super(key: _keyFinder);
+
+  final Widget child;
 
   @override
   StatefulElement createElement() {
@@ -131,9 +131,15 @@ class _GlobalToastificationOverlayState
       ''');
     return navigator?.overlay;
   }
+
+  @override
+  ToastificationConfig? get globalConfig =>
+      ToastificationConfigProvider.maybeOf(context)?.config;
 }
 
 abstract class ToastificationOverlayState<T extends StatefulWidget>
     extends State<T> {
   OverlayState? get overlayState;
+
+  ToastificationConfig? get globalConfig;
 }
