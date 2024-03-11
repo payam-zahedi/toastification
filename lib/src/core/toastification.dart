@@ -134,10 +134,8 @@ class Toastification {
     ToastificationOverlayState? toastificationOverlayState;
     if (overlayState == null) {
       toastificationOverlayState = findToastificationOverlayState();
-      overlayState = toastificationOverlayState?.overlayState;
+      overlayState = toastificationOverlayState.overlayState;
     }
-
-    assert(overlayState != null, 'Unable to find Toastification overlay!');
 
     /// find the config from the context or use the global config
     final ToastificationConfig config = (contextProvided

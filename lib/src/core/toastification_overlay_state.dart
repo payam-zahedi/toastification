@@ -7,37 +7,31 @@ import 'package:toastification/src/widget/toastification_config_provider.dart';
 final GlobalKey<ToastificationOverlayState> _keyFinder =
     GlobalKey(debugLabel: 'toastification_overlay');
 
-ToastificationOverlayState? findToastificationOverlayState({
-  BuildContext? context,
-}) {
-  if (context == null) {
-    assert(
-      _debugInitialized,
-      'Toastification Not Initialized ! \n'
-      'ensure your app wrapped widget ToastificationWrapper',
-    );
-    final state = _keyFinder.currentState;
-    assert(() {
-      if (state == null) {
-        throw FlutterError(
-            '''We can't find ToastificationOverlayState in your app.
-         
-         Did you declare ToastificationWrapper in your app widget tree like this?
-         
-         ToastificationWrapper(
-           child: MaterialApp(
-             title: 'Overlay Support Example',
-             home: HomePage(),
-           ),
-         )
-      
-      ''');
-      }
-      return true;
-    }());
-    return state;
-  }
-  return context.findAncestorStateOfType<ToastificationOverlayState>();
+ToastificationOverlayState findToastificationOverlayState() {
+  assert(
+    _debugInitialized,
+    'Toastification is not initialized!\n'
+    'ensure your app is wrapped with a ToastificationWrapper widget',
+  );
+  final state = _keyFinder.currentState;
+  assert(() {
+    if (state == null) {
+      throw FlutterError(
+        '''
+We can't find ToastificationOverlayState in your app.
+Did you declare ToastificationWrapper in your app's widget tree like this?
+  ToastificationWrapper(
+    child: MaterialApp(
+      title: 'My Application',
+      home: HomePage(),
+    ),
+  );
+''',
+      );
+    }
+    return true;
+  }());
+  return state!;
 }
 
 bool _debugInitialized = false;
@@ -93,7 +87,7 @@ class _GlobalToastificationOverlayState
               .findAncestorWidgetOfExactType<_GlobalToastificationOverlay>() !=
           null) {
         throw FlutterError(
-          'There is already an ToastificationWrapper in the Widget tree.',
+          'There is already a ToastificationWrapper in the widget tree.',
         );
       }
       return true;
@@ -116,19 +110,19 @@ class _GlobalToastificationOverlayState
 
     context.visitChildElements(visitor);
 
-    assert(navigator != null,
-        '''It looks like you are not using Navigator in your app.
-         
-         do you wrapped you app widget like this?
-         
-         ToastificationWrapper(
-           child: MaterialApp(
-             title: 'My Application',
-             home: HomePage(),
-           ),
-         )
-      
-      ''');
+    assert(
+      navigator != null,
+      '''
+It looks like you are not using Navigator in your app.
+Did you wrapped your app widget like this?
+  ToastificationWrapper(
+    child: MaterialApp(
+      title: 'My Application',
+      home: HomePage(),
+    ),
+  )
+''',
+    );
     return navigator?.overlay;
   }
 
