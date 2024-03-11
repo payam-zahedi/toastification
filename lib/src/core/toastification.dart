@@ -124,21 +124,20 @@ class Toastification {
   }) {
     final contextProvided = context?.mounted == true;
 
+    if (contextProvided) {
+      direction ??= Directionality.of(context!);
+      overlayState ??= Overlay.maybeOf(context!, rootOverlay: true);
+    }
+
+    // if context isn't provided
+    // or the overlay can't be found in the provided context
     ToastificationOverlayState? toastificationOverlayState;
-    if (!contextProvided) {
-      toastificationOverlayState = findToastificationOverlayState();
-    }
-
-    overlayState ??= contextProvided
-        ? Overlay.of(context!, rootOverlay: true)
-        : toastificationOverlayState?.overlayState;
-
     if (overlayState == null) {
-      assert(() {
-        debugPrint('Unable to find Toastification overlay!');
-        return true;
-      }());
+      toastificationOverlayState = findToastificationOverlayState();
+      overlayState = toastificationOverlayState?.overlayState;
     }
+
+    assert(overlayState != null, 'Unable to find Toastification overlay!');
 
     /// find the config from the context or use the global config
     final ToastificationConfig config = (contextProvided
