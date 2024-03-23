@@ -4,9 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/widget/toastification_config_provider.dart';
 
+/// Key used to locate the [ToastificationOverlayState].
 final GlobalKey<ToastificationOverlayState> _keyFinder =
     GlobalKey(debugLabel: 'toastification_overlay');
 
+/// This method is responsible for finding [ToastificationOverlayState] with
+/// the GlobalKey that is assigned to [_GlobalToastificationOverlay].
+///
+/// It throws an error if the overlay state is not found and if the app
+/// is not wrapped with a [ToastificationWrapper].
 ToastificationOverlayState findToastificationOverlayState() {
   assert(
     _debugInitialized,
@@ -34,11 +40,16 @@ Did you declare ToastificationWrapper in your app's widget tree like this?
   return state!;
 }
 
+/// Flag indicating whether Toastification is initialized or not.
 bool _debugInitialized = false;
 
+/// A wrapper widget that allows the show method to work without context.
+/// You can also provides Toastification configurations to its descendants.
 class ToastificationWrapper extends StatelessWidget {
+  /// The child widget for this wrapper - Mainly MaterialApp
   final Widget child;
 
+  /// The configuration for Toastification.
   final ToastificationConfig? config;
 
   const ToastificationWrapper({
@@ -46,10 +57,6 @@ class ToastificationWrapper extends StatelessWidget {
     required this.child,
     this.config,
   }) : super(key: key);
-
-  ToastificationOverlayState? of(BuildContext context) {
-    return context.findAncestorStateOfType<ToastificationOverlayState>();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +69,13 @@ class ToastificationWrapper extends StatelessWidget {
   }
 }
 
+/// A global overlay widget for Toastification.
 class _GlobalToastificationOverlay extends StatefulWidget {
-  _GlobalToastificationOverlay({required this.child}) : super(key: _keyFinder);
-
+  /// The child widget.
   final Widget child;
+
+  /// Constructs a [_GlobalToastificationOverlay] with the provided [child].
+  _GlobalToastificationOverlay({required this.child}) : super(key: _keyFinder);
 
   @override
   StatefulElement createElement() {
@@ -95,6 +105,12 @@ class _GlobalToastificationOverlayState
     return widget.child;
   }
 
+  /// Retrieves the [OverlayState].
+  ///
+  /// It traverses the widget tree to find the nearest [Navigator] widget and
+  /// retrieves its overlay. If a [Navigator] widget is not found, it throws
+  /// an error indicating that the app's widget tree should be wrapped
+  /// with a [ToastificationWrapper].
   @override
   OverlayState? get overlayState {
     NavigatorState? navigator;
@@ -131,9 +147,12 @@ Did you wrapped your app widget like this?
       ToastificationConfigProvider.maybeOf(context)?.config;
 }
 
+/// Abstract class representing the state of a Toastification overlay.
 abstract class ToastificationOverlayState<T extends StatefulWidget>
     extends State<T> {
+  /// Retrieves the overlay state.
   OverlayState? get overlayState;
 
+  /// Retrieves the global Toastification configuration.
   ToastificationConfig? get globalConfig;
 }
