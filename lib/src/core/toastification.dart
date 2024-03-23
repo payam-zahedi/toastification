@@ -14,7 +14,7 @@ import 'package:toastification/toastification.dart';
 ///
 /// ```dart
 /// toastification.show(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   title: Text('Hello World'),
 ///   description: Text('This is a notification'),
@@ -30,7 +30,7 @@ import 'package:toastification/toastification.dart';
 ///
 /// ```dart
 /// toastification.showCustom(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   animationDuration: Duration(milliseconds: 500),
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -49,7 +49,7 @@ final toastification = Toastification();
 ///
 /// ```dart
 /// Toastification().show(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   title: Text('Hello World'),
 ///   description: Text('This is a notification'),
@@ -65,7 +65,7 @@ final toastification = Toastification();
 ///
 /// ```dart
 /// Toastification().showCustom(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   animationDuration: Duration(milliseconds: 500),
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -101,7 +101,7 @@ class Toastification {
   ///
   /// ```dart
   /// toastification.showCustom(
-  ///   context: context,
+  ///   context: context, // optional if ToastificationWrapper is in widget tree
   ///   alignment: Alignment.topRight,
   ///   animationDuration: Duration(milliseconds: 500),
   ///   autoCloseDuration: Duration(seconds: 3),
@@ -129,8 +129,8 @@ class Toastification {
       overlayState ??= Overlay.maybeOf(context!, rootOverlay: true);
     }
 
-    // if context isn't provided
-    // or the overlay can't be found in the provided context
+    /// if context isn't provided
+    /// or the overlay can't be found in the provided context
     ToastificationOverlayState? toastificationOverlayState;
     if (overlayState == null) {
       toastificationOverlayState = findToastificationOverlayState();
@@ -220,7 +220,7 @@ class Toastification {
   ///
   /// ```dart
   /// toastification.show(
-  ///   context: context,
+  ///   context: context, // optional if ToastificationWrapper is in widget tree
   ///   alignment: Alignment.topRight,
   ///   title: Text('Hello World'),
   ///   description: Text('This is a notification'),
