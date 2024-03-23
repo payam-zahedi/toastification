@@ -143,6 +143,8 @@ class Toastification {
             : toastificationOverlayState?.globalConfig) ??
         const ToastificationConfig();
 
+    direction ??= TextDirection.ltr;
+
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
 
