@@ -43,6 +43,18 @@ before we dive into the details, you should know that you can use Toastification
 
 you can either use the 'toastification' instance or 'Toastification()' constructor to access the methods.
 
+## Usage without context
+
+If you want to display toast messages without using `context`, wrap your AppWidget with `ToastificationWrapper` like this:
+
+```dart
+return ToastificationWrapper(
+  child: MaterialApp(),
+);
+```
+
+And now you can use both `toastification.show` and `toastification.showCustom` without providing `context`.
+
 ## Show Method
 
 by using the `show` method, you can show predefined toast messages. you can use the `ToastificationType` enum to choose the type and `ToastificationStyle` enum to choose the style of the toast message.

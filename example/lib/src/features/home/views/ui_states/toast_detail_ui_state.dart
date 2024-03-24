@@ -31,7 +31,6 @@ class ToastDetail with _$ToastDetail {
   factory ToastDetail({
     @Default(ToastificationType.success) ToastificationType type,
     @Default(ToastificationStyle.flat) ToastificationStyle style,
-    // placement
     @Default(Alignment.topLeft) AlignmentGeometry alignment,
     @Default(Text('Component updates available.')) Widget? title,
     @Default(Text('Component updates available.')) Widget? description,
@@ -48,7 +47,7 @@ class ToastDetail with _$ToastDetail {
     @Default(BounceAnimationType()) AnimationType animationType,
     @Default(CloseButtonShowType.always)
     CloseButtonShowType closeButtonShowType,
-    @Default(true) bool newestOnTop,
+    @Default(true) bool useContext,
     @Default(false) bool showProgressBar,
     @Default(true) bool closeOnClick,
     @Default(true) bool pauseOnHover,

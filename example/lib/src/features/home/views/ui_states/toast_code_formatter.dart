@@ -10,12 +10,14 @@ class ToastCodeFormatter {
   static String format(ToastDetail toastDetail) {
     final StringBuffer code = StringBuffer();
 
-    code.write('''
-    toastification.show(
-    context: context,
-    type: ${toastDetail.type},
-    style: ${toastDetail.style},
-  ''');
+    code.writeln('toastification.show(');
+
+    if (toastDetail.useContext) {
+      code.writeln('context: context,');
+    }
+
+    code.writeln('type: ${toastDetail.type},');
+    code.writeln('style: ${toastDetail.style},');
 
     if (toastDetail.title != null) {
       code.writeln('\ttitle: ${toastDetail.title},');

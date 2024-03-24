@@ -493,13 +493,12 @@ class _SystemSection extends ConsumerWidget {
             rowFit: FlexFit.tight,
             columnFit: FlexFit.loose,
             child: ToggleTile(
-              title: 'Newest on top',
-              value: ref.watch(toastDetailControllerProvider).newestOnTop,
-              soon: true,
+              title: 'Use BuildContext - Recommended',
+              value: ref.watch(toastDetailControllerProvider).useContext,
               onChanged: (value) {
                 ref
                     .read(toastDetailControllerProvider.notifier)
-                    .changeNewestOnTop(value!);
+                    .changeUseContext(value!);
               },
             ),
           ),

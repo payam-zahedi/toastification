@@ -17,8 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ToastDetail {
   ToastificationType get type => throw _privateConstructorUsedError;
-  ToastificationStyle get style =>
-      throw _privateConstructorUsedError; // placement
+  ToastificationStyle get style => throw _privateConstructorUsedError;
   AlignmentGeometry get alignment => throw _privateConstructorUsedError;
   Widget? get title => throw _privateConstructorUsedError;
   Widget? get description => throw _privateConstructorUsedError;
@@ -35,7 +34,7 @@ mixin _$ToastDetail {
   AnimationType get animationType => throw _privateConstructorUsedError;
   CloseButtonShowType get closeButtonShowType =>
       throw _privateConstructorUsedError;
-  bool get newestOnTop => throw _privateConstructorUsedError;
+  bool get useContext => throw _privateConstructorUsedError;
   bool get showProgressBar => throw _privateConstructorUsedError;
   bool get closeOnClick => throw _privateConstructorUsedError;
   bool get pauseOnHover => throw _privateConstructorUsedError;
@@ -71,7 +70,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       Duration? animationDuration,
       AnimationType animationType,
       CloseButtonShowType closeButtonShowType,
-      bool newestOnTop,
+      bool useContext,
       bool showProgressBar,
       bool closeOnClick,
       bool pauseOnHover,
@@ -111,7 +110,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? animationDuration = freezed,
     Object? animationType = null,
     Object? closeButtonShowType = null,
-    Object? newestOnTop = null,
+    Object? useContext = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
     Object? pauseOnHover = null,
@@ -187,9 +186,9 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
               as CloseButtonShowType,
-      newestOnTop: null == newestOnTop
-          ? _value.newestOnTop
-          : newestOnTop // ignore: cast_nullable_to_non_nullable
+      useContext: null == useContext
+          ? _value.useContext
+          : useContext // ignore: cast_nullable_to_non_nullable
               as bool,
       showProgressBar: null == showProgressBar
           ? _value.showProgressBar
@@ -253,7 +252,7 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       Duration? animationDuration,
       AnimationType animationType,
       CloseButtonShowType closeButtonShowType,
-      bool newestOnTop,
+      bool useContext,
       bool showProgressBar,
       bool closeOnClick,
       bool pauseOnHover,
@@ -292,7 +291,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? animationDuration = freezed,
     Object? animationType = null,
     Object? closeButtonShowType = null,
-    Object? newestOnTop = null,
+    Object? useContext = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
     Object? pauseOnHover = null,
@@ -368,9 +367,9 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
               as CloseButtonShowType,
-      newestOnTop: null == newestOnTop
-          ? _value.newestOnTop
-          : newestOnTop // ignore: cast_nullable_to_non_nullable
+      useContext: null == useContext
+          ? _value.useContext
+          : useContext // ignore: cast_nullable_to_non_nullable
               as bool,
       showProgressBar: null == showProgressBar
           ? _value.showProgressBar
@@ -417,7 +416,7 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.animationDuration,
       this.animationType = const BounceAnimationType(),
       this.closeButtonShowType = CloseButtonShowType.always,
-      this.newestOnTop = true,
+      this.useContext = true,
       this.showProgressBar = false,
       this.closeOnClick = true,
       this.pauseOnHover = true,
@@ -430,7 +429,6 @@ class _$ToastDetailImpl implements _ToastDetail {
   @override
   @JsonKey()
   final ToastificationStyle style;
-// placement
   @override
   @JsonKey()
   final AlignmentGeometry alignment;
@@ -470,7 +468,7 @@ class _$ToastDetailImpl implements _ToastDetail {
   final CloseButtonShowType closeButtonShowType;
   @override
   @JsonKey()
-  final bool newestOnTop;
+  final bool useContext;
   @override
   @JsonKey()
   final bool showProgressBar;
@@ -489,7 +487,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, newestOnTop: $newestOnTop, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect)';
   }
 
   @override
@@ -526,8 +524,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.animationType == animationType) &&
             (identical(other.closeButtonShowType, closeButtonShowType) ||
                 other.closeButtonShowType == closeButtonShowType) &&
-            (identical(other.newestOnTop, newestOnTop) ||
-                other.newestOnTop == newestOnTop) &&
+            (identical(other.useContext, useContext) ||
+                other.useContext == useContext) &&
             (identical(other.showProgressBar, showProgressBar) ||
                 other.showProgressBar == showProgressBar) &&
             (identical(other.closeOnClick, closeOnClick) ||
@@ -560,7 +558,7 @@ class _$ToastDetailImpl implements _ToastDetail {
         animationDuration,
         animationType,
         closeButtonShowType,
-        newestOnTop,
+        useContext,
         showProgressBar,
         closeOnClick,
         pauseOnHover,
@@ -594,7 +592,7 @@ abstract class _ToastDetail implements ToastDetail {
       final Duration? animationDuration,
       final AnimationType animationType,
       final CloseButtonShowType closeButtonShowType,
-      final bool newestOnTop,
+      final bool useContext,
       final bool showProgressBar,
       final bool closeOnClick,
       final bool pauseOnHover,
@@ -605,7 +603,7 @@ abstract class _ToastDetail implements ToastDetail {
   ToastificationType get type;
   @override
   ToastificationStyle get style;
-  @override // placement
+  @override
   AlignmentGeometry get alignment;
   @override
   Widget? get title;
@@ -636,7 +634,7 @@ abstract class _ToastDetail implements ToastDetail {
   @override
   CloseButtonShowType get closeButtonShowType;
   @override
-  bool get newestOnTop;
+  bool get useContext;
   @override
   bool get showProgressBar;
   @override

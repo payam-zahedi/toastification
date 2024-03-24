@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
+import 'package:toastification/src/core/toastification_overlay_state.dart';
 import 'package:toastification/src/widget/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -13,7 +14,7 @@ import 'package:toastification/toastification.dart';
 ///
 /// ```dart
 /// toastification.show(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   title: Text('Hello World'),
 ///   description: Text('This is a notification'),
@@ -29,7 +30,7 @@ import 'package:toastification/toastification.dart';
 ///
 /// ```dart
 /// toastification.showCustom(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   animationDuration: Duration(milliseconds: 500),
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -48,7 +49,7 @@ final toastification = Toastification();
 ///
 /// ```dart
 /// Toastification().show(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   title: Text('Hello World'),
 ///   description: Text('This is a notification'),
@@ -64,7 +65,7 @@ final toastification = Toastification();
 ///
 /// ```dart
 /// Toastification().showCustom(
-///   context: context,
+///   context: context, // optional if ToastificationWrapper is in widget tree
 ///   alignment: Alignment.topRight,
 ///   animationDuration: Duration(milliseconds: 500),
 ///   autoCloseDuration: Duration(seconds: 3),
@@ -100,7 +101,7 @@ class Toastification {
   ///
   /// ```dart
   /// toastification.showCustom(
-  ///   context: context,
+  ///   context: context, // optional if ToastificationWrapper is in widget tree
   ///   alignment: Alignment.topRight,
   ///   animationDuration: Duration(milliseconds: 500),
   ///   autoCloseDuration: Duration(seconds: 3),
@@ -110,7 +111,7 @@ class Toastification {
   /// );
   /// ```
   ToastificationItem showCustom({
-    required BuildContext context,
+    BuildContext? context,
     AlignmentGeometry? alignment,
     TextDirection? direction,
     required ToastificationBuilder builder,
@@ -121,10 +122,28 @@ class Toastification {
     DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
-    direction ??= Directionality.of(context);
+    final contextProvided = context?.mounted == true;
 
-    final config = ToastificationConfigProvider.maybeOf(context)?.config ??
+    if (contextProvided) {
+      direction ??= Directionality.of(context!);
+      overlayState ??= Overlay.maybeOf(context!, rootOverlay: true);
+    }
+
+    /// if context isn't provided
+    /// or the overlay can't be found in the provided context
+    ToastificationOverlayState? toastificationOverlayState;
+    if (overlayState == null) {
+      toastificationOverlayState = findToastificationOverlayState();
+      overlayState = toastificationOverlayState.overlayState;
+    }
+
+    /// find the config from the context or use the global config
+    final ToastificationConfig config = (contextProvided
+            ? ToastificationConfigProvider.maybeOf(context!)?.config
+            : toastificationOverlayState?.globalConfig) ??
         const ToastificationConfig();
+
+    direction ??= TextDirection.ltr;
 
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
@@ -138,12 +157,11 @@ class Toastification {
     );
 
     return manager.showCustom(
-      context: context,
       builder: builder,
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
-      overlayState: overlayState,
+      overlayState: overlayState!,
       callbacks: callbacks,
     );
   }
@@ -202,7 +220,7 @@ class Toastification {
   ///
   /// ```dart
   /// toastification.show(
-  ///   context: context,
+  ///   context: context, // optional if ToastificationWrapper is in widget tree
   ///   alignment: Alignment.topRight,
   ///   title: Text('Hello World'),
   ///   description: Text('This is a notification'),
@@ -213,7 +231,7 @@ class Toastification {
   /// ```
   /// TODO(payam): add close button icon parameter
   ToastificationItem show({
-    required BuildContext context,
+    BuildContext? context,
     AlignmentGeometry? alignment,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
