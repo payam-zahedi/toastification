@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:toastification/src/core/animated_scroll_view.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -21,7 +22,7 @@ class ToastificationManager {
   OverlayEntry? _overlayEntry;
 
   /// this key is attached to [AnimatedList] so we can add or remove items using it.
-  final _listGlobalKey = GlobalKey<AnimatedListState>();
+  final _listGlobalKey = GlobalKey<CustomAnimatedListState>();
 
   /// this is the list of items that are currently shown
   /// if the list is empty, the overlay entry will be removed
@@ -81,8 +82,7 @@ class ToastificationManager {
   /// Finds the [ToastificationItem] with the given [id].
   ToastificationItem? findToastificationItem(String id) {
     try {
-      return _notifications
-          .firstWhereOrNull((notification) => notification.id == id);
+      return _notifications.firstWhereOrNull((notification) => notification.id == id);
     } catch (e) {
       return null;
     }
@@ -202,7 +202,7 @@ class ToastificationManager {
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
-            child: AnimatedList(
+            child: CustomAnimatedList(
               key: _listGlobalKey,
               initialItemCount: _notifications.length,
               reverse: alignment.y >= 0,
@@ -236,6 +236,5 @@ class ToastificationManager {
   ) =>
       item.animationBuilder ?? config.animationBuilder;
 
-  Duration _createAnimationDuration(ToastificationItem item) =>
-      item.animationDuration ?? config.animationDuration;
+  Duration _createAnimationDuration(ToastificationItem item) => item.animationDuration ?? config.animationDuration;
 }
