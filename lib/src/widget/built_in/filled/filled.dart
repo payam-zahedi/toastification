@@ -18,6 +18,7 @@ class FilledToastWidget extends StatelessWidget {
     this.brightness,
     this.padding,
     this.borderRadius,
+    this.borderSide,
     this.boxShadow,
     this.direction,
     this.onCloseTap,
@@ -47,6 +48,8 @@ class FilledToastWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   final BorderRadiusGeometry? borderRadius;
+
+  final BorderSide? borderSide;
 
   final List<BoxShadow>? boxShadow;
 
@@ -78,7 +81,7 @@ class FilledToastWidget extends StatelessWidget {
     final borderRadius =
         this.borderRadius ?? defaultStyle.borderRadius(context);
 
-    final borderSide = defaultStyle.borderSide(context);
+    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
 
     final direction = this.direction ?? Directionality.of(context);
 

@@ -84,6 +84,7 @@ class ToastPreview extends ConsumerWidget {
       backgroundColor: toastDetail.backgroundColor,
       icon: toastDetail.icon == null ? null : Icon(toastDetail.icon?.iconData),
       borderRadius: toastDetail.borderRadius,
+      borderSide: toastDetail.borderSide,
       boxShadow: toastDetail.shadow.shadow,
       direction: toastDetail.direction,
       showProgressBar: toastDetail.showProgressBar,

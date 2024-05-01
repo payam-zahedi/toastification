@@ -14,6 +14,7 @@ class SimpleToastWidget extends StatelessWidget {
     this.brightness,
     this.padding,
     this.borderRadius,
+    this.borderSide,
     this.boxShadow,
     this.direction,
     this.applyBlurEffect = false,
@@ -35,6 +36,8 @@ class SimpleToastWidget extends StatelessWidget {
 
   final BorderRadiusGeometry? borderRadius;
 
+  final BorderSide? borderSide;
+
   final List<BoxShadow>? boxShadow;
 
   final TextDirection? direction;
@@ -50,7 +53,7 @@ class SimpleToastWidget extends StatelessWidget {
     final borderRadius =
         this.borderRadius ?? defaultStyle.borderRadius(context);
 
-    final borderSide = defaultStyle.borderSide(context);
+    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
 
     final direction = this.direction ?? Directionality.of(context);
 

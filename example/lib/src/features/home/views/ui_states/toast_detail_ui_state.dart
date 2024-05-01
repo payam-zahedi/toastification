@@ -40,6 +40,7 @@ class ToastDetail with _$ToastDetail {
     Color? foregroundColor,
     Color? iconColor,
     BorderRadiusGeometry? borderRadius,
+    BorderSide? borderSide,
     @Default(ShadowOptions.none) ShadowOptions shadow,
     TextDirection? direction,
     @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
