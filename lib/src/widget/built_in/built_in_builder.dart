@@ -23,6 +23,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.padding,
     this.margin,
     this.borderRadius,
+    this.borderSide,
     this.boxShadow,
     this.showProgressBar,
     this.applyBlurEffect,
@@ -56,6 +57,8 @@ class BuiltInBuilder extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
 
   final BorderRadiusGeometry? borderRadius;
+
+  final BorderSide? borderSide;
 
   final List<BoxShadow>? boxShadow;
 
@@ -110,6 +113,7 @@ class BuiltInBuilder extends StatelessWidget {
         brightness: brightness,
         padding: padding,
         borderRadius: borderRadius,
+        borderSide: borderSide,
         boxShadow: boxShadow,
         onCloseTap: _onCloseButtonTap(),
         showProgressBar: showProgressBar,
@@ -157,6 +161,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.brightness,
     this.padding,
     this.borderRadius,
+    this.borderSide,
     this.boxShadow,
     required this.onCloseTap,
     this.showProgressBar,
@@ -185,6 +190,8 @@ class BuiltInToastBuilder extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   final BorderRadiusGeometry? borderRadius;
+
+  final BorderSide? borderSide;
 
   final List<BoxShadow>? boxShadow;
 
@@ -240,6 +247,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
+              borderSide: borderSide,
               boxShadow: boxShadow,
               direction: direction,
               onCloseTap: onCloseTap,
@@ -260,6 +268,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
+              borderSide: borderSide,
               boxShadow: boxShadow,
               direction: direction,
               onCloseTap: onCloseTap,
@@ -280,6 +289,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
+              borderSide: borderSide,
               boxShadow: boxShadow,
               direction: direction,
               onCloseTap: onCloseTap,
@@ -300,6 +310,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
+              borderSide: borderSide,
               boxShadow: boxShadow,
               direction: direction,
               onCloseTap: onCloseTap,
@@ -318,6 +329,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
+              borderSide: borderSide,
               boxShadow: boxShadow,
               direction: direction,
               applyBlurEffect: applyBlurEffect ?? false,

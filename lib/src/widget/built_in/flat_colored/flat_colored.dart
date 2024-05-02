@@ -18,6 +18,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.brightness,
     this.padding,
     this.borderRadius,
+    this.borderSide,
     this.boxShadow,
     this.direction,
     this.onCloseTap,
@@ -48,6 +49,8 @@ class FlatColoredToastWidget extends StatelessWidget {
 
   final BorderRadiusGeometry? borderRadius;
 
+  final BorderSide? borderSide;
+
   final List<BoxShadow>? boxShadow;
 
   final TextDirection? direction;
@@ -76,7 +79,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     final borderRadius =
         this.borderRadius ?? defaultStyle.borderRadius(context);
 
-    final borderSide =
+    final borderSide = this.borderSide ??
         defaultStyle.borderSide(context).copyWith(color: primaryColor);
 
     final direction = this.direction ?? Directionality.of(context);
