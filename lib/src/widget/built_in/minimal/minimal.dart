@@ -85,6 +85,8 @@ class MinimalToastWidget extends StatelessWidget {
         (this.borderRadius ?? defaultStyle.borderRadius(context))
             .resolve(direction);
 
+    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
+
     return Directionality(
       textDirection: direction,
       child: IconTheme(
@@ -103,6 +105,7 @@ class MinimalToastWidget extends StatelessWidget {
               context: context,
               background: background,
               borderRadius: borderRadius,
+              borderSide: borderSide,
               iconColor: iconColor,
               showCloseButton: showCloseButton,
               applyBlurEffect: applyBlurEffect,
@@ -117,6 +120,7 @@ class MinimalToastWidget extends StatelessWidget {
     required BuildContext context,
     required Color background,
     required BorderRadius borderRadius,
+    required BorderSide borderSide,
     required Color iconColor,
     required bool showCloseButton,
     required bool applyBlurEffect,
@@ -125,7 +129,7 @@ class MinimalToastWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: applyBlurEffect ? background.withOpacity(0.5) : background,
         borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
-        border: Border.fromBorderSide(defaultStyle.borderSide(context)),
+        border: Border.fromBorderSide(borderSide),
         boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
       ),
       padding: padding ?? defaultStyle.padding(context),
