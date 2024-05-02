@@ -1,3 +1,7 @@
+## 2.0.0
+* Feature: optional context by @SamadiPour
+* Add optional BorderSide option by @LampeMW
+
 ## 1.2.1
 * Enhancement: [Website] Adding Icon Picker Component by @mahmoud-eslami
 

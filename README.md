@@ -65,7 +65,7 @@ by using the `show` method, you can show predefined toast messages. you can use 
 
 ```dart
 toastification.show(
-  context: context,
+  context: context, // optional if you use ToastificationWrapper
   title: Text('Hello, world!'),
   autoCloseDuration: const Duration(seconds: 5),
 );
@@ -77,7 +77,7 @@ You can customize the appearance of the toast message by passing in additional p
 
 ```dart
 toastification.show(
-  context: context,
+  context: context, // optional if you use ToastificationWrapper
   type: ToastificationType.success,
   style: ToastificationStyle.flat,
   autoCloseDuration: const Duration(seconds: 5),
@@ -143,7 +143,7 @@ Here's an example of how to use showCustom() to create a custom toast message wi
 
 ```dart
 toastification.showCustom(
-  context: context,
+  context: context, // optional if you use ToastificationWrapper
   autoCloseDuration: const Duration(seconds: 5),
   alignment: Alignment.topRight,
   builder: (BuildContext context, ToastificationItem holder) {
