@@ -30,6 +30,8 @@ migrate_working_dir/
 build/
 
 # fvm 
-.fvm/flutter_sdk
 
 .vscode
+
+# FVM Version Cache
+.fvm/
