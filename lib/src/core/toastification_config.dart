@@ -5,6 +5,7 @@ import 'package:toastification/toastification.dart';
 const _defaultAlignment = AlignmentDirectional.topEnd;
 const _itemAnimationDuration = Duration(milliseconds: 600);
 const _defaultWidth = 400.0;
+const _defaultClipBehavior = Clip.none;
 const _defaultMargin = EdgeInsets.symmetric(vertical: 32);
 
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
@@ -21,6 +22,7 @@ class ToastificationConfig extends Equatable {
   const ToastificationConfig({
     this.alignment = _defaultAlignment,
     this.itemWidth = _defaultWidth,
+    this.clipBehavior = _defaultClipBehavior,
     this.animationDuration = _itemAnimationDuration,
     this.animationBuilder = _defaultAnimationBuilderConfig,
     this.marginBuilder = _defaultMarginBuilder,
@@ -28,6 +30,9 @@ class ToastificationConfig extends Equatable {
 
   final AlignmentGeometry alignment;
   final double itemWidth;
+
+  /// The ClipBehavior of [AnimatedList], used as entry point for all [ToastificationItem]s' widgets under the hood. The default value is [Clip.none].
+  final Clip clipBehavior;
   final Duration animationDuration;
   final ToastificationAnimationBuilder animationBuilder;
   final EdgeInsetsGeometry Function(AlignmentGeometry alignment) marginBuilder;
@@ -36,6 +41,7 @@ class ToastificationConfig extends Equatable {
   ToastificationConfig copyWith({
     AlignmentGeometry? alignment,
     double? itemWidth,
+    Clip? clipBehavior,
     Duration? animationDuration,
     ToastificationAnimationBuilder? animationBuilder,
     EdgeInsetsGeometry Function(AlignmentGeometry alignment)? marginBuilder,
@@ -43,6 +49,7 @@ class ToastificationConfig extends Equatable {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
       itemWidth: itemWidth ?? this.itemWidth,
+      clipBehavior: clipBehavior ?? this.clipBehavior,
       animationDuration: animationDuration ?? this.animationDuration,
       animationBuilder: animationBuilder ?? this.animationBuilder,
       marginBuilder: marginBuilder ?? this.marginBuilder,
