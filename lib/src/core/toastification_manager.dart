@@ -204,6 +204,7 @@ class ToastificationManager {
             ),
             child: AnimatedList(
               key: _listGlobalKey,
+              clipBehavior: config.clipBehavior,
               initialItemCount: _notifications.length,
               reverse: alignment.y >= 0,
               primary: true,
