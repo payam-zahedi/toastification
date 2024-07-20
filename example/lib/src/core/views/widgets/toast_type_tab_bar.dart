@@ -147,7 +147,7 @@ class TabTypeItem extends StatelessWidget {
 
     return Material(
       animationDuration: const Duration(milliseconds: 500),
-      color: selected ? color.withOpacity(.1) : theme.colorScheme.background,
+      color: selected ? color.withOpacity(.1) : theme.colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
         side: BorderSide(

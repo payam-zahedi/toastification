@@ -6,8 +6,6 @@ const _onPrimary = Color(0xffFFFFFF);
 const _onPrimaryContainer = Color(0xff303030);
 const _secondary = Color(0xffFFCE51);
 const _onSecondary = Color(0xff474648);
-const _background = Color(0xffffffff);
-const _onBackground = Color(0xff000000);
 const _surface = Color(0xffF4F6F8);
 const _onSurface = Color(0xff111111);
 const _error = Color(0xffFF5740);
@@ -40,11 +38,9 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     onSecondary: _onSecondary,
     tertiary: _tagBackgroundColor,
     onTertiary: _tagTextColor,
-    background: _background,
-    onBackground: _onBackground,
     surface: _surface,
     onSurface: _onSurface,
-    surfaceVariant: _cardColor,
+    surfaceContainerHighest: _cardColor,
     onSurfaceVariant: _cardBorderColor,
     error: _error,
     onError: _onError,
@@ -56,13 +52,13 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
   if (useInterFont) {
     textTheme = GoogleFonts.interTextTheme().apply(
       bodyColor: scheme.onSurface,
-      displayColor: scheme.onBackground,
+      displayColor: scheme.onSurface,
     );
   } else {
     textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
           fontFamily: 'PlusJakartaDisplay',
           bodyColor: scheme.onSurface,
-          displayColor: scheme.onBackground,
+          displayColor: scheme.onSurface,
         );
   }
 
@@ -72,8 +68,8 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     colorScheme: scheme,
     dividerColor: scheme.outline,
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(_switchActiveColor),
-      trackColor: MaterialStateProperty.all(_switchInActiveColor),
+      thumbColor: WidgetStateProperty.all(_switchActiveColor),
+      trackColor: WidgetStateProperty.all(_switchInActiveColor),
       splashRadius: 16,
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     ),
@@ -114,15 +110,15 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         minimumSize: const Size(80, 48),
-        backgroundColor: scheme.background,
-        foregroundColor: scheme.onBackground,
+        backgroundColor: scheme.surface,
+        foregroundColor: scheme.onSurface,
         textStyle: textTheme.bodyLarge?.copyWith(
           fontWeight: FontWeight.w500,
         ),
         elevation: 0,
         side: BorderSide(
           width: 1,
-          color: scheme.onBackground.withOpacity(.1),
+          color: scheme.onSurface.withOpacity(.1),
         ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -153,7 +149,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
       ),
     ),
     cardTheme: CardTheme(
-      color: scheme.surfaceVariant,
+      color: scheme.surfaceContainerHighest,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
         side: BorderSide(
@@ -175,14 +171,12 @@ final darkTheme = ThemeData(
     onPrimary: _onPrimary,
     secondary: _secondary,
     onSecondary: _onSecondary,
-    background: _background,
-    onBackground: _onBackground,
     surface: _surface,
     onSurface: _onSurface,
   ),
   elevatedButtonTheme: const ElevatedButtonThemeData(
     style: ButtonStyle(
-      shape: MaterialStatePropertyAll(StadiumBorder()),
+      shape: WidgetStatePropertyAll(StadiumBorder()),
     ),
   ),
 );

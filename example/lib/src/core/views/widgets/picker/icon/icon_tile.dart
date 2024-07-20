@@ -46,7 +46,7 @@ class _IconTileState extends ConsumerState<IconTile> {
             widget.item.value,
             color: hovered
                 ? theme.colorScheme.primary
-                : theme.colorScheme.onBackground,
+                : theme.colorScheme.surface,
           ),
         ),
       ),
