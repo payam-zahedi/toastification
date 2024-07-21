@@ -138,16 +138,14 @@ class MinimalToastWidget extends StatelessWidget {
         children: [
           Offstage(
             offstage: !(showIcon ?? true),
-            child: Row(
-              children: [
-                icon ??
-                    Icon(
-                      defaultStyle.icon(context),
-                      size: 24,
-                      color: iconColor,
-                    ),
-                const SizedBox(width: 12),
-              ],
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(end: 12),
+              child: icon ??
+                  Icon(
+                    defaultStyle.icon(context),
+                    size: 24,
+                    color: iconColor,
+                  ),
             ),
           ),
           Expanded(
