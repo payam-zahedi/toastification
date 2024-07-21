@@ -6,8 +6,8 @@ const _onPrimary = Color(0xffFFFFFF);
 const _onPrimaryContainer = Color(0xff303030);
 const _secondary = Color(0xffFFCE51);
 const _onSecondary = Color(0xff474648);
-const _surface = Color(0xffF4F6F8);
-const _onSurface = Color(0xff111111);
+const _surface = Color(0xffffffff);
+const _onSurface = Color(0xff000000);
 const _error = Color(0xffFF5740);
 const _onError = Color(0xffffffff);
 

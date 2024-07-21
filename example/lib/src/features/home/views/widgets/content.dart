@@ -99,24 +99,43 @@ class _ContentDesktop extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Type the title text here..',
-                      ),
+                    child: ToggleTile(
+                      title: 'Show Icon',
+                      value: ref.watch(toastDetailControllerProvider).showIcon,
+                      soon: false,
                       onChanged: (value) {
                         ref
                             .read(toastDetailControllerProvider.notifier)
-                            .changeTitle(value);
+                            .changeShowIcon(value ?? true);
                       },
                     ),
                   ),
                   const SizedBox(width: 10),
                   const IconPicker(),
                 ],
+              ),
+              const SizedBox(width: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Type the title text here..',
+                        ),
+                        onChanged: (value) {
+                          ref
+                              .read(toastDetailControllerProvider.notifier)
+                              .changeTitle(value);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(

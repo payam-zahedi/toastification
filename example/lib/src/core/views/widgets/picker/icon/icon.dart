@@ -45,6 +45,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
     return Theme(
       data: Theme.of(context).copyWith(
         hoverColor: Colors.transparent,
+        
       ),
       child: PopupMenuButton(
         key: _menuKey,
