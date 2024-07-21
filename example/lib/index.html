@@ -27,14 +27,12 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Toastification">
-  <meta property="og:description"
-    content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
+  <meta property="og:description" content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
   <meta property="og:image"
     content="https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/image/intro.png">
 
   <meta property="twitter:title" content="Toastification">
-  <meta property="twitter:description"
-    content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
+  <meta property="twitter:description" content="Toastification is a Flutter package that allows you to easily show toast messages in your application.">
   <meta property="twitter:image"
     content="https://raw.githubusercontent.com/payam-zahedi/toastification/main/doc/image/intro.png">
 
@@ -62,11 +60,29 @@
   <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/android-icon-192x192.png">
 
-  <link rel="manifest" href="manifest.json">
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = null;
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
 </head>
 
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    window.addEventListener('load', function (ev) {
+      // Download main.dart.js
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        }
+      }).then(function (engineInitializer) {
+        return engineInitializer.initializeEngine();
+      }).then(function (appRunner) {
+        return appRunner.runApp();
+      });
+    });
+  </script>
 </body>
 
 </html>
