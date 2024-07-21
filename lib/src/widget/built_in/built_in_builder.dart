@@ -33,6 +33,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.dragToClose,
     this.dismissDirection,
     this.pauseOnHover,
+    this.showIcon,
     this.callbacks = const ToastificationCallbacks(),
   });
 
@@ -67,6 +68,8 @@ class BuiltInBuilder extends StatelessWidget {
   final bool? showProgressBar;
 
   final bool? applyBlurEffect;
+
+  final bool? showIcon;
 
   final ProgressIndicatorThemeData? progressBarTheme;
 
@@ -110,6 +113,7 @@ class BuiltInBuilder extends StatelessWidget {
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
         icon: icon,
+        showIcon: showIcon,
         brightness: brightness,
         padding: padding,
         borderRadius: borderRadius,
@@ -163,6 +167,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.borderRadius,
     this.borderSide,
     this.boxShadow,
+    this.showIcon,
     required this.onCloseTap,
     this.showProgressBar,
     this.applyBlurEffect,
@@ -200,6 +205,8 @@ class BuiltInToastBuilder extends StatelessWidget {
   final VoidCallback onCloseTap;
 
   final bool? showProgressBar;
+
+  final bool? showIcon;
 
   final bool? applyBlurEffect;
 
@@ -246,6 +253,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               icon: icon,
               brightness: brightness,
               padding: padding,
+              showIcon: showIcon,
               borderRadius: borderRadius,
               borderSide: borderSide,
               boxShadow: boxShadow,
@@ -286,6 +294,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               icon: icon,
+              showIcon: showIcon,
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
@@ -307,6 +316,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               icon: icon,
+              showIcon: showIcon,
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,

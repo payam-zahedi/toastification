@@ -100,6 +100,7 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     description: toastDetail.description,
     type: toastDetail.type,
     style: toastDetail.style,
+    showIcon: toastDetail.showIcon,
     autoCloseDuration: toastDetail.autoCloseDuration,
     animationDuration: toastDetail.animationDuration,
     animationBuilder: toastDetail.animationType.builder,

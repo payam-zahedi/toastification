@@ -2,6 +2,7 @@ import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/picker/icon/icon.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
+import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,6 @@ class ContentWidget extends StatelessWidget {
 
 class _ContentDesktop extends ConsumerWidget {
   const _ContentDesktop();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textDirection = ref.watch(toastDetailControllerProvider).direction ??
@@ -99,6 +99,7 @@ class _ContentDesktop extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -184,6 +185,17 @@ class _ContentMobile extends ConsumerWidget {
             SizedBox(width: 8),
             Expanded(child: IconPicker()),
           ],
+        ),
+        const SizedBox(height: 16),
+        ToggleTile(
+          title: 'Show Icon',
+          value: ref.watch(toastDetailControllerProvider).showIcon,
+          soon: false,
+          onChanged: (value) {
+            ref
+                .read(toastDetailControllerProvider.notifier)
+                .changeShowIcon(value ?? true);
+          },
         ),
         const SizedBox(height: 16),
         TextField(
