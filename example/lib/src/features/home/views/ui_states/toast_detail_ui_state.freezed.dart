@@ -449,7 +449,7 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.pauseOnHover = true,
       this.dragToClose = false,
       this.applyBlurEffect = false,
-      this.showIcon = false});
+      this.showIcon = true});
 
   @override
   @JsonKey()

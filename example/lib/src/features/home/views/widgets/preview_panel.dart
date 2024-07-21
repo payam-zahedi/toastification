@@ -90,6 +90,7 @@ class ToastPreview extends ConsumerWidget {
       showProgressBar: toastDetail.showProgressBar,
       applyBlurEffect: toastDetail.applyBlurEffect,
       closeButtonShowType: toastDetail.closeButtonShowType,
+      showIcon: toastDetail.showIcon,
       onCloseTap: () {},
     );
   }
@@ -155,7 +156,8 @@ class _RawCodePreview extends StatelessWidget {
       child: Material(
         shape: RoundedRectangleBorder(
           borderRadius: context.cardsBorderRadius,
-          side: BorderSide(color: Theme.of(context).colorScheme.surfaceContainerHighest),
+          side: BorderSide(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest),
         ),
         color: const Color(0xffFBFCFD),
         child: ConstrainedBox(
