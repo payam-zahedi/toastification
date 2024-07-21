@@ -112,6 +112,9 @@ class ToastCodeFormatter {
     if (toastDetail.applyBlurEffect == true) {
       code.writeln('\tapplyBlurEffect: ${toastDetail.applyBlurEffect},');
     }
+    if (toastDetail.showIcon == false) {
+      code.writeln('\tshowIcon: ${toastDetail.showIcon},');
+    }
 
     code.write(');');
 
