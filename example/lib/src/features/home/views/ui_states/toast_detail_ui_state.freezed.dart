@@ -41,7 +41,7 @@ mixin _$ToastDetail {
   bool get pauseOnHover => throw _privateConstructorUsedError;
   bool get dragToClose => throw _privateConstructorUsedError;
   bool get applyBlurEffect => throw _privateConstructorUsedError;
-
+  bool get showIcon => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ToastDetailCopyWith<ToastDetail> get copyWith =>
       throw _privateConstructorUsedError;
@@ -77,7 +77,8 @@ abstract class $ToastDetailCopyWith<$Res> {
       bool closeOnClick,
       bool pauseOnHover,
       bool dragToClose,
-      bool applyBlurEffect});
+      bool applyBlurEffect,
+      bool showIcon});
 
   $IconModelCopyWith<$Res>? get icon;
 }
@@ -119,6 +120,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? pauseOnHover = null,
     Object? dragToClose = null,
     Object? applyBlurEffect = null,
+    Object? showIcon = null,
   }) {
     return _then(_value.copyWith(
       type: null == type
@@ -217,6 +219,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.applyBlurEffect
           : applyBlurEffect // ignore: cast_nullable_to_non_nullable
               as bool,
+      showIcon: null == showIcon
+          ? _value.showIcon
+          : showIcon // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -265,7 +271,8 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       bool closeOnClick,
       bool pauseOnHover,
       bool dragToClose,
-      bool applyBlurEffect});
+      bool applyBlurEffect,
+      bool showIcon});
 
   @override
   $IconModelCopyWith<$Res>? get icon;
@@ -306,6 +313,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? pauseOnHover = null,
     Object? dragToClose = null,
     Object? applyBlurEffect = null,
+    Object? showIcon = null,
   }) {
     return _then(_$ToastDetailImpl(
       type: null == type
@@ -404,6 +412,10 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.applyBlurEffect
           : applyBlurEffect // ignore: cast_nullable_to_non_nullable
               as bool,
+      showIcon: null == showIcon
+          ? _value.showIcon
+          : showIcon // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -435,7 +447,8 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.closeOnClick = true,
       this.pauseOnHover = true,
       this.dragToClose = false,
-      this.applyBlurEffect = false});
+      this.applyBlurEffect = false,
+      this.showIcon = true});
 
   @override
   @JsonKey()
@@ -500,10 +513,13 @@ class _$ToastDetailImpl implements _ToastDetail {
   @override
   @JsonKey()
   final bool applyBlurEffect;
+  @override
+  @JsonKey()
+  final bool showIcon;
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
   }
 
   @override
@@ -553,7 +569,9 @@ class _$ToastDetailImpl implements _ToastDetail {
             (identical(other.dragToClose, dragToClose) ||
                 other.dragToClose == dragToClose) &&
             (identical(other.applyBlurEffect, applyBlurEffect) ||
-                other.applyBlurEffect == applyBlurEffect));
+                other.applyBlurEffect == applyBlurEffect) &&
+            (identical(other.showIcon, showIcon) ||
+                other.showIcon == showIcon));
   }
 
   @override
@@ -582,7 +600,8 @@ class _$ToastDetailImpl implements _ToastDetail {
         closeOnClick,
         pauseOnHover,
         dragToClose,
-        applyBlurEffect
+        applyBlurEffect,
+        showIcon
       ]);
 
   @JsonKey(ignore: true)
@@ -617,6 +636,7 @@ abstract class _ToastDetail implements ToastDetail {
       final bool closeOnClick,
       final bool pauseOnHover,
       final bool dragToClose,
+      final bool showIcon,
       final bool applyBlurEffect}) = _$ToastDetailImpl;
 
   @override
@@ -667,6 +687,8 @@ abstract class _ToastDetail implements ToastDetail {
   bool get dragToClose;
   @override
   bool get applyBlurEffect;
+  @override
+  bool get showIcon;
   @override
   @JsonKey(ignore: true)
   _$$ToastDetailImplCopyWith<_$ToastDetailImpl> get copyWith =>

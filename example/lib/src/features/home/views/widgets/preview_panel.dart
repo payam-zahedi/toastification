@@ -22,7 +22,7 @@ class PreviewPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Column(
@@ -155,7 +155,7 @@ class _RawCodePreview extends StatelessWidget {
       child: Material(
         shape: RoundedRectangleBorder(
           borderRadius: context.cardsBorderRadius,
-          side: BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
+          side: BorderSide(color: Theme.of(context).colorScheme.surfaceContainerHighest),
         ),
         color: const Color(0xffFBFCFD),
         child: ConstrainedBox(

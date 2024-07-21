@@ -67,7 +67,7 @@ class ToastificationApp extends ConsumerWidget {
               ),
             ],
             background: Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
             ),
           );
         },

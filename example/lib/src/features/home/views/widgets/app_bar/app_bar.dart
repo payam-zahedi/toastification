@@ -123,7 +123,7 @@ class _AppBar extends StatelessWidget {
     }
 
     return Container(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: AppBarContainer(

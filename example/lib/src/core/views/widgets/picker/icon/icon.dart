@@ -45,6 +45,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
     return Theme(
       data: Theme.of(context).copyWith(
         hoverColor: Colors.transparent,
+        
       ),
       child: PopupMenuButton(
         key: _menuKey,
@@ -54,7 +55,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
         elevation: 0,
         padding: EdgeInsets.zero,
         enabled: true,
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
           side: BorderSide(
