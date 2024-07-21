@@ -20,11 +20,12 @@ class ToastCodeFormatter {
     code.writeln('style: ${toastDetail.style},');
 
     if (toastDetail.title != null) {
-      code.writeln('\ttitle: ${toastDetail.title},');
+      code.writeln('\ttitle: Text("${(toastDetail.title as Text).data}"),');
     }
 
     if (toastDetail.description != null) {
-      code.writeln('\tdescription: ${toastDetail.description},');
+      code.writeln(
+          '\tdescription: Text("${(toastDetail.description as Text).data}"),');
     }
 
     code.writeln('\talignment: ${toastDetail.alignment},');
