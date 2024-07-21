@@ -17,8 +17,8 @@ class AppBarTextButton extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final buttonStyle = TextButton.styleFrom(
-      foregroundColor: colorScheme.onBackground,
-      backgroundColor: colorScheme.background,
+      foregroundColor: colorScheme.onSurface,
+      backgroundColor: colorScheme.surface,
       padding: const EdgeInsets.symmetric(
         horizontal: 8,
         vertical: 0,

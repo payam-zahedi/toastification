@@ -31,7 +31,7 @@ class BorderedDropDown<T> extends StatelessWidget {
       ),
       child: DropdownButtonFormField<T>(
         icon: const Icon(Icons.keyboard_arrow_down),
-        focusColor: theme.colorScheme.background,
+        focusColor: theme.colorScheme.surface,
         isExpanded: isExpanded,
         borderRadius: BorderRadius.circular(10),
         decoration: InputDecoration(
@@ -49,11 +49,11 @@ class BorderedDropDown<T> extends StatelessWidget {
           ),
           enabled: available,
           filled: !available,
-          fillColor: theme.colorScheme.onBackground.withOpacity(.05),
+          fillColor: theme.colorScheme.onSurface.withOpacity(.05),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-              color: theme.colorScheme.onBackground.withOpacity(.05),
+              color: theme.colorScheme.onSurface.withOpacity(.05),
             ),
           ),
           focusedBorder: OutlineInputBorder(

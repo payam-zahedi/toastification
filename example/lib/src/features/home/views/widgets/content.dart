@@ -2,6 +2,7 @@ import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/picker/icon/icon.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
+import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,6 @@ class ContentWidget extends StatelessWidget {
 
 class _ContentDesktop extends ConsumerWidget {
   const _ContentDesktop();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textDirection = ref.watch(toastDetailControllerProvider).direction ??
@@ -102,20 +102,40 @@ class _ContentDesktop extends ConsumerWidget {
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Type the title text here..',
-                      ),
+                    child: ToggleTile(
+                      title: 'Show Icon',
+                      value: ref.watch(toastDetailControllerProvider).showIcon,
+                      soon: false,
                       onChanged: (value) {
                         ref
                             .read(toastDetailControllerProvider.notifier)
-                            .changeTitle(value);
+                            .changeShowIcon(value ?? true);
                       },
                     ),
                   ),
                   const SizedBox(width: 10),
                   const IconPicker(),
                 ],
+              ),
+              const SizedBox(width: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Type the title text here..',
+                        ),
+                        onChanged: (value) {
+                          ref
+                              .read(toastDetailControllerProvider.notifier)
+                              .changeTitle(value);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -184,6 +204,17 @@ class _ContentMobile extends ConsumerWidget {
             SizedBox(width: 8),
             Expanded(child: IconPicker()),
           ],
+        ),
+        const SizedBox(height: 16),
+        ToggleTile(
+          title: 'Show Icon',
+          value: ref.watch(toastDetailControllerProvider).showIcon,
+          soon: false,
+          onChanged: (value) {
+            ref
+                .read(toastDetailControllerProvider.notifier)
+                .changeShowIcon(value ?? true);
+          },
         ),
         const SizedBox(height: 16),
         TextField(

@@ -34,7 +34,7 @@ class BorderedContainer extends StatelessWidget {
 
     final background = active
         ? theme.colorScheme.primary.withOpacity(.1)
-        : theme.colorScheme.background;
+        : theme.colorScheme.surface;
 
     final disableBackground = theme.colorScheme.onSurface.withOpacity(.05);
 
@@ -132,7 +132,7 @@ class ShadowContainer extends StatelessWidget {
 
     final backgroundColor = active
         ? theme.colorScheme.primary.withOpacity(.1)
-        : theme.colorScheme.background;
+        : theme.colorScheme.surface;
 
     final foreground = active
         ? theme.colorScheme.primary

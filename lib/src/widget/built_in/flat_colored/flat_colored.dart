@@ -15,6 +15,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
+    this.showIcon,
     this.brightness,
     this.padding,
     this.borderRadius,
@@ -36,7 +37,7 @@ class FlatColoredToastWidget extends StatelessWidget {
   final Widget? description;
 
   final Widget? icon;
-
+  final bool? showIcon;
   final MaterialColor? primaryColor;
 
   final MaterialColor? backgroundColor;
@@ -121,13 +122,18 @@ class FlatColoredToastWidget extends StatelessWidget {
       padding: padding ?? defaultStyle.padding(context),
       child: Row(
         children: [
-          icon ??
-              Icon(
-                defaultStyle.icon(context),
-                size: 24,
-                color: iconColor,
-              ),
-          const SizedBox(width: 12),
+          Offstage(
+            offstage: !(showIcon ?? true),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(end: 12),
+              child: icon ??
+                  Icon(
+                    defaultStyle.icon(context),
+                    size: 24,
+                    color: iconColor,
+                  ),
+            ),
+          ),
           Expanded(
             child: BuiltInContent(
               style: defaultStyle,

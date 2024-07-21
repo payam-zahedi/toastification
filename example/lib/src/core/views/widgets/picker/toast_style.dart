@@ -64,7 +64,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                       margin: const EdgeInsets.only(top: 2),
                       padding: const EdgeInsets.all(16),
                       decoration: ShapeDecoration(
-                        color: theme.colorScheme.background,
+                        color: theme.colorScheme.surface,
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             width: 1.5,
@@ -281,7 +281,7 @@ class _ItemHolder extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Material(
-              color: theme.colorScheme.surfaceVariant,
+              color: theme.colorScheme.surfaceContainerHighest,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1,

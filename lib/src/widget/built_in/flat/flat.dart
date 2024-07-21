@@ -15,6 +15,7 @@ class FlatToastWidget extends StatelessWidget {
     this.backgroundColor,
     this.foregroundColor,
     this.icon,
+    this.showIcon,
     this.brightness,
     this.padding,
     this.borderRadius,
@@ -60,6 +61,8 @@ class FlatToastWidget extends StatelessWidget {
   final bool? showCloseButton;
 
   final bool applyBlurEffect;
+
+  final bool? showIcon;
 
   final bool showProgressBar;
   final double? progressBarValue;
@@ -121,13 +124,18 @@ class FlatToastWidget extends StatelessWidget {
       padding: padding ?? defaultStyle.padding(context),
       child: Row(
         children: [
-          icon ??
-              Icon(
-                defaultStyle.icon(context),
-                size: 24,
-                color: iconColor,
-              ),
-          const SizedBox(width: 12),
+          Offstage(
+            offstage: !(showIcon ?? true),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(end: 12),
+              child: icon ??
+                  Icon(
+                    defaultStyle.icon(context),
+                    size: 24,
+                    color: iconColor,
+                  ),
+            ),
+          ),
           Expanded(
             child: BuiltInContent(
               style: defaultStyle,

@@ -36,6 +36,9 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   void changeIcon(IconModel? icon) {
     state = state.copyWith(icon: icon);
   }
+  void changeShowIcon(bool showIcon) {
+    state = state.copyWith(showIcon: showIcon);
+  }
 
   void changePrimary(Color? primaryColor) {
     state = state.copyWith(primaryColor: primaryColor);
