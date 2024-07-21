@@ -8,6 +8,7 @@ const _secondary = Color(0xffFFCE51);
 const _onSecondary = Color(0xff474648);
 const _surface = Color(0xffffffff);
 const _onSurface = Color(0xff000000);
+const _surfaceHigh = Color(0xffF4F6F8);
 const _error = Color(0xffFF5740);
 const _onError = Color(0xffffffff);
 
@@ -40,6 +41,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     onTertiary: _tagTextColor,
     surface: _surface,
     onSurface: _onSurface,
+    surfaceContainerHigh: _surfaceHigh,
     surfaceContainerHighest: _cardColor,
     onSurfaceVariant: _cardBorderColor,
     error: _error,
@@ -66,6 +68,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: scheme,
+    scaffoldBackgroundColor: scheme.surface,
     dividerColor: scheme.outline,
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.all(_switchActiveColor),
@@ -94,7 +97,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         minimumSize: const Size(80, 48),
-        backgroundColor: scheme.surface,
+        backgroundColor: scheme.surfaceContainerHigh,
         foregroundColor: scheme.onSurface,
         textStyle: textTheme.bodyLarge?.copyWith(
           fontWeight: FontWeight.w500,

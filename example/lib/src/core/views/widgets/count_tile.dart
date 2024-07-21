@@ -74,7 +74,7 @@ class CountTile extends StatelessWidget {
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.all(0),
               minimumSize: const Size.square(40),
-              backgroundColor: theme.colorScheme.surface,
+              backgroundColor: theme.colorScheme.surfaceContainerHigh,
               foregroundColor: theme.colorScheme.onSurface,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(

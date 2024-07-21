@@ -149,7 +149,7 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
         style: TextButton.styleFrom(
           padding: const EdgeInsets.all(0),
           minimumSize: size,
-          backgroundColor: theme.colorScheme.surface,
+          backgroundColor: theme.colorScheme.surfaceContainerHigh,
           foregroundColor: theme.colorScheme.onSurface,
         ),
         onPressed: () {},
