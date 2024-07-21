@@ -1,3 +1,7 @@
+## 2.1.0
+* fix: Add clipBehavior for ToastificationConfig by @komakur
+* feat: Add dismiss icon possibility by @alirezat66
+
 ## 2.0.0
 * Feature: optional context by @SamadiPour
 * Add optional BorderSide option by @LampeMW
