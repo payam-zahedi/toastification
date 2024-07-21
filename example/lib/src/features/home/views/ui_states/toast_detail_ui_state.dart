@@ -54,5 +54,6 @@ class ToastDetail with _$ToastDetail {
     @Default(true) bool pauseOnHover,
     @Default(false) bool dragToClose,
     @Default(false) bool applyBlurEffect,
+    @Default(false) bool showIcon,
   }) = _ToastDetail;
 }
