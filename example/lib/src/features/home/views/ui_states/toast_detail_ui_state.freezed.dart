@@ -42,6 +42,7 @@ mixin _$ToastDetail {
   bool get dragToClose => throw _privateConstructorUsedError;
   bool get applyBlurEffect => throw _privateConstructorUsedError;
   bool get showIcon => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $ToastDetailCopyWith<ToastDetail> get copyWith =>
       throw _privateConstructorUsedError;
@@ -448,7 +449,7 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.pauseOnHover = true,
       this.dragToClose = false,
       this.applyBlurEffect = false,
-      this.showIcon = true});
+      this.showIcon = false});
 
   @override
   @JsonKey()
@@ -636,8 +637,8 @@ abstract class _ToastDetail implements ToastDetail {
       final bool closeOnClick,
       final bool pauseOnHover,
       final bool dragToClose,
-      final bool showIcon,
-      final bool applyBlurEffect}) = _$ToastDetailImpl;
+      final bool applyBlurEffect,
+      final bool showIcon}) = _$ToastDetailImpl;
 
   @override
   ToastificationType get type;
