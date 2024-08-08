@@ -101,7 +101,7 @@ class BuiltInContent extends StatelessWidget {
       children: [
         content,
         if (description != null) ...[
-          const SizedBox(height: 6),
+          if (title != null) const SizedBox(height: 6),
           DefaultTextStyle.merge(
             style: style.descriptionTextStyle(context)?.copyWith(
                   color: foregroundColor,
