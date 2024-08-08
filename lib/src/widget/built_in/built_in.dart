@@ -110,7 +110,7 @@ class BuiltInContent extends StatelessWidget {
           ),
         ],
         if (showProgressBar) ...[
-          const SizedBox(height: 10),
+          if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
             data:
                 progressIndicatorTheme ?? style.progressIndicatorTheme(context),
