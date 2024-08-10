@@ -75,23 +75,26 @@ class ToastPreview extends ConsumerWidget {
 
   BuiltInToastBuilder _buildToastWidget(ToastDetail toastDetail) {
     return BuiltInToastBuilder(
-      style: toastDetail.style,
-      type: toastDetail.type,
-      title: toastDetail.title,
-      description: toastDetail.description,
-      primaryColor: toastDetail.primaryColor,
-      foregroundColor: toastDetail.foregroundColor,
-      backgroundColor: toastDetail.backgroundColor,
-      icon: toastDetail.icon == null ? null : Icon(toastDetail.icon?.iconData),
-      borderRadius: toastDetail.borderRadius,
-      borderSide: toastDetail.borderSide,
-      boxShadow: toastDetail.shadow.shadow,
-      direction: toastDetail.direction,
-      showProgressBar: toastDetail.showProgressBar,
-      applyBlurEffect: toastDetail.applyBlurEffect,
-      closeButtonShowType: toastDetail.closeButtonShowType,
-      showIcon: toastDetail.showIcon,
-      onCloseTap: () {},
+      toastificationModel: ToastificationModel(
+        style: toastDetail.style,
+        type: toastDetail.type,
+        title: toastDetail.title,
+        description: toastDetail.description,
+        primaryColor: toastDetail.primaryColor,
+        foregroundColor: toastDetail.foregroundColor,
+        backgroundColor: toastDetail.backgroundColor,
+        icon:
+            toastDetail.icon == null ? null : Icon(toastDetail.icon?.iconData),
+        borderRadius: toastDetail.borderRadius,
+        borderSide: toastDetail.borderSide,
+        boxShadow: toastDetail.shadow.shadow,
+        direction: toastDetail.direction,
+        showProgressBar: toastDetail.showProgressBar,
+        applyBlurEffect: toastDetail.applyBlurEffect,
+        closeButtonShowType: toastDetail.closeButtonShowType,
+        showIcon: toastDetail.showIcon,
+        onCloseTap: () {},
+      ),
     );
   }
 }

@@ -5,6 +5,8 @@ export 'src/core/toastification.dart';
 export 'src/core/toastification_item.dart';
 export 'src/core/toastification_config.dart';
 export 'src/core/toastification_callbacks.dart';
+export 'src/core/toast_model.dart';
+export 'src/core/toastification_model.dart';
 export 'src/core/toastification_overlay_state.dart'
     hide findToastificationOverlayState, ToastificationOverlayState;
 export 'src/widget/toastification_config_provider.dart';

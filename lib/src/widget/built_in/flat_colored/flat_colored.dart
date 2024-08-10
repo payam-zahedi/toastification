@@ -1,102 +1,37 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/toast_model.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
-import 'package:toastification/src/widget/built_in/flat_colored/flat_colored_style.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 
 class FlatColoredToastWidget extends StatelessWidget {
   const FlatColoredToastWidget({
     super.key,
-    required this.type,
-    this.title,
-    this.description,
-    this.primaryColor,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.icon,
-    this.showIcon,
-    this.brightness,
-    this.padding,
-    this.borderRadius,
-    this.borderSide,
-    this.boxShadow,
-    this.direction,
-    this.onCloseTap,
-    this.showCloseButton,
-    this.showProgressBar = false,
-    this.applyBlurEffect = false,
-    this.progressBarValue,
-    this.progressBarWidget,
-    this.progressIndicatorTheme,
+    required this.toastModel,
   });
 
-  final ToastificationType type;
-
-  final Widget? title;
-  final Widget? description;
-
-  final Widget? icon;
-  final bool? showIcon;
-  final MaterialColor? primaryColor;
-
-  final MaterialColor? backgroundColor;
-
-  final Color? foregroundColor;
-
-  final Brightness? brightness;
-
-  final EdgeInsetsGeometry? padding;
-
-  final BorderRadiusGeometry? borderRadius;
-
-  final BorderSide? borderSide;
-
-  final List<BoxShadow>? boxShadow;
-
-  final TextDirection? direction;
-
-  final VoidCallback? onCloseTap;
-
-  final bool? showCloseButton;
-
-  final bool showProgressBar;
-  final bool applyBlurEffect;
-  final double? progressBarValue;
-  final Widget? progressBarWidget;
-
-  final ProgressIndicatorThemeData? progressIndicatorTheme;
-
-  FlatColoredStyle get defaultStyle => FlatColoredStyle(type);
-
+  final ToastModel toastModel;
   @override
   Widget build(BuildContext context) {
-    final iconColor = primaryColor ?? defaultStyle.iconColor(context);
-
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
-
-    final showCloseButton = this.showCloseButton ?? true;
-
-    final borderRadius =
-        this.borderRadius ?? defaultStyle.borderRadius(context);
-
-    final borderSide = this.borderSide ??
-        defaultStyle.borderSide(context).copyWith(color: primaryColor);
-
-    final direction = this.direction ?? Directionality.of(context);
-
     return Directionality(
-      textDirection: direction,
+      textDirection: toastModel.direction ?? Directionality.of(context),
       child: IconTheme(
-        data: Theme.of(context).primaryIconTheme.copyWith(color: iconColor),
+        data: Theme.of(context)
+            .primaryIconTheme
+            .copyWith(color: toastModel.iconColor(context)),
         child: buildBody(
           context: context,
-          background: background,
-          borderRadius: borderRadius,
-          borderSide: borderSide,
-          iconColor: iconColor,
-          showCloseButton: showCloseButton,
-          applyBlurEffect: applyBlurEffect,
+          background: toastModel.background(context),
+          borderRadius: toastModel.borderRadius ??
+              toastModel.defaultStyle.borderRadius(context),
+          borderSide: toastModel.borderSide ??
+              toastModel.defaultStyle
+                  .borderSide(context)
+                  .copyWith(color: toastModel.primaryColor),
+          iconColor: toastModel.iconColor(context),
+          showCloseButton: toastModel.showCloseButton ?? true,
+          applyBlurEffect: toastModel.applyBlurEffect,
         ),
       ),
     );
@@ -117,18 +52,19 @@ class FlatColoredToastWidget extends StatelessWidget {
         color: applyBlurEffect ? background.withOpacity(0.5) : background,
         borderRadius: borderRadius,
         border: Border.fromBorderSide(borderSide),
-        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+        boxShadow:
+            toastModel.boxShadow ?? toastModel.defaultStyle.boxShadow(context),
       ),
-      padding: padding ?? defaultStyle.padding(context),
+      padding: toastModel.padding ?? toastModel.defaultStyle.padding(context),
       child: Row(
         children: [
           Offstage(
-            offstage: !(showIcon ?? true),
+            offstage: !(toastModel.showIcon ?? true),
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
-              child: icon ??
+              child: toastModel.icon ??
                   Icon(
-                    defaultStyle.icon(context),
+                    toastModel.defaultStyle.icon(context),
                     size: 24,
                     color: iconColor,
                   ),
@@ -136,25 +72,16 @@ class FlatColoredToastWidget extends StatelessWidget {
           ),
           Expanded(
             child: BuiltInContent(
-              style: defaultStyle,
-              title: title,
-              description: description,
-              primaryColor: primaryColor,
-              foregroundColor: foregroundColor,
-              backgroundColor: backgroundColor,
-              showProgressBar: showProgressBar,
-              progressBarValue: progressBarValue,
-              progressBarWidget: progressBarWidget,
-              progressIndicatorTheme: progressIndicatorTheme,
+              contentModel: toastModel.getBuildInContentModel(),
             ),
           ),
           const SizedBox(width: 8),
           ToastCloseButton(
-            showCloseButton: showCloseButton,
-            onCloseTap: onCloseTap,
-            icon: defaultStyle.closeIcon(context),
-            iconColor: foregroundColor?.withOpacity(.3) ??
-                defaultStyle.closeIconColor(context),
+            showCloseButton: toastModel.showCloseButton ?? true,
+            onCloseTap: toastModel.onCloseTap,
+            icon: toastModel.defaultStyle.closeIcon(context),
+            iconColor: toastModel.foregroundColor?.withOpacity(.3) ??
+                toastModel.defaultStyle.closeIconColor(context),
           ),
         ],
       ),

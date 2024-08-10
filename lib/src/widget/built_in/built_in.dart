@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in_style.dart';
+import 'package:toastification/src/widget/built_in/widget/model/build_in_content_model.dart';
 
 /// enum to define the style of the built-in toastification
 enum ToastificationStyle {
@@ -54,43 +54,20 @@ enum CloseButtonShowType {
 class BuiltInContent extends StatelessWidget {
   const BuiltInContent({
     super.key,
-    required this.style,
-    this.title,
-    this.description,
-    this.primaryColor,
-    this.foregroundColor,
-    this.backgroundColor,
-    this.showProgressBar = false,
-    this.progressBarValue,
-    this.progressBarWidget,
-    this.progressIndicatorTheme,
+    required this.contentModel,
   });
 
-  final BuiltInStyle style;
-
-  final Widget? title;
-  final Widget? description;
-
-  final Color? primaryColor;
-  final Color? foregroundColor;
-  final Color? backgroundColor;
-
-  final bool showProgressBar;
-  final double? progressBarValue;
-  final Widget? progressBarWidget;
-
-  final ProgressIndicatorThemeData? progressIndicatorTheme;
-
+  final BuildInContentModel contentModel;
   @override
   Widget build(BuildContext context) {
     Widget content = DefaultTextStyle.merge(
-      style: style.titleTextStyle(context)?.copyWith(
-            color: foregroundColor,
+      style:contentModel.style.titleTextStyle(context)?.copyWith(
+            color: contentModel.foregroundColor,
           ),
-      child: title ?? const SizedBox(),
+      child: contentModel.title ?? const SizedBox(),
     );
 
-    final showColumn = description != null || showProgressBar == true;
+    final showColumn = contentModel.description != null || contentModel.showProgressBar == true;
     if (!showColumn) {
       return content;
     }
@@ -100,22 +77,22 @@ class BuiltInContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         content,
-        if (description != null) ...[
+        if (contentModel.description != null) ...[
           const SizedBox(height: 6),
           DefaultTextStyle.merge(
-            style: style.descriptionTextStyle(context)?.copyWith(
-                  color: foregroundColor,
+            style: contentModel.style.descriptionTextStyle(context)?.copyWith(
+                  color: contentModel.foregroundColor,
                 ),
-            child: description!,
+            child: contentModel.description!,
           ),
         ],
-        if (showProgressBar) ...[
+        if (contentModel.showProgressBar) ...[
           const SizedBox(height: 10),
           ProgressIndicatorTheme(
             data:
-                progressIndicatorTheme ?? style.progressIndicatorTheme(context),
-            child: progressBarWidget ??
-                LinearProgressIndicator(value: progressBarValue),
+                contentModel.progressIndicatorTheme ?? contentModel.style.progressIndicatorTheme(context),
+            child: contentModel.progressBarWidget ??
+                LinearProgressIndicator(value: contentModel.progressBarValue),
           ),
         ],
       ],

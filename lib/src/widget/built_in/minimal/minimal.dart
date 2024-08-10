@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/toast_model.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 
@@ -9,107 +10,43 @@ import 'minimal_style.dart';
 class MinimalToastWidget extends StatelessWidget {
   const MinimalToastWidget({
     super.key,
-    required this.type,
-    this.title,
-    this.description,
-    this.primaryColor,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.icon,
-    this.showIcon,
-    this.brightness,
-    this.padding,
-    this.borderRadius,
-    this.borderSide,
-    this.boxShadow,
-    this.direction,
-    this.onCloseTap,
-    this.showCloseButton,
-    this.showProgressBar = false,
-    this.progressBarValue,
-    this.progressBarWidget,
-    this.progressIndicatorTheme,
-    this.applyBlurEffect = false,
+    required this.toastModel,
   });
 
-  final ToastificationType type;
-
-  final Widget? title;
-  final Widget? description;
-
-  final Widget? icon;
-  final bool? showIcon;
-  final MaterialColor? primaryColor;
-
-  final MaterialColor? backgroundColor;
-
-  final Color? foregroundColor;
-
-  final Brightness? brightness;
-
-  final EdgeInsetsGeometry? padding;
-
-  final BorderRadiusGeometry? borderRadius;
-
-  final BorderSide? borderSide;
-
-  final List<BoxShadow>? boxShadow;
-
-  final VoidCallback? onCloseTap;
-
-  final TextDirection? direction;
-
-  final bool? showCloseButton;
-
-  final bool applyBlurEffect;
-
-  final bool showProgressBar;
-  final double? progressBarValue;
-  final Widget? progressBarWidget;
-
-  final ProgressIndicatorThemeData? progressIndicatorTheme;
-
-  MinimalStyle get defaultStyle => MinimalStyle(type);
+  final ToastModel toastModel;
+  MinimalStyle get defaultStyle => MinimalStyle(toastModel.type);
 
   @override
   Widget build(BuildContext context) {
-    final primary = primaryColor ?? defaultStyle.primaryColor(context);
-    final iconColor = primaryColor ?? defaultStyle.iconColor(context);
-
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
-
-    final showCloseButton = this.showCloseButton ?? true;
-
-    final direction = this.direction ?? Directionality.of(context);
-
-    final borderRadius =
-        (this.borderRadius ?? defaultStyle.borderRadius(context))
-            .resolve(direction);
-
-    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
-
+    final direction = toastModel.direction ?? Directionality.of(context);
     return Directionality(
       textDirection: direction,
       child: IconTheme(
-        data: Theme.of(context).primaryIconTheme.copyWith(color: iconColor),
+        data: Theme.of(context)
+            .primaryIconTheme
+            .copyWith(color: toastModel.iconColor(context)),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 64),
           child: Material(
             color: Colors.transparent,
             shape: LinearBorder.start(
               side: BorderSide(
-                color: primary,
+                color: toastModel.primaryColor ??
+                    defaultStyle.primaryColor(context),
                 width: 3,
               ),
             ),
             child: buildBody(
               context: context,
-              background: background,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              iconColor: iconColor,
-              showCloseButton: showCloseButton,
-              applyBlurEffect: applyBlurEffect,
+              background: toastModel.background(context),
+              borderRadius: (toastModel.borderRadius ??
+                      defaultStyle.borderRadius(context))
+                  .resolve(direction),
+              borderSide:
+                  toastModel.borderSide ?? defaultStyle.borderSide(context),
+              iconColor: toastModel.iconColor(context),
+              showCloseButton: toastModel.showCloseButton ?? true,
+              applyBlurEffect: toastModel.applyBlurEffect,
             ),
           ),
         ),
@@ -131,16 +68,16 @@ class MinimalToastWidget extends StatelessWidget {
         color: applyBlurEffect ? background.withOpacity(0.5) : background,
         borderRadius: defaultStyle.effectiveBorderRadius(borderRadius),
         border: Border.fromBorderSide(borderSide),
-        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
+        boxShadow: toastModel.boxShadow ?? defaultStyle.boxShadow(context),
       ),
-      padding: padding ?? defaultStyle.padding(context),
+      padding: toastModel.padding ?? defaultStyle.padding(context),
       child: Row(
         children: [
           Offstage(
-            offstage: !(showIcon ?? true),
+            offstage: !(toastModel.showIcon ?? true),
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
-              child: icon ??
+              child: toastModel.icon ??
                   Icon(
                     defaultStyle.icon(context),
                     size: 24,
@@ -150,24 +87,15 @@ class MinimalToastWidget extends StatelessWidget {
           ),
           Expanded(
             child: BuiltInContent(
-              style: defaultStyle,
-              title: title,
-              description: description,
-              primaryColor: primaryColor,
-              foregroundColor: foregroundColor,
-              backgroundColor: backgroundColor,
-              showProgressBar: showProgressBar,
-              progressBarValue: progressBarValue,
-              progressBarWidget: progressBarWidget,
-              progressIndicatorTheme: progressIndicatorTheme,
-            ),
+                contentModel:
+                    toastModel.getBuildInContentModel(style: defaultStyle)),
           ),
           const SizedBox(width: 8),
           ToastCloseButton(
             showCloseButton: showCloseButton,
-            onCloseTap: onCloseTap,
+            onCloseTap: toastModel.onCloseTap,
             icon: defaultStyle.closeIcon(context),
-            iconColor: foregroundColor?.withOpacity(.3) ??
+            iconColor: toastModel.foregroundColor?.withOpacity(.3) ??
                 defaultStyle.closeIconColor(context),
           ),
         ],
