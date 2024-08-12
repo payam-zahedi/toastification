@@ -101,7 +101,7 @@ class BuiltInContent extends StatelessWidget {
       children: [
         content,
         if (description != null) ...[
-          const SizedBox(height: 6),
+          if (title != null) const SizedBox(height: 6),
           DefaultTextStyle.merge(
             style: style.descriptionTextStyle(context)?.copyWith(
                   color: foregroundColor,
@@ -110,7 +110,7 @@ class BuiltInContent extends StatelessWidget {
           ),
         ],
         if (showProgressBar) ...[
-          const SizedBox(height: 10),
+          if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
             data:
                 progressIndicatorTheme ?? style.progressIndicatorTheme(context),
