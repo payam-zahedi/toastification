@@ -273,6 +273,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               backgroundColor: backgroundColor,
               foregroundColor: foregroundColor,
               icon: icon,
+              showIcon: showIcon,
               brightness: brightness,
               padding: padding,
               borderRadius: borderRadius,
