@@ -58,6 +58,7 @@ class ToastificationManager {
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
 
+      // TODO(payam): remove this in the future
       delay = const Duration(milliseconds: 300);
     }
 
@@ -139,6 +140,7 @@ class ToastificationManager {
         );
       }
 
+      // TODO(payam): add the condition before the delay
       /// we will remove the [_overlayEntry] if there are no notifications
       Future.delayed(
         removedItem.animationDuration ?? config.animationDuration,

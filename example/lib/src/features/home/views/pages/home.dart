@@ -69,9 +69,7 @@ class CustomizationSection extends StatelessWidget {
 }
 
 class _HorizontalSection extends StatelessWidget {
-  const _HorizontalSection({
-    Key? key,
-  }) : super(key: key);
+  const _HorizontalSection();
 
   @override
   Widget build(BuildContext context) {

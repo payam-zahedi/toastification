@@ -53,10 +53,10 @@ class ToastificationWrapper extends StatelessWidget {
   final ToastificationConfig? config;
 
   const ToastificationWrapper({
-    Key? key,
+    super.key,
     required this.child,
     this.config,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
