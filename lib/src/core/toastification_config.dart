@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
@@ -6,7 +8,6 @@ const _defaultAlignment = AlignmentDirectional.topEnd;
 const _itemAnimationDuration = Duration(milliseconds: 600);
 const _defaultWidth = 400.0;
 const _defaultClipBehavior = Clip.none;
-const _defaultMargin = EdgeInsets.symmetric(vertical: 32);
 
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
 ///
@@ -81,5 +82,21 @@ Widget _defaultAnimationBuilderConfig(
 
 /// Default margin builder for [Toastification]
 EdgeInsetsGeometry _defaultMarginBuilder(AlignmentGeometry alignment) {
-  return _defaultMargin;
+  final y = alignment is Alignment
+      ? alignment.y
+      : alignment is AlignmentDirectional
+          ? alignment.y
+          : 0.0;
+  Alignment.topCenter;
+
+  log('Margin builder called with y: $y');
+  log('Margin builder called with alignment: $alignment');
+
+  return switch (y) {
+    >= -1 => const EdgeInsets.only(top: 12),
+    >= -0.5 => const EdgeInsets.only(top: 12),
+    <= 0.5 => const EdgeInsets.only(bottom: 12),
+    <= 1 => const EdgeInsets.only(bottom: 12),
+    _ => EdgeInsets.zero,
+  };
 }

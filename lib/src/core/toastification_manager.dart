@@ -204,27 +204,32 @@ class ToastificationManager {
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
-            child: AnimatedList(
-              key: _listGlobalKey,
-              clipBehavior: config.clipBehavior,
-              initialItemCount: _notifications.length,
-              reverse: alignment.y >= 0,
-              primary: true,
-              shrinkWrap: true,
-              itemBuilder: (
-                BuildContext context,
-                int index,
-                Animation<double> animation,
-              ) {
-                final item = _notifications[index];
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: alignment.y >= -.9,
+              removeBottom: alignment.y <= .9,
+              child: AnimatedList(
+                key: _listGlobalKey,
+                clipBehavior: config.clipBehavior,
+                initialItemCount: _notifications.length,
+                reverse: alignment.y >= 0,
+                primary: true,
+                shrinkWrap: true,
+                itemBuilder: (
+                  BuildContext context,
+                  int index,
+                  Animation<double> animation,
+                ) {
+                  final item = _notifications[index];
 
-                return ToastHolderWidget(
-                  item: item,
-                  animation: animation,
-                  alignment: alignment,
-                  transformerBuilder: _toastAnimationBuilder(item),
-                );
-              },
+                  return ToastHolderWidget(
+                    item: item,
+                    animation: animation,
+                    alignment: alignment,
+                    transformerBuilder: _toastAnimationBuilder(item),
+                  );
+                },
+              ),
             ),
           ),
         );
