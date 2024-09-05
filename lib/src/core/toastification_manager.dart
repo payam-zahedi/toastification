@@ -200,7 +200,7 @@ class ToastificationManager {
         Widget overlay = Align(
           alignment: alignment,
           child: Container(
-            margin: config.marginBuilder(alignment),
+            margin: config.marginBuilder(context, alignment),
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
