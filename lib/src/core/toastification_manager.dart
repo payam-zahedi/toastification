@@ -27,6 +27,8 @@ class ToastificationManager {
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
 
+  Duration delay = const Duration(milliseconds: 10);
+
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
   /// if the [_notifications] list is empty, we will create the [_overlayEntry]
@@ -53,7 +55,6 @@ class ToastificationManager {
 
     /// we need this delay because we want to show the item animation after
     /// the overlay created
-    var delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
@@ -103,7 +104,7 @@ class ToastificationManager {
     bool showRemoveAnimation = true,
   }) {
     final index = _notifications.indexOf(notification);
-
+    // print("Toastification Manager Dismiss Notifications: $_notifications");
     if (index != -1) {
       notification = _notifications[index];
 
@@ -143,7 +144,7 @@ class ToastificationManager {
       // TODO(payam): add the condition before the delay
       /// we will remove the [_overlayEntry] if there are no notifications
       Future.delayed(
-        removedItem.animationDuration ?? config.animationDuration,
+        (removedItem.animationDuration ?? config.animationDuration) + delay,
         () {
           if (_notifications.isEmpty) {
             _overlayEntry?.remove();
