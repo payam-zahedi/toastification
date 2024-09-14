@@ -27,7 +27,19 @@ class ToastificationManager {
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
 
-  Duration delay = const Duration(milliseconds: 10);
+  /// this is the delay for showing the overlay entry
+  /// We need this delay because we want to show the item animation after
+  /// the overlay created
+  ///
+  /// When we want to show first toast, we need to wait for the overlay to be created
+  /// and then show the toast item.
+  final _createOverlayDelay = const Duration(milliseconds: 100);
+
+  /// this is the delay for removing the overlay entry
+  ///
+  /// when we want to remove the last toast, we need to wait for the animation
+  /// to be completed and then remove the overlay.
+  final _removeOverlayDelay = const Duration(milliseconds: 50);
 
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
@@ -55,12 +67,12 @@ class ToastificationManager {
 
     /// we need this delay because we want to show the item animation after
     /// the overlay created
+    Duration delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
 
-      // TODO(payam): remove this in the future
-      delay = const Duration(milliseconds: 300);
+      delay = _createOverlayDelay;
     }
 
     Future.delayed(
@@ -141,17 +153,21 @@ class ToastificationManager {
         );
       }
 
-      // TODO(payam): add the condition before the delay
       /// we will remove the [_overlayEntry] if there are no notifications
-      Future.delayed(
-        (removedItem.animationDuration ?? config.animationDuration) + delay,
-        () {
-          if (_notifications.isEmpty) {
-            _overlayEntry?.remove();
-            _overlayEntry = null;
-          }
-        },
-      );
+      /// We need to check if the _notifications list is empty twice.
+      /// To make sure after the delay, there are no new notifications added.
+      if (_notifications.isEmpty) {
+        Future.delayed(
+          (removedItem.animationDuration ?? config.animationDuration) +
+              _removeOverlayDelay,
+          () {
+            if (_notifications.isEmpty) {
+              _overlayEntry?.remove();
+              _overlayEntry = null;
+            }
+          },
+        );
+      }
     }
   }
 
