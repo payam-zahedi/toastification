@@ -83,11 +83,7 @@ Widget _defaultAnimationBuilderConfig(
 
 /// Default margin builder for [Toastification]
 EdgeInsetsGeometry _defaultMarginBuilder(BuildContext context, AlignmentGeometry alignment) {
-  final y = alignment is Alignment
-      ? alignment.y
-      : alignment is AlignmentDirectional
-          ? alignment.y
-          : 0.0;
+  final y = alignment.resolve(Directionality.of(context)).y;
   final kbdBottomMargin = MediaQuery.of(context).viewInsets.bottom;
 
   log('Margin builder called with y: $y');
