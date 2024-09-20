@@ -9,6 +9,7 @@ const _itemAnimationDuration = Duration(milliseconds: 600);
 const _defaultWidth = 400.0;
 const _defaultClipBehavior = Clip.none;
 
+
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
 ///
 /// when you are using [show] or [showCustom] methods,
@@ -36,7 +37,7 @@ class ToastificationConfig extends Equatable {
   final Clip clipBehavior;
   final Duration animationDuration;
   final ToastificationAnimationBuilder animationBuilder;
-  final EdgeInsetsGeometry Function(AlignmentGeometry alignment) marginBuilder;
+  final EdgeInsetsGeometry Function(BuildContext context, AlignmentGeometry alignment) marginBuilder;
 
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
@@ -45,7 +46,7 @@ class ToastificationConfig extends Equatable {
     Clip? clipBehavior,
     Duration? animationDuration,
     ToastificationAnimationBuilder? animationBuilder,
-    EdgeInsetsGeometry Function(AlignmentGeometry alignment)? marginBuilder,
+    EdgeInsetsGeometry Function(BuildContext context, AlignmentGeometry alignment)? marginBuilder,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
@@ -81,22 +82,15 @@ Widget _defaultAnimationBuilderConfig(
 }
 
 /// Default margin builder for [Toastification]
-EdgeInsetsGeometry _defaultMarginBuilder(AlignmentGeometry alignment) {
-  final y = alignment is Alignment
-      ? alignment.y
-      : alignment is AlignmentDirectional
-          ? alignment.y
-          : 0.0;
-  Alignment.topCenter;
+EdgeInsetsGeometry _defaultMarginBuilder(BuildContext context, AlignmentGeometry alignment) {
+  final y = alignment.resolve(Directionality.of(context)).y;
 
   log('Margin builder called with y: $y');
   log('Margin builder called with alignment: $alignment');
 
   return switch (y) {
-    >= -1 => const EdgeInsets.only(top: 12),
-    >= -0.5 => const EdgeInsets.only(top: 12),
-    <= 0.5 => const EdgeInsets.only(bottom: 12),
-    <= 1 => const EdgeInsets.only(bottom: 12),
-    _ => EdgeInsets.zero,
+    <= -0.5 => const EdgeInsets.only(top: 12) + MediaQuery.of(context).viewInsets,
+    >= 0.5 => const EdgeInsets.only(bottom: 12) + MediaQuery.of(context).viewInsets,
+    _ => MediaQuery.of(context).viewInsets,
   };
 }
