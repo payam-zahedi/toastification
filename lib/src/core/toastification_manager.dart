@@ -218,13 +218,14 @@ class ToastificationManager {
           alignment: alignment,
           child: Container(
             margin: _marginBuilder(context, alignment, config),
+            color: Colors.black38,
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
             child: MediaQuery.removePadding(
               context: context,
-              removeTop: alignment.y >= -.9,
-              removeBottom: alignment.y <= .9,
+              removeTop: true,
+              removeBottom: true,
               child: AnimatedList(
                 key: _listGlobalKey,
                 clipBehavior: config.clipBehavior,
@@ -267,7 +268,9 @@ class ToastificationManager {
       marginValue = marginValue.add(MediaQuery.of(context).viewInsets);
     }
 
-    return marginValue;
+    /// Add the MediaQuery viewPadding as margin so other widgets behind the toastification overlay
+    /// will be touchable and not covered by the toastification overlay.
+    return marginValue.add(MediaQuery.of(context).viewPadding);
   }
 
   ToastificationAnimationBuilder _toastAnimationBuilder(

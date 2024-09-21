@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scrollbar(
         child: Scaffold(
           extendBody: true,
-          bottomNavigationBar: BottomNavigationView(),
+          bottomNavigationBar: const BottomNavigationView(),
           body: CustomScrollView(
             scrollBehavior: const ScrollBehavior().copyWith(
               scrollbars: false,
