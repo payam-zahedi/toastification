@@ -11,22 +11,6 @@ enum ToastificationStyle {
   /// a simple toast message just show the given title without any icon or extra widget
   simple,
 }
-
-/// enum to define the type of the built-in toastification
-enum ToastificationType {
-  /// info toast to show some information - blue color - icon: info
-  info,
-
-  /// warning toast to show some warning - yellow color - icon: warning
-  warning,
-
-  /// error toast to show some error - red color - icon: error
-  success,
-
-  /// success toast to show some success - green color - icon: success
-  error,
-}
-
 /// Using this enum you can define the behavior of the toast close button
 enum CloseButtonShowType {
   /// [always] - show the close button always

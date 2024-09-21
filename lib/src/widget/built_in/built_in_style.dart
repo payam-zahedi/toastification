@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 /// default style for info toastification
@@ -54,19 +54,13 @@ abstract class BuiltInStyle {
   EdgeInsetsGeometry padding(BuildContext context) =>
       const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16);
 
-  MaterialColor primaryColor(BuildContext context);
+  MaterialColor primaryColor(BuildContext context) =>
+      ToastHelper.createMaterialColor(type.color);
   MaterialColor onPrimaryColor(BuildContext context);
   Color backgroundColor(BuildContext context);
   Color foregroundColor(BuildContext context);
 
-  IconData icon(BuildContext context) {
-    return switch (type) {
-      ToastificationType.success => Iconsax.tick_circle_copy,
-      ToastificationType.info => Iconsax.info_circle_copy,
-      ToastificationType.warning => Iconsax.danger_copy,
-      ToastificationType.error => Iconsax.close_circle_copy,
-    };
-  }
+  IconData icon(BuildContext context) => type.icon;
 
   Color iconColor(BuildContext context);
 

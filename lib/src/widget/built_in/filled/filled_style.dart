@@ -4,19 +4,6 @@ import 'package:toastification/toastification.dart';
 
 class FilledStyle extends BuiltInStyle {
   const FilledStyle(super.type);
-
-  @override
-  MaterialColor primaryColor(BuildContext context) {
-    final color = switch (type) {
-      ToastificationType.info => infoColor,
-      ToastificationType.warning => warningColor,
-      ToastificationType.success => successColor,
-      ToastificationType.error => errorColor,
-    };
-
-    return ToastHelper.createMaterialColor(color);
-  }
-
   @override
   MaterialColor onPrimaryColor(BuildContext context) {
     return ToastHelper.createMaterialColor(Colors.white);
