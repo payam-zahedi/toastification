@@ -217,7 +217,7 @@ class ToastificationManager {
         Widget overlay = Align(
           alignment: alignment,
           child: Container(
-            margin: config.marginBuilder(context, alignment),
+            margin: _marginBuilder(context, alignment, config),
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
@@ -254,6 +254,20 @@ class ToastificationManager {
         return overlay;
       },
     );
+  }
+
+  EdgeInsetsGeometry _marginBuilder(
+    BuildContext context,
+    AlignmentGeometry alignment,
+    ToastificationConfig config,
+  ) {
+    var marginValue = config.marginBuilder(context, alignment);
+
+    if (config.applyMediaQueryViewInsets) {
+      marginValue = marginValue.add(MediaQuery.of(context).viewInsets);
+    }
+
+    return marginValue;
   }
 
   ToastificationAnimationBuilder _toastAnimationBuilder(
