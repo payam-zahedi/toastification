@@ -218,7 +218,6 @@ class ToastificationManager {
           alignment: alignment,
           child: Container(
             margin: _marginBuilder(context, alignment, config),
-            color: Colors.black38,
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
