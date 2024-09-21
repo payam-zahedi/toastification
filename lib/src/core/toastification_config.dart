@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
@@ -9,6 +7,8 @@ const _itemAnimationDuration = Duration(milliseconds: 600);
 const _defaultWidth = 400.0;
 const _defaultClipBehavior = Clip.none;
 
+typedef ToastificationMarginBuilder = EdgeInsetsGeometry Function(
+    BuildContext context, AlignmentGeometry alignment);
 
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
 ///
@@ -28,6 +28,7 @@ class ToastificationConfig extends Equatable {
     this.animationDuration = _itemAnimationDuration,
     this.animationBuilder = _defaultAnimationBuilderConfig,
     this.marginBuilder = _defaultMarginBuilder,
+    this.applyMediaQueryViewInsets = true,
   });
 
   final AlignmentGeometry alignment;
@@ -35,9 +36,21 @@ class ToastificationConfig extends Equatable {
 
   /// The ClipBehavior of [AnimatedList], used as entry point for all [ToastificationItem]s' widgets under the hood. The default value is [Clip.none].
   final Clip clipBehavior;
+
+  /// The duration of the animation for [ToastificationItem]s. The default value is 600 milliseconds.
   final Duration animationDuration;
+
   final ToastificationAnimationBuilder animationBuilder;
-  final EdgeInsetsGeometry Function(BuildContext context, AlignmentGeometry alignment) marginBuilder;
+
+  /// Builder method for creating margin for Toastification Overlay.
+  final ToastificationMarginBuilder marginBuilder;
+
+  /// Whether to apply the viewInsets to the margin of the Toastification Overlay.
+  /// Basically, this is used to move the Toastification Overlay up or down when the keyboard is shown.
+  /// So Toast overlay will not be hidden by the keyboard when the keyboard is shown.
+  ///
+  /// If set to true, MediaQuery.of(context).viewInsets will be added to the result of the [marginBuilder] method.
+  final bool applyMediaQueryViewInsets;
 
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
@@ -46,7 +59,8 @@ class ToastificationConfig extends Equatable {
     Clip? clipBehavior,
     Duration? animationDuration,
     ToastificationAnimationBuilder? animationBuilder,
-    EdgeInsetsGeometry Function(BuildContext context, AlignmentGeometry alignment)? marginBuilder,
+    ToastificationMarginBuilder? marginBuilder,
+    bool? applyMediaQueryViewInsets,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
@@ -55,6 +69,8 @@ class ToastificationConfig extends Equatable {
       animationDuration: animationDuration ?? this.animationDuration,
       animationBuilder: animationBuilder ?? this.animationBuilder,
       marginBuilder: marginBuilder ?? this.marginBuilder,
+      applyMediaQueryViewInsets:
+          applyMediaQueryViewInsets ?? this.applyMediaQueryViewInsets,
     );
   }
 
@@ -62,8 +78,10 @@ class ToastificationConfig extends Equatable {
   List<Object?> get props => [
         alignment,
         itemWidth,
+        clipBehavior,
         animationDuration,
         marginBuilder,
+        applyMediaQueryViewInsets,
       ];
 }
 
@@ -82,15 +100,15 @@ Widget _defaultAnimationBuilderConfig(
 }
 
 /// Default margin builder for [Toastification]
-EdgeInsetsGeometry _defaultMarginBuilder(BuildContext context, AlignmentGeometry alignment) {
+EdgeInsetsGeometry _defaultMarginBuilder(
+  BuildContext context,
+  AlignmentGeometry alignment,
+) {
   final y = alignment.resolve(Directionality.of(context)).y;
 
-  log('Margin builder called with y: $y');
-  log('Margin builder called with alignment: $alignment');
-
   return switch (y) {
-    <= -0.5 => const EdgeInsets.only(top: 12) + MediaQuery.of(context).viewInsets,
-    >= 0.5 => const EdgeInsets.only(bottom: 12) + MediaQuery.of(context).viewInsets,
-    _ => MediaQuery.of(context).viewInsets,
+    <= -0.5 => const EdgeInsets.only(top: 12),
+    >= 0.5 => const EdgeInsets.only(bottom: 12),
+    _ => EdgeInsets.zero,
   };
 }
