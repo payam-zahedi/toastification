@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/built_in_style.dart';
 
-/// enum to define the style of the built-in toastification
-enum ToastificationStyle {
-  minimal,
-  fillColored,
-  flatColored,
-  flat,
 
-  /// a simple toast message just show the given title without any icon or extra widget
-  simple,
-}
 /// Using this enum you can define the behavior of the toast close button
 enum CloseButtonShowType {
   /// [always] - show the close button always
