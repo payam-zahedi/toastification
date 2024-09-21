@@ -5,7 +5,7 @@ import 'package:toastification/src/core/toastification_type.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 
-import 'minimal_style.dart';
+import '../../../core/style/factory/minimal_style.dart';
 
 class MinimalToastWidget extends StatelessWidget {
   const MinimalToastWidget({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style/style_factory.dart';
+import 'package:toastification/src/core/style/factory/style_factory.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 

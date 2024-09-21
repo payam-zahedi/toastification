@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/built_in_style.dart';
+import 'package:toastification/src/core/style/built_in_style.dart';
 
 
 /// Using this enum you can define the behavior of the toast close button
