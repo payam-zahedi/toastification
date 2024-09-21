@@ -1,3 +1,9 @@
+## 2.3.0
+* fix: AnimationController.dispose() called more than once. on multiple action show by @AntonioAEMartins
+* fix: add extra bottom margin to account for keyboard by @MrLightful 
+* refactor: toast config and applyMediaQueryViewInsets as property by @payam-zahedi
+* fix: add Media Query view padding as a margin to toast overlay by @payam-zahedi
+* fix: add max line limit for title and description by @payam-zahedi
 
 ## 2.2.0
 * Fix offset in description when title is null by @romatallinn
