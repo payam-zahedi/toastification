@@ -87,6 +87,7 @@ class BuiltInContent extends StatelessWidget {
       style: style.titleTextStyle(context)?.copyWith(
             color: foregroundColor,
           ),
+      maxLines: 1,
       child: title ?? const SizedBox(),
     );
 
@@ -106,6 +107,7 @@ class BuiltInContent extends StatelessWidget {
             style: style.descriptionTextStyle(context)?.copyWith(
                   color: foregroundColor,
                 ),
+            maxLines: 2,
             child: description!,
           ),
         ],
