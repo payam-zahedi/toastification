@@ -21,12 +21,9 @@ dependencies:
   pausable_timer: ^3.1.0+3
   collection: ^1.16.0
   iconsax_flutter: ^1.0.0
-  reflectable: ^4.0.10
   
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
-flutter:

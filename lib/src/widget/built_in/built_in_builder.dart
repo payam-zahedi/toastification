@@ -136,6 +136,7 @@ class BuiltInBuilder extends StatelessWidget {
     return BuiltInStyle.fromToastificationStyle(style, type);
   }
 
+
   VoidCallback _onCloseButtonTap() {
     return () {
       callbacks.onCloseButtonTap != null

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/style/style_factory.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
@@ -12,13 +13,7 @@ abstract class BuiltInStyle {
     ToastificationStyle style,
     ToastificationType type,
   ) {
-    return switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
-    };
+    return StyleFactory.createStyle(style, type);
   }
 
   final ToastificationType type;
