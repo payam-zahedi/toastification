@@ -8,6 +8,7 @@ export 'src/core/toastification_callbacks.dart';
 export 'src/core/toastification_overlay_state.dart'
     hide findToastificationOverlayState, ToastificationOverlayState;
 export 'src/core/toastification_type.dart';
+export 'src/core/constants_values.dart';
 export 'src/widget/toastification_config_provider.dart';
 
 // animation
