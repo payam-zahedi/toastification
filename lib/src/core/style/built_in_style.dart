@@ -26,7 +26,6 @@ abstract class BuiltInStyle {
   MaterialColor onPrimaryColor(BuildContext context);
   Color backgroundColor(BuildContext context);
   Color foregroundColor(BuildContext context);
-
   IconData icon(BuildContext context) => type.icon;
 
   Color iconColor(BuildContext context);

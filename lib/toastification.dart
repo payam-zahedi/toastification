@@ -9,6 +9,7 @@ export 'src/core/toastification_overlay_state.dart'
     hide findToastificationOverlayState, ToastificationOverlayState;
 export 'src/core/toastification_type.dart';
 export 'src/core/constants_values.dart';
+export 'src/core/style_parameter_builder.dart';
 export 'src/core/style/toastification_style.dart';
 export 'src/widget/toastification_config_provider.dart';
 

@@ -58,19 +58,6 @@ class MinimalStyle extends BuiltInStyle {
     return const BorderRadius.all(Radius.circular(12));
   }
 
-  BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) {
-    return BorderRadiusDirectional.only(
-      topEnd: borderRadius.topRight.clamp(
-        minimum: const Radius.circular(0),
-        maximum: const Radius.circular(30),
-      ),
-      bottomEnd: borderRadius.bottomRight.clamp(
-        minimum: const Radius.circular(0),
-        maximum: const Radius.circular(30),
-      ),
-    );
-  }
-
   @override
   ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context) {
     return ProgressIndicatorThemeData(

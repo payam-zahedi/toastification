@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/style_parameter_builder.dart';
 
 class ToastCloseButton extends StatelessWidget {
   const ToastCloseButton({
     super.key,
-    this.showCloseButton = true,
-    required this.icon,
-    required this.iconColor,
+    required this.styleParameters,
     this.onCloseTap,
   });
-
-  final bool showCloseButton;
+  final StyleParameters styleParameters;
   final VoidCallback? onCloseTap;
-  final IconData icon;
-  final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.square(
       dimension: 30,
       child: IgnorePointer(
-        ignoring: !showCloseButton,
+        ignoring: !styleParameters.showCloseButton,
         child: AnimatedOpacity(
-          opacity: showCloseButton ? 1 : 0,
+          opacity: styleParameters.showCloseButton ? 1 : 0,
           duration: const Duration(milliseconds: 200),
           child: Material(
             color: Colors.transparent,
@@ -31,8 +27,8 @@ class ToastCloseButton extends StatelessWidget {
                 onTap: onCloseTap,
                 borderRadius: BorderRadius.circular(5),
                 child: Icon(
-                  icon,
-                  color: iconColor,
+                  styleParameters.closeIcon,
+                  color: styleParameters.closeIconColor,
                   size: 18,
                 ),
               );

@@ -103,8 +103,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   toast: FilledToastWidget(
-                                    type:
-                                        widget.type ?? ToastificationType.info,
+                                    styleParameters: StyleParameters(
+                                        FilledStyle(widget.type ??
+                                            ToastificationType.info),
+                                        context),
                                     title: const Text('The Title'),
                                     description: const Text('The Description'),
                                   ),
@@ -120,8 +122,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   toast: FlatToastWidget(
-                                    type:
-                                        widget.type ?? ToastificationType.info,
+                                    styleParameters: StyleParameters(
+                                        FlatStyle(widget.type ??
+                                            ToastificationType.info),
+                                        context),
                                     title: const Text('The Title'),
                                     description: const Text('The Description'),
                                   ),
@@ -141,8 +145,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   toast: FlatColoredToastWidget(
-                                    type:
-                                        widget.type ?? ToastificationType.info,
+                                    styleParameters: StyleParameters(
+                                        FlatColoredStyle(widget.type ??
+                                            ToastificationType.info),
+                                        context),
                                     title: const Text('The Title'),
                                     description: const Text('The Description'),
                                   ),
@@ -158,8 +164,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   toast: MinimalToastWidget(
-                                    type:
-                                        widget.type ?? ToastificationType.info,
+                                    styleParameters: StyleParameters(
+                                        MinimalStyle(widget.type ??
+                                            ToastificationType.info),
+                                        context),
                                     title: const Text('The Title'),
                                     description: const Text('The Description'),
                                   ),
@@ -180,8 +188,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                 child: _ItemHolder(
                                   isCenter: true,
                                   toast: SimpleToastWidget(
-                                    type:
-                                        widget.type ?? ToastificationType.info,
+                                    styleParameters: StyleParameters(
+                                        SimpleStyle(widget.type ??
+                                            ToastificationType.info),
+                                        context),
                                     title: const Text('Simple Title Toast'),
                                   ),
                                   onTap: () {
