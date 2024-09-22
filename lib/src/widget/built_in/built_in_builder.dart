@@ -128,15 +128,6 @@ class BuiltInBuilder extends StatelessWidget {
     );
   }
 
-  BuiltInStyle toastDefaultStyle() {
-    final type = this.type ?? ToastificationType.info;
-
-    final style = this.style ?? ToastificationStyle.fillColored;
-
-    return BuiltInStyle.fromToastificationStyle(style, type);
-  }
-
-
   VoidCallback _onCloseButtonTap() {
     return () {
       callbacks.onCloseButtonTap != null
