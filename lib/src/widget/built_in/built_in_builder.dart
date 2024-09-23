@@ -258,11 +258,9 @@ class BuiltInToastBuilder extends StatelessWidget {
           final showCloseButton =
               (closeButtonType != CloseButtonShowType.none) && showWidget;
           final defaultStyle = StyleFactory.createStyle(style, type);
-      
+
           final styleParameter = StyleParameters(defaultStyle, context);
-      
-         
-      
+
           styleParameter
               .setApplyBlurEffect(applyBlurEffect)
               .setPrimaryColor(primaryColor)

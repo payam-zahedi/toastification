@@ -15,6 +15,7 @@ class FlatToastWidget extends StatelessWidget {
     this.onCloseTap,
     this.progressBarValue,
     this.progressBarWidget,
+    required this.styleParameters,
   });
 
   final StyleParameters styleParameters;
