@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style/factory/style_factory.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
@@ -9,15 +8,9 @@ import 'package:toastification/toastification.dart';
 abstract class BuiltInStyle {
   const BuiltInStyle(this.type);
 
-  factory BuiltInStyle.fromToastificationStyle(
-    ToastificationStyle style,
-    ToastificationType type,
-  ) {
-    return StyleFactory.createStyle(style, type);
-  }
-
   final ToastificationType type;
 
+  
   EdgeInsetsGeometry padding(BuildContext context) =>
       const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16);
 
