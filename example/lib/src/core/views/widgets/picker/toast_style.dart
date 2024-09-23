@@ -122,6 +122,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   toast: FlatToastWidget(
+                                    
                                     styleParameters: StyleParameters(
                                         FlatStyle(widget.type ??
                                             ToastificationType.info),

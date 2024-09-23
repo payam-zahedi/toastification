@@ -57,12 +57,17 @@ class ToastificationTheme {
       _backgroundColor ?? defaultStyle.backgroundColor(context);
   Color get foregroundColor =>
       _foregroundColor ?? defaultStyle.foregroundColor(context);
+
+  Color get decorationColor =>
+      _applyBlurEffect ? backgroundColor.withOpacity(0.5) : backgroundColor;
   EdgeInsetsGeometry get padding => _padding ?? defaultStyle.padding(context);
   BorderRadiusGeometry get borderRadius =>
       _borderRadius ?? defaultStyle.borderRadius(context);
   BorderSide get borderSide =>
       _borderSide ??
       defaultStyle.borderSide(context).copyWith(color: primaryColor);
+  Border get decorationBorder => Border.fromBorderSide(borderSide);
+
   List<BoxShadow> get boxShadow =>
       _boxShadow ?? defaultStyle.boxShadow(context);
   TextDirection get direction => _direction ?? Directionality.of(context);

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/style/factory/style_factory.dart';
+import 'package:toastification/src/core/style/toastification_theme.dart';
+import 'package:toastification/src/core/style/toastification_theme_provider.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
@@ -229,69 +231,94 @@ class BuiltInToastBuilder extends StatelessWidget {
           )
         : null;
 
-    return OnHoverShow(
-      enabled: closeButtonType == CloseButtonShowType.onHover,
-      childBuilder: (context, showWidget) {
-        final showCloseButton =
-            (closeButtonType != CloseButtonShowType.none) && showWidget;
-        final defaultStyle = StyleFactory.createStyle(style, type);
-
-        final styleParameter = StyleParameters(defaultStyle, context);
-        styleParameter
-            .setApplyBlurEffect(applyBlurEffect)
-            .setPrimaryColor(primaryColor)
-            .setBackgroundColor(backgroundColor)
-            .setForegroundColor(foregroundColor)
-            .setPadding(padding)
-            .setShowIcon(showIcon)
-            .setBorderRadius(borderRadius)
-            .setBorderSide(borderSide)
-            .setBoxShadow(boxShadow)
-            .setDirection(direction)
-            .setShowCloseButton(showCloseButton)
-            .setShowProgressBar(showProgressBar)
-            .setProgressIndicatorTheme(progressBarTheme)
-            .setApplyBlurEffect(applyBlurEffect)
-            .build();
-        return switch (style) {
-          ToastificationStyle.flat => FlatToastWidget(
-              title: title,
-              description: description,
-              icon: icon,
-              onCloseTap: onCloseTap,
-              progressBarWidget: progressBarWidget,
-              styleParameters: styleParameter,
-            ),
-          ToastificationStyle.flatColored => FlatColoredToastWidget(
-              title: title,
-              description: description,
-              icon: icon,
-              onCloseTap: onCloseTap,
-              progressBarWidget: progressBarWidget,
-              styleParameters: styleParameter,
-            ),
-          ToastificationStyle.fillColored => FilledToastWidget(
-              title: title,
-              description: description,
-              icon: icon,
-              onCloseTap: onCloseTap,
-              progressBarWidget: progressBarWidget,
-              styleParameters: styleParameter,
-            ),
-          ToastificationStyle.minimal => MinimalToastWidget(
-              title: title,
-              description: description,
-              icon: icon,
-              onCloseTap: onCloseTap,
-              progressBarWidget: progressBarWidget,
-              styleParameters: styleParameter,
-            ),
-          ToastificationStyle.simple => SimpleToastWidget(
-              title: title,
-              styleParameters: styleParameter,
-            ),
-        };
+    return ToastificationThemeProvider(
+      defaultStyle: StyleFactory.createStyle(style, type),
+      themeBuilder: (theme) {
+        return ToastificationTheme(
+          defaultStyle: StyleFactory.createStyle(style, type),
+          context: context,
+          primaryColor: primaryColor,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          padding: padding,
+          borderRadius: borderRadius,
+          borderSide: borderSide,
+          boxShadow: boxShadow,
+          direction: direction,
+          showCloseButton: closeButtonType != CloseButtonShowType.none,
+          showProgressBar: showProgressBar,
+          applyBlurEffect: applyBlurEffect ?? false,
+          showIcon: showIcon ?? true,
+          progressIndicatorTheme: progressBarTheme,
+        );
       },
+      child: OnHoverShow(
+        enabled: closeButtonType == CloseButtonShowType.onHover,
+        childBuilder: (context, showWidget) {
+          final showCloseButton =
+              (closeButtonType != CloseButtonShowType.none) && showWidget;
+          final defaultStyle = StyleFactory.createStyle(style, type);
+      
+          final styleParameter = StyleParameters(defaultStyle, context);
+      
+         
+      
+          styleParameter
+              .setApplyBlurEffect(applyBlurEffect)
+              .setPrimaryColor(primaryColor)
+              .setBackgroundColor(backgroundColor)
+              .setForegroundColor(foregroundColor)
+              .setPadding(padding)
+              .setShowIcon(showIcon)
+              .setBorderRadius(borderRadius)
+              .setBorderSide(borderSide)
+              .setBoxShadow(boxShadow)
+              .setDirection(direction)
+              .setShowCloseButton(showCloseButton)
+              .setShowProgressBar(showProgressBar)
+              .setProgressIndicatorTheme(progressBarTheme)
+              .setApplyBlurEffect(applyBlurEffect)
+              .build();
+          return switch (style) {
+            ToastificationStyle.flat => FlatToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+                styleParameters: styleParameter,
+              ),
+            ToastificationStyle.flatColored => FlatColoredToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+                styleParameters: styleParameter,
+              ),
+            ToastificationStyle.fillColored => FilledToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+                styleParameters: styleParameter,
+              ),
+            ToastificationStyle.minimal => MinimalToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+                styleParameters: styleParameter,
+              ),
+            ToastificationStyle.simple => SimpleToastWidget(
+                title: title,
+                styleParameters: styleParameter,
+              ),
+          };
+        },
+      ),
     );
   }
 

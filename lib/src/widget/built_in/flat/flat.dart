@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/context_ext.dart';
 import 'package:toastification/src/core/style_parameter_builder.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
@@ -14,7 +15,6 @@ class FlatToastWidget extends StatelessWidget {
     this.onCloseTap,
     this.progressBarValue,
     this.progressBarWidget,
-    required this.styleParameters,
   });
 
   final StyleParameters styleParameters;
@@ -26,41 +26,40 @@ class FlatToastWidget extends StatelessWidget {
   final VoidCallback? onCloseTap;
   final double? progressBarValue;
   final Widget? progressBarWidget;
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: styleParameters.direction,
+      textDirection: context.toastTheme.direction,
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color: styleParameters.iconColor),
-        child: buildBody(),
+            .copyWith(color: context.toastTheme.iconColor),
+        child: buildBody(context),
       ),
     );
   }
 
-  Widget buildBody() {
+  Widget buildBody(BuildContext context) {
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: styleParameters.decorationColor,
-        borderRadius: styleParameters.borderRadius,
-        border: styleParameters.decorationBorder,
-        boxShadow: styleParameters.boxShadow,
+        color: context.toastTheme.decorationColor,
+        borderRadius: context.toastTheme.borderRadius,
+        border: context.toastTheme.decorationBorder,
+        boxShadow: context.toastTheme.boxShadow,
       ),
-      padding: styleParameters.padding,
+      padding: context.toastTheme.padding,
       child: Row(
         children: [
           Offstage(
-            offstage: !styleParameters.showIcon,
+            offstage: !context.toastTheme.showIcon,
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
               child: icon ??
                   Icon(
-                    styleParameters.icon,
+                    context.toastTheme.icon,
                     size: 24,
-                    color: styleParameters.iconColor,
+                    color: context.toastTheme.iconColor,
                   ),
             ),
           ),
@@ -82,9 +81,9 @@ class FlatToastWidget extends StatelessWidget {
       ),
     );
 
-    if (styleParameters.applyBlurEffect) {
+    if (context.toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: styleParameters.borderRadius,
+        borderRadius: context.toastTheme.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,
