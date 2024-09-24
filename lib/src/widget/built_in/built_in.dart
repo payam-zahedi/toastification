@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style_parameter_builder.dart';
+import 'package:toastification/src/core/context_ext.dart';
 
 /// Using this enum you can define the behavior of the toast close button
 enum CloseButtonShowType {
@@ -28,14 +28,12 @@ enum CloseButtonShowType {
 class BuiltInContent extends StatelessWidget {
   const BuiltInContent({
     super.key,
-    required this.styleParameters,
     this.title,
     this.description,
     this.progressBarValue,
     this.progressBarWidget,
   });
 
-  final StyleParameters styleParameters;
 
   final Widget? title;
   final Widget? description;
@@ -46,14 +44,14 @@ class BuiltInContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content = DefaultTextStyle.merge(
-      style: styleParameters.defaultStyle.titleTextStyle(context)?.copyWith(
-            color: styleParameters.foregroundColor,
+      style: context.toastTheme.titleTextStyle?.copyWith(
+            color: context.toastTheme.foregroundColor,
           ),
       child: title ?? const SizedBox(),
     );
 
     final showColumn =
-        description != null || styleParameters.showProgressBar == true;
+        description != null || context.toastTheme.showProgressBar == true;
     if (!showColumn) {
       return content;
     }
@@ -66,18 +64,18 @@ class BuiltInContent extends StatelessWidget {
         if (description != null) ...[
           const SizedBox(height: 6),
           DefaultTextStyle.merge(
-            style: styleParameters.defaultStyle
-                .descriptionTextStyle(context)
+            style: context.toastTheme
+                .descriptionTextStyle
                 ?.copyWith(
-                  color: styleParameters.foregroundColor,
+                  color: context.toastTheme.foregroundColor,
                 ),
             child: description!,
           ),
         ],
-        if (styleParameters.showProgressBar) ...[
+        if (context.toastTheme.showProgressBar) ...[
           const SizedBox(height: 10),
           ProgressIndicatorTheme(
-            data: styleParameters.progressIndicatorTheme,
+            data: context.toastTheme.progressIndicatorTheme,
             child: progressBarWidget ??
                 LinearProgressIndicator(value: progressBarValue),
           ),

@@ -102,13 +102,9 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                             children: [
                               Expanded(
                                 child: _ItemHolder(
-                                  toast: FilledToastWidget(
-                                    styleParameters: StyleParameters(
-                                        FilledStyle(widget.type ??
-                                            ToastificationType.info),
-                                        context),
-                                    title: const Text('The Title'),
-                                    description: const Text('The Description'),
+                                  toast: const FilledToastWidget(
+                                    title: Text('The Title'),
+                                    description: Text('The Description'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -121,14 +117,9 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: _ItemHolder(
-                                  toast: FlatToastWidget(
-                                    
-                                    styleParameters: StyleParameters(
-                                        FlatStyle(widget.type ??
-                                            ToastificationType.info),
-                                        context),
-                                    title: const Text('The Title'),
-                                    description: const Text('The Description'),
+                                  toast: const FlatToastWidget(
+                                    title: Text('The Title'),
+                                    description: Text('The Description'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -145,13 +136,9 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                             children: [
                               Expanded(
                                 child: _ItemHolder(
-                                  toast: FlatColoredToastWidget(
-                                    styleParameters: StyleParameters(
-                                        FlatColoredStyle(widget.type ??
-                                            ToastificationType.info),
-                                        context),
-                                    title: const Text('The Title'),
-                                    description: const Text('The Description'),
+                                  toast: const FlatColoredToastWidget(
+                                    title: Text('The Title'),
+                                    description: Text('The Description'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -164,13 +151,9 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: _ItemHolder(
-                                  toast: MinimalToastWidget(
-                                    styleParameters: StyleParameters(
-                                        MinimalStyle(widget.type ??
-                                            ToastificationType.info),
-                                        context),
-                                    title: const Text('The Title'),
-                                    description: const Text('The Description'),
+                                  toast: const MinimalToastWidget(
+                                    title: Text('The Title'),
+                                    description: Text('The Description'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -188,12 +171,8 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   isCenter: true,
-                                  toast: SimpleToastWidget(
-                                    styleParameters: StyleParameters(
-                                        SimpleStyle(widget.type ??
-                                            ToastificationType.info),
-                                        context),
-                                    title: const Text('Simple Title Toast'),
+                                  toast: const SimpleToastWidget(
+                                    title: Text('Simple Title Toast'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(

@@ -4,22 +4,26 @@ import 'package:toastification/src/core/style/toastification_theme.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastificationThemeProvider extends StatelessWidget {
-  final BuiltInStyle defaultStyle;
+  final BuiltInStyle selectedStyle;
+  final TextDirection textDirection;
   final Widget child;
+
   final ToastificationTheme Function(ToastificationTheme)? themeBuilder;
 
   const ToastificationThemeProvider({
     Key? key,
-    required this.defaultStyle,
+    required this.selectedStyle,
     required this.child,
+    required this.textDirection,
     this.themeBuilder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     ToastificationTheme theme = ToastificationTheme(
-      defaultStyle: defaultStyle,
-      context: context,
+      selectedStyle: selectedStyle,
+      themeData: Theme.of(context),
+      direction: textDirection,
     );
 
     if (themeBuilder != null) {

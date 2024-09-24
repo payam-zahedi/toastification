@@ -1,66 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/style/factory/base_style.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
-class FilledStyle extends BuiltInStyle {
-  const FilledStyle(super.type);
-  @override
-  MaterialColor onPrimaryColor(BuildContext context) {
-    return ToastHelper.createMaterialColor(Colors.white);
-  }
+class FilledStyle extends BaseStyle {
+  FilledStyle(ToastificationType type, ThemeData theme) : super(type, theme);
 
   @override
-  Color backgroundColor(BuildContext context) {
-    return primaryColor(context);
-  }
+  Color get backgroundColor => primaryColor;
 
   @override
-  Color foregroundColor(BuildContext context) {
-    return onPrimaryColor(context);
-  }
+  Color get iconColor => ToastHelper.createMaterialColor(Colors.white);
 
   @override
-  Color iconColor(BuildContext context) {
-    return onPrimaryColor(context);
-  }
-
+  Color get closeIconColor => foregroundColor.withOpacity(0.4);
   @override
-  IconData closeIcon(BuildContext context) {
-    return Icons.close;
-  }
-
-  @override
-  Color closeIconColor(BuildContext context) {
-    return foregroundColor(context).withOpacity(.6);
-  }
-
-  @override
-  BorderSide borderSide(BuildContext context) {
-    return const BorderSide(
-      color: Colors.black12,
-      width: 1,
-    );
-  }
-
-  @override
-  BorderRadiusGeometry borderRadius(BuildContext context) {
-    return const BorderRadius.all(Radius.circular(12));
-  }
-
-  @override
-  TextStyle? descriptionTextStyle(BuildContext context) {
-    return super.descriptionTextStyle(context)?.copyWith(
-          color: foregroundColor(context).withOpacity(.9),
-        );
-  }
-
-  @override
-  ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context) {
-    return ProgressIndicatorThemeData(
-      color: foregroundColor(context).withOpacity(.30),
-      linearMinHeight: super.progressIndicatorStrokeWidth(context),
-      linearTrackColor: foregroundColor(context).withOpacity(.15),
-      refreshBackgroundColor: foregroundColor(context).withOpacity(.15),
-    );
-  }
+  ProgressIndicatorThemeData get progressIndicatorTheme =>
+      ProgressIndicatorThemeData(
+        color: foregroundColor.withOpacity(.30),
+        linearMinHeight: progressIndicatorStrokeWidth,
+        linearTrackColor: foregroundColor.withOpacity(.15),
+        refreshBackgroundColor: foregroundColor.withOpacity(.15),
+      );
 }

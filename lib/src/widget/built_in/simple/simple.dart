@@ -1,40 +1,40 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/context_ext.dart';
+import 'package:toastification/src/core/style/toastification_theme.dart';
+import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/toastification.dart';
 
 class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({
     super.key,
-    required this.styleParameters,
     this.title,
   });
 
-  final StyleParameters styleParameters;
 
   final Widget? title;
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: styleParameters.direction,
+      textDirection: context.toastTheme.direction,
       child: Center(
-        child: buildContent(),
+        child: buildContent(context.toastTheme),
       ),
     );
   }
 
-  Widget buildContent() {
+  Widget buildContent(ToastificationTheme toastTheme) {
     Widget body = Container(
       decoration: BoxDecoration(
-        color: styleParameters.decorationColor,
-        border: styleParameters.decorationBorder,
-        boxShadow: styleParameters.boxShadow,
-        borderRadius: styleParameters.borderRadius,
+        color: toastTheme.decorationColor,
+        border: toastTheme.decorationBorder,
+        boxShadow: toastTheme.boxShadow,
+        borderRadius: toastTheme.borderRadius,
       ),
-      padding: styleParameters.padding,
+      padding: toastTheme.padding,
       child: BuiltInContent(
-        styleParameters: styleParameters,
         title: title,
         description: null,
         progressBarValue: null,
@@ -42,9 +42,9 @@ class SimpleToastWidget extends StatelessWidget {
       ),
     );
 
-    if (styleParameters.applyBlurEffect) {
+    if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: styleParameters.borderRadius,
+        borderRadius: toastTheme.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

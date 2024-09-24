@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/context_ext.dart';
-import 'package:toastification/src/core/style_parameter_builder.dart';
+import 'package:toastification/src/core/style/toastification_theme.dart';
 import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 
@@ -15,10 +15,8 @@ class FlatToastWidget extends StatelessWidget {
     this.onCloseTap,
     this.progressBarValue,
     this.progressBarWidget,
-    required this.styleParameters,
   });
 
-  final StyleParameters styleParameters;
   final Widget? title;
   final Widget? description;
 
@@ -35,38 +33,37 @@ class FlatToastWidget extends StatelessWidget {
         data: Theme.of(context)
             .primaryIconTheme
             .copyWith(color: context.toastTheme.iconColor),
-        child: buildBody(context),
+        child: buildBody(context.toastTheme),
       ),
     );
   }
 
-  Widget buildBody(BuildContext context) {
+  Widget buildBody(ToastificationTheme toastTheme) {
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: context.toastTheme.decorationColor,
-        borderRadius: context.toastTheme.borderRadius,
-        border: context.toastTheme.decorationBorder,
-        boxShadow: context.toastTheme.boxShadow,
+        color: toastTheme.decorationColor,
+        borderRadius: toastTheme.borderRadius,
+        border: toastTheme.decorationBorder,
+        boxShadow: toastTheme.boxShadow,
       ),
-      padding: context.toastTheme.padding,
+      padding: toastTheme.padding,
       child: Row(
         children: [
           Offstage(
-            offstage: !context.toastTheme.showIcon,
+            offstage: !toastTheme.showIcon,
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
               child: icon ??
                   Icon(
-                    context.toastTheme.icon,
+                    toastTheme.icon,
                     size: 24,
-                    color: context.toastTheme.iconColor,
+                    color: toastTheme.iconColor,
                   ),
             ),
           ),
           Expanded(
             child: BuiltInContent(
-              styleParameters: styleParameters,
               title: title,
               description: description,
               progressBarValue: progressBarValue,
@@ -75,16 +72,15 @@ class FlatToastWidget extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           ToastCloseButton(
-            styleParameters: styleParameters,
             onCloseTap: onCloseTap,
           ),
         ],
       ),
     );
 
-    if (context.toastTheme.applyBlurEffect) {
+    if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: context.toastTheme.borderRadius,
+        borderRadius: toastTheme.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

@@ -1,60 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/helper/toast_helper.dart';
+import 'package:toastification/src/core/style/factory/base_style.dart';
 import 'package:toastification/toastification.dart';
 
-class FlatColoredStyle extends BuiltInStyle {
-  const FlatColoredStyle(super.type);
+class FlatColoredStyle extends BaseStyle {
+  FlatColoredStyle(ToastificationType type, ThemeData theme)
+      : super(type, theme);
 
   @override
-  MaterialColor onPrimaryColor(BuildContext context) {
-    return ToastHelper.createMaterialColor(Colors.white);
-  }
+  Color get backgroundColor => primaryColor.shade50;
 
   @override
-  Color backgroundColor(BuildContext context) {
-    return primaryColor(context).shade50;
-  }
+  BorderSide get borderSide => BorderSide(
+        color: primaryColor,
+        width: 1.5,
+      );
 
   @override
-  Color foregroundColor(BuildContext context) {
-    return Colors.black;
-  }
+  double get elevation => 0.0;
 
   @override
-  Color iconColor(BuildContext context) {
-    return foregroundColor(context);
-  }
+  Color get foregroundColor => Colors.black;
+
 
   @override
-  IconData closeIcon(BuildContext context) {
-    return Icons.close;
-  }
+  Color get iconColor => foregroundColor;
 
-  @override
-  Color closeIconColor(BuildContext context) {
-    return foregroundColor(context).withOpacity(.3);
-  }
-
-  @override
-  BorderSide borderSide(BuildContext context) {
-    return BorderSide(
-      color: primaryColor(context),
-      width: 1.5,
-    );
-  }
-
-  @override
-  BorderRadiusGeometry borderRadius(BuildContext context) {
-    return const BorderRadius.all(Radius.circular(12));
-  }
-
-  @override
-  ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context) {
-    return ProgressIndicatorThemeData(
-      color: foregroundColor(context).withOpacity(.15),
-      linearMinHeight: super.progressIndicatorStrokeWidth(context),
-      linearTrackColor: foregroundColor(context).withOpacity(.05),
-      refreshBackgroundColor: foregroundColor(context).withOpacity(.05),
-    );
-  }
+  
 }

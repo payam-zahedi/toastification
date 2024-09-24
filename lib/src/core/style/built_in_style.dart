@@ -1,55 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/helper/toast_helper.dart';
-import 'package:toastification/toastification.dart';
 
 /// default style for info toastification
 
 /// Base abstract class for built-in styles
 abstract class BuiltInStyle {
-  const BuiltInStyle(this.type);
+  const BuiltInStyle();
 
-  final ToastificationType type;
+  EdgeInsetsGeometry get padding;
 
-  
-  EdgeInsetsGeometry padding(BuildContext context) =>
-      const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16);
+  MaterialColor get primaryColor;
+  Color get backgroundColor;
+  Color get foregroundColor;
+  IconData get icon;
 
-  MaterialColor primaryColor(BuildContext context) =>
-      ToastHelper.createMaterialColor(type.color);
-  MaterialColor onPrimaryColor(BuildContext context);
-  Color backgroundColor(BuildContext context);
-  Color foregroundColor(BuildContext context);
-  IconData icon(BuildContext context) => type.icon;
+  Color get iconColor;
 
-  Color iconColor(BuildContext context);
+  IconData get closeIcon;
+  Color get closeIconColor;
 
-  IconData closeIcon(BuildContext context);
-  Color closeIconColor(BuildContext context);
+  BorderSide get borderSide;
 
-  BorderSide borderSide(BuildContext context);
+  BorderRadiusGeometry get borderRadius;
 
-  BorderRadiusGeometry borderRadius(BuildContext context);
+  TextStyle? get titleTextStyle;
+  TextStyle? get descriptionTextStyle;
 
-  TextStyle? titleTextStyle(BuildContext context) =>
-      Theme.of(context).textTheme.titleSmall?.copyWith(
-            color: foregroundColor(context),
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            height: 1.2,
-          );
+  double get elevation;
+  List<BoxShadow> get boxShadow;
 
-  TextStyle? descriptionTextStyle(BuildContext context) =>
-      Theme.of(context).textTheme.titleSmall?.copyWith(
-            color: foregroundColor(context).withOpacity(.7),
-            fontSize: 14,
-            fontWeight: FontWeight.w300,
-            height: 1.2,
-          );
+  double get progressIndicatorStrokeWidth;
 
-  double elevation(BuildContext context) => 0.0;
-  List<BoxShadow> boxShadow(BuildContext context) => const [];
-
-  double progressIndicatorStrokeWidth(BuildContext context) => 2.0;
-
-  ProgressIndicatorThemeData progressIndicatorTheme(BuildContext context);
+  ProgressIndicatorThemeData get progressIndicatorTheme;
 }

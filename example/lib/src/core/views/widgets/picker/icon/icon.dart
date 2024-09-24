@@ -35,17 +35,17 @@ class _IconPickerState extends ConsumerState<IconPicker> {
     final icon = ref.watch(toastDetailControllerProvider).icon;
 
     final defaultStyle = switch (style) {
-      ToastificationStyle.minimal => MinimalStyle(type),
-      ToastificationStyle.fillColored => FilledStyle(type),
-      ToastificationStyle.flatColored => FlatColoredStyle(type),
-      ToastificationStyle.flat => FlatStyle(type),
-      ToastificationStyle.simple => SimpleStyle(type),
+      ToastificationStyle.minimal => MinimalStyle(type, Theme.of(context)),
+      ToastificationStyle.fillColored => FilledStyle(type, Theme.of(context)),
+      ToastificationStyle.flatColored =>
+        FlatColoredStyle(type, Theme.of(context)),
+      ToastificationStyle.flat => FlatStyle(type, Theme.of(context)),
+      ToastificationStyle.simple => SimpleStyle(type, Theme.of(context)),
     };
 
     return Theme(
       data: Theme.of(context).copyWith(
         hoverColor: Colors.transparent,
-        
       ),
       child: PopupMenuButton(
         key: _menuKey,
@@ -72,7 +72,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
             children: [
               Icon(
                 icon?.iconData ?? Iconsax.tick_circle_copy,
-                color: iconColor ?? defaultStyle.iconColor(context),
+                color: iconColor ?? defaultStyle.iconColor,
               ),
               const SizedBox(width: 8),
               const Text('Icon'),
@@ -92,7 +92,7 @@ class _IconPickerState extends ConsumerState<IconPicker> {
             padding: EdgeInsets.zero,
             child: Center(
               child: IconPickerWidget(
-                iconColor: iconColor ?? defaultStyle.iconColor(context),
+                iconColor: iconColor ?? defaultStyle.iconColor,
               ),
             ),
           )

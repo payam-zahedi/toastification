@@ -333,17 +333,18 @@ class _StyleSection extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
-    final builtInStyle = StyleFactory.createStyle(style, type);
+    final builtInStyle =
+        StyleFactory.createStyle(style, type, Theme.of(context));
 
     Color primaryColor = ref.watch(toastDetailControllerProvider
             .select((value) => value.primaryColor)) ??
-        builtInStyle.primaryColor(context);
+        builtInStyle.primaryColor;
     Color backgroundColor = ref.watch(toastDetailControllerProvider
             .select((value) => value.backgroundColor)) ??
-        builtInStyle.backgroundColor(context);
+        builtInStyle.backgroundColor;
     Color foregroundColor = ref.watch(toastDetailControllerProvider
             .select((value) => value.foregroundColor)) ??
-        builtInStyle.foregroundColor(context);
+        builtInStyle.foregroundColor;
 
     return SubSection(
       title: 'STYLE',
