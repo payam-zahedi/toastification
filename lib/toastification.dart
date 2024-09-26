@@ -13,6 +13,8 @@ export 'src/core/style/toastification_style.dart';
 export 'src/core/style/factory/style_factory.dart';
 export 'src/widget/toastification_config_provider.dart';
 
+export 'src/core/style/toastification_theme_provider.dart';
+
 // animation
 export 'src/widget/toast_animation.dart';
 

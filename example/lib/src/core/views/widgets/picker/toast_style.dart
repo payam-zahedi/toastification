@@ -172,6 +172,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                 child: _ItemHolder(
                                   isCenter: true,
                                   toast: const SimpleToastWidget(
+                                   
                                     title: Text('Simple Title Toast'),
                                   ),
                                   onTap: () {
