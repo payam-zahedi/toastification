@@ -16,7 +16,7 @@ class ToastCodeFormatter {
       code.writeln('context: context,');
     }
 
-    code.writeln('type: ${toastDetail.type},');
+    code.writeln('type: ${toastDetail.type.name},');
     code.writeln('style: ${toastDetail.style},');
 
     if (toastDetail.title != null) {
