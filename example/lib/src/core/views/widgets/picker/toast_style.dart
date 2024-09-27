@@ -102,9 +102,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                             children: [
                               Expanded(
                                 child: _ItemHolder(
+                                  style: ToastificationStyle.fillColored,
                                   toast: const FilledToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                    title: Text('Fill Colored Title'),
+                                    description: Text('This is Fill Colored Style'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -117,9 +118,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: _ItemHolder(
+                                  style: ToastificationStyle.flat,
                                   toast: const FlatToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                    title: Text('Flat Title'),
+                                    description: Text('This is Flat style'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -136,9 +138,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                             children: [
                               Expanded(
                                 child: _ItemHolder(
+                                  style: ToastificationStyle.flatColored,
                                   toast: const FlatColoredToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                    title: Text('Flat Colored Title'),
+                                    description: Text('This is Flat Colored Style'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -151,9 +154,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: _ItemHolder(
+                                  style: ToastificationStyle.minimal,
                                   toast: const MinimalToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                    title: Text('Minimal Title'),
+                                    description: Text('This is Minimal Style'),
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -171,8 +175,8 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   isCenter: true,
+                                  style: ToastificationStyle.flatColored,
                                   toast: const SimpleToastWidget(
-                                   
                                     title: Text('Simple Title Toast'),
                                   ),
                                   onTap: () {
@@ -242,17 +246,23 @@ class _ItemHolder extends StatelessWidget {
     this.isCenter = false,
     required this.toast,
     required this.onTap,
+    required this.style,
   });
 
   final bool isCenter;
   final VoidCallback onTap;
   final Widget toast;
+  final ToastificationStyle style;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    Widget child = toast;
+    Widget child = ToastificationThemeProvider(
+        selectedStyle:
+            StyleFactory.createStyle(style, ToastificationType.success, theme),
+        textDirection: TextDirection.ltr,
+        child: toast);
 
     if (isCenter) {
       child = Center(

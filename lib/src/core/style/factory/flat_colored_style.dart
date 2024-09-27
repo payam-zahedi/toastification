@@ -19,11 +19,9 @@ class FlatColoredStyle extends BaseStyle {
   double get elevation => 0.0;
 
   @override
-  Color get foregroundColor => Colors.black;
-
+  Color get foregroundColor =>
+      theme.brightness == Brightness.light ? Colors.black : Colors.white;
 
   @override
-  Color get iconColor => foregroundColor;
-
-  
+  Color get iconColor => primaryColor;
 }

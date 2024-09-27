@@ -238,7 +238,27 @@ class BuiltInToastBuilder extends StatelessWidget {
 
     return ToastificationThemeProvider(
       selectedStyle: StyleFactory.createStyle(
-          style, type ?? ToastificationType.info, Theme.of(context)),
+          style, type ?? ToastificationType.success, Theme.of(context)),
+      themeBuilder: (theme) {
+        return theme.copyWith(
+          primaryColor: primaryColor != null
+              ? ToastHelper.createMaterialColor(primaryColor!)
+              : null,
+          foregroundColor: foregroundColor != null
+              ? ToastHelper.createMaterialColor(foregroundColor!)
+              : null,
+          padding: padding ?? theme.padding,
+          borderRadius: borderRadius ?? theme.borderRadius,
+          borderSide: borderSide ?? theme.borderSide,
+          boxShadow: boxShadow ?? theme.boxShadow,
+          direction: direction ?? Directionality.of(context),
+          showProgressBar: showProgressBar,
+          applyBlurEffect: applyBlurEffect ?? false,
+          showIcon: showIcon ?? true,
+          progressIndicatorTheme:
+              progressBarTheme ?? theme.progressIndicatorTheme,
+        );
+      },
       textDirection: direction ?? Directionality.of(context),
       child: OnHoverShow(
         enabled: closeButtonShowType == CloseButtonShowType.onHover,

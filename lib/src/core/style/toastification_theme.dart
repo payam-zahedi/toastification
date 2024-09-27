@@ -62,8 +62,7 @@ class ToastificationTheme {
   EdgeInsetsGeometry get padding => _padding ?? selectedStyle.padding;
   BorderRadiusGeometry get borderRadius =>
       _borderRadius ?? selectedStyle.borderRadius;
-  BorderSide get borderSide =>
-      _borderSide ?? selectedStyle.borderSide.copyWith(color: primaryColor);
+  BorderSide get borderSide => _borderSide ?? selectedStyle.borderSide;
   Border get decorationBorder => Border.fromBorderSide(borderSide);
 
   List<BoxShadow> get boxShadow => _boxShadow ?? selectedStyle.boxShadow;
@@ -76,7 +75,7 @@ class ToastificationTheme {
       _progressIndicatorTheme ?? selectedStyle.progressIndicatorTheme;
 
   // Additional getters that depend on the above properties
-  Color get iconColor => primaryColor;
+  Color get iconColor => selectedStyle.iconColor;
   Color get closeIconColor => foregroundColor.withOpacity(0.3);
   IconData get icon => selectedStyle.icon;
   IconData get closeIcon => selectedStyle.closeIcon;

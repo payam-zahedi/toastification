@@ -19,6 +19,8 @@ class ToastificationThemeInherited extends InheritedWidget {
 
   @override
   bool updateShouldNotify(ToastificationThemeInherited oldWidget) {
+    print(
+        'updateShouldNotify AND WE SHOULD KNOW THAT ${theme != oldWidget.theme}');
     return theme != oldWidget.theme;
   }
 }
