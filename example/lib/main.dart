@@ -4,6 +4,7 @@ import 'package:example/src/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:toastification/toastification.dart';
 
@@ -11,8 +12,15 @@ final themeVariantProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Hive.initFlutter();
+
+  await Hive.openBox('toastDetailBox');
+
   usePathUrlStrategy();
+
   runApp(const ProviderScope(child: ToastificationApp()));
 }
 
