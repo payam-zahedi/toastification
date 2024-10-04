@@ -18,13 +18,11 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     _loadState();
   }
 
-// Save state to Hive
   Future<void> _saveState() async {
     final box = Hive.box('toastDetailBox');
     box.put(_hiveKey, state.toMap());
   }
 
-// Load state from Hive
   Future<void> _loadState() async {
     final box = Hive.box('toastDetailBox');
     final data = box.get(_hiveKey);
@@ -39,10 +37,9 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     }
   }
 
-  // Example change method with _saveState call
   void changeType(ToastificationType type) {
     state = state.copyWith(type: type);
-    _saveState(); // Save the updated state
+    _saveState();
   }
 
   void changeStyle(ToastificationStyle style) {
