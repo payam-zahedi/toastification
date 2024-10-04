@@ -19,7 +19,9 @@ mixin _$IconModel {
   String get name => throw _privateConstructorUsedError;
   IconData get iconData => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $IconModelCopyWith<IconModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -42,6 +44,8 @@ class _$IconModelCopyWithImpl<$Res, $Val extends IconModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -80,6 +84,8 @@ class __$$IconModelImplCopyWithImpl<$Res>
       _$IconModelImpl _value, $Res Function(_$IconModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,7 +133,9 @@ class _$IconModelImpl implements _IconModel {
   @override
   int get hashCode => Object.hash(runtimeType, name, iconData);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IconModelImplCopyWith<_$IconModelImpl> get copyWith =>
@@ -143,8 +151,11 @@ abstract class _IconModel implements IconModel {
   String get name;
   @override
   IconData get iconData;
+
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IconModelImplCopyWith<_$IconModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
