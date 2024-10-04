@@ -57,13 +57,19 @@ class ToastificationTheme {
   Color get foregroundColor =>
       _foregroundColor ?? selectedStyle.foregroundColor;
 
+  MaterialColor? get primary => _primaryColor;
+  Color? get background => _backgroundColor;
+  Color? get foreground => _foregroundColor;
+
+  
+
   Color get decorationColor =>
       _applyBlurEffect ? backgroundColor.withOpacity(0.5) : backgroundColor;
   EdgeInsetsGeometry get padding => _padding ?? selectedStyle.padding;
   BorderRadiusGeometry get borderRadius =>
       _borderRadius ?? selectedStyle.borderRadius;
-  BorderSide get borderSide => _borderSide ?? selectedStyle.borderSide;
-  Border get decorationBorder => Border.fromBorderSide(borderSide);
+  BorderSide? get borderSide => _borderSide;
+  Border get decorationBorder => Border.fromBorderSide(borderSide ?? selectedStyle.borderSide);
 
   List<BoxShadow> get boxShadow => _boxShadow ?? selectedStyle.boxShadow;
   TextDirection get direction => _direction;
