@@ -141,7 +141,6 @@ extension ToastDetailSerialization on ToastDetail {
   static IconModel? _iconFromMap(Map<dynamic, dynamic>? map) {
     if (map == null) return null;
 
-    // Explicitly cast map to Map<String, dynamic>
     final castedMap = Map<String, dynamic>.from(map);
 
     final int codePoint = castedMap['code_point'];
@@ -162,7 +161,6 @@ extension ToastDetailSerialization on ToastDetail {
     );
   }
 
-  // Helper methods (unchanged)
   static String _alignmentToString(AlignmentGeometry alignment) {
     if (alignment == Alignment.topLeft) return 'topLeft';
     if (alignment == Alignment.topRight) return 'topRight';
