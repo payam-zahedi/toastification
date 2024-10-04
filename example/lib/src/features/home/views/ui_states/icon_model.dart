@@ -43,7 +43,6 @@ extension IconModelSerialization on IconModel {
     );
   }
 
-  // Helper methods for color conversion
   static String _colorToHex(Color color) {
     return '#${color.value.toRadixString(16).padLeft(8, '0')}';
   }

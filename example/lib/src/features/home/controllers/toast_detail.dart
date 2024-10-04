@@ -31,7 +31,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
       try {
         final Map<String, dynamic> castData = Map<String, dynamic>.from(data);
         state = ToastDetailSerialization.fromMap(castData);
-      } catch (_, _) {
+      } catch (_) {
         // This is a fallback in case the data is corrupted, so the user can still use the app
         state = ToastDetail();
         _saveState();
