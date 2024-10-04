@@ -84,6 +84,7 @@ extension ToastDetailSerialization on ToastDetail {
       'dragToClose': dragToClose,
       'applyBlurEffect': applyBlurEffect,
       'showIcon': showIcon,
+      'icon': _iconToMap(icon),
     };
   }
 
@@ -117,6 +118,47 @@ extension ToastDetailSerialization on ToastDetail {
       dragToClose: map['dragToClose'],
       applyBlurEffect: map['applyBlurEffect'],
       showIcon: map['showIcon'],
+      icon: _iconFromMap(map['icon']),
+    );
+  }
+
+  static Map<String, dynamic>? _iconToMap(IconModel? iconModel) {
+    if (iconModel == null) return null;
+
+    final iconData = iconModel.iconData;
+    final iconColor = iconModel.color;
+
+    return {
+      'name': iconModel.name,
+      'code_point': iconData.codePoint,
+      'font_family': iconData.fontFamily,
+      'font_package': iconData.fontPackage,
+      'match_text_direction': iconData.matchTextDirection,
+      'color': _colorToHex(iconColor),
+    };
+  }
+
+  static IconModel? _iconFromMap(Map<dynamic, dynamic>? map) {
+    if (map == null) return null;
+
+    // Explicitly cast map to Map<String, dynamic>
+    final castedMap = Map<String, dynamic>.from(map);
+
+    final int codePoint = castedMap['code_point'];
+    final String? fontFamily = castedMap['font_family'];
+    final String? fontPackage = castedMap['font_package'];
+    final bool matchTextDirection = castedMap['match_text_direction'] ?? false;
+    final Color color = _colorFromHex(castedMap['color']) ?? Colors.white;
+
+    return IconModel(
+      name: castedMap['name'] ?? 'default_name',
+      iconData: IconData(
+        codePoint,
+        fontFamily: fontFamily,
+        fontPackage: fontPackage,
+        matchTextDirection: matchTextDirection,
+      ),
+      color: color,
     );
   }
 
