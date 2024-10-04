@@ -31,6 +31,8 @@ dependencies:
   flutter_spinkit: ^5.2.0
   http: ^1.1.0
   flex_color_picker: ^3.3.0
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:
