@@ -17,7 +17,6 @@ class FilledToastWidget extends StatelessWidget {
     this.progressBarWidget,
   });
 
-
   final Widget? title;
   final Widget? description;
   final Widget? icon;
@@ -26,7 +25,6 @@ class FilledToastWidget extends StatelessWidget {
   final double? progressBarValue;
   final Widget? progressBarWidget;
 
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -34,17 +32,20 @@ class FilledToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color:  context.toastTheme.iconColor),
+            .copyWith(color: context.toastTheme.iconColor),
         child: buildBody(context.toastTheme),
       ),
     );
   }
 
   Widget buildBody(ToastificationTheme toastTheme) {
+    final backGround = toastTheme.primary ?? toastTheme.backgroundColor;
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: toastTheme.decorationColor,
+        color: toastTheme.applyBlurEffect
+            ? backGround.withOpacity(0.8)
+            : backGround,
         borderRadius: toastTheme.borderRadius,
         border: toastTheme.decorationBorder,
         boxShadow: toastTheme.boxShadow,
@@ -60,7 +61,7 @@ class FilledToastWidget extends StatelessWidget {
                   Icon(
                     toastTheme.icon,
                     size: 24,
-                    color: toastTheme.iconColor,
+                    color: toastTheme.foreground ?? toastTheme.iconColor,
                   ),
             ),
           ),
