@@ -12,7 +12,6 @@ class SimpleToastWidget extends StatelessWidget {
     this.title,
   });
 
-
   final Widget? title;
 
   @override

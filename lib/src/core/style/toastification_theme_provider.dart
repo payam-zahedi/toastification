@@ -25,7 +25,6 @@ class ToastificationThemeProvider extends StatelessWidget {
       themeData: Theme.of(context),
       direction: textDirection,
     );
-    print("the selected Style is $selectedStyle");
     if (themeBuilder != null) {
       theme = themeBuilder!(theme);
     }

@@ -58,7 +58,7 @@ class MinimalToastWidget extends StatelessWidget {
         color: toastTheme.decorationColor,
         borderRadius: toastTheme.effectiveBorderRadius(
           toastTheme.borderRadius.resolve(toastTheme.direction),
-        ),
+            ),
         border: toastTheme.decorationBorder,
         boxShadow: toastTheme.boxShadow,
       ),
@@ -73,7 +73,7 @@ class MinimalToastWidget extends StatelessWidget {
                   Icon(
                     toastTheme.icon,
                     size: 24,
-                    color: toastTheme.primaryColor,
+                    color: toastTheme.primary ?? toastTheme.iconColor,
                   ),
             ),
           ),

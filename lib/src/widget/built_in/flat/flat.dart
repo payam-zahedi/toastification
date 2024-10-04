@@ -39,7 +39,6 @@ class FlatToastWidget extends StatelessWidget {
   }
 
   Widget buildBody(ToastificationTheme toastTheme) {
-    print('the boarder side color is ${toastTheme.decorationColor}');
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
@@ -59,7 +58,7 @@ class FlatToastWidget extends StatelessWidget {
                   Icon(
                     toastTheme.icon,
                     size: 24,
-                    color: toastTheme.primaryColor,
+                    color: toastTheme.primary ?? toastTheme.iconColor,
                   ),
             ),
           ),
