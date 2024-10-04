@@ -12,28 +12,25 @@ final toastDetailControllerProvider =
 });
 
 class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
-  static const _hiveBoxName = 'toastDetailBox';
   static const _hiveKey = 'toastDetailKey';
 
   ToastDetailControllerNotifier() : super(ToastDetail()) {
-    _loadState(); // Load initial state from Hive
+    _loadState();
   }
 
 // Save state to Hive
   Future<void> _saveState() async {
-    final box = Hive.box('toastDetailBox'); // Access the already opened box
+    final box = Hive.box('toastDetailBox');
     box.put(_hiveKey, state.toMap());
   }
 
 // Load state from Hive
   Future<void> _loadState() async {
-    print('Loading state');
-    final box = Hive.box('toastDetailBox'); // Access the already opened box
+    final box = Hive.box('toastDetailBox');
     final data = box.get(_hiveKey);
 
     if (data != null) {
       try {
-        // Convert to Map<String, dynamic> before using it
         final Map<String, dynamic> castData = Map<String, dynamic>.from(data);
         state = ToastDetailSerialization.fromMap(castData);
       } catch (e) {
