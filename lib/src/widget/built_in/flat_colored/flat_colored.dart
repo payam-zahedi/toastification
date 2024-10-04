@@ -45,7 +45,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: toastTheme.backgroundColor,
+        color: toastTheme.decorationColor,
         borderRadius: toastTheme.borderRadius,
         border: toastTheme.decorationBorder,
         boxShadow: toastTheme.boxShadow,

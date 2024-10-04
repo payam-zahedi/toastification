@@ -19,7 +19,6 @@ class ToastificationTheme {
   final bool _showIcon;
   final TextDirection _direction;
   final ProgressIndicatorThemeData? _progressIndicatorTheme;
-
   ToastificationTheme({
     required this.selectedStyle,
     required this.themeData,
@@ -30,6 +29,7 @@ class ToastificationTheme {
     BorderRadiusGeometry? borderRadius,
     BorderSide? borderSide,
     List<BoxShadow>? boxShadow,
+    Color? closeIconColor,
     required TextDirection direction,
     bool showCloseButton = true,
     bool showProgressBar = false,
@@ -76,7 +76,7 @@ class ToastificationTheme {
 
   // Additional getters that depend on the above properties
   Color get iconColor => selectedStyle.iconColor;
-  Color get closeIconColor => foregroundColor.withOpacity(0.3);
+  Color get closeIconColor => selectedStyle.closeIconColor;
   IconData get icon => selectedStyle.icon;
   IconData get closeIcon => selectedStyle.closeIcon;
 

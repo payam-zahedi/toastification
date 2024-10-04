@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style/toastification_theme.dart';
-import 'package:toastification/src/core/style/toastification_theme_provider.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
@@ -241,6 +239,9 @@ class BuiltInToastBuilder extends StatelessWidget {
           style, type ?? ToastificationType.success, Theme.of(context)),
       themeBuilder: (theme) {
         return theme.copyWith(
+          backgroundColor: backgroundColor != null
+              ? ToastHelper.createMaterialColor(backgroundColor!)
+              : null,
           primaryColor: primaryColor != null
               ? ToastHelper.createMaterialColor(primaryColor!)
               : null,

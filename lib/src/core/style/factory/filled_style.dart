@@ -9,11 +9,12 @@ class FilledStyle extends BaseStyle {
   @override
   Color get backgroundColor => primaryColor;
 
+
   @override
   Color get iconColor => ToastHelper.createMaterialColor(Colors.white);
 
   @override
-  Color get closeIconColor => foregroundColor.withOpacity(0.4);
+  Color get closeIconColor => iconColor.withOpacity(0.4);
   @override
   ProgressIndicatorThemeData get progressIndicatorTheme =>
       ProgressIndicatorThemeData(

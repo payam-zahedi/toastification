@@ -73,7 +73,7 @@ class MinimalToastWidget extends StatelessWidget {
                   Icon(
                     toastTheme.icon,
                     size: 24,
-                    color: toastTheme.iconColor,
+                    color: toastTheme.primaryColor,
                   ),
             ),
           ),
