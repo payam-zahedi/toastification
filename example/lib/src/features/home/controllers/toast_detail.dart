@@ -1,42 +1,34 @@
+import 'package:example/src/database/database.dart';
+import 'package:example/src/database/database_provider.dart';
+import 'package:example/src/database/utils_mapping.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/ui_states/icon_model.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
 import 'package:toastification/toastification.dart';
 
 final toastDetailControllerProvider =
     StateNotifierProvider<ToastDetailControllerNotifier, ToastDetail>((ref) {
-  return ToastDetailControllerNotifier();
+  final db = ref.watch(appDatabaseProvider);
+  return ToastDetailControllerNotifier(db);
 });
 
 class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
-  static const _hiveKey = 'toastDetailKey';
+  final AppDatabase _db;
 
-  ToastDetailControllerNotifier() : super(ToastDetail()) {
+  ToastDetailControllerNotifier(this._db) : super(ToastDetail()) {
     _loadState();
   }
 
   Future<void> _saveState() async {
-    final box = Hive.box('toastDetailBox');
-    box.put(_hiveKey, state.toMap());
+    final companion = state.toCompanion(state);
+    await _db.upsertToastDetail(companion);
   }
 
   Future<void> _loadState() async {
-    final box = Hive.box('toastDetailBox');
-    final data = box.get(_hiveKey);
-
-    if (data != null) {
-      try {
-        final Map<String, dynamic> castData = Map<String, dynamic>.from(data);
-        state = ToastDetailSerialization.fromMap(castData);
-      } catch (_) {
-        // This is a fallback in case the data is corrupted, so the user can still use the app
-        state = ToastDetail();
-        _saveState();
-      }
-    }
+    final toastDetailData = await _db.getOrCreateDefaultToastDetail();
+    state = ToastDetailDrift.fromCompanion(toastDetailData);
   }
 
   void changeType(ToastificationType type) {
@@ -159,6 +151,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     _saveState();
   }
 
+  /// Resets all color-related fields to their default values and persists the change.
   void resetColors() {
     state = state.copyWith(
       primaryColor: null,
