@@ -181,7 +181,7 @@ extension ToastDetailDrift on ToastDetail {
     if (alignment == Alignment.bottomLeft) return 'bottomLeft';
     if (alignment == Alignment.bottomRight) return 'bottomRight';
     if (alignment == Alignment.bottomCenter) return 'bottomCenter';
-    return 'topLeft'; // Default case
+    return 'topLeft'; 
   }
 
   static AnimationType _animationTypeFromName(String name) {
@@ -218,7 +218,7 @@ extension ToastDetailDrift on ToastDetail {
       case 'bottomCenter':
         return Alignment.bottomCenter;
       default:
-        return Alignment.topLeft; // Default case
+        return Alignment.topLeft; 
     }
   }
 

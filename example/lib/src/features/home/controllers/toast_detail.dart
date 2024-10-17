@@ -43,35 +43,34 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     }
   }
 
-  /// Resets the state to default values and persists the reset state.
   void resetStateToDefaults() {
     state = ToastDetail(
-      type: ToastificationType.success, // Default type
-      style: ToastificationStyle.flat, // Default style
-      alignment: Alignment.topLeft, // Default alignment
+      type: ToastificationType.success, 
+      style: ToastificationStyle.flat, 
+      alignment: Alignment.topLeft, 
       title: const Text('Default Title'),
       description: const Text('Default Description'),
-      icon: null, // No default icon
+      icon: null,
       primaryColor: null,
       backgroundColor: null,
       foregroundColor: null,
       iconColor: null,
-      borderRadius: BorderRadius.zero, // Default border radius
-      shadow: ShadowOptions.none, // Default shadow option
+      borderRadius: BorderRadius.zero,
+      shadow: ShadowOptions.none, 
       direction: null,
       autoCloseDuration: const Duration(seconds: 5),
       animationDuration: const Duration(milliseconds: 300),
-      animationType: const BounceAnimationType(), // Default animation type
+      animationType: const BounceAnimationType(), 
       useContext: true,
       showProgressBar: false,
-      closeButtonShowType: CloseButtonShowType.always, // Default close button
+      closeButtonShowType: CloseButtonShowType.always, 
       closeOnClick: true,
       dragToClose: false,
       pauseOnHover: true,
       applyBlurEffect: false,
       showIcon: true,
     );
-    _saveState(); // Persist the reset state
+    _saveState();
   }
 
   void changeType(ToastificationType type) {

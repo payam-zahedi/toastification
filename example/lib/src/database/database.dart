@@ -88,7 +88,6 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-// Web-only connection for WasmDatabase
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final result = await WasmDatabase.open(
