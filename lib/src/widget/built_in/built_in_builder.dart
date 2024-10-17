@@ -344,6 +344,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               boxShadow: boxShadow,
               direction: direction,
               applyBlurEffect: applyBlurEffect ?? false,
+              showCloseButton: showCloseButton,
             ),
         };
       },
