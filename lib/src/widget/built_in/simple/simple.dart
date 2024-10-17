@@ -52,17 +52,16 @@ class SimpleToastWidget extends StatefulWidget {
   SimpleStyle get defaultStyle => SimpleStyle(type);
 
   @override
-  SimpleToastWidgetState createState() => SimpleToastWidgetState();
+  _SimpleToastWidgetState createState() => _SimpleToastWidgetState();
 }
 
-class SimpleToastWidgetState extends State<SimpleToastWidget>
+class _SimpleToastWidgetState extends State<SimpleToastWidget>
     with SingleTickerProviderStateMixin {
-  bool isHovered = false;
-
   @override
   Widget build(BuildContext context) {
     final background =
         widget.backgroundColor ?? widget.defaultStyle.backgroundColor(context);
+    final showCloseButton = widget.showCloseButton ?? true;
     final borderRadius =
         widget.borderRadius ?? widget.defaultStyle.borderRadius(context);
     final borderSide =
@@ -71,29 +70,17 @@ class SimpleToastWidgetState extends State<SimpleToastWidget>
 
     return Directionality(
       textDirection: direction,
-      child: MouseRegion(
-        onEnter: (_) {
-          setState(() {
-            isHovered = true;
-          });
-        },
-        onExit: (_) {
-          setState(() {
-            isHovered = false;
-          });
-        },
-        child: Center(
-          child: AnimatedSize(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: buildContent(
-              context: context,
-              background: background,
-              borderSide: borderSide,
-              borderRadius: borderRadius,
-              applyBlurEffect: widget.applyBlurEffect,
-              showCloseButton: isHovered,
-            ),
+      child: Center(
+        child: AnimatedSize(
+          duration: const Duration(milliseconds: 100),
+          curve: Curves.easeInOut,
+          child: buildContent(
+            context: context,
+            background: background,
+            borderSide: borderSide,
+            borderRadius: borderRadius,
+            applyBlurEffect: widget.applyBlurEffect,
+            showCloseButton: showCloseButton,
           ),
         ),
       ),
