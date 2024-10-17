@@ -8,32 +8,6 @@ import 'package:toastification/toastification.dart';
 
 extension ToastDetailDrift on ToastDetail {
   ToastDetailsSchemaCompanion toCompanion(ToastDetail details) {
-    // return {
-    //   'type': type.index,
-    //   'style': style.index,
-    //   'alignment': _alignmentToString(alignment),
-    //   'title': (title as Text).data,
-    //   'description': (description as Text).data,
-    //   'primaryColor': _colorToHex(primaryColor),
-    //   'backgroundColor': _colorToHex(backgroundColor),
-    //   'foregroundColor': _colorToHex(foregroundColor),
-    //   'iconColor': _colorToHex(iconColor),
-    //   'borderRadius': _borderRadiusToString(borderRadius),
-    //   'shadow': shadow.index,
-    //   'direction': direction?.index,
-    //   'autoCloseDuration': autoCloseDuration?.inMilliseconds ?? 4000,
-    //   'animationDuration': animationDuration?.inMilliseconds,
-    //   'animationType': animationType.name,
-    //   'closeButtonShowType': closeButtonShowType.index,
-    //   'useContext': useContext,
-    //   'showProgressBar': showProgressBar,
-    //   'closeOnClick': closeOnClick,
-    //   'pauseOnHover': pauseOnHover,
-    //   'dragToClose': dragToClose,
-    //   'applyBlurEffect': applyBlurEffect,
-    //   'showIcon': showIcon,
-    //   'icon': _iconToMap(icon),
-    // };
     return ToastDetailsSchemaCompanion(
       type: Value(details.type.index),
       style: Value(details.style.index),
