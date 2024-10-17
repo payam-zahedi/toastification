@@ -18,8 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$IconModel {
   String get name => throw _privateConstructorUsedError;
   IconData get iconData => throw _privateConstructorUsedError;
+  Color get color => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $IconModelCopyWith<IconModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -29,7 +32,7 @@ abstract class $IconModelCopyWith<$Res> {
   factory $IconModelCopyWith(IconModel value, $Res Function(IconModel) then) =
       _$IconModelCopyWithImpl<$Res, IconModel>;
   @useResult
-  $Res call({String name, IconData iconData});
+  $Res call({String name, IconData iconData, Color color});
 }
 
 /// @nodoc
@@ -42,11 +45,14 @@ class _$IconModelCopyWithImpl<$Res, $Val extends IconModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
     Object? iconData = null,
+    Object? color = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -57,6 +63,10 @@ class _$IconModelCopyWithImpl<$Res, $Val extends IconModel>
           ? _value.iconData
           : iconData // ignore: cast_nullable_to_non_nullable
               as IconData,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
     ) as $Val);
   }
 }
@@ -69,7 +79,7 @@ abstract class _$$IconModelImplCopyWith<$Res>
       __$$IconModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, IconData iconData});
+  $Res call({String name, IconData iconData, Color color});
 }
 
 /// @nodoc
@@ -80,11 +90,14 @@ class __$$IconModelImplCopyWithImpl<$Res>
       _$IconModelImpl _value, $Res Function(_$IconModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = null,
     Object? iconData = null,
+    Object? color = null,
   }) {
     return _then(_$IconModelImpl(
       name: null == name
@@ -95,6 +108,10 @@ class __$$IconModelImplCopyWithImpl<$Res>
           ? _value.iconData
           : iconData // ignore: cast_nullable_to_non_nullable
               as IconData,
+      color: null == color
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as Color,
     ));
   }
 }
@@ -102,16 +119,20 @@ class __$$IconModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IconModelImpl implements _IconModel {
-  _$IconModelImpl({required this.name, required this.iconData});
+  _$IconModelImpl(
+      {required this.name, required this.iconData, this.color = Colors.white});
 
   @override
   final String name;
   @override
   final IconData iconData;
+  @override
+  @JsonKey()
+  final Color color;
 
   @override
   String toString() {
-    return 'IconModel(name: $name, iconData: $iconData)';
+    return 'IconModel(name: $name, iconData: $iconData, color: $color)';
   }
 
   @override
@@ -121,13 +142,16 @@ class _$IconModelImpl implements _IconModel {
             other is _$IconModelImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.iconData, iconData) ||
-                other.iconData == iconData));
+                other.iconData == iconData) &&
+            (identical(other.color, color) || other.color == color));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, iconData);
+  int get hashCode => Object.hash(runtimeType, name, iconData, color);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IconModelImplCopyWith<_$IconModelImpl> get copyWith =>
@@ -137,14 +161,20 @@ class _$IconModelImpl implements _IconModel {
 abstract class _IconModel implements IconModel {
   factory _IconModel(
       {required final String name,
-      required final IconData iconData}) = _$IconModelImpl;
+      required final IconData iconData,
+      final Color color}) = _$IconModelImpl;
 
   @override
   String get name;
   @override
   IconData get iconData;
   @override
-  @JsonKey(ignore: true)
+  Color get color;
+
+  /// Create a copy of IconModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IconModelImplCopyWith<_$IconModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
