@@ -63,38 +63,32 @@ extension ToastDetailDrift on ToastDetail {
     );
   }
 
-  static ToastDetail fromCompanion(ToastDetailsSchemaData data) {
-    // return ToastDetail(
-    //   type: ToastificationType.values[map['type']],
-    //   style: ToastificationStyle.values[map['style']],
-    //   alignment: _alignmentFromString(map['alignment']),
-    //   title: Text(map['title'] ?? 'Default Title'),
-    //   description: Text(map['description'] ?? 'Default Description'),
-    //   primaryColor: _colorFromHex(map['primaryColor']),
-    //   backgroundColor: _colorFromHex(map['backgroundColor']),
-    //   foregroundColor: _colorFromHex(map['foregroundColor']),
-    //   iconColor: _colorFromHex(map['iconColor']),
-    //   borderRadius: _borderRadiusFromString(map['borderRadius']),
-    //   shadow: ShadowOptions.values[map['shadow']],
-    //   direction: map['direction'] != null
-    //       ? TextDirection.values[map['direction']]
-    //       : null,
-    //   autoCloseDuration: Duration(milliseconds: map['autoCloseDuration']),
-    //   animationDuration: map['animationDuration'] != null
-    //       ? Duration(milliseconds: map['animationDuration'])
-    //       : null,
-    //   animationType: _animationTypeFromName(map['animationType']),
-    //   closeButtonShowType:
-    //       CloseButtonShowType.values[map['closeButtonShowType']],
-    //   useContext: map['useContext'],
-    //   showProgressBar: map['showProgressBar'],
-    //   closeOnClick: map['closeOnClick'],
-    //   pauseOnHover: map['pauseOnHover'],
-    //   dragToClose: map['dragToClose'],
-    //   applyBlurEffect: map['applyBlurEffect'],
-    //   showIcon: map['showIcon'],
-    //   icon: _iconFromMap(map['icon']),
-    // );
+  static ToastDetail fromCompanion(ToastDetailsSchemaData? data) {
+    if (data == null) {
+      return ToastDetail(
+        type: ToastificationType.success,
+        style: ToastificationStyle.flat,
+        alignment: Alignment.topLeft,
+        title: const Text('Component updates available.'),
+        description: const Text('Component updates available.'),
+        iconColor: Colors.white,
+        borderRadius: BorderRadius.zero,
+        shadow: ShadowOptions.none,
+        direction: null,
+        autoCloseDuration: const Duration(milliseconds: 4000),
+        animationDuration: null,
+        animationType: const BounceAnimationType(),
+        closeButtonShowType: CloseButtonShowType.always,
+        useContext: true,
+        showProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        dragToClose: false,
+        applyBlurEffect: false,
+        showIcon: true,
+        icon: null,
+      );
+    }
     return ToastDetail(
       type: ToastificationType.values[data.type],
       style: ToastificationStyle.values[data.style],
@@ -151,12 +145,12 @@ extension ToastDetailDrift on ToastDetail {
     final parsedMap = map.substring(1, map.length - 1).split(', ');
 
     final Map<String, dynamic> castedMap = {
-      'name': parsedMap[0],
-      'code_point': int.parse(parsedMap[1]),
-      'font_family': parsedMap[2],
-      'font_package': parsedMap[3],
-      'match_text_direction': parsedMap[4] == 'true',
-      'color': parsedMap[5],
+      'name': parsedMap[0].split(': ')[1],
+      'code_point': int.parse(parsedMap[1].split(': ')[1]),
+      'font_family': parsedMap[2].split(': ')[1],
+      'font_package': parsedMap[3].split(': ')[1],
+      'match_text_direction': parsedMap[4].split(': ')[1] == 'true',
+      'color': parsedMap[5].split(': ')[1],
     };
 
     final int codePoint = castedMap['code_point'];

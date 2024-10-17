@@ -22,13 +22,66 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   }
 
   Future<void> _saveState() async {
-    final companion = state.toCompanion(state);
-    await _db.upsertToastDetail(companion);
+    try {
+      print('Saving toast detail state...');
+      final companion = state.toCompanion(state);
+      await _db.upsertToastDetail(companion);
+      print('Toast detail state saved successfully!');
+    } catch (e) {
+      print('Failed to save toast detail state: $e');
+    }
   }
 
   Future<void> _loadState() async {
-    final toastDetailData = await _db.getOrCreateDefaultToastDetail();
-    state = ToastDetailDrift.fromCompanion(toastDetailData);
+    try {
+      print('Loading toast detail state...');
+      final toastDetailData = await _db.getToastDetail(1);
+
+      if (toastDetailData != null) {
+        state = ToastDetailDrift.fromCompanion(toastDetailData);
+        print('Toast detail state loaded successfully!');
+      } else {
+        print(
+            'No existing toast detail found, creating default toast detail...');
+        final toastDetail = await _db.getOrCreateDefaultToastDetail();
+        state = ToastDetailDrift.fromCompanion(toastDetail);
+      }
+    } catch (e) {
+      print('Failed to load toast detail state: $e');
+      // Reset the state to default values in case of failure
+      resetStateToDefaults();
+    }
+  }
+
+  /// Resets the state to default values and persists the reset state.
+  void resetStateToDefaults() {
+    state = ToastDetail(
+      type: ToastificationType.success, // Default type
+      style: ToastificationStyle.flat, // Default style
+      alignment: Alignment.topLeft, // Default alignment
+      title: const Text('Default Title'),
+      description: const Text('Default Description'),
+      icon: null, // No default icon
+      primaryColor: null,
+      backgroundColor: null,
+      foregroundColor: null,
+      iconColor: null,
+      borderRadius: BorderRadius.zero, // Default border radius
+      shadow: ShadowOptions.none, // Default shadow option
+      direction: null,
+      autoCloseDuration: const Duration(seconds: 5),
+      animationDuration: const Duration(milliseconds: 300),
+      animationType: const BounceAnimationType(), // Default animation type
+      useContext: true,
+      showProgressBar: false,
+      closeButtonShowType: CloseButtonShowType.always, // Default close button
+      closeOnClick: true,
+      dragToClose: false,
+      pauseOnHover: true,
+      applyBlurEffect: false,
+      showIcon: true,
+    );
+    _saveState(); // Persist the reset state
   }
 
   void changeType(ToastificationType type) {
@@ -151,7 +204,6 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     _saveState();
   }
 
-  /// Resets all color-related fields to their default values and persists the change.
   void resetColors() {
     state = state.copyWith(
       primaryColor: null,

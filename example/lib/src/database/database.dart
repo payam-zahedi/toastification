@@ -1,10 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
+import 'package:drift/wasm.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
-import 'dart:io';
-
 import 'package:toastification/toastification.dart';
 
 part 'database.g.dart';
@@ -47,8 +43,10 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 
   Future<int> upsertToastDetail(ToastDetailsSchemaCompanion detail) {
-    return into(toastDetailsSchema).insert(detail.copyWith(id: const Value(1)),
-        mode: InsertMode.insertOrReplace);
+    return into(toastDetailsSchema).insert(
+      detail.copyWith(id: const Value(1)),
+      mode: InsertMode.replace,
+    );
   }
 
   Future<ToastDetailsSchemaData> getOrCreateDefaultToastDetail() async {
@@ -57,6 +55,7 @@ class AppDatabase extends _$AppDatabase {
         .getSingleOrNull();
 
     if (toastDetail == null) {
+      print('Creating new default toast detail...');
       final defaultToastDetail = ToastDetailsSchemaCompanion.insert(
         type: ToastificationType.success.index,
         style: ToastificationStyle.flat.index,
@@ -68,7 +67,10 @@ class AppDatabase extends _$AppDatabase {
         closeButtonShowType: Value(CloseButtonShowType.always.index),
       );
       await upsertToastDetail(defaultToastDetail);
+      print('Default toast detail created and saved.');
       return (await getToastDetail(1))!;
+    } else {
+      print('Found existing toast detail: $toastDetail');
     }
 
     return toastDetail;
@@ -89,10 +91,15 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
+// Web-only connection for WasmDatabase
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'app.db'));
-    return NativeDatabase(file);
+    final result = await WasmDatabase.open(
+      databaseName: 'app_web_db',
+      sqlite3Uri: Uri.parse('sqlite3.wasm'),
+      driftWorkerUri: Uri.parse('drift_worker.dart.js'),
+    );
+
+    return result.resolvedExecutor;
   });
 }
