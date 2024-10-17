@@ -23,32 +23,22 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
   Future<void> _saveState() async {
     try {
-      print('Saving toast detail state...');
       final companion = state.toCompanion(state);
       await _db.upsertToastDetail(companion);
-      print('Toast detail state saved successfully!');
-    } catch (e) {
-      print('Failed to save toast detail state: $e');
-    }
+    } catch (_) {}
   }
 
   Future<void> _loadState() async {
     try {
-      print('Loading toast detail state...');
       final toastDetailData = await _db.getToastDetail(1);
 
       if (toastDetailData != null) {
         state = ToastDetailDrift.fromCompanion(toastDetailData);
-        print('Toast detail state loaded successfully!');
       } else {
-        print(
-            'No existing toast detail found, creating default toast detail...');
         final toastDetail = await _db.getOrCreateDefaultToastDetail();
         state = ToastDetailDrift.fromCompanion(toastDetail);
       }
     } catch (e) {
-      print('Failed to load toast detail state: $e');
-      // Reset the state to default values in case of failure
       resetStateToDefaults();
     }
   }

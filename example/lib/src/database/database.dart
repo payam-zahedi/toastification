@@ -55,7 +55,6 @@ class AppDatabase extends _$AppDatabase {
         .getSingleOrNull();
 
     if (toastDetail == null) {
-      print('Creating new default toast detail...');
       final defaultToastDetail = ToastDetailsSchemaCompanion.insert(
         type: ToastificationType.success.index,
         style: ToastificationStyle.flat.index,
@@ -67,10 +66,8 @@ class AppDatabase extends _$AppDatabase {
         closeButtonShowType: Value(CloseButtonShowType.always.index),
       );
       await upsertToastDetail(defaultToastDetail);
-      print('Default toast detail created and saved.');
       return (await getToastDetail(1))!;
     } else {
-      print('Found existing toast detail: $toastDetail');
     }
 
     return toastDetail;
