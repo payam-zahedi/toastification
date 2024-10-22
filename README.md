@@ -126,13 +126,26 @@ toastification.show(
 
 ### ToastificationStyle
 
-we have 4 predefined styles for toast messages:
+We have 5 predefined styles for toast messages, each offering a unique look and feel to match your application's design. Here's a breakdown of each style:
 
 <p align="left">
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/styles.png?raw=true" width="100%" alt="Styles" />
 </p>
 
-additionally, we added a `ToastificationStyle.simple` style to show a simple toast message with a single line of text.
+1. **ToastificationStyle.flat**  
+   - A simple and clean style with a subtle border and no background fill. Ideal for minimalist notifications that don't overwhelm the interface.
+
+2. **ToastificationStyle.fillColored**  
+   - A bold style with a solid colored background. Perfect for high-visibility alerts or important notifications that need immediate attention.
+
+3. **ToastificationStyle.flatColored**  
+   - A balanced style with a flat design, colored borders, and text, but without a solid fill. Great for notifications that need to stand out without being too bold.
+
+4. **ToastificationStyle.minimal**  
+   - A sleek and modern design with minimal elements and an accent line denoting the notification type. Perfect for clean, distraction-free interfaces.
+
+5. **ToastificationStyle.simple**  
+   - A straightforward style showing a single line of text. Best for short, simple messages or confirmations where minimal design is preferred.
 
 ## ShowCustom Method
 
