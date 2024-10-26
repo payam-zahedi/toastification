@@ -39,13 +39,14 @@ class FilledToastWidget extends StatelessWidget {
   }
 
   Widget buildBody(ToastificationTheme toastTheme) {
-    final backGround = toastTheme.primary ?? toastTheme.backgroundColor;
+    final backgroundColor = toastTheme.primaryColor;
+
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
         color: toastTheme.applyBlurEffect
-            ? backGround.withOpacity(0.8)
-            : backGround,
+            ? backgroundColor.withOpacity(0.8)
+            : backgroundColor,
         borderRadius: toastTheme.borderRadius,
         border: toastTheme.decorationBorder,
         boxShadow: toastTheme.boxShadow,

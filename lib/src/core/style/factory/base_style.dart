@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
+// TODO(payam): rename this class and subclass to something more meaningful - default
 abstract class BaseStyle implements BuiltInStyle {
   const BaseStyle(this.type, this.theme);
 
@@ -21,7 +22,7 @@ abstract class BaseStyle implements BuiltInStyle {
   IconData get closeIcon => Icons.close;
 
   @override
-  Color get closeIconColor => foregroundColor.withOpacity(.3);
+  Color get closeIconColor => foregroundColor.withOpacity(.4);
 
   @override
   BorderRadiusGeometry get borderRadius =>
@@ -32,6 +33,7 @@ abstract class BaseStyle implements BuiltInStyle {
         color: Colors.black12,
         width: 1,
       );
+      
   @override
   EdgeInsetsGeometry get padding =>
       const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16);

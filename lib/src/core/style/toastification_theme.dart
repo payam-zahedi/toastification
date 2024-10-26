@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-class ToastificationTheme {
+// TODO(payam): refactor this class and add more comments
+class ToastificationTheme extends Equatable {
   final BuiltInStyle selectedStyle;
   final ThemeData themeData;
 
@@ -19,7 +21,8 @@ class ToastificationTheme {
   final bool _showIcon;
   final TextDirection _direction;
   final ProgressIndicatorThemeData? _progressIndicatorTheme;
-  ToastificationTheme({
+
+  const ToastificationTheme({
     required this.selectedStyle,
     required this.themeData,
     MaterialColor? primaryColor,
@@ -80,27 +83,39 @@ class ToastificationTheme {
       _progressIndicatorTheme ?? selectedStyle.progressIndicatorTheme;
 
   // Additional getters that depend on the above properties
-  Color get iconColor => selectedStyle.iconColor;
-  Color get closeIconColor => selectedStyle.closeIconColor;
   IconData get icon => selectedStyle.icon;
+  Color get iconColor => selectedStyle.iconColor;
+
   IconData get closeIcon => selectedStyle.closeIcon;
+  Color get closeIconColor =>
+      foreground?.withOpacity(.4) ?? selectedStyle.closeIconColor;
 
   TextStyle? get titleTextStyle => selectedStyle.titleTextStyle?.copyWith(
-      // color: foregroundColor,
-      // fontSize: 14,
-      // fontWeight: FontWeight.w500,
-      // height: 1.2,
+        color: foregroundColor,
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        height: 1.2,
       );
 
   TextStyle? get descriptionTextStyle =>
       selectedStyle.descriptionTextStyle?.copyWith(
-          // color: foregroundColor.withOpacity(.7),
-          // fontSize: 14,
-          // fontWeight: FontWeight.w300,
-          // height: 1.2,
-          );
+        color: foregroundColor.withOpacity(.7),
+        fontSize: 14,
+        fontWeight: FontWeight.w300,
+        height: 1.2,
+      );
 
-  // You can add more getters as needed
+  BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) =>
+      BorderRadiusDirectional.only(
+        topEnd: borderRadius.topRight.clamp(
+          minimum: const Radius.circular(0),
+          maximum: const Radius.circular(30),
+        ),
+        bottomEnd: borderRadius.bottomRight.clamp(
+          minimum: const Radius.circular(0),
+          maximum: const Radius.circular(30),
+        ),
+      );
 
   // Method to create a new instance with updated properties
   ToastificationTheme copyWith({
@@ -137,15 +152,22 @@ class ToastificationTheme {
     );
   }
 
-  BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) =>
-      BorderRadiusDirectional.only(
-        topEnd: borderRadius.topRight.clamp(
-          minimum: const Radius.circular(0),
-          maximum: const Radius.circular(30),
-        ),
-        bottomEnd: borderRadius.bottomRight.clamp(
-          minimum: const Radius.circular(0),
-          maximum: const Radius.circular(30),
-        ),
-      );
+  @override
+  List<Object?> get props => [
+        selectedStyle,
+        themeData,
+        _primaryColor,
+        _backgroundColor,
+        _foregroundColor,
+        _padding,
+        _borderRadius,
+        _borderSide,
+        _boxShadow,
+        _showCloseButton,
+        _showProgressBar,
+        _applyBlurEffect,
+        _showIcon,
+        _direction,
+        _progressIndicatorTheme,
+      ];
 }

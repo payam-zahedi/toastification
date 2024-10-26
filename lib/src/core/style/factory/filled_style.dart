@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/style/factory/base_style.dart';
-import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 class FilledStyle extends BaseStyle {
@@ -9,12 +8,9 @@ class FilledStyle extends BaseStyle {
   @override
   Color get backgroundColor => primaryColor;
 
-
   @override
-  Color get iconColor => ToastHelper.createMaterialColor(Colors.white);
+  Color get iconColor => foregroundColor;
 
-  @override
-  Color get closeIconColor => iconColor.withOpacity(0.4);
   @override
   ProgressIndicatorThemeData get progressIndicatorTheme =>
       ProgressIndicatorThemeData(

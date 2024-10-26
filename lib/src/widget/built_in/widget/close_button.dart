@@ -10,12 +10,14 @@ class ToastCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final toastTheme = context.toastTheme;
+
     return SizedBox.square(
       dimension: 30,
       child: IgnorePointer(
-        ignoring: !context.toastTheme.showCloseButton,
+        ignoring: !toastTheme.showCloseButton,
         child: AnimatedOpacity(
-          opacity: context.toastTheme.showCloseButton ? 1 : 0,
+          opacity: toastTheme.showCloseButton ? 1 : 0,
           duration: const Duration(milliseconds: 200),
           child: Material(
             color: Colors.transparent,
@@ -25,8 +27,8 @@ class ToastCloseButton extends StatelessWidget {
                 onTap: onCloseTap,
                 borderRadius: BorderRadius.circular(5),
                 child: Icon(
-                  context.toastTheme.closeIcon,
-                  color: context.toastTheme.closeIconColor,
+                  toastTheme.closeIcon,
+                  color: toastTheme.closeIconColor,
                   size: 18,
                 ),
               );
