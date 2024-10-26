@@ -253,7 +253,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           borderSide: borderSide ?? theme.borderSide,
           boxShadow: boxShadow ?? theme.boxShadow,
           direction: direction ?? Directionality.of(context),
-          showProgressBar: showProgressBar,
+          showProgressBar: this.showProgressBar == true,
           applyBlurEffect: applyBlurEffect ?? false,
           showIcon: showIcon ?? true,
           progressIndicatorTheme:
