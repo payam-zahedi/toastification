@@ -1,108 +1,49 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/src/core/context_ext.dart';
+import 'package:toastification/src/core/style/toastification_theme.dart';
+import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/toastification.dart';
 
 class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({
     super.key,
-    required this.type,
     this.title,
-    this.primaryColor,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.brightness,
-    this.padding,
-    this.borderRadius,
-    this.borderSide,
-    this.boxShadow,
-    this.direction,
-    this.applyBlurEffect = false,
   });
-
-  final ToastificationType type;
 
   final Widget? title;
 
-  final MaterialColor? primaryColor;
-
-  final MaterialColor? backgroundColor;
-
-  final Color? foregroundColor;
-
-  final Brightness? brightness;
-
-  final EdgeInsetsGeometry? padding;
-
-  final BorderRadiusGeometry? borderRadius;
-
-  final BorderSide? borderSide;
-
-  final List<BoxShadow>? boxShadow;
-
-  final TextDirection? direction;
-
-  final bool applyBlurEffect;
-
-  SimpleStyle get defaultStyle => SimpleStyle(type);
-
   @override
   Widget build(BuildContext context) {
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
-
-    final borderRadius =
-        this.borderRadius ?? defaultStyle.borderRadius(context);
-
-    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
-
-    final direction = this.direction ?? Directionality.of(context);
-
     return Directionality(
-      textDirection: direction,
+      textDirection: context.toastTheme.direction,
       child: Center(
-        child: buildContent(
-          context: context,
-          background: background,
-          borderSide: borderSide,
-          borderRadius: borderRadius,
-          applyBlurEffect: applyBlurEffect,
-        ),
+        child: buildContent(context.toastTheme),
       ),
     );
   }
 
-  Widget buildContent({
-    required BuildContext context,
-    required Color background,
-    required BorderSide borderSide,
-    required BorderRadiusGeometry borderRadius,
-    required bool applyBlurEffect,
-  }) {
+  Widget buildContent(ToastificationTheme toastTheme) {
     Widget body = Container(
       decoration: BoxDecoration(
-        color: applyBlurEffect ? background.withOpacity(0.5) : background,
-        border: Border.fromBorderSide(borderSide),
-        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-        borderRadius: borderRadius,
+        color: toastTheme.decorationColor,
+        border: toastTheme.decorationBorder,
+        boxShadow: toastTheme.boxShadow,
+        borderRadius: toastTheme.borderRadius,
       ),
-      padding: padding ?? defaultStyle.padding(context),
+      padding: toastTheme.padding,
       child: BuiltInContent(
-        style: defaultStyle,
         title: title,
         description: null,
-        primaryColor: primaryColor,
-        foregroundColor: foregroundColor,
-        backgroundColor: backgroundColor,
-        showProgressBar: false,
         progressBarValue: null,
         progressBarWidget: null,
-        progressIndicatorTheme: null,
       ),
     );
 
-    if (applyBlurEffect) {
+    if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: borderRadius,
+        borderRadius: toastTheme.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

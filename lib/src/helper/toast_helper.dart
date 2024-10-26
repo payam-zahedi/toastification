@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 /// ToastHelper is a helper class that contains some useful utility methods like [convertRange] and [createMaterialColor]
@@ -20,6 +21,17 @@ class ToastHelper {
   ) {
     double scale = (newEnd - newStart) / (originalEnd - originalStart);
     return (newStart + ((value - originalStart) * scale));
+  }
+
+  static MaterialColor? convertToMaterialColor(Color? color) {
+    if (color == null) return null;
+
+    if (color is MaterialColor) return color;
+
+    final findInMaterialColors = Colors.primaries
+        .firstWhereOrNull((element) => element.shade500 == color);
+
+    return findInMaterialColors ?? createMaterialColor(color);
   }
 
   /// creates a [MaterialColor] from a given [Color]
