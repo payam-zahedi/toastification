@@ -27,6 +27,20 @@ class ToastificationManager {
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
 
+  /// this is the delay for showing the overlay entry
+  /// We need this delay because we want to show the item animation after
+  /// the overlay created
+  ///
+  /// When we want to show first toast, we need to wait for the overlay to be created
+  /// and then show the toast item.
+  final _createOverlayDelay = const Duration(milliseconds: 100);
+
+  /// this is the delay for removing the overlay entry
+  ///
+  /// when we want to remove the last toast, we need to wait for the animation
+  /// to be completed and then remove the overlay.
+  final _removeOverlayDelay = const Duration(milliseconds: 50);
+
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
   /// if the [_notifications] list is empty, we will create the [_overlayEntry]
@@ -53,12 +67,12 @@ class ToastificationManager {
 
     /// we need this delay because we want to show the item animation after
     /// the overlay created
-    var delay = const Duration(milliseconds: 10);
+    Duration delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
 
-      delay = const Duration(milliseconds: 300);
+      delay = _createOverlayDelay;
     }
 
     Future.delayed(
@@ -102,7 +116,7 @@ class ToastificationManager {
     bool showRemoveAnimation = true,
   }) {
     final index = _notifications.indexOf(notification);
-
+    // print("Toastification Manager Dismiss Notifications: $_notifications");
     if (index != -1) {
       notification = _notifications[index];
 
@@ -140,15 +154,20 @@ class ToastificationManager {
       }
 
       /// we will remove the [_overlayEntry] if there are no notifications
-      Future.delayed(
-        removedItem.animationDuration ?? config.animationDuration,
-        () {
-          if (_notifications.isEmpty) {
-            _overlayEntry?.remove();
-            _overlayEntry = null;
-          }
-        },
-      );
+      /// We need to check if the _notifications list is empty twice.
+      /// To make sure after the delay, there are no new notifications added.
+      if (_notifications.isEmpty) {
+        Future.delayed(
+          (removedItem.animationDuration ?? config.animationDuration) +
+              _removeOverlayDelay,
+          () {
+            if (_notifications.isEmpty) {
+              _overlayEntry?.remove();
+              _overlayEntry = null;
+            }
+          },
+        );
+      }
     }
   }
 
@@ -198,31 +217,36 @@ class ToastificationManager {
         Widget overlay = Align(
           alignment: alignment,
           child: Container(
-            margin: config.marginBuilder(alignment),
+            margin: _marginBuilder(context, alignment, config),
             constraints: BoxConstraints.tightFor(
               width: config.itemWidth,
             ),
-            child: AnimatedList(
-              key: _listGlobalKey,
-              clipBehavior: config.clipBehavior,
-              initialItemCount: _notifications.length,
-              reverse: alignment.y >= 0,
-              primary: true,
-              shrinkWrap: true,
-              itemBuilder: (
-                BuildContext context,
-                int index,
-                Animation<double> animation,
-              ) {
-                final item = _notifications[index];
+            child: MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              removeBottom: true,
+              child: AnimatedList(
+                key: _listGlobalKey,
+                clipBehavior: config.clipBehavior,
+                initialItemCount: _notifications.length,
+                reverse: alignment.y >= 0,
+                primary: true,
+                shrinkWrap: true,
+                itemBuilder: (
+                  BuildContext context,
+                  int index,
+                  Animation<double> animation,
+                ) {
+                  final item = _notifications[index];
 
-                return ToastHolderWidget(
-                  item: item,
-                  animation: animation,
-                  alignment: alignment,
-                  transformerBuilder: _toastAnimationBuilder(item),
-                );
-              },
+                  return ToastHolderWidget(
+                    item: item,
+                    animation: animation,
+                    alignment: alignment,
+                    transformerBuilder: _toastAnimationBuilder(item),
+                  );
+                },
+              ),
             ),
           ),
         );
@@ -230,6 +254,22 @@ class ToastificationManager {
         return overlay;
       },
     );
+  }
+
+  EdgeInsetsGeometry _marginBuilder(
+    BuildContext context,
+    AlignmentGeometry alignment,
+    ToastificationConfig config,
+  ) {
+    var marginValue = config.marginBuilder(context, alignment);
+
+    if (config.applyMediaQueryViewInsets) {
+      marginValue = marginValue.add(MediaQuery.of(context).viewInsets);
+    }
+
+    /// Add the MediaQuery viewPadding as margin so other widgets behind the toastification overlay
+    /// will be touchable and not covered by the toastification overlay.
+    return marginValue.add(MediaQuery.of(context).viewPadding);
   }
 
   ToastificationAnimationBuilder _toastAnimationBuilder(

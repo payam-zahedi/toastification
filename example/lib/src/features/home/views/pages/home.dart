@@ -35,15 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ToastificationConfigProvider(
       config: ToastificationConfig(
-        marginBuilder: (alignment) => const EdgeInsets.fromLTRB(0, 16, 0, 110),
+        marginBuilder: (context, alignment) =>
+            const EdgeInsets.fromLTRB(0, 16, 0, 110),
       ),
-      child: const Scrollbar(
+      child: Scrollbar(
         child: Scaffold(
           extendBody: true,
-          bottomNavigationBar: BottomNavigationView(),
+          bottomNavigationBar: const BottomNavigationView(),
           body: CustomScrollView(
+            scrollBehavior: const ScrollBehavior().copyWith(
+              scrollbars: false,
+            ),
             primary: true,
-            slivers: [
+            slivers: const [
               ToastAppBar(),
               SliverToBoxAdapter(child: ToastHeader()),
               CustomizationSection(),
@@ -69,9 +73,7 @@ class CustomizationSection extends StatelessWidget {
 }
 
 class _HorizontalSection extends StatelessWidget {
-  const _HorizontalSection({
-    Key? key,
-  }) : super(key: key);
+  const _HorizontalSection();
 
   @override
   Widget build(BuildContext context) {

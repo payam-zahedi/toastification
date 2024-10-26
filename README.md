@@ -94,6 +94,7 @@ toastification.show(
     );
   },
   icon: const Icon(Icons.check),
+  showIcon: true, // show or hide the icon
   primaryColor: Colors.green,
   backgroundColor: Colors.white,
   foregroundColor: Colors.black,

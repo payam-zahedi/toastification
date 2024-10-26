@@ -1,3 +1,19 @@
+## 2.3.0
+* fix: AnimationController.dispose() called more than once. on multiple action show by @AntonioAEMartins
+* fix: add extra bottom margin to account for keyboard by @MrLightful 
+* refactor: toast config and applyMediaQueryViewInsets as property by @payam-zahedi
+* fix: add Media Query view padding as a margin to toast overlay by @payam-zahedi
+* fix: add max line limit for title and description by @payam-zahedi
+
+## 2.2.0
+* Fix offset in description when title is null by @romatallinn
+* fix: Cannot hide the icon if the style is FlatColored by @sandunrajitha
+* fix: remove padding on top of toast list and make it tappable by @payam-zahedi
+
+## 2.1.0
+* fix: Add clipBehavior for ToastificationConfig by @komakur
+* feat: Add dismiss icon possibility by @alirezat66
+
 ## 2.0.0
 * Feature: optional context by @SamadiPour
 * Add optional BorderSide option by @LampeMW

@@ -95,6 +95,7 @@ void openGithubPullRequests(BuildContext context) async {
 
 void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
   toastification.show(
+    context: context,
     alignment: toastDetail.alignment,
     title: toastDetail.title,
     description: toastDetail.description,

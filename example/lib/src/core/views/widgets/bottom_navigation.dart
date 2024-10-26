@@ -181,34 +181,38 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
       ),
     );
 
-    return SlideTransition(
-      position: animation,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 32),
-          padding: containerPadding,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.black.withOpacity(.15)),
-            boxShadow: [
-              BoxShadow(
-                color: theme.colorScheme.onSurface.withOpacity(.1),
-                blurRadius: 48,
-                offset: const Offset(0, 24),
-              )
-            ],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              previewButton,
-              const SizedBox(width: 16),
-              saveToastButton,
-              const SizedBox(width: 16),
-              copyCodeButton,
-            ],
+    return SizedBox(
+      height: 150,
+      child: SlideTransition(
+        position: animation,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 32),
+            padding: containerPadding,
+            height: 80,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.black.withOpacity(.15)),
+              boxShadow: [
+                BoxShadow(
+                  color: theme.colorScheme.onSurface.withOpacity(.1),
+                  blurRadius: 48,
+                  offset: const Offset(0, 24),
+                )
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                previewButton,
+                const SizedBox(width: 16),
+                saveToastButton,
+                const SizedBox(width: 16),
+                copyCodeButton,
+              ],
+            ),
           ),
         ),
       ),

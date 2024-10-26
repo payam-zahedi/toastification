@@ -44,6 +44,7 @@ class BuiltInContent extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget content = DefaultTextStyle.merge(
       style: context.toastTheme.titleTextStyle,
+      maxLines: 1,
       child: title ?? const SizedBox(),
     );
 
@@ -59,14 +60,14 @@ class BuiltInContent extends StatelessWidget {
       children: [
         content,
         if (description != null) ...[
-          const SizedBox(height: 6),
+          if (title != null) const SizedBox(height: 6),
           DefaultTextStyle.merge(
             style: context.toastTheme.descriptionTextStyle,
             child: description!,
           ),
         ],
         if (context.toastTheme.showProgressBar) ...[
-          const SizedBox(height: 10),
+          if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
             data: context.toastTheme.progressIndicatorTheme,
             child: progressBarWidget ??

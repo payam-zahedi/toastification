@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class RoundToggle extends StatelessWidget {
   const RoundToggle({
-    Key? key,
+    super.key,
     required this.value,
     this.onChanged,
     this.enabledThumbColor,
@@ -12,7 +12,7 @@ class RoundToggle extends StatelessWidget {
     this.thumbRadius,
     this.backgroundRadius,
     this.duration = const Duration(milliseconds: 200),
-  }) : super(key: key);
+  });
 
   ///type of [Color] used for the active thumb color
   final Color? enabledThumbColor;
