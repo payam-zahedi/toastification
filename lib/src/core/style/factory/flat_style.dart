@@ -22,5 +22,4 @@ class FlatStyle extends BaseStyle {
 
   @override
   Color get iconColor => primaryColor;
-
 }

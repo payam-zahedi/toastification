@@ -22,5 +22,4 @@ class MinimalStyle extends BaseStyle {
 
   @override
   Color get iconColor => primaryColor;
-
 }

@@ -33,7 +33,7 @@ abstract class BaseStyle implements BuiltInStyle {
         color: Colors.black12,
         width: 1,
       );
-      
+
   @override
   EdgeInsetsGeometry get padding =>
       const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16);
