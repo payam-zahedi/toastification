@@ -3,10 +3,10 @@ import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 abstract class BaseStyle implements BuiltInStyle {
+  const BaseStyle(this.type, this.theme);
+
   final ToastificationType type;
   final ThemeData theme;
-
-  BaseStyle(this.type, this.theme);
 
   @override
   MaterialColor get primaryColor => ToastHelper.createMaterialColor(type.color);
@@ -49,7 +49,7 @@ abstract class BaseStyle implements BuiltInStyle {
 
   @override
   TextStyle? get descriptionTextStyle => theme.textTheme.titleSmall?.copyWith(
-        color: foregroundColor.withOpacity(.7),
+        color: foregroundColor.withOpacity(.8),
         fontSize: 14,
         fontWeight: FontWeight.w300,
         height: 1.2,

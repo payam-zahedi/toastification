@@ -86,13 +86,19 @@ class ToastificationTheme {
   IconData get closeIcon => selectedStyle.closeIcon;
 
   TextStyle? get titleTextStyle => selectedStyle.titleTextStyle?.copyWith(
-        color: foregroundColor,
+      // color: foregroundColor,
+      // fontSize: 14,
+      // fontWeight: FontWeight.w500,
+      // height: 1.2,
       );
 
   TextStyle? get descriptionTextStyle =>
       selectedStyle.descriptionTextStyle?.copyWith(
-        color: foregroundColor.withOpacity(.7),
-      );
+          // color: foregroundColor.withOpacity(.7),
+          // fontSize: 14,
+          // fontWeight: FontWeight.w300,
+          // height: 1.2,
+          );
 
   // You can add more getters as needed
 

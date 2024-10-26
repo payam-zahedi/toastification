@@ -34,7 +34,6 @@ class BuiltInContent extends StatelessWidget {
     this.progressBarWidget,
   });
 
-
   final Widget? title;
   final Widget? description;
 
@@ -44,9 +43,7 @@ class BuiltInContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget content = DefaultTextStyle.merge(
-      style: context.toastTheme.titleTextStyle?.copyWith(
-            color: context.toastTheme.foregroundColor,
-          ),
+      style: context.toastTheme.titleTextStyle,
       child: title ?? const SizedBox(),
     );
 
@@ -64,11 +61,7 @@ class BuiltInContent extends StatelessWidget {
         if (description != null) ...[
           const SizedBox(height: 6),
           DefaultTextStyle.merge(
-            style: context.toastTheme
-                .descriptionTextStyle
-                ?.copyWith(
-                  color: context.toastTheme.foregroundColor,
-                ),
+            style: context.toastTheme.descriptionTextStyle,
             child: description!,
           ),
         ],
