@@ -13,6 +13,7 @@ class FlatToastWidget extends StatelessWidget {
     this.description,
     this.icon,
     this.onCloseTap,
+    this.showCloseButton = true,
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -23,8 +24,11 @@ class FlatToastWidget extends StatelessWidget {
   final Widget? icon;
 
   final VoidCallback? onCloseTap;
+  final bool showCloseButton;
+
   final double? progressBarValue;
   final Widget? progressBarWidget;
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -73,6 +77,7 @@ class FlatToastWidget extends StatelessWidget {
           const SizedBox(width: 8),
           ToastCloseButton(
             onCloseTap: onCloseTap,
+            showCloseButton: showCloseButton,
           ),
         ],
       ),

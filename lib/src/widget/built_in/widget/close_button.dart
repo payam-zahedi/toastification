@@ -5,8 +5,11 @@ class ToastCloseButton extends StatelessWidget {
   const ToastCloseButton({
     super.key,
     this.onCloseTap,
+    required this.showCloseButton,
   });
+
   final VoidCallback? onCloseTap;
+  final bool showCloseButton;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +18,9 @@ class ToastCloseButton extends StatelessWidget {
     return SizedBox.square(
       dimension: 30,
       child: IgnorePointer(
-        ignoring: !toastTheme.showCloseButton,
+        ignoring: !showCloseButton,
         child: AnimatedOpacity(
-          opacity: toastTheme.showCloseButton ? 1 : 0,
+          opacity: showCloseButton ? 1 : 0,
           duration: const Duration(milliseconds: 200),
           child: Material(
             color: Colors.transparent,

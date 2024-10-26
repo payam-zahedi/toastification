@@ -13,6 +13,7 @@ class FilledToastWidget extends StatelessWidget {
     this.description,
     this.icon,
     this.onCloseTap,
+    this.showCloseButton = true,
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -20,7 +21,9 @@ class FilledToastWidget extends StatelessWidget {
   final Widget? title;
   final Widget? description;
   final Widget? icon;
+
   final VoidCallback? onCloseTap;
+  final bool showCloseButton;
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
@@ -77,6 +80,7 @@ class FilledToastWidget extends StatelessWidget {
           const SizedBox(width: 8),
           ToastCloseButton(
             onCloseTap: onCloseTap,
+            showCloseButton: showCloseButton,
           ),
         ],
       ),

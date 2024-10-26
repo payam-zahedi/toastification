@@ -15,7 +15,6 @@ class ToastificationTheme extends Equatable {
   final BorderRadiusGeometry? _borderRadius;
   final BorderSide? _borderSide;
   final List<BoxShadow>? _boxShadow;
-  final bool _showCloseButton;
   final bool _showProgressBar;
   final bool _applyBlurEffect;
   final bool _showIcon;
@@ -34,7 +33,6 @@ class ToastificationTheme extends Equatable {
     List<BoxShadow>? boxShadow,
     Color? closeIconColor,
     required TextDirection direction,
-    bool showCloseButton = true,
     bool showProgressBar = false,
     bool applyBlurEffect = false,
     bool showIcon = true,
@@ -47,7 +45,6 @@ class ToastificationTheme extends Equatable {
         _borderSide = borderSide,
         _boxShadow = boxShadow,
         _direction = direction,
-        _showCloseButton = showCloseButton,
         _showProgressBar = showProgressBar,
         _applyBlurEffect = applyBlurEffect,
         _showIcon = showIcon,
@@ -75,7 +72,6 @@ class ToastificationTheme extends Equatable {
 
   List<BoxShadow> get boxShadow => _boxShadow ?? selectedStyle.boxShadow;
   TextDirection get direction => _direction;
-  bool get showCloseButton => _showCloseButton;
   bool get showProgressBar => _showProgressBar;
   bool get applyBlurEffect => _applyBlurEffect;
   bool get showIcon => _showIcon;
@@ -127,7 +123,6 @@ class ToastificationTheme extends Equatable {
     BorderSide? borderSide,
     List<BoxShadow>? boxShadow,
     TextDirection? direction,
-    bool? showCloseButton,
     bool? showProgressBar,
     bool? applyBlurEffect,
     bool? showIcon,
@@ -144,7 +139,6 @@ class ToastificationTheme extends Equatable {
       borderSide: borderSide ?? _borderSide,
       boxShadow: boxShadow ?? _boxShadow,
       direction: direction ?? _direction,
-      showCloseButton: showCloseButton ?? _showCloseButton,
       showProgressBar: showProgressBar ?? _showProgressBar,
       applyBlurEffect: applyBlurEffect ?? _applyBlurEffect,
       showIcon: showIcon ?? _showIcon,
@@ -163,7 +157,6 @@ class ToastificationTheme extends Equatable {
         _borderRadius,
         _borderSide,
         _boxShadow,
-        _showCloseButton,
         _showProgressBar,
         _applyBlurEffect,
         _showIcon,

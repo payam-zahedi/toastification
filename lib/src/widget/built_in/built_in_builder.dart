@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
@@ -93,8 +92,13 @@ class BuiltInBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
-    final primaryColor = buildMaterialColor(this.primaryColor);
-    final backgroundColor = buildMaterialColor(this.backgroundColor);
+    final closeButtonShowType =
+        this.closeButtonShowType ?? CloseButtonShowType.always;
+
+    final primaryColor = ToastHelper.convertToMaterialColor(this.primaryColor);
+    final backgroundColor =
+        ToastHelper.convertToMaterialColor(this.backgroundColor);
+
     return _BuiltInContainer(
       item: item,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -125,7 +129,7 @@ class BuiltInBuilder extends StatelessWidget {
         showProgressBar: showProgressBar,
         applyBlurEffect: applyBlurEffect,
         progressBarTheme: progressBarTheme,
-        closeButtonShowType: closeButtonShowType ?? CloseButtonShowType.always,
+        closeButtonShowType: closeButtonShowType,
       ),
     );
   }
@@ -140,17 +144,6 @@ class BuiltInBuilder extends StatelessWidget {
 
   void _defaultCloseButtonTap() {
     Toastification().dismiss(item);
-  }
-
-  MaterialColor? buildMaterialColor(Color? color) {
-    if (color == null) return null;
-
-    if (color is MaterialColor) return color;
-
-    final findInMaterialColors = Colors.primaries
-        .firstWhereOrNull((element) => element.shade500 == color);
-
-    return findInMaterialColors ?? ToastHelper.createMaterialColor(color);
   }
 }
 
@@ -264,11 +257,17 @@ class BuiltInToastBuilder extends StatelessWidget {
       child: OnHoverShow(
         enabled: closeButtonShowType == CloseButtonShowType.onHover,
         childBuilder: (context, showWidget) {
+          final showCloseWidget = switch (closeButtonShowType) {
+            CloseButtonShowType.none => false,
+            _ => showWidget,
+          };
+
           return switch (style) {
             ToastificationStyle.flat => FlatToastWidget(
                 title: title,
                 description: description,
                 icon: icon,
+                showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
                 progressBarWidget: progressBarWidget,
               ),
@@ -276,6 +275,7 @@ class BuiltInToastBuilder extends StatelessWidget {
                 title: title,
                 description: description,
                 icon: icon,
+                showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
                 progressBarWidget: progressBarWidget,
               ),
@@ -283,6 +283,7 @@ class BuiltInToastBuilder extends StatelessWidget {
                 title: title,
                 description: description,
                 icon: icon,
+                showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
                 progressBarWidget: progressBarWidget,
               ),
@@ -290,6 +291,7 @@ class BuiltInToastBuilder extends StatelessWidget {
                 title: title,
                 description: description,
                 icon: icon,
+                showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
                 progressBarWidget: progressBarWidget,
               ),

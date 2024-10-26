@@ -14,6 +14,7 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.description,
     this.icon,
     this.onCloseTap,
+    this.showCloseButton = true,
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -24,6 +25,7 @@ class FlatColoredToastWidget extends StatelessWidget {
   final Widget? icon;
 
   final VoidCallback? onCloseTap;
+  final bool showCloseButton;
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
@@ -47,7 +49,9 @@ class FlatColoredToastWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: toastTheme.decorationColor,
         borderRadius: toastTheme.borderRadius,
-        border: Border.fromBorderSide(toastTheme.borderSide ?? toastTheme.selectedStyle.borderSide.copyWith(color: toastTheme.primaryColor)),
+        border: Border.fromBorderSide(toastTheme.borderSide ??
+            toastTheme.selectedStyle.borderSide
+                .copyWith(color: toastTheme.primaryColor)),
         boxShadow: toastTheme.boxShadow,
       ),
       padding: toastTheme.padding,
@@ -76,6 +80,7 @@ class FlatColoredToastWidget extends StatelessWidget {
           const SizedBox(width: 8),
           ToastCloseButton(
             onCloseTap: onCloseTap,
+            showCloseButton: showCloseButton,
           ),
         ],
       ),

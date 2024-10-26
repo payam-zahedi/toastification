@@ -14,6 +14,7 @@ class MinimalToastWidget extends StatelessWidget {
     this.description,
     this.icon,
     this.onCloseTap,
+    this.showCloseButton = true,
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -24,6 +25,7 @@ class MinimalToastWidget extends StatelessWidget {
   final Widget? icon;
 
   final VoidCallback? onCloseTap;
+  final bool showCloseButton;
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
@@ -58,7 +60,7 @@ class MinimalToastWidget extends StatelessWidget {
         color: toastTheme.decorationColor,
         borderRadius: toastTheme.effectiveBorderRadius(
           toastTheme.borderRadius.resolve(toastTheme.direction),
-            ),
+        ),
         border: toastTheme.decorationBorder,
         boxShadow: toastTheme.boxShadow,
       ),
@@ -88,6 +90,7 @@ class MinimalToastWidget extends StatelessWidget {
           const SizedBox(width: 8),
           ToastCloseButton(
             onCloseTap: onCloseTap,
+            showCloseButton: showCloseButton,
           ),
         ],
       ),
