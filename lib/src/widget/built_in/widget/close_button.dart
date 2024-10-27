@@ -25,17 +25,19 @@ class ToastCloseButton extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             borderRadius: BorderRadius.circular(5),
-            child: Builder(builder: (context) {
-              return InkWell(
-                onTap: onCloseTap,
-                borderRadius: BorderRadius.circular(5),
-                child: Icon(
-                  toastTheme.closeIcon,
-                  color: toastTheme.closeIconColor,
-                  size: 18,
-                ),
-              );
-            }),
+            child: Builder(
+              builder: (context) {
+                return InkWell(
+                  onTap: onCloseTap,
+                  borderRadius: BorderRadius.circular(5),
+                  child: Icon(
+                    toastTheme.closeIcon,
+                    color: toastTheme.closeIconColor,
+                    size: 18,
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

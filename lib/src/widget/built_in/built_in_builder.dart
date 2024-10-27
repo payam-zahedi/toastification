@@ -229,7 +229,10 @@ class BuiltInToastBuilder extends StatelessWidget {
 
     return ToastificationThemeProvider(
       selectedStyle: StyleFactory.createStyle(
-          style, type ?? ToastificationType.success, Theme.of(context)),
+        style,
+        type ?? ToastificationType.success,
+        Theme.of(context),
+      ),
       themeBuilder: (theme) {
         return theme.copyWith(
           backgroundColor: backgroundColor != null

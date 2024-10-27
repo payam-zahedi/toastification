@@ -17,7 +17,7 @@ const lowModeShadow = [
     blurRadius: 16,
     offset: Offset(0, 16),
     spreadRadius: 0,
-  )
+  ),
 ];
 
 const highModeShadow = [
@@ -26,5 +26,5 @@ const highModeShadow = [
     blurRadius: 30,
     offset: Offset(0, 20),
     spreadRadius: 0,
-  )
+  ),
 ];

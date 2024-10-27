@@ -3,7 +3,10 @@ import 'package:toastification/toastification.dart';
 
 class StyleFactory {
   static BuiltInStyle createStyle(
-      ToastificationStyle style, ToastificationType type, ThemeData theme) {
+    ToastificationStyle style,
+    ToastificationType type,
+    ThemeData theme,
+  ) {
     return switch (style) {
       ToastificationStyle.minimal => MinimalStyle(type, theme),
       ToastificationStyle.fillColored => FilledStyle(type, theme),
