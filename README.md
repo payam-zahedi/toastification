@@ -318,7 +318,7 @@ Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We w
 
 Contributions are always welcome! If you have any suggestions, bug reports, or feature requests, please open an issue on the GitHub repository.
 
-If you would like to contribute to the project, please read the [CONTRIBUTING.md](https://github.com/payam-zahedi/toastification/CONTRIBUTING.md "CONTRIBUTING.md") file for more information on how to contribute.
+If you would like to contribute to the project, please read the [CONTRIBUTING.md](https://github.com/payam-zahedi/toastification/blob/main/CONTRIBUTING.md "CONTRIBUTING.md") file for more information on how to contribute.
 
 ## License
 
