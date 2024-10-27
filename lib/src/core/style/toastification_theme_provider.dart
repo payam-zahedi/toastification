@@ -11,12 +11,12 @@ class ToastificationThemeProvider extends StatelessWidget {
   final ToastificationTheme Function(ToastificationTheme)? themeBuilder;
 
   const ToastificationThemeProvider({
-    Key? key,
+    super.key,
     required this.selectedStyle,
     required this.child,
     required this.textDirection,
     this.themeBuilder,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

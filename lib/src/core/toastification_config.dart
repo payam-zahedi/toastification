@@ -8,7 +8,9 @@ const _defaultWidth = 400.0;
 const _defaultClipBehavior = Clip.none;
 
 typedef ToastificationMarginBuilder = EdgeInsetsGeometry Function(
-    BuildContext context, AlignmentGeometry alignment);
+  BuildContext context,
+  AlignmentGeometry alignment,
+);
 
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
 ///

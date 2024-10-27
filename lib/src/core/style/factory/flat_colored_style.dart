@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/style/factory/base_style.dart';
-import 'package:toastification/toastification.dart';
 
 class FlatColoredStyle extends BaseStyle {
-  FlatColoredStyle(ToastificationType type, ThemeData theme)
-      : super(type, theme);
+  FlatColoredStyle(super.type, super.theme);
 
   @override
   Color get backgroundColor => primaryColor.shade50;

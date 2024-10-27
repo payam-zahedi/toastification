@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/style/factory/base_style.dart';
-import 'package:toastification/toastification.dart';
 
 class MinimalStyle extends BaseStyle {
-  MinimalStyle(ToastificationType type, ThemeData theme) : super(type, theme);
+  MinimalStyle(super.type, super.theme);
 
   @override
   Color get backgroundColor => theme.brightness == Brightness.light

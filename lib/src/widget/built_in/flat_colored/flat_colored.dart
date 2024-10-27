@@ -49,9 +49,11 @@ class FlatColoredToastWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: toastTheme.decorationColor,
         borderRadius: toastTheme.borderRadius,
-        border: Border.fromBorderSide(toastTheme.borderSide ??
-            toastTheme.selectedStyle.borderSide
-                .copyWith(color: toastTheme.primaryColor)),
+        border: Border.fromBorderSide(
+          toastTheme.borderSide ??
+              toastTheme.selectedStyle.borderSide
+                  .copyWith(color: toastTheme.primaryColor),
+        ),
         boxShadow: toastTheme.boxShadow,
       ),
       padding: toastTheme.padding,
