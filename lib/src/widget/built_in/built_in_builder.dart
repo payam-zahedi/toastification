@@ -345,6 +345,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               direction: direction,
               applyBlurEffect: applyBlurEffect ?? false,
               showCloseButton: showCloseButton,
+              onCloseTap: onCloseTap,
             ),
         };
       },
