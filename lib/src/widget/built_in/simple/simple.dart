@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 import 'package:toastification/toastification.dart';
 
-class SimpleToastWidget extends StatefulWidget {
+class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({
     super.key,
     required this.type,
@@ -46,27 +46,19 @@ class SimpleToastWidget extends StatefulWidget {
 
   final bool applyBlurEffect;
 
-  final bool? showCloseButton;
+  final bool showCloseButton;
   final VoidCallback? onCloseTap;
 
   SimpleStyle get defaultStyle => SimpleStyle(type);
 
   @override
-  _SimpleToastWidgetState createState() => _SimpleToastWidgetState();
-}
-
-class _SimpleToastWidgetState extends State<SimpleToastWidget>
-    with SingleTickerProviderStateMixin {
-  @override
   Widget build(BuildContext context) {
-    final background =
-        widget.backgroundColor ?? widget.defaultStyle.backgroundColor(context);
-    final showCloseButton = widget.showCloseButton ?? true;
+    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
+    final direction = this.direction ?? Directionality.of(context);
     final borderRadius =
-        widget.borderRadius ?? widget.defaultStyle.borderRadius(context);
-    final borderSide =
-        widget.borderSide ?? widget.defaultStyle.borderSide(context);
-    final direction = widget.direction ?? Directionality.of(context);
+        (this.borderRadius ?? defaultStyle.borderRadius(context))
+            .resolve(direction);
+    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
 
     return Directionality(
       textDirection: direction,
@@ -79,7 +71,7 @@ class _SimpleToastWidgetState extends State<SimpleToastWidget>
             background: background,
             borderSide: borderSide,
             borderRadius: borderRadius,
-            applyBlurEffect: widget.applyBlurEffect,
+            applyBlurEffect: applyBlurEffect,
             showCloseButton: showCloseButton,
           ),
         ),
@@ -97,39 +89,40 @@ class _SimpleToastWidgetState extends State<SimpleToastWidget>
   }) {
     Widget body;
 
-    if (showCloseButton) {
-      body = Row(
-        children: [
-          Expanded(
-            child: widget.title ?? const SizedBox(),
-          ),
+    body = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Flexible(
+          fit: FlexFit.loose,
+          child: title ?? const SizedBox(),
+        ),
+        if (showCloseButton) ...[
+          const SizedBox(width: 8),
           ToastCloseButton(
             showCloseButton: showCloseButton,
-            onCloseTap: widget.onCloseTap,
-            icon: widget.defaultStyle.closeIcon(context),
-            iconColor: widget.foregroundColor?.withOpacity(.3) ??
-                widget.defaultStyle.closeIconColor(context),
+            onCloseTap: onCloseTap,
+            icon: defaultStyle.closeIcon(context),
+            iconColor: foregroundColor?.withOpacity(.3) ??
+                defaultStyle.closeIconColor(context),
           ),
-        ],
-      );
-    } else {
-      body = widget.title ?? const SizedBox();
-    }
+        ]
+      ],
+    );
 
     body = Container(
       decoration: BoxDecoration(
         color: applyBlurEffect ? background.withOpacity(0.5) : background,
         border: Border.fromBorderSide(borderSide),
-        boxShadow: widget.boxShadow ?? widget.defaultStyle.boxShadow(context),
+        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
         borderRadius: borderRadius,
       ),
-      padding: widget.padding ?? widget.defaultStyle.padding(context),
+      padding: padding ?? defaultStyle.padding(context),
       child: body,
     );
 
     if (applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: widget.defaultStyle.borderRadius(context),
+        borderRadius: defaultStyle.borderRadius(context),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,
