@@ -309,6 +309,16 @@ Remove a notification with the given ID from the screen.
 toastification.dismissById('my_notification_id');
 ```
 
+#### Dismiss All Notifications
+
+Remove all notifications that are currently displayed on the screen.
+
+```dart
+toastification.dismissAll(delayForAnimation: true);
+```
+
+You can customize the dismissal behavior by setting the `delayForAnimation` parameter. If set to `true`, Toastification will wait for the animation to finish before dismissing all notifications. If set to `false`, the notifications will be dismissed immediately without waiting for the animation.
+
 ## Design
 
 Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We want to extend our heartfelt appreciation to Sepide for her exceptional design work, which has made Toastification visually appealing and user-friendly. Special thanks to Sepide for her valuable contributions to this project.
