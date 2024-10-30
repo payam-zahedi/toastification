@@ -145,7 +145,7 @@ class SimpleToastWidget extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       padding: padding ?? defaultStyle.padding(context),
-      child: body,
+      child: IntrinsicHeight(child: body),
     );
 
     if (applyBlurEffect) {
