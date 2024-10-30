@@ -97,7 +97,9 @@ class SimpleToastWidget extends StatelessWidget {
           child: title ?? const SizedBox(),
         ),
         AnimatedSwitcher(
-          duration: const Duration(milliseconds: 100),
+          duration: const Duration(milliseconds: 250),
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeInOut,
           transitionBuilder: (Widget child, Animation<double> animation) {
             return FadeTransition(
               opacity: animation,
