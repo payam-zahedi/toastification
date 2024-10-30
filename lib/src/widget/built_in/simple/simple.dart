@@ -96,20 +96,46 @@ class SimpleToastWidget extends StatelessWidget {
           fit: FlexFit.loose,
           child: title ?? const SizedBox(),
         ),
-        if (showCloseButton) ...[
-          const SizedBox(width: 8),
-          ToastCloseButton(
-            showCloseButton: showCloseButton,
-            onCloseTap: onCloseTap,
-            icon: defaultStyle.closeIcon(context),
-            iconColor: foregroundColor?.withOpacity(.3) ??
-                defaultStyle.closeIconColor(context),
-          ),
-        ]
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 100),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return FadeTransition(
+              opacity: animation,
+              child: SizeTransition(
+                sizeFactor: animation,
+                axis: Axis.horizontal,
+                child: child,
+              ),
+            );
+          },
+          child: showCloseButton
+              ? Row(
+                  key: const ValueKey('close_button_visible'),
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const SizedBox(width: 8),
+                    ToastCloseButton(
+                      showCloseButton: showCloseButton,
+                      onCloseTap: onCloseTap,
+                      icon: defaultStyle.closeIcon(context),
+                      iconColor: foregroundColor?.withOpacity(.3) ??
+                          defaultStyle.closeIconColor(context),
+                    ),
+                  ],
+                )
+              : const SizedBox(
+                  key: ValueKey('close_button_hidden'),
+                  width: 0,
+                  height: 0,
+                ),
+        ),
       ],
     );
 
     body = Container(
+      constraints: const BoxConstraints(
+        minHeight: 65.0,
+      ),
       decoration: BoxDecoration(
         color: applyBlurEffect ? background.withOpacity(0.5) : background,
         border: Border.fromBorderSide(borderSide),
