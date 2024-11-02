@@ -91,45 +91,21 @@ class SimpleToastWidget extends StatelessWidget {
 
     body = Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
           fit: FlexFit.loose,
           child: title ?? const SizedBox(),
         ),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          switchInCurve: Curves.easeInOut,
-          switchOutCurve: Curves.easeInOut,
-          transitionBuilder: (Widget child, Animation<double> animation) {
-            return FadeTransition(
-              opacity: animation,
-              child: SizeTransition(
-                sizeFactor: animation,
-                axis: Axis.horizontal,
-                child: child,
-              ),
-            );
-          },
-          child: showCloseButton
-              ? Row(
-                  key: const ValueKey('close_button_visible'),
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const SizedBox(width: 8),
-                    ToastCloseButton(
-                      showCloseButton: showCloseButton,
-                      onCloseTap: onCloseTap,
-                      icon: defaultStyle.closeIcon(context),
-                      iconColor: foregroundColor?.withOpacity(.3) ??
-                          defaultStyle.closeIconColor(context),
-                    ),
-                  ],
-                )
-              : const SizedBox(
-                  key: ValueKey('close_button_hidden'),
-                  width: 0,
-                  height: 0,
-                ),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(start: 8),
+          child: ToastCloseButton(
+            showCloseButton: showCloseButton,
+            onCloseTap: onCloseTap,
+            icon: defaultStyle.closeIcon(context),
+            iconColor: foregroundColor?.withOpacity(.3) ??
+                defaultStyle.closeIconColor(context),
+          ),
         ),
       ],
     );
@@ -145,7 +121,7 @@ class SimpleToastWidget extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       padding: padding ?? defaultStyle.padding(context),
-      child: IntrinsicHeight(child: body),
+      child: body,
     );
 
     if (applyBlurEffect) {

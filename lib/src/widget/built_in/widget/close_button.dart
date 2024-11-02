@@ -16,28 +16,48 @@ class ToastCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.square(
-      dimension: 30,
-      child: IgnorePointer(
-        ignoring: !showCloseButton,
-        child: AnimatedOpacity(
-          opacity: showCloseButton ? 1 : 0,
+    return IgnorePointer(
+      ignoring: !showCloseButton,
+      child: SizedBox(
+        height: 30,
+        child: AnimatedSwitcher(
           duration: const Duration(milliseconds: 200),
-          child: Material(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(5),
-            child: Builder(builder: (context) {
-              return InkWell(
-                onTap: onCloseTap,
-                borderRadius: BorderRadius.circular(5),
-                child: Icon(
-                  icon,
-                  color: iconColor,
-                  size: 18,
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeInOut,
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return FadeTransition(
+              opacity: animation,
+              child: SizeTransition(
+                sizeFactor: animation,
+                axis: Axis.horizontal,
+                axisAlignment: 1,
+                child: child,
+              ),
+            );
+          },
+          child: showCloseButton
+              ? SizedBox.square(
+                  dimension: 30,
+                  child: Material(
+                    key: const ValueKey('close_button_visible'),
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(5),
+                    child: Builder(builder: (context) {
+                      return InkWell(
+                        onTap: onCloseTap,
+                        borderRadius: BorderRadius.circular(5),
+                        child: Icon(
+                          icon,
+                          color: iconColor,
+                          size: 18,
+                        ),
+                      );
+                    }),
+                  ),
+                )
+              : const SizedBox.shrink(
+                  key: ValueKey('close_button_hidden'),
                 ),
-              );
-            }),
-          ),
         ),
       ),
     );
