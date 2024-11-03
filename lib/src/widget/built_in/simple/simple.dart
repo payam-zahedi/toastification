@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 import 'package:toastification/src/core/context_ext.dart';
 import 'package:toastification/src/core/style/toastification_theme.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/toastification.dart';
 
 class SimpleToastWidget extends StatelessWidget {
@@ -24,12 +23,8 @@ class SimpleToastWidget extends StatelessWidget {
     return Directionality(
       textDirection: context.toastTheme.direction,
       child: Center(
-        child: AnimatedSize(
-          duration: const Duration(milliseconds: 100),
-          curve: Curves.easeInOut,
-          child: buildContent(
-            toastTheme: context.toastTheme,
-          ),
+        child: buildContent(
+          toastTheme: context.toastTheme,
         ),
       ),
     );
@@ -48,9 +43,6 @@ class SimpleToastWidget extends StatelessWidget {
           fit: FlexFit.loose,
           child: BuiltInContent(
             title: title ?? const SizedBox(),
-            description: null,
-            progressBarValue: null,
-            progressBarWidget: null,
           ),
         ),
         Padding(
@@ -64,9 +56,6 @@ class SimpleToastWidget extends StatelessWidget {
     );
 
     body = Container(
-      constraints: const BoxConstraints(
-        minHeight: 65.0,
-      ),
       decoration: BoxDecoration(
         color: toastTheme.decorationColor,
         border: toastTheme.decorationBorder,
@@ -74,12 +63,7 @@ class SimpleToastWidget extends StatelessWidget {
         borderRadius: toastTheme.borderRadius,
       ),
       padding: toastTheme.padding,
-      child: BuiltInContent(
-        title: title,
-        description: null,
-        progressBarValue: null,
-        progressBarWidget: null,
-      ),
+      child: body,
     );
 
     if (toastTheme.applyBlurEffect) {
