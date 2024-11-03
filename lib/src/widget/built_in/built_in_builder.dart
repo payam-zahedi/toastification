@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
@@ -93,6 +92,13 @@ class BuiltInBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
+    final closeButtonShowType =
+        this.closeButtonShowType ?? CloseButtonShowType.always;
+
+    final primaryColor = ToastHelper.convertToMaterialColor(this.primaryColor);
+    final backgroundColor =
+        ToastHelper.convertToMaterialColor(this.backgroundColor);
+
     return _BuiltInContainer(
       item: item,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -126,14 +132,6 @@ class BuiltInBuilder extends StatelessWidget {
         closeButtonShowType: closeButtonShowType,
       ),
     );
-  }
-
-  BuiltInStyle toastDefaultStyle() {
-    final type = this.type ?? ToastificationType.info;
-
-    final style = this.style ?? ToastificationStyle.fillColored;
-
-    return BuiltInStyle.fromToastificationStyle(style, type);
   }
 
   VoidCallback _onCloseButtonTap() {
@@ -218,13 +216,6 @@ class BuiltInToastBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = this.style ?? ToastificationStyle.flat;
 
-    final type = this.type ?? ToastificationType.info;
-
-    final closeButtonType = closeButtonShowType ?? CloseButtonShowType.always;
-
-    final primaryColor = buildMaterialColor(this.primaryColor);
-    final backgroundColor = buildMaterialColor(this.backgroundColor);
-
     final showProgressBar = (this.showProgressBar ?? false) && item != null;
 
     final progressBarWidget = showProgressBar
@@ -236,131 +227,86 @@ class BuiltInToastBuilder extends StatelessWidget {
           )
         : null;
 
-    return OnHoverShow(
-      enabled: closeButtonType == CloseButtonShowType.onHover,
-      childBuilder: (context, showWidget) {
-        final showCloseButton =
-            (closeButtonType != CloseButtonShowType.none) && showWidget;
-
-        return switch (style) {
-          ToastificationStyle.flat => FlatToastWidget(
-              type: type,
-              title: title,
-              description: description,
-              primaryColor: primaryColor,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              icon: icon,
-              brightness: brightness,
-              padding: padding,
-              showIcon: showIcon,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              boxShadow: boxShadow,
-              direction: direction,
-              onCloseTap: onCloseTap,
-              showCloseButton: showCloseButton,
-              showProgressBar: this.showProgressBar == true,
-              progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,
-              applyBlurEffect: applyBlurEffect ?? false,
-            ),
-          ToastificationStyle.flatColored => FlatColoredToastWidget(
-              type: type,
-              title: title,
-              description: description,
-              primaryColor: primaryColor,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              icon: icon,
-              showIcon: showIcon,
-              brightness: brightness,
-              padding: padding,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              boxShadow: boxShadow,
-              direction: direction,
-              onCloseTap: onCloseTap,
-              showCloseButton: showCloseButton,
-              applyBlurEffect: applyBlurEffect ?? false,
-              showProgressBar: this.showProgressBar == true,
-              progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,
-            ),
-          ToastificationStyle.fillColored => FilledToastWidget(
-              type: type,
-              title: title,
-              description: description,
-              primaryColor: primaryColor,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              icon: icon,
-              showIcon: showIcon,
-              brightness: brightness,
-              padding: padding,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              boxShadow: boxShadow,
-              direction: direction,
-              onCloseTap: onCloseTap,
-              showCloseButton: showCloseButton,
-              applyBlurEffect: applyBlurEffect ?? false,
-              showProgressBar: this.showProgressBar == true,
-              progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,
-            ),
-          ToastificationStyle.minimal => MinimalToastWidget(
-              type: type,
-              title: title,
-              description: description,
-              primaryColor: primaryColor,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              icon: icon,
-              showIcon: showIcon,
-              brightness: brightness,
-              padding: padding,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              boxShadow: boxShadow,
-              direction: direction,
-              onCloseTap: onCloseTap,
-              showCloseButton: showCloseButton,
-              showProgressBar: this.showProgressBar == true,
-              applyBlurEffect: applyBlurEffect ?? false,
-              progressIndicatorTheme: progressBarTheme,
-              progressBarWidget: progressBarWidget,
-            ),
-          ToastificationStyle.simple => SimpleToastWidget(
-              type: type,
-              title: title,
-              primaryColor: primaryColor,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              brightness: brightness,
-              padding: padding,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              boxShadow: boxShadow,
-              direction: direction,
-              applyBlurEffect: applyBlurEffect ?? false,
-              showCloseButton: showCloseButton,
-              onCloseTap: onCloseTap,
-            ),
-        };
+    return ToastificationThemeProvider(
+      selectedStyle: StyleFactory.createStyle(
+        style,
+        type ?? ToastificationType.success,
+        Theme.of(context),
+      ),
+      themeBuilder: (theme) {
+        return theme.copyWith(
+          backgroundColor: backgroundColor != null
+              ? ToastHelper.createMaterialColor(backgroundColor!)
+              : null,
+          primaryColor: primaryColor != null
+              ? ToastHelper.createMaterialColor(primaryColor!)
+              : null,
+          foregroundColor: foregroundColor != null
+              ? ToastHelper.createMaterialColor(foregroundColor!)
+              : null,
+          padding: padding ?? theme.padding,
+          borderRadius: borderRadius ?? theme.borderRadius,
+          borderSide: borderSide ?? theme.borderSide,
+          boxShadow: boxShadow ?? theme.boxShadow,
+          direction: direction ?? Directionality.of(context),
+          showProgressBar: this.showProgressBar == true,
+          applyBlurEffect: applyBlurEffect ?? false,
+          showIcon: showIcon ?? true,
+          progressIndicatorTheme:
+              progressBarTheme ?? theme.progressIndicatorTheme,
+        );
       },
+      textDirection: direction ?? Directionality.of(context),
+      child: OnHoverShow(
+        enabled: closeButtonShowType == CloseButtonShowType.onHover,
+        childBuilder: (context, showWidget) {
+          final showCloseWidget = switch (closeButtonShowType) {
+            CloseButtonShowType.none => false,
+            _ => showWidget,
+          };
+
+          return switch (style) {
+            ToastificationStyle.flat => FlatToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                showCloseButton: showCloseWidget,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+              ),
+            ToastificationStyle.flatColored => FlatColoredToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                showCloseButton: showCloseWidget,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+              ),
+            ToastificationStyle.fillColored => FilledToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                onCloseTap: onCloseTap,
+                showCloseButton: showCloseWidget,
+                progressBarWidget: progressBarWidget,
+              ),
+            ToastificationStyle.minimal => MinimalToastWidget(
+                title: title,
+                description: description,
+                icon: icon,
+                showCloseButton: showCloseWidget,
+                onCloseTap: onCloseTap,
+                progressBarWidget: progressBarWidget,
+              ),
+            ToastificationStyle.simple => SimpleToastWidget(
+                title: title,
+                showCloseButton: showCloseWidget,
+                onCloseTap: onCloseTap,
+              ),
+          };
+        },
+      ),
     );
-  }
-
-  MaterialColor? buildMaterialColor(Color? color) {
-    if (color == null) return null;
-
-    if (color is MaterialColor) return color;
-
-    final findInMaterialColors = Colors.primaries
-        .firstWhereOrNull((element) => element.shade500 == color);
-
-    return findInMaterialColors ?? ToastHelper.createMaterialColor(color);
   }
 }
 

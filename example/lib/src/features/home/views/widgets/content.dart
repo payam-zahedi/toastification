@@ -117,25 +117,22 @@ class _ContentDesktop extends ConsumerWidget {
                   const IconPicker(),
                 ],
               ),
-              const SizedBox(width: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          hintText: 'Type the title text here..',
-                        ),
-                        onChanged: (value) {
-                          ref
-                              .read(toastDetailControllerProvider.notifier)
-                              .changeTitle(value);
-                        },
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: const InputDecoration(
+                        hintText: 'Type the title text here..',
                       ),
+                      onChanged: (value) {
+                        ref
+                            .read(toastDetailControllerProvider.notifier)
+                            .changeTitle(value);
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               SizedBox(

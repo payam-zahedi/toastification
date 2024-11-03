@@ -1,78 +1,34 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
+import 'package:toastification/src/core/context_ext.dart';
+import 'package:toastification/src/core/style/toastification_theme.dart';
+import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/toastification.dart';
 
 class SimpleToastWidget extends StatelessWidget {
   const SimpleToastWidget({
     super.key,
-    required this.type,
     this.title,
-    this.primaryColor,
-    this.backgroundColor,
-    this.foregroundColor,
-    this.brightness,
-    this.padding,
-    this.borderRadius,
-    this.borderSide,
-    this.boxShadow,
-    this.direction,
-    this.applyBlurEffect = false,
     this.showCloseButton = true,
     this.onCloseTap,
   });
 
-  final ToastificationType type;
-
   final Widget? title;
-
-  final MaterialColor? primaryColor;
-
-  final MaterialColor? backgroundColor;
-
-  final Color? foregroundColor;
-
-  final Brightness? brightness;
-
-  final EdgeInsetsGeometry? padding;
-
-  final BorderRadiusGeometry? borderRadius;
-
-  final BorderSide? borderSide;
-
-  final List<BoxShadow>? boxShadow;
-
-  final TextDirection? direction;
-
-  final bool applyBlurEffect;
 
   final bool showCloseButton;
   final VoidCallback? onCloseTap;
 
-  SimpleStyle get defaultStyle => SimpleStyle(type);
-
   @override
   Widget build(BuildContext context) {
-    final background = backgroundColor ?? defaultStyle.backgroundColor(context);
-    final direction = this.direction ?? Directionality.of(context);
-    final borderRadius =
-        (this.borderRadius ?? defaultStyle.borderRadius(context))
-            .resolve(direction);
-    final borderSide = this.borderSide ?? defaultStyle.borderSide(context);
-
     return Directionality(
-      textDirection: direction,
+      textDirection: context.toastTheme.direction,
       child: Center(
         child: AnimatedSize(
           duration: const Duration(milliseconds: 100),
           curve: Curves.easeInOut,
           child: buildContent(
-            context: context,
-            background: background,
-            borderSide: borderSide,
-            borderRadius: borderRadius,
-            applyBlurEffect: applyBlurEffect,
-            showCloseButton: showCloseButton,
+            toastTheme: context.toastTheme,
           ),
         ),
       ),
@@ -80,12 +36,7 @@ class SimpleToastWidget extends StatelessWidget {
   }
 
   Widget buildContent({
-    required BuildContext context,
-    required Color background,
-    required BorderSide borderSide,
-    required BorderRadiusGeometry borderRadius,
-    required bool applyBlurEffect,
-    required bool showCloseButton,
+    required ToastificationTheme toastTheme,
   }) {
     Widget body;
 
@@ -95,16 +46,18 @@ class SimpleToastWidget extends StatelessWidget {
       children: [
         Flexible(
           fit: FlexFit.loose,
-          child: title ?? const SizedBox(),
+          child: BuiltInContent(
+            title: title ?? const SizedBox(),
+            description: null,
+            progressBarValue: null,
+            progressBarWidget: null,
+          ),
         ),
         Padding(
           padding: const EdgeInsetsDirectional.only(start: 8),
           child: ToastCloseButton(
             showCloseButton: showCloseButton,
             onCloseTap: onCloseTap,
-            icon: defaultStyle.closeIcon(context),
-            iconColor: foregroundColor?.withOpacity(.3) ??
-                defaultStyle.closeIconColor(context),
           ),
         ),
       ],
@@ -115,18 +68,23 @@ class SimpleToastWidget extends StatelessWidget {
         minHeight: 65.0,
       ),
       decoration: BoxDecoration(
-        color: applyBlurEffect ? background.withOpacity(0.5) : background,
-        border: Border.fromBorderSide(borderSide),
-        boxShadow: boxShadow ?? defaultStyle.boxShadow(context),
-        borderRadius: borderRadius,
+        color: toastTheme.decorationColor,
+        border: toastTheme.decorationBorder,
+        boxShadow: toastTheme.boxShadow,
+        borderRadius: toastTheme.borderRadius,
       ),
-      padding: padding ?? defaultStyle.padding(context),
-      child: body,
+      padding: toastTheme.padding,
+      child: BuiltInContent(
+        title: title,
+        description: null,
+        progressBarValue: null,
+        progressBarWidget: null,
+      ),
     );
 
-    if (applyBlurEffect) {
+    if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: defaultStyle.borderRadius(context),
+        borderRadius: toastTheme.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

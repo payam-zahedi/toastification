@@ -126,13 +126,26 @@ toastification.show(
 
 ### ToastificationStyle
 
-we have 4 predefined styles for toast messages:
+We have 5 predefined styles for toast messages, each offering a unique look and feel to match your application's design. Here's a breakdown of each style:
 
 <p align="left">
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/styles.png?raw=true" width="100%" alt="Styles" />
 </p>
 
-additionally, we added a `ToastificationStyle.simple` style to show a simple toast message with a single line of text.
+1. **ToastificationStyle.flat**  
+   - A simple and clean style with a subtle border and no background fill. Ideal for minimalist notifications that don't overwhelm the interface.
+
+2. **ToastificationStyle.fillColored**  
+   - A bold style with a solid colored background. Perfect for high-visibility alerts or important notifications that need immediate attention.
+
+3. **ToastificationStyle.flatColored**  
+   - A balanced style with a flat design, colored borders, and text, but without a solid fill. Great for notifications that need to stand out without being too bold.
+
+4. **ToastificationStyle.minimal**  
+   - A sleek and modern design with minimal elements and an accent line denoting the notification type. Perfect for clean, distraction-free interfaces.
+
+5. **ToastificationStyle.simple**  
+   - A straightforward style showing a single line of text. Best for short, simple messages or confirmations where minimal design is preferred.
 
 ## ShowCustom Method
 
@@ -296,6 +309,16 @@ Remove a notification with the given ID from the screen.
 toastification.dismissById('my_notification_id');
 ```
 
+#### Dismiss All Notifications
+
+Remove all notifications that are currently displayed on the screen.
+
+```dart
+toastification.dismissAll(delayForAnimation: true);
+```
+
+You can customize the dismissal behavior by setting the `delayForAnimation` parameter. If set to `true`, Toastification will wait for the animation to finish before dismissing all notifications. If set to `false`, the notifications will be dismissed immediately without waiting for the animation.
+
 ## Design
 
 Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We want to extend our heartfelt appreciation to Sepide for her exceptional design work, which has made Toastification visually appealing and user-friendly. Special thanks to Sepide for her valuable contributions to this project.
@@ -318,7 +341,7 @@ Toastification was redesigned by [Sepide Moqadasi](https://sepide.design/). We w
 
 Contributions are always welcome! If you have any suggestions, bug reports, or feature requests, please open an issue on the GitHub repository.
 
-If you would like to contribute to the project, please read the [CONTRIBUTING.md](https://github.com/payam-zahedi/toastification/CONTRIBUTING.md "CONTRIBUTING.md") file for more information on how to contribute.
+If you would like to contribute to the project, please read the [CONTRIBUTING.md](https://github.com/payam-zahedi/toastification/blob/main/CONTRIBUTING.md "CONTRIBUTING.md") file for more information on how to contribute.
 
 ## License
 
