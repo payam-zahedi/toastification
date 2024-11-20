@@ -65,13 +65,10 @@ class ToastificationManager {
       },
     );
 
-    /// we need this delay because we want to show the item animation after
-    /// the overlay created
     Duration delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
-
       delay = _createOverlayDelay;
     }
 
@@ -84,10 +81,12 @@ class ToastificationManager {
           0,
           duration: _createAnimationDuration(item),
         );
+
+        while (_notifications.length > config.maxToastLimit) {
+          dismissLast();
+        }
       },
     );
-
-    // TODO(payam): add limit count feature
 
     return item;
   }
@@ -116,7 +115,6 @@ class ToastificationManager {
     bool showRemoveAnimation = true,
   }) {
     final index = _notifications.indexOf(notification);
-    // print("Toastification Manager Dismiss Notifications: $_notifications");
     if (index != -1) {
       notification = _notifications[index];
 
@@ -126,8 +124,6 @@ class ToastificationManager {
 
       final removedItem = _notifications.removeAt(index);
 
-      /// if the [showRemoveAnimation] is true, we will show the remove animation
-      /// of the notification.
       if (showRemoveAnimation) {
         _listGlobalKey.currentState?.removeItem(
           index,
@@ -141,9 +137,6 @@ class ToastificationManager {
           },
           duration: _createAnimationDuration(removedItem),
         );
-
-        /// if the [showRemoveAnimation] is false, we will remove the notification
-        /// without showing the remove animation.
       } else {
         _listGlobalKey.currentState?.removeItem(
           index,
@@ -153,9 +146,6 @@ class ToastificationManager {
         );
       }
 
-      /// we will remove the [_overlayEntry] if there are no notifications
-      /// We need to check if the _notifications list is empty twice.
-      /// To make sure after the delay, there are no new notifications added.
       if (_notifications.isEmpty) {
         Future.delayed(
           (removedItem.animationDuration ?? config.animationDuration) +
