@@ -44,7 +44,8 @@ class BuiltInContent extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget content = DefaultTextStyle.merge(
       style: context.toastTheme.titleTextStyle,
-      maxLines: 1,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       child: title ?? const SizedBox(),
     );
 
