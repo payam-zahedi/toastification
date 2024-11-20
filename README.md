@@ -281,7 +281,7 @@ In addition to displaying toast messages, the Toastification package also provid
 
 #### Find a Notification item
 
-Find a notification with the given ID
+Find a notification with the given ID.
 
 ```dart
 final notification = toastification.findToastificationItem('my_notification_id');
@@ -318,6 +318,22 @@ toastification.dismissAll(delayForAnimation: true);
 ```
 
 You can customize the dismissal behavior by setting the `delayForAnimation` parameter. If set to `true`, Toastification will wait for the animation to finish before dismissing all notifications. If set to `false`, the notifications will be dismissed immediately without waiting for the animation.
+
+#### Dismiss First Notification
+
+Remove the first notification from the screen.
+
+```dart
+toastification.dismissFirst();
+```
+
+#### Dismiss Last Notification
+
+Remove the last notification from the screen.
+
+```dart
+toastification.dismissLast();
+```
 
 ## Design
 
