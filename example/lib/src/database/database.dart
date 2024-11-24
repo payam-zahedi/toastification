@@ -44,6 +44,18 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
+  static LazyDatabase _openConnection() {
+    return LazyDatabase(() async {
+      final result = await WasmDatabase.open(
+        databaseName: 'app_web_db',
+        sqlite3Uri: Uri.parse('sqlite3.wasm'),
+        driftWorkerUri: Uri.parse('drift_worker.dart.js'),
+      );
+
+      return result.resolvedExecutor;
+    });
+  }
+
   Future<int> upsertToastDetail(ToastDetailsSchemaCompanion detail) {
     return into(toastDetailsSchema).insert(
       detail.copyWith(id: const Value(defaultToastDetailId)),
@@ -52,24 +64,12 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future<ToastDetailsSchemaData?> retrieveSavedToastState() {
-    return (select(toastDetailsSchema)..where((tbl) => tbl.id.equals(defaultToastDetailId)))
+    return (select(toastDetailsSchema)
+          ..where((tbl) => tbl.id.equals(defaultToastDetailId)))
         .getSingleOrNull();
   }
-
 
   Future<int> deleteToastDetail() {
     return (delete(toastDetailsSchema)..where((tbl) => tbl.id.equals(1))).go();
   }
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    final result = await WasmDatabase.open(
-      databaseName: 'app_web_db',
-      sqlite3Uri: Uri.parse('sqlite3.wasm'),
-      driftWorkerUri: Uri.parse('drift_worker.dart.js'),
-    );
-
-    return result.resolvedExecutor;
-  });
 }
