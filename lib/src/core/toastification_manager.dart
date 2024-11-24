@@ -27,6 +27,9 @@ class ToastificationManager {
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
 
+   /// This list keeps track of toast items that are scheduled to be added.
+  final List<ToastificationItem> _pendingNotifications = [];
+
   /// this is the delay for showing the overlay entry
   /// We need this delay because we want to show the item animation after
   /// the overlay created
@@ -75,9 +78,17 @@ class ToastificationManager {
       delay = _createOverlayDelay;
     }
 
+    _pendingNotifications.add(item);
+
     Future.delayed(
       delay,
       () {
+        if (!_pendingNotifications.contains(item)) {
+          return;
+        }
+
+        _pendingNotifications.remove(item);
+
         _notifications.insert(0, item);
 
         _listGlobalKey.currentState?.insertItem(
@@ -115,6 +126,9 @@ class ToastificationManager {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
+    // Remove from pending notifications if it's there
+    _pendingNotifications.remove(notification);
+
     final index = _notifications.indexOf(notification);
     // print("Toastification Manager Dismiss Notifications: $_notifications");
     if (index != -1) {
@@ -175,6 +189,9 @@ class ToastificationManager {
   /// The [delayForAnimation] parameter is optional and defaults to true.
   /// When it is true, it adds a delay for better animation.
   void dismissAll({bool delayForAnimation = true}) async {
+
+    _pendingNotifications.clear();
+
     // Creates a new list cloneList that has all the notifications from the _notifications list, but in reverse order.
     final cloneList = _notifications.toList(growable: false).reversed;
 
