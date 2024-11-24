@@ -5,6 +5,8 @@ import 'package:toastification/toastification.dart';
 
 part 'database.g.dart';
 
+const defaultToastDetailId = 1;
+
 class ToastDetailsSchema extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get type => integer()();
@@ -44,44 +46,16 @@ class AppDatabase extends _$AppDatabase {
 
   Future<int> upsertToastDetail(ToastDetailsSchemaCompanion detail) {
     return into(toastDetailsSchema).insert(
-      detail.copyWith(id: const Value(1)),
+      detail.copyWith(id: const Value(defaultToastDetailId)),
       mode: InsertMode.replace,
     );
   }
 
-  Future<ToastDetailsSchemaData> getOrCreateDefaultToastDetail() async {
-    final toastDetail = await (select(toastDetailsSchema)
-          ..where((tbl) => tbl.id.equals(1)))
-        .getSingleOrNull();
-
-    if (toastDetail == null) {
-      final defaultToastDetail = ToastDetailsSchemaCompanion.insert(
-        type: ToastificationType.success.index,
-        style: ToastificationStyle.flat.index,
-        alignment: 'topLeft',
-        title: const Value<String?>('Component updates available.'),
-        description: const Value<String?>('Component updates available.'),
-        shadow: ShadowOptions.none.index,
-        animationType: 'Bounce',
-        closeButtonShowType: Value(CloseButtonShowType.always.index),
-      );
-      await upsertToastDetail(defaultToastDetail);
-      return (await getToastDetail(1))!;
-    } else {
-    }
-
-    return toastDetail;
-  }
-
-  Future<ToastDetailsSchemaData?> getToastDetail(int id) {
-    return (select(toastDetailsSchema)..where((tbl) => tbl.id.equals(id)))
+  Future<ToastDetailsSchemaData?> retrieveSavedToastState() {
+    return (select(toastDetailsSchema)..where((tbl) => tbl.id.equals(defaultToastDetailId)))
         .getSingleOrNull();
   }
 
-  Stream<ToastDetailsSchemaData?> watchToastDetail() {
-    return (select(toastDetailsSchema)..where((tbl) => tbl.id.equals(1)))
-        .watchSingleOrNull();
-  }
 
   Future<int> deleteToastDetail() {
     return (delete(toastDetailsSchema)..where((tbl) => tbl.id.equals(1))).go();
