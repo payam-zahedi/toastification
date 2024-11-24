@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:toastification/src/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
