@@ -30,46 +30,16 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
   Future<void> _loadState() async {
     try {
-      final toastDetailData = await _db.getToastDetail(1);
+      final toastDetailData = await _db.retrieveSavedToastState();
 
-      if (toastDetailData != null) {
-        state = ToastDetailDrift.fromCompanion(toastDetailData);
-      } else {
-        final toastDetail = await _db.getOrCreateDefaultToastDetail();
-        state = ToastDetailDrift.fromCompanion(toastDetail);
-      }
+      state = ToastDetailDrift.fromCompanion(toastDetailData);
     } catch (e) {
       resetStateToDefaults();
     }
   }
 
   void resetStateToDefaults() {
-    state = ToastDetail(
-      type: ToastificationType.success, 
-      style: ToastificationStyle.flat, 
-      alignment: Alignment.topLeft, 
-      title: const Text('Default Title'),
-      description: const Text('Default Description'),
-      icon: null,
-      primaryColor: null,
-      backgroundColor: null,
-      foregroundColor: null,
-      iconColor: null,
-      borderRadius: BorderRadius.zero,
-      shadow: ShadowOptions.none, 
-      direction: null,
-      autoCloseDuration: const Duration(seconds: 5),
-      animationDuration: const Duration(milliseconds: 300),
-      animationType: const BounceAnimationType(), 
-      useContext: true,
-      showProgressBar: false,
-      closeButtonShowType: CloseButtonShowType.always, 
-      closeOnClick: true,
-      dragToClose: false,
-      pauseOnHover: true,
-      applyBlurEffect: false,
-      showIcon: true,
-    );
+    state = ToastDetail();
     _saveState();
   }
 
