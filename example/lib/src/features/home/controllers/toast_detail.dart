@@ -21,7 +21,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     _loadState();
   }
 
-  Future<void> _saveState() async {
+  Future<void> saveState() async {
     try {
       final companion = state.toCompanion(state);
       await _db.upsertToastDetail(companion);
@@ -40,127 +40,102 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
   void resetStateToDefaults() {
     state = ToastDetail();
-    _saveState();
   }
 
   void changeType(ToastificationType type) {
     state = state.copyWith(type: type);
-    _saveState();
   }
 
   void changeStyle(ToastificationStyle style) {
     state = state.copyWith(style: style);
-    _saveState();
   }
 
   void changeAlignment(AlignmentGeometry alignment) {
     state = state.copyWith(alignment: alignment);
-    _saveState();
   }
 
   void changeTitle(String title) {
     state = state.copyWith(title: Text(title));
-    _saveState();
   }
 
   void changeDescription(String description) {
     state = state.copyWith(description: Text(description));
-    _saveState();
   }
 
   void changeIcon(IconModel? icon) {
     state = state.copyWith(icon: icon);
-    _saveState();
   }
 
   void changeShowIcon(bool showIcon) {
     state = state.copyWith(showIcon: showIcon);
-    _saveState();
   }
 
   void changePrimary(Color? primaryColor) {
     state = state.copyWith(primaryColor: primaryColor);
-    _saveState();
   }
 
   void changeBackgroundColor(Color? backgroundColor) {
     state = state.copyWith(backgroundColor: backgroundColor);
-    _saveState();
   }
 
   void changeForegroundColor(Color? foregroundColor) {
     state = state.copyWith(foregroundColor: foregroundColor);
-    _saveState();
   }
 
   void changeIconColor(Color? iconColor) {
     state = state.copyWith(iconColor: iconColor);
-    _saveState();
   }
 
   void changeBorderRadius(BorderRadiusGeometry? borderRadius) {
     state = state.copyWith(borderRadius: borderRadius);
-    _saveState();
   }
 
   void changeShadow(ShadowOptions shadow) {
     state = state.copyWith(shadow: shadow);
-    _saveState();
   }
 
   void changeDirection(TextDirection? direction) {
     state = state.copyWith(direction: direction);
-    _saveState();
   }
 
   void changeAutoCloseDuration(Duration? autoCloseDuration) {
     state = state.copyWith(autoCloseDuration: autoCloseDuration);
-    _saveState();
   }
 
   void changeAnimationDuration(Duration? animationDuration) {
     state = state.copyWith(animationDuration: animationDuration);
-    _saveState();
   }
 
   void changeAnimationType(AnimationType animationType) {
     state = state.copyWith(animationType: animationType);
-    _saveState();
   }
 
   void changeUseContext(bool useContext) {
     state = state.copyWith(useContext: useContext);
-    _saveState();
   }
 
   void changeShowProgressBar(bool showProgressBar) {
     state = state.copyWith(showProgressBar: showProgressBar);
-    _saveState();
   }
 
   void changeCloseButtonShowType(CloseButtonShowType closeButtonShowType) {
     state = state.copyWith(closeButtonShowType: closeButtonShowType);
-    _saveState();
   }
 
   void changeCloseOnClick(bool closeOnClick) {
     state = state.copyWith(closeOnClick: closeOnClick);
-    _saveState();
   }
 
   void changeDragToClose(bool dragToClose) {
     state = state.copyWith(dragToClose: dragToClose);
-    _saveState();
   }
 
   void changePauseOnHover(bool pauseOnHover) {
     state = state.copyWith(pauseOnHover: pauseOnHover);
-    _saveState();
   }
 
   void changeApplyBlurEffect(bool applyBlurEffect) {
     state = state.copyWith(applyBlurEffect: applyBlurEffect);
-    _saveState();
   }
 
   void resetColors() {
@@ -170,6 +145,5 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
       foregroundColor: null,
       iconColor: null,
     );
-    _saveState();
   }
 }
