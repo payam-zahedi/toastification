@@ -39,29 +39,7 @@ extension ToastDetailDrift on ToastDetail {
 
   static ToastDetail fromCompanion(ToastDetailsSchemaData? data) {
     if (data == null) {
-      return ToastDetail(
-        type: ToastificationType.success,
-        style: ToastificationStyle.flat,
-        alignment: Alignment.topLeft,
-        title: const Text('Component updates available.'),
-        description: const Text('Component updates available.'),
-        iconColor: Colors.white,
-        borderRadius: BorderRadius.zero,
-        shadow: ShadowOptions.none,
-        direction: null,
-        autoCloseDuration: const Duration(milliseconds: 4000),
-        animationDuration: null,
-        animationType: const BounceAnimationType(),
-        closeButtonShowType: CloseButtonShowType.always,
-        useContext: true,
-        showProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        dragToClose: false,
-        applyBlurEffect: false,
-        showIcon: true,
-        icon: null,
-      );
+      return ToastDetail();
     }
     return ToastDetail(
       type: ToastificationType.values[data.type],
@@ -145,55 +123,36 @@ extension ToastDetailDrift on ToastDetail {
     );
   }
 
-  static String _alignmentToString(AlignmentGeometry alignment) {
-    if (alignment == Alignment.topLeft) return 'topLeft';
-    if (alignment == Alignment.topRight) return 'topRight';
-    if (alignment == Alignment.topCenter) return 'topCenter';
-    if (alignment == Alignment.center) return 'center';
-    if (alignment == Alignment.centerLeft) return 'centerLeft';
-    if (alignment == Alignment.centerRight) return 'centerRight';
-    if (alignment == Alignment.bottomLeft) return 'bottomLeft';
-    if (alignment == Alignment.bottomRight) return 'bottomRight';
-    if (alignment == Alignment.bottomCenter) return 'bottomCenter';
-    return 'topLeft'; 
-  }
+  static final Map<AlignmentGeometry, String> _alignmentMap = {
+    Alignment.topLeft: 'topLeft',
+    Alignment.topRight: 'topRight',
+    Alignment.topCenter: 'topCenter',
+    Alignment.center: 'center',
+    Alignment.centerLeft: 'centerLeft',
+    Alignment.centerRight: 'centerRight',
+    Alignment.bottomLeft: 'bottomLeft',
+    Alignment.bottomRight: 'bottomRight',
+    Alignment.bottomCenter: 'bottomCenter',
+  };
 
-  static AnimationType _animationTypeFromName(String name) {
-    switch (name) {
-      case 'Bounce':
-        return const BounceAnimationType();
-      case 'Fade':
-        return const FadeAnimationType();
-      case 'Scale':
-        return const ScaleAnimationType();
-      default:
-        return const BounceAnimationType();
-    }
+  static String _alignmentToString(AlignmentGeometry alignment) {
+    return _alignmentMap[alignment] ?? 'topLeft';
   }
 
   static AlignmentGeometry _alignmentFromString(String alignment) {
-    switch (alignment) {
-      case 'topLeft':
-        return Alignment.topLeft;
-      case 'topRight':
-        return Alignment.topRight;
-      case 'topCenter':
-        return Alignment.topCenter;
-      case 'center':
-        return Alignment.center;
-      case 'centerLeft':
-        return Alignment.centerLeft;
-      case 'centerRight':
-        return Alignment.centerRight;
-      case 'bottomLeft':
-        return Alignment.bottomLeft;
-      case 'bottomRight':
-        return Alignment.bottomRight;
-      case 'bottomCenter':
-        return Alignment.bottomCenter;
-      default:
-        return Alignment.topLeft; 
-    }
+    return _alignmentMap.entries
+        .firstWhere(
+          (entry) => entry.value == alignment,
+          orElse: () => const MapEntry(Alignment.topLeft, 'topLeft'),
+        )
+        .key;
+  }
+
+  static AnimationType _animationTypeFromName(String name) {
+    return AnimationType.types.firstWhere(
+      (type) => type.name == name,
+      orElse: () => const BounceAnimationType(),
+    );
   }
 
   static String? _colorToHex(Color? color) {
