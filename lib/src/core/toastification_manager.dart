@@ -172,41 +172,106 @@ class ToastificationManager {
 
   /// Create a [OverlayEntry] as holder of the notifications
   OverlayEntry _createOverlayEntry() {
+    ValueNotifier<bool> _isHovering = ValueNotifier<bool>(false);
+
     return OverlayEntry(
       opaque: false,
       builder: (context) {
         return Align(
           alignment: alignment,
-          child: Container(
-            margin: _marginBuilder(context, alignment, config),
-            constraints: BoxConstraints.tightFor(
-              width: config.itemWidth,
-            ),
-            child: ValueListenableBuilder<List<ToastificationItem>>(
-              valueListenable: _notifications,
-              builder: (context, notifications, child) {
-                return Stack(
-                  alignment: Alignment.topCenter,
-                  children: notifications.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final item = entry.value;
-                    final offset = index * 10.0;
+          child: MouseRegion(
+            onEnter: (_) => _isHovering.value = true,
+            onExit: (_) => _isHovering.value = false,
+            child: Container(
+              margin: _marginBuilder(context, alignment, config),
+              constraints: BoxConstraints.tightFor(
+                width: config.itemWidth,
+              ),
+              child: ValueListenableBuilder<List<ToastificationItem>>(
+                valueListenable: _notifications,
+                builder: (context, notifications, child) {
+                  return ValueListenableBuilder<bool>(
+                    valueListenable: _isHovering,
+                    builder: (context, isHovering, child) {
+                      // Limita aos últimos 5 toasts (o último item é o mais novo)
+                      final maxToasts = 5;
+                      final visibleNotifications =
+                          notifications.length <= maxToasts
+                              ? notifications
+                              : notifications
+                                  .sublist(notifications.length - maxToasts);
 
-                    return Positioned(
-                      key: ValueKey(item.id),
-                      top: offset,
-                      left: 0,
-                      right: 0,
-                      child: ToastHolderWidget(
-                        item: item,
-                        animation: const AlwaysStoppedAnimation(1.0),
-                        alignment: alignment,
-                        transformerBuilder: _toastAnimationBuilder(item),
-                      ),
-                    );
-                  }).toList(),
-                );
-              },
+                      // Reverte a lista para que o toast mais novo seja renderizado por último
+                      final reverseVisibleNotifications =
+                          visibleNotifications.reversed.toList();
+
+                      final totalToasts = visibleNotifications.length;
+                      final maxOpacity = 1.0;
+                      final minOpacity = 0.5; // Ajuste conforme necessário
+
+                      return Stack(
+                        alignment: Alignment.topCenter,
+                        children: reverseVisibleNotifications
+                            .asMap()
+                            .entries
+                            .map((entry) {
+                          final index = entry.key;
+                          final item = entry.value;
+
+                          // Calcula a opacidade: todos os toasts têm opacidade máxima ao hover
+                          double opacity;
+                          if (isHovering) {
+                            opacity = maxOpacity;
+                          } else {
+                            final reverseListIndex = totalToasts - index - 1;
+                            if (reverseListIndex != 0) {
+                              opacity = maxOpacity -
+                                  (reverseListIndex / (totalToasts - 1)) *
+                                      (maxOpacity - minOpacity);
+                            } else {
+                              opacity = maxOpacity;
+                            }
+                          }
+
+                          // Expande a stack ao hover
+                          final targetOffset = isHovering
+                              ? (totalToasts - index - 1) *
+                                  90.0 // Ajuste conforme necessário
+                              : (totalToasts - index - 1) *
+                                  10.0; // Ajuste conforme necessário
+
+                          return AnimatedPositioned(
+                            key: ValueKey(item.id),
+                            duration: _createAnimationDuration(item),
+                            curve: Curves.easeInOut,
+                            top: targetOffset,
+                            left: 0,
+                            right: 0,
+                            child: AnimatedOpacity(
+                              opacity: opacity,
+                              duration: _createAnimationDuration(item),
+                              child: TweenAnimationBuilder<double>(
+                                tween: Tween<double>(begin: 0.0, end: 1.0),
+                                duration: _createAnimationDuration(item),
+                                builder: (context, animationValue, child) {
+                                  return ToastHolderWidget(
+                                    item: item,
+                                    animation:
+                                        AlwaysStoppedAnimation(animationValue),
+                                    alignment: alignment,
+                                    transformerBuilder:
+                                        _toastAnimationBuilder(item),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         );
