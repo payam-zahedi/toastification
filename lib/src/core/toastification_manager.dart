@@ -166,7 +166,20 @@ class ToastificationManager {
 
   /// Create a [OverlayEntry] as holder of the notifications
   OverlayEntry _createOverlayEntry() {
-    ValueNotifier<bool> _isHovering = ValueNotifier<bool>(false);
+    ValueNotifier<bool> isHovering = ValueNotifier<bool>(false);
+
+    // Handle hover state changes to pause/start timers
+    isHovering.addListener(() {
+      for (var item in _notifications.value) {
+        if (item.hasTimer) {
+          if (isHovering.value) {
+            item.pause();
+          } else {
+            item.start();
+          }
+        }
+      }
+    });
 
     return OverlayEntry(
       opaque: false,
@@ -174,95 +187,74 @@ class ToastificationManager {
         return Align(
           alignment: alignment,
           child: MouseRegion(
-            onEnter: (_) => _isHovering.value = true,
-            onExit: (_) => _isHovering.value = false,
+            onEnter: (_) => isHovering.value = true,
+            onExit: (_) => isHovering.value = false,
             child: Container(
               margin: _marginBuilder(context, alignment, config),
-              constraints: BoxConstraints.tightFor(
-                width: config.itemWidth,
-              ),
-              child: ValueListenableBuilder<List<ToastificationItem>>(
-                valueListenable: _notifications,
-                builder: (context, notifications, child) {
-                  return ValueListenableBuilder<bool>(
-                    valueListenable: _isHovering,
-                    builder: (context, isHovering, child) {
-                      // Limita aos últimos 5 toasts (o último item é o mais novo)
-                      final maxToasts = 5;
-                      final visibleNotifications =
-                          notifications.length <= maxToasts
-                              ? notifications
-                              : notifications
-                                  .sublist(notifications.length - maxToasts);
+              constraints: BoxConstraints.tightFor(width: config.itemWidth),
+              child: AnimatedBuilder(
+                animation: Listenable.merge([_notifications, isHovering]),
+                builder: (context, child) {
+                  const int maxToasts = 5;
+                  const double maxOpacity = 1.0;
+                  const double minOpacity = 0.5;
+                  const double expandedOffset = 90.0;
+                  const double collapsedOffset = 10.0;
 
-                      // Reverte a lista para que o toast mais novo seja renderizado por último
-                      final reverseVisibleNotifications =
-                          visibleNotifications.reversed.toList();
+                  final notifications = _notifications.value;
+                  final isHoveringValue = isHovering.value;
 
-                      final totalToasts = visibleNotifications.length;
-                      final maxOpacity = 1.0;
-                      final minOpacity = 0.5; // Ajuste conforme necessário
+                  final startIndex = notifications.length > maxToasts
+                      ? notifications.length - maxToasts
+                      : 0;
+                  final visibleNotifications =
+                      notifications.sublist(startIndex).reversed.toList();
 
-                      return Stack(
-                        alignment: Alignment.topCenter,
-                        children: reverseVisibleNotifications
-                            .asMap()
-                            .entries
-                            .map((entry) {
-                          final index = entry.key;
-                          final item = entry.value;
+                  return Stack(
+                    alignment: Alignment.topCenter,
+                    children:
+                        List.generate(visibleNotifications.length, (index) {
+                      final item = visibleNotifications[index];
+                      final reverseIndex =
+                          visibleNotifications.length - index - 1;
 
-                          // Calcula a opacidade: todos os toasts têm opacidade máxima ao hover
-                          double opacity;
-                          if (isHovering) {
-                            opacity = maxOpacity;
-                          } else {
-                            final reverseListIndex = totalToasts - index - 1;
-                            if (reverseListIndex != 0) {
-                              opacity = maxOpacity -
-                                  (reverseListIndex / (totalToasts - 1)) *
-                                      (maxOpacity - minOpacity);
-                            } else {
-                              opacity = maxOpacity;
-                            }
-                          }
+                      final opacity = isHoveringValue || reverseIndex == 0
+                          ? maxOpacity
+                          : maxOpacity -
+                              (reverseIndex /
+                                      (visibleNotifications.length - 1)) *
+                                  (maxOpacity - minOpacity);
 
-                          // Expande a stack ao hover
-                          final targetOffset = isHovering
-                              ? (totalToasts - index - 1) *
-                                  90.0 // Ajuste conforme necessário
-                              : (totalToasts - index - 1) *
-                                  10.0; // Ajuste conforme necessário
+                      final targetOffset = reverseIndex *
+                          (isHoveringValue ? expandedOffset : collapsedOffset);
 
-                          return AnimatedPositioned(
-                            key: ValueKey(item.id),
+                      return AnimatedPositioned(
+                        key: ValueKey(item.id),
+                        duration: _createAnimationDuration(item),
+                        curve: Curves.easeInOut,
+                        top: targetOffset,
+                        left: 0,
+                        right: 0,
+                        child: AnimatedOpacity(
+                          opacity: opacity,
+                          duration: _createAnimationDuration(item),
+                          child: TweenAnimationBuilder<double>(
+                            tween: Tween<double>(begin: 0.0, end: 1.0),
                             duration: _createAnimationDuration(item),
-                            curve: Curves.easeInOut,
-                            top: targetOffset,
-                            left: 0,
-                            right: 0,
-                            child: AnimatedOpacity(
-                              opacity: opacity,
-                              duration: _createAnimationDuration(item),
-                              child: TweenAnimationBuilder<double>(
-                                tween: Tween<double>(begin: 0.0, end: 1.0),
-                                duration: _createAnimationDuration(item),
-                                builder: (context, animationValue, child) {
-                                  return ToastHolderWidget(
-                                    item: item,
-                                    animation:
-                                        AlwaysStoppedAnimation(animationValue),
-                                    alignment: alignment,
-                                    transformerBuilder:
-                                        _toastAnimationBuilder(item),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                            builder: (context, animationValue, child) {
+                              return ToastHolderWidget(
+                                item: item,
+                                animation:
+                                    AlwaysStoppedAnimation(animationValue),
+                                alignment: alignment,
+                                transformerBuilder:
+                                    _toastAnimationBuilder(item),
+                              );
+                            },
+                          ),
+                        ),
                       );
-                    },
+                    }),
                   );
                 },
               ),
