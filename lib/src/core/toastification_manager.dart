@@ -73,16 +73,23 @@ class ToastificationManager {
     Future.delayed(
       delay,
       () {
-        _notifications.insert(0, item);
+        // _notifications.insert(0, item);
 
-        _listGlobalKey.currentState?.insertItem(
-          0,
-          duration: _createAnimationDuration(item),
-        );
+        _notifications.value = [item, ..._notifications.value];
 
-        while (_notifications.length > config.maxToastLimit) {
+        // _listGlobalKey.currentState?.insertItem(
+        //   0,
+        //   duration: _createAnimationDuration(item),
+        // );
+
+        // while (_notifications.length > config.maxToastLimit) {
+          // dismissLast();
+        // }
+
+        while (_notifications.value.length > config.maxToastLimit) {
           dismissLast();
         }
+
       },
     );
 
