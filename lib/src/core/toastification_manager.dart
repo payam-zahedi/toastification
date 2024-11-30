@@ -222,8 +222,8 @@ class ToastificationManager {
             ),
             child: MediaQuery.removePadding(
               context: context,
-              removeTop: true,
-              removeBottom: true,
+              removeTop: config.removeTopPadding,
+              removeBottom: config.removeBottomPadding,
               child: AnimatedList(
                 key: _listGlobalKey,
                 clipBehavior: config.clipBehavior,

@@ -32,6 +32,8 @@ class ToastificationConfig extends Equatable {
     this.marginBuilder = _defaultMarginBuilder,
     this.applyMediaQueryViewInsets = true,
     this.maxToastLimit = 10,
+    this.removeTopPadding = true,
+    this.removeBottomPadding = true,
   });
 
   final AlignmentGeometry alignment;
@@ -60,6 +62,10 @@ class ToastificationConfig extends Equatable {
   /// If set to true, MediaQuery.of(context).viewInsets will be added to the result of the [marginBuilder] method.
   final bool applyMediaQueryViewInsets;
 
+  final bool removeTopPadding;
+
+  final bool removeBottomPadding;
+
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
     AlignmentGeometry? alignment,
@@ -69,6 +75,8 @@ class ToastificationConfig extends Equatable {
     ToastificationAnimationBuilder? animationBuilder,
     ToastificationMarginBuilder? marginBuilder,
     bool? applyMediaQueryViewInsets,
+    bool? removeTopPadding,
+    bool? removeBottomPadding,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
@@ -79,6 +87,8 @@ class ToastificationConfig extends Equatable {
       marginBuilder: marginBuilder ?? this.marginBuilder,
       applyMediaQueryViewInsets:
           applyMediaQueryViewInsets ?? this.applyMediaQueryViewInsets,
+      removeTopPadding: removeTopPadding ?? this.removeTopPadding,
+      removeBottomPadding: removeBottomPadding ?? this.removeBottomPadding,
     );
   }
 
@@ -90,6 +100,9 @@ class ToastificationConfig extends Equatable {
         animationDuration,
         marginBuilder,
         applyMediaQueryViewInsets,
+        maxToastLimit,
+        removeTopPadding,
+        removeBottomPadding,
       ];
 }
 
