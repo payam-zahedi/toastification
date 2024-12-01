@@ -27,6 +27,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.showProgressBar,
     this.applyBlurEffect,
     this.progressBarTheme,
+    this.closeButton,
     this.closeButtonShowType,
     this.closeOnClick,
     this.dragToClose,
@@ -71,6 +72,8 @@ class BuiltInBuilder extends StatelessWidget {
   final bool? showIcon;
 
   final ProgressIndicatorThemeData? progressBarTheme;
+
+  final Widget? closeButton;
 
   final CloseButtonShowType? closeButtonShowType;
 
@@ -129,6 +132,7 @@ class BuiltInBuilder extends StatelessWidget {
         showProgressBar: showProgressBar,
         applyBlurEffect: applyBlurEffect,
         progressBarTheme: progressBarTheme,
+        closeButton: closeButton,
         closeButtonShowType: closeButtonShowType,
       ),
     );
@@ -170,6 +174,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.showProgressBar,
     this.applyBlurEffect,
     this.progressBarTheme,
+    this.closeButton,
     this.closeButtonShowType,
   });
 
@@ -209,6 +214,8 @@ class BuiltInToastBuilder extends StatelessWidget {
   final bool? applyBlurEffect;
 
   final ProgressIndicatorThemeData? progressBarTheme;
+
+  final Widget? closeButton;
 
   final CloseButtonShowType? closeButtonShowType;
 
@@ -272,6 +279,7 @@ class BuiltInToastBuilder extends StatelessWidget {
                 icon: icon,
                 showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
+                customCloseButton: closeButton,
                 progressBarWidget: progressBarWidget,
               ),
             ToastificationStyle.flatColored => FlatColoredToastWidget(
@@ -280,6 +288,7 @@ class BuiltInToastBuilder extends StatelessWidget {
                 icon: icon,
                 showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
+                customCloseButton: closeButton,
                 progressBarWidget: progressBarWidget,
               ),
             ToastificationStyle.fillColored => FilledToastWidget(
@@ -288,6 +297,7 @@ class BuiltInToastBuilder extends StatelessWidget {
                 icon: icon,
                 onCloseTap: onCloseTap,
                 showCloseButton: showCloseWidget,
+                customCloseButton: closeButton,
                 progressBarWidget: progressBarWidget,
               ),
             ToastificationStyle.minimal => MinimalToastWidget(
@@ -296,12 +306,14 @@ class BuiltInToastBuilder extends StatelessWidget {
                 icon: icon,
                 showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
+                customCloseButton: closeButton,
                 progressBarWidget: progressBarWidget,
               ),
             ToastificationStyle.simple => SimpleToastWidget(
                 title: title,
                 showCloseButton: showCloseWidget,
                 onCloseTap: onCloseTap,
+                customCloseButton: closeButton,
               ),
           };
         },

@@ -11,12 +11,14 @@ class SimpleToastWidget extends StatelessWidget {
     this.title,
     this.showCloseButton = true,
     this.onCloseTap,
+    this.customCloseButton,
   });
 
   final Widget? title;
 
   final bool showCloseButton;
   final VoidCallback? onCloseTap;
+  final Widget? customCloseButton;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class SimpleToastWidget extends StatelessWidget {
           child: ToastCloseButton(
             showCloseButton: showCloseButton,
             onCloseTap: onCloseTap,
+            customCloseButton: customCloseButton,
           ),
         ),
       ],
