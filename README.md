@@ -110,6 +110,10 @@ toastification.show(
     )
   ],
   showProgressBar: true,
+  closeButton: ElevatedButton(
+    onPressed: () {},
+    child: const Text('Close'),
+  ),
   closeButtonShowType: CloseButtonShowType.onHover,
   closeOnClick: false,
   pauseOnHover: true,
