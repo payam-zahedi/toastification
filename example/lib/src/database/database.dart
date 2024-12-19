@@ -1,7 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:drift/wasm.dart';
-import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
-import 'package:toastification/toastification.dart';
 
 part 'database.g.dart';
 

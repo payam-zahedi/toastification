@@ -23,7 +23,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
   Future<void> saveState() async {
     try {
-      final companion = state.toCompanion(state);
+      final companion = state.toCompanion();
       await _db.upsertToastDetail(companion);
     } catch (_) {}
   }

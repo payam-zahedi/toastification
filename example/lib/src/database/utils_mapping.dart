@@ -6,52 +6,110 @@ import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
+class UtilsMapping {
+  const UtilsMapping._();
+
+  static String alignmentToString(AlignmentGeometry alignment) {
+    Alignment effectiveAlignment = alignment is Alignment
+        ? alignment
+        : alignment.resolve(TextDirection.ltr);
+
+    return '${effectiveAlignment.x},${effectiveAlignment.y}';
+  }
+
+  static AlignmentGeometry alignmentFromString(String alignment) {
+    try {
+      final coordinates = alignment.split(',').map(double.parse).toList();
+      if (coordinates.length != 2) {
+        return Alignment.center;
+      }
+      return Alignment(coordinates[0], coordinates[1]);
+    } catch (e) {
+      return Alignment.topLeft;
+    }
+  }
+
+  static AnimationType animationTypeFromName(String name) {
+    return AnimationType.types.firstWhere(
+      (type) => type.name == name,
+      orElse: () => const BounceAnimationType(),
+    );
+  }
+
+  static String? colorToHex(Color? color) {
+    return color != null
+        ? '#${color.value.toRadixString(16).padLeft(8, '0')}'
+        : null;
+  }
+
+  static Color? colorFromHex(String? hex) {
+    if (hex == null) return null;
+    return Color(int.parse(hex.replaceFirst('#', '0xff')));
+  }
+
+  static String? borderRadiusToString(BorderRadiusGeometry? borderRadius) {
+    if (borderRadius is BorderRadius) {
+      return '${borderRadius.topLeft.x},${borderRadius.topLeft.y},${borderRadius.bottomRight.x},${borderRadius.bottomRight.y}';
+    }
+    return null;
+  }
+
+  static BorderRadiusGeometry? borderRadiusFromString(String? borderRadius) {
+    if (borderRadius == null) return null;
+    var values = borderRadius.split(',').map(double.parse).toList();
+    return BorderRadius.only(
+      topLeft: Radius.circular(values[0]),
+      topRight: Radius.circular(values[1]),
+      bottomLeft: Radius.circular(values[2]),
+      bottomRight: Radius.circular(values[3]),
+    );
+  }
+}
+
 extension ToastDetailDrift on ToastDetail {
-  ToastDetailsSchemaCompanion toCompanion(ToastDetail details) {
+  ToastDetailsSchemaCompanion toCompanion() {
     return ToastDetailsSchemaCompanion(
-      type: Value(details.type.index),
-      style: Value(details.style.index),
-      alignment: Value(_alignmentToString(details.alignment)),
-      title: Value((details.title as Text).data),
-      description: Value((details.description as Text).data),
-      primaryColor: Value(_colorToHex(details.primaryColor)),
-      backgroundColor: Value(_colorToHex(details.backgroundColor)),
-      foregroundColor: Value(_colorToHex(details.foregroundColor)),
-      iconColor: Value(_colorToHex(details.iconColor)),
-      borderRadius: Value(_borderRadiusToString(details.borderRadius)),
-      shadow: Value(details.shadow.index),
-      direction: Value(details.direction?.index),
-      autoCloseDuration:
-          Value(details.autoCloseDuration?.inMilliseconds ?? 4000),
-      animationDuration: Value(details.animationDuration?.inMilliseconds),
-      animationType: Value(details.animationType.name),
-      closeButtonShowType: Value(details.closeButtonShowType.index),
-      useContext: Value(details.useContext),
-      showProgressBar: Value(details.showProgressBar),
-      closeOnClick: Value(details.closeOnClick),
-      pauseOnHover: Value(details.pauseOnHover),
-      dragToClose: Value(details.dragToClose),
-      applyBlurEffect: Value(details.applyBlurEffect),
-      showIcon: Value(details.showIcon),
-      icon: Value(_iconToMap(details.icon)),
+      type: Value(type.index),
+      style: Value(style.index),
+      alignment: Value(UtilsMapping.alignmentToString(alignment)),
+      title: Value((title as Text).data),
+      description: Value((description as Text).data),
+      primaryColor: Value(UtilsMapping.colorToHex(primaryColor)),
+      backgroundColor: Value(UtilsMapping.colorToHex(backgroundColor)),
+      foregroundColor: Value(UtilsMapping.colorToHex(foregroundColor)),
+      iconColor: Value(UtilsMapping.colorToHex(iconColor)),
+      borderRadius: Value(UtilsMapping.borderRadiusToString(borderRadius)),
+      shadow: Value(shadow.index),
+      direction: Value(direction?.index),
+      autoCloseDuration: Value(autoCloseDuration?.inMilliseconds ?? 4000),
+      animationDuration: Value(animationDuration?.inMilliseconds),
+      animationType: Value(animationType.name),
+      closeButtonShowType: Value(closeButtonShowType.index),
+      useContext: Value(useContext),
+      showProgressBar: Value(showProgressBar),
+      closeOnClick: Value(closeOnClick),
+      pauseOnHover: Value(pauseOnHover),
+      dragToClose: Value(dragToClose),
+      applyBlurEffect: Value(applyBlurEffect),
+      showIcon: Value(showIcon),
+      icon: Value(icon == null ? null : IconMapper(icon!).toMap()),
     );
   }
 
   static ToastDetail fromCompanion(ToastDetailsSchemaData? data) {
-    if (data == null) {
-      return ToastDetail();
-    }
+    if (data == null) return ToastDetail();
+
     return ToastDetail(
       type: ToastificationType.values[data.type],
       style: ToastificationStyle.values[data.style],
-      alignment: _alignmentFromString(data.alignment),
+      alignment: UtilsMapping.alignmentFromString(data.alignment),
       title: Text(data.title ?? 'Default Title'),
       description: Text(data.description ?? 'Default Description'),
-      primaryColor: _colorFromHex(data.primaryColor),
-      backgroundColor: _colorFromHex(data.backgroundColor),
-      foregroundColor: _colorFromHex(data.foregroundColor),
-      iconColor: _colorFromHex(data.iconColor),
-      borderRadius: _borderRadiusFromString(data.borderRadius),
+      primaryColor: UtilsMapping.colorFromHex(data.primaryColor),
+      backgroundColor: UtilsMapping.colorFromHex(data.backgroundColor),
+      foregroundColor: UtilsMapping.colorFromHex(data.foregroundColor),
+      iconColor: UtilsMapping.colorFromHex(data.iconColor),
+      borderRadius: UtilsMapping.borderRadiusFromString(data.borderRadius),
       shadow: ShadowOptions.values[data.shadow],
       direction:
           data.direction != null ? TextDirection.values[data.direction!] : null,
@@ -59,7 +117,7 @@ extension ToastDetailDrift on ToastDetail {
       animationDuration: data.animationDuration != null
           ? Duration(milliseconds: data.animationDuration!)
           : null,
-      animationType: _animationTypeFromName(data.animationType),
+      animationType: UtilsMapping.animationTypeFromName(data.animationType),
       closeButtonShowType:
           CloseButtonShowType.values[data.closeButtonShowType ?? 0],
       useContext: data.useContext,
@@ -69,31 +127,17 @@ extension ToastDetailDrift on ToastDetail {
       dragToClose: data.dragToClose,
       applyBlurEffect: data.applyBlurEffect,
       showIcon: data.showIcon,
-      icon: _iconFromMap(data.icon),
+      icon: data.icon == null ? null : IconMapper.fromMap(data.icon!).iconModel,
     );
   }
+}
 
-  static String? _iconToMap(IconModel? iconModel) {
-    if (iconModel == null) return null;
+class IconMapper {
+  final IconModel iconModel;
 
-    final iconData = iconModel.iconData;
-    final iconColor = iconModel.color;
+  const IconMapper(this.iconModel);
 
-    final iconDataMap = {
-      'name': iconModel.name,
-      'code_point': iconData.codePoint,
-      'font_family': iconData.fontFamily,
-      'font_package': iconData.fontPackage,
-      'match_text_direction': iconData.matchTextDirection,
-      'color': _colorToHex(iconColor),
-    };
-
-    return iconDataMap.toString();
-  }
-
-  static IconModel? _iconFromMap(String? map) {
-    if (map == null) return null;
-
+  factory IconMapper.fromMap(String map) {
     final parsedMap = map.substring(1, map.length - 1).split(', ');
 
     final Map<String, dynamic> castedMap = {
@@ -109,9 +153,10 @@ extension ToastDetailDrift on ToastDetail {
     final String? fontFamily = castedMap['font_family'];
     final String? fontPackage = castedMap['font_package'];
     final bool matchTextDirection = castedMap['match_text_direction'] ?? false;
-    final Color color = _colorFromHex(castedMap['color']) ?? Colors.white;
+    final Color color =
+        UtilsMapping.colorFromHex(castedMap['color']) ?? Colors.white;
 
-    return IconModel(
+    final icon = IconModel(
       name: castedMap['name'] ?? 'default_name',
       iconData: IconData(
         codePoint,
@@ -121,66 +166,23 @@ extension ToastDetailDrift on ToastDetail {
       ),
       color: color,
     );
+
+    return IconMapper(icon);
   }
 
-  static final Map<AlignmentGeometry, String> _alignmentMap = {
-    Alignment.topLeft: 'topLeft',
-    Alignment.topRight: 'topRight',
-    Alignment.topCenter: 'topCenter',
-    Alignment.center: 'center',
-    Alignment.centerLeft: 'centerLeft',
-    Alignment.centerRight: 'centerRight',
-    Alignment.bottomLeft: 'bottomLeft',
-    Alignment.bottomRight: 'bottomRight',
-    Alignment.bottomCenter: 'bottomCenter',
-  };
+  String toMap() {
+    final iconData = iconModel.iconData;
+    final iconColor = iconModel.color;
 
-  static String _alignmentToString(AlignmentGeometry alignment) {
-    return _alignmentMap[alignment] ?? 'topLeft';
-  }
+    final iconDataMap = {
+      'name': iconModel.name,
+      'code_point': iconData.codePoint,
+      'font_family': iconData.fontFamily,
+      'font_package': iconData.fontPackage,
+      'match_text_direction': iconData.matchTextDirection,
+      'color': UtilsMapping.colorToHex(iconColor),
+    };
 
-  static AlignmentGeometry _alignmentFromString(String alignment) {
-    return _alignmentMap.entries
-        .firstWhere(
-          (entry) => entry.value == alignment,
-          orElse: () => const MapEntry(Alignment.topLeft, 'topLeft'),
-        )
-        .key;
-  }
-
-  static AnimationType _animationTypeFromName(String name) {
-    return AnimationType.types.firstWhere(
-      (type) => type.name == name,
-      orElse: () => const BounceAnimationType(),
-    );
-  }
-
-  static String? _colorToHex(Color? color) {
-    return color != null
-        ? '#${color.value.toRadixString(16).padLeft(8, '0')}'
-        : null;
-  }
-
-  static Color? _colorFromHex(String? hex) {
-    if (hex == null) return null;
-    return Color(int.parse(hex.replaceFirst('#', '0xff')));
-  }
-
-  static String? _borderRadiusToString(BorderRadiusGeometry? borderRadius) {
-    if (borderRadius is BorderRadius) {
-      return '${borderRadius.topLeft.x},${borderRadius.topLeft.y},${borderRadius.bottomRight.x},${borderRadius.bottomRight.y}';
-    }
-    return null;
-  }
-
-  static BorderRadiusGeometry? _borderRadiusFromString(String? borderRadius) {
-    if (borderRadius == null) return null;
-    var values = borderRadius.split(',').map(double.parse).toList();
-    return BorderRadius.only(
-      topLeft: Radius.circular(values[0]),
-      topRight: Radius.circular(values[1]),
-      bottomLeft: Radius.circular(values[2]),
-      bottomRight: Radius.circular(values[3]),
-    );
+    return iconDataMap.toString();
   }
 }
