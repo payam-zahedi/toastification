@@ -69,7 +69,7 @@ class UtilsMapping {
 extension ToastDetailDrift on ToastDetail {
   ToastDetailsSchemaCompanion toCompanion() {
     return ToastDetailsSchemaCompanion(
-      type: Value(type.index),
+      type: Value(ToastificationType.defaultValues.indexOf(type)),
       style: Value(style.index),
       alignment: Value(UtilsMapping.alignmentToString(alignment)),
       title: Value((title as Text).data),
@@ -100,7 +100,7 @@ extension ToastDetailDrift on ToastDetail {
     if (data == null) return ToastDetail();
 
     return ToastDetail(
-      type: ToastificationType.values[data.type],
+      type: ToastificationType.defaultValues[data.type],
       style: ToastificationStyle.values[data.style],
       alignment: UtilsMapping.alignmentFromString(data.alignment),
       title: Text(data.title ?? 'Default Title'),

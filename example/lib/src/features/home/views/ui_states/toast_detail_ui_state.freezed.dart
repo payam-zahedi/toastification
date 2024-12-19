@@ -552,8 +552,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.foregroundColor == foregroundColor) &&
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
-            (identical(other.borderRadius, borderRadius) ||
-                other.borderRadius == borderRadius) &&
+            const DeepCollectionEquality()
+                .equals(other.borderRadius, borderRadius) &&
             (identical(other.borderSide, borderSide) ||
                 other.borderSide == borderSide) &&
             (identical(other.shadow, shadow) || other.shadow == shadow) &&
@@ -596,7 +596,7 @@ class _$ToastDetailImpl implements _ToastDetail {
         backgroundColor,
         foregroundColor,
         iconColor,
-        borderRadius,
+        const DeepCollectionEquality().hash(borderRadius),
         borderSide,
         shadow,
         direction,

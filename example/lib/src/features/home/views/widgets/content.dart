@@ -172,6 +172,11 @@ class _ContentDesktopState extends ConsumerState<_ContentDesktop> {
                         decoration: const InputDecoration(
                           hintText: 'Type the title text here..',
                         ),
+                        onChanged: (value) {
+                          ref
+                              .read(toastDetailControllerProvider.notifier)
+                              .changeTitle(value);
+                        },
                       ),
                     ),
                   ],

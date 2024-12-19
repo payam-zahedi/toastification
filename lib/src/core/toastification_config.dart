@@ -8,7 +8,9 @@ const _defaultWidth = 400.0;
 const _defaultClipBehavior = Clip.none;
 
 typedef ToastificationMarginBuilder = EdgeInsetsGeometry Function(
-    BuildContext context, AlignmentGeometry alignment);
+  BuildContext context,
+  AlignmentGeometry alignment,
+);
 
 /// you can use [ToastificationConfig] class to change default values of [Toastification]
 ///
@@ -29,6 +31,7 @@ class ToastificationConfig extends Equatable {
     this.animationBuilder = _defaultAnimationBuilderConfig,
     this.marginBuilder = _defaultMarginBuilder,
     this.applyMediaQueryViewInsets = true,
+    this.maxToastLimit = 10,
   });
 
   final AlignmentGeometry alignment;
@@ -44,6 +47,11 @@ class ToastificationConfig extends Equatable {
 
   /// Builder method for creating margin for Toastification Overlay.
   final ToastificationMarginBuilder marginBuilder;
+
+  /// The maximum number of toasts that can be displayed at the same time.
+  /// If the number of toasts exceeds this limit, the oldest toast will be removed.
+  /// The default value is 10.
+  final int maxToastLimit;
 
   /// Whether to apply the viewInsets to the margin of the Toastification Overlay.
   /// Basically, this is used to move the Toastification Overlay up or down when the keyboard is shown.

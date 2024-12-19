@@ -65,13 +65,10 @@ class ToastificationManager {
       },
     );
 
-    /// we need this delay because we want to show the item animation after
-    /// the overlay created
     Duration delay = const Duration(milliseconds: 10);
 
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
-
       delay = _createOverlayDelay;
     }
 
@@ -84,10 +81,12 @@ class ToastificationManager {
           0,
           duration: _createAnimationDuration(item),
         );
+
+        while (_notifications.length > config.maxToastLimit) {
+          dismissLast();
+        }
       },
     );
-
-    // TODO(payam): add limit count feature
 
     return item;
   }
