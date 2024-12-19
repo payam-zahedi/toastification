@@ -43,7 +43,9 @@ mixin _$ToastDetail {
   bool get applyBlurEffect => throw _privateConstructorUsedError;
   bool get showIcon => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ToastDetailCopyWith<ToastDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -94,6 +96,8 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -227,6 +231,8 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     ) as $Val);
   }
 
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $IconModelCopyWith<$Res>? get icon {
@@ -287,6 +293,8 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
       _$ToastDetailImpl _value, $Res Function(_$ToastDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -544,8 +552,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.foregroundColor == foregroundColor) &&
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
-            (identical(other.borderRadius, borderRadius) ||
-                other.borderRadius == borderRadius) &&
+            const DeepCollectionEquality()
+                .equals(other.borderRadius, borderRadius) &&
             (identical(other.borderSide, borderSide) ||
                 other.borderSide == borderSide) &&
             (identical(other.shadow, shadow) || other.shadow == shadow) &&
@@ -588,7 +596,7 @@ class _$ToastDetailImpl implements _ToastDetail {
         backgroundColor,
         foregroundColor,
         iconColor,
-        borderRadius,
+        const DeepCollectionEquality().hash(borderRadius),
         borderSide,
         shadow,
         direction,
@@ -605,7 +613,9 @@ class _$ToastDetailImpl implements _ToastDetail {
         showIcon
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ToastDetailImplCopyWith<_$ToastDetailImpl> get copyWith =>
@@ -690,8 +700,11 @@ abstract class _ToastDetail implements ToastDetail {
   bool get applyBlurEffect;
   @override
   bool get showIcon;
+
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ToastDetailImplCopyWith<_$ToastDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -8,5 +8,6 @@ class IconModel with _$IconModel {
   factory IconModel({
     required String name,
     required IconData iconData,
+    @Default(Colors.white) Color color,
   }) = _IconModel;
 }

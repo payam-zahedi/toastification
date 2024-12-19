@@ -141,9 +141,11 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
           padding: edgeInsets,
           minimumSize: size,
         ),
-        onPressed: () {},
-        label: const Text('Save My Toast'),
-        icon: const Icon(Iconsax.save_add_copy, size: 20),
+        onPressed: () {
+          ref.read(toastDetailControllerProvider.notifier).clearState(true);
+        },
+        label: const Text('Reset State'),
+        icon: const Icon(Iconsax.refresh_copy, size: 20),
       ),
       tablet: TextButton(
         style: TextButton.styleFrom(
