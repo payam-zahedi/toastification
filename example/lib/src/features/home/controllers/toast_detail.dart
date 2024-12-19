@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:example/src/database/database.dart';
 import 'package:example/src/database/database_provider.dart';
 import 'package:example/src/database/utils_mapping.dart';
@@ -21,11 +23,20 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
     _loadState();
   }
 
+  // Add new wrapper method
+  Future<void> _updateAndSave(
+      ToastDetail Function(ToastDetail current) update) async {
+    state = update(state);
+    await saveState();
+  }
+
   Future<void> saveState() async {
     try {
       final companion = state.toCompanion();
       await _db.upsertToastDetail(companion);
-    } catch (_) {}
+    } catch (error) {
+      log('Error saving toast detail state: $error');
+    }
   }
 
   Future<void> _loadState() async {
@@ -34,116 +45,128 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
 
       state = ToastDetailDrift.fromCompanion(toastDetailData);
     } catch (e) {
-      resetStateToDefaults();
+      clearState();
     }
   }
 
-  void resetStateToDefaults() {
+  void clearState([bool clearDatabase = false]) {
     state = ToastDetail();
+
+    if (clearDatabase) {
+      _db.deleteToastDetail();
+    }
   }
 
   void changeType(ToastificationType type) {
-    state = state.copyWith(type: type);
+    _updateAndSave((current) => current.copyWith(type: type));
   }
 
   void changeStyle(ToastificationStyle style) {
-    state = state.copyWith(style: style);
+    _updateAndSave((current) => current.copyWith(style: style));
   }
 
   void changeAlignment(AlignmentGeometry alignment) {
-    state = state.copyWith(alignment: alignment);
+    _updateAndSave((current) => current.copyWith(alignment: alignment));
   }
 
   void changeTitle(String title) {
-    state = state.copyWith(title: Text(title));
+    _updateAndSave((current) => current.copyWith(title: Text(title)));
   }
 
   void changeDescription(String description) {
-    state = state.copyWith(description: Text(description));
+    _updateAndSave(
+        (current) => current.copyWith(description: Text(description)));
   }
 
   void changeIcon(IconModel? icon) {
-    state = state.copyWith(icon: icon);
+    _updateAndSave((current) => current.copyWith(icon: icon));
   }
 
   void changeShowIcon(bool showIcon) {
-    state = state.copyWith(showIcon: showIcon);
+    _updateAndSave((current) => current.copyWith(showIcon: showIcon));
   }
 
   void changePrimary(Color? primaryColor) {
-    state = state.copyWith(primaryColor: primaryColor);
+    _updateAndSave((current) => current.copyWith(primaryColor: primaryColor));
   }
 
   void changeBackgroundColor(Color? backgroundColor) {
-    state = state.copyWith(backgroundColor: backgroundColor);
+    _updateAndSave(
+        (current) => current.copyWith(backgroundColor: backgroundColor));
   }
 
   void changeForegroundColor(Color? foregroundColor) {
-    state = state.copyWith(foregroundColor: foregroundColor);
+    _updateAndSave(
+        (current) => current.copyWith(foregroundColor: foregroundColor));
   }
 
   void changeIconColor(Color? iconColor) {
-    state = state.copyWith(iconColor: iconColor);
+    _updateAndSave((current) => current.copyWith(iconColor: iconColor));
   }
 
   void changeBorderRadius(BorderRadiusGeometry? borderRadius) {
-    state = state.copyWith(borderRadius: borderRadius);
+    _updateAndSave((current) => current.copyWith(borderRadius: borderRadius));
   }
 
   void changeShadow(ShadowOptions shadow) {
-    state = state.copyWith(shadow: shadow);
+    _updateAndSave((current) => current.copyWith(shadow: shadow));
   }
 
   void changeDirection(TextDirection? direction) {
-    state = state.copyWith(direction: direction);
+    _updateAndSave((current) => current.copyWith(direction: direction));
   }
 
   void changeAutoCloseDuration(Duration? autoCloseDuration) {
-    state = state.copyWith(autoCloseDuration: autoCloseDuration);
+    _updateAndSave(
+        (current) => current.copyWith(autoCloseDuration: autoCloseDuration));
   }
 
   void changeAnimationDuration(Duration? animationDuration) {
-    state = state.copyWith(animationDuration: animationDuration);
+    _updateAndSave(
+        (current) => current.copyWith(animationDuration: animationDuration));
   }
 
   void changeAnimationType(AnimationType animationType) {
-    state = state.copyWith(animationType: animationType);
+    _updateAndSave((current) => current.copyWith(animationType: animationType));
   }
 
   void changeUseContext(bool useContext) {
-    state = state.copyWith(useContext: useContext);
+    _updateAndSave((current) => current.copyWith(useContext: useContext));
   }
 
   void changeShowProgressBar(bool showProgressBar) {
-    state = state.copyWith(showProgressBar: showProgressBar);
+    _updateAndSave(
+        (current) => current.copyWith(showProgressBar: showProgressBar));
   }
 
   void changeCloseButtonShowType(CloseButtonShowType closeButtonShowType) {
-    state = state.copyWith(closeButtonShowType: closeButtonShowType);
+    _updateAndSave((current) =>
+        current.copyWith(closeButtonShowType: closeButtonShowType));
   }
 
   void changeCloseOnClick(bool closeOnClick) {
-    state = state.copyWith(closeOnClick: closeOnClick);
+    _updateAndSave((current) => current.copyWith(closeOnClick: closeOnClick));
   }
 
   void changeDragToClose(bool dragToClose) {
-    state = state.copyWith(dragToClose: dragToClose);
+    _updateAndSave((current) => current.copyWith(dragToClose: dragToClose));
   }
 
   void changePauseOnHover(bool pauseOnHover) {
-    state = state.copyWith(pauseOnHover: pauseOnHover);
+    _updateAndSave((current) => current.copyWith(pauseOnHover: pauseOnHover));
   }
 
   void changeApplyBlurEffect(bool applyBlurEffect) {
-    state = state.copyWith(applyBlurEffect: applyBlurEffect);
+    _updateAndSave(
+        (current) => current.copyWith(applyBlurEffect: applyBlurEffect));
   }
 
   void resetColors() {
-    state = state.copyWith(
-      primaryColor: null,
-      backgroundColor: null,
-      foregroundColor: null,
-      iconColor: null,
-    );
+    _updateAndSave((current) => current.copyWith(
+          primaryColor: null,
+          backgroundColor: null,
+          foregroundColor: null,
+          iconColor: null,
+        ));
   }
 }
