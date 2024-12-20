@@ -32,3 +32,5 @@ export 'src/widget/built_in/simple/simple.dart';
 export 'src/core/style/factory/simple_style.dart';
 export 'src/widget/built_in/flat_colored/flat_colored.dart';
 export 'src/core/style/factory/flat_colored_style.dart';
+export 'src/widget/built_in/widget/close_button.dart'
+    hide ToastCloseButtonHolder;

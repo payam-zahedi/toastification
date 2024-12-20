@@ -4,6 +4,7 @@ import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:toastification/toastification.dart';
 
 class BottomNavigationView extends ConsumerStatefulWidget {
   const BottomNavigationView({super.key});
@@ -141,7 +142,30 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
           padding: edgeInsets,
           minimumSize: size,
         ),
-        onPressed: () {},
+        onPressed: () {
+          final toastDetail = ref.read(toastDetailControllerProvider);
+
+          showCurrentToast(
+            context,
+            toastDetail.copyWith(
+              closeButton: ToastCloseButton(
+                showType: toastDetail.closeButton.showType,
+                buttonBuilder: (context, onTap) {
+                  return FilledButton(
+                    style: FilledButton.styleFrom(
+                      padding: edgeInsets,
+                      minimumSize: size,
+                    ),
+                    onPressed: () {
+                      onTap();
+                    },
+                    child: const Text('Close'),
+                  );
+                },
+              ),
+            ),
+          );
+        },
         label: const Text('Save My Toast'),
         icon: const Icon(Iconsax.save_add_copy, size: 20),
       ),
@@ -152,7 +176,31 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
           backgroundColor: theme.colorScheme.surfaceContainerHigh,
           foregroundColor: theme.colorScheme.onSurface,
         ),
-        onPressed: () {},
+        onPressed: () {
+          final toastDetail = ref.read(toastDetailControllerProvider);
+
+          showCurrentToast(
+            context,
+            toastDetail.copyWith(
+              closeButton: ToastCloseButton(
+                showType: toastDetail.closeButton.showType,
+                buttonBuilder: (context, onTap) {
+                  return OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(
+                      padding: edgeInsets,
+                      minimumSize: size,
+                    ),
+                    onPressed: () {
+                      onTap();
+                    },
+                    icon: const Icon(Iconsax.monitor_copy, size: 20),
+                    label: const Text('Preview on Screen'),
+                  );
+                },
+              ),
+            ),
+          );
+        },
         child: const Icon(Iconsax.save_add_copy, size: 20),
       ),
     );

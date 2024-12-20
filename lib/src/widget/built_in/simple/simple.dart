@@ -10,15 +10,15 @@ class SimpleToastWidget extends StatelessWidget {
     super.key,
     this.title,
     this.showCloseButton = true,
-    this.onCloseTap,
-    this.customCloseButton,
+    required this.onCloseTap,
+    this.closeButton = const ToastCloseButton(),
   });
 
   final Widget? title;
 
   final bool showCloseButton;
-  final VoidCallback? onCloseTap;
-  final Widget? customCloseButton;
+  final VoidCallback onCloseTap;
+  final ToastCloseButton closeButton;
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +49,10 @@ class SimpleToastWidget extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsetsDirectional.only(start: 8),
-          child: ToastCloseButton(
+          child: ToastCloseButtonHolder(
             showCloseButton: showCloseButton,
             onCloseTap: onCloseTap,
-            customCloseButton: customCloseButton,
+            toastCloseButton: closeButton,
           ),
         ),
       ],

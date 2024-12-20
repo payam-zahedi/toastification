@@ -33,6 +33,7 @@ mixin _$ToastDetail {
   Duration? get autoCloseDuration => throw _privateConstructorUsedError;
   Duration? get animationDuration => throw _privateConstructorUsedError;
   AnimationType get animationType => throw _privateConstructorUsedError;
+  ToastCloseButton get closeButton => throw _privateConstructorUsedError;
   CloseButtonShowType get closeButtonShowType =>
       throw _privateConstructorUsedError;
   bool get useContext => throw _privateConstructorUsedError;
@@ -43,7 +44,9 @@ mixin _$ToastDetail {
   bool get applyBlurEffect => throw _privateConstructorUsedError;
   bool get showIcon => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ToastDetailCopyWith<ToastDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -72,6 +75,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       Duration? autoCloseDuration,
       Duration? animationDuration,
       AnimationType animationType,
+      ToastCloseButton closeButton,
       CloseButtonShowType closeButtonShowType,
       bool useContext,
       bool showProgressBar,
@@ -94,6 +98,8 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +120,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
     Object? animationType = null,
+    Object? closeButton = null,
     Object? closeButtonShowType = null,
     Object? useContext = null,
     Object? showProgressBar = null,
@@ -192,6 +199,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.animationType
           : animationType // ignore: cast_nullable_to_non_nullable
               as AnimationType,
+      closeButton: null == closeButton
+          ? _value.closeButton
+          : closeButton // ignore: cast_nullable_to_non_nullable
+              as ToastCloseButton,
       closeButtonShowType: null == closeButtonShowType
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
@@ -227,6 +238,8 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     ) as $Val);
   }
 
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $IconModelCopyWith<$Res>? get icon {
@@ -266,6 +279,7 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       Duration? autoCloseDuration,
       Duration? animationDuration,
       AnimationType animationType,
+      ToastCloseButton closeButton,
       CloseButtonShowType closeButtonShowType,
       bool useContext,
       bool showProgressBar,
@@ -287,6 +301,8 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
       _$ToastDetailImpl _value, $Res Function(_$ToastDetailImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -307,6 +323,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
     Object? animationType = null,
+    Object? closeButton = null,
     Object? closeButtonShowType = null,
     Object? useContext = null,
     Object? showProgressBar = null,
@@ -385,6 +402,10 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.animationType
           : animationType // ignore: cast_nullable_to_non_nullable
               as AnimationType,
+      closeButton: null == closeButton
+          ? _value.closeButton
+          : closeButton // ignore: cast_nullable_to_non_nullable
+              as ToastCloseButton,
       closeButtonShowType: null == closeButtonShowType
           ? _value.closeButtonShowType
           : closeButtonShowType // ignore: cast_nullable_to_non_nullable
@@ -442,6 +463,7 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.autoCloseDuration = const Duration(seconds: 4),
       this.animationDuration,
       this.animationType = const BounceAnimationType(),
+      this.closeButton = const ToastCloseButton(),
       this.closeButtonShowType = CloseButtonShowType.always,
       this.useContext = true,
       this.showProgressBar = false,
@@ -495,6 +517,9 @@ class _$ToastDetailImpl implements _ToastDetail {
   final AnimationType animationType;
   @override
   @JsonKey()
+  final ToastCloseButton closeButton;
+  @override
+  @JsonKey()
   final CloseButtonShowType closeButtonShowType;
   @override
   @JsonKey()
@@ -520,7 +545,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButton: $closeButton, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
   }
 
   @override
@@ -557,6 +582,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.animationDuration == animationDuration) &&
             (identical(other.animationType, animationType) ||
                 other.animationType == animationType) &&
+            (identical(other.closeButton, closeButton) ||
+                other.closeButton == closeButton) &&
             (identical(other.closeButtonShowType, closeButtonShowType) ||
                 other.closeButtonShowType == closeButtonShowType) &&
             (identical(other.useContext, useContext) ||
@@ -595,6 +622,7 @@ class _$ToastDetailImpl implements _ToastDetail {
         autoCloseDuration,
         animationDuration,
         animationType,
+        closeButton,
         closeButtonShowType,
         useContext,
         showProgressBar,
@@ -605,7 +633,9 @@ class _$ToastDetailImpl implements _ToastDetail {
         showIcon
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ToastDetailImplCopyWith<_$ToastDetailImpl> get copyWith =>
@@ -631,6 +661,7 @@ abstract class _ToastDetail implements ToastDetail {
       final Duration? autoCloseDuration,
       final Duration? animationDuration,
       final AnimationType animationType,
+      final ToastCloseButton closeButton,
       final CloseButtonShowType closeButtonShowType,
       final bool useContext,
       final bool showProgressBar,
@@ -675,6 +706,8 @@ abstract class _ToastDetail implements ToastDetail {
   @override
   AnimationType get animationType;
   @override
+  ToastCloseButton get closeButton;
+  @override
   CloseButtonShowType get closeButtonShowType;
   @override
   bool get useContext;
@@ -690,8 +723,11 @@ abstract class _ToastDetail implements ToastDetail {
   bool get applyBlurEffect;
   @override
   bool get showIcon;
+
+  /// Create a copy of ToastDetail
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ToastDetailImplCopyWith<_$ToastDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

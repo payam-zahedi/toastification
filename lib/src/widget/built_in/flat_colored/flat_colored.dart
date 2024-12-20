@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/context_ext.dart';
 import 'package:toastification/src/core/style/toastification_theme.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
 import 'package:toastification/src/widget/built_in/widget/close_button.dart';
 import 'package:toastification/toastification.dart';
 
@@ -13,9 +12,9 @@ class FlatColoredToastWidget extends StatelessWidget {
     this.title,
     this.description,
     this.icon,
-    this.onCloseTap,
+    required this.onCloseTap,
     this.showCloseButton = true,
-    this.customCloseButton,
+    this.closeButton = const ToastCloseButton(),
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -25,9 +24,9 @@ class FlatColoredToastWidget extends StatelessWidget {
 
   final Widget? icon;
 
-  final VoidCallback? onCloseTap;
+  final VoidCallback onCloseTap;
   final bool showCloseButton;
-  final Widget? customCloseButton;
+  final ToastCloseButton closeButton;
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
@@ -82,10 +81,10 @@ class FlatColoredToastWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          ToastCloseButton(
+          ToastCloseButtonHolder(
             onCloseTap: onCloseTap,
             showCloseButton: showCloseButton,
-            customCloseButton: customCloseButton,
+            toastCloseButton: closeButton,
           ),
         ],
       ),

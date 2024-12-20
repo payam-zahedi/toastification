@@ -46,6 +46,7 @@ class ToastDetail with _$ToastDetail {
     @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
     Duration? animationDuration,
     @Default(BounceAnimationType()) AnimationType animationType,
+    @Default(ToastCloseButton()) ToastCloseButton closeButton,
     @Default(CloseButtonShowType.always)
     CloseButtonShowType closeButtonShowType,
     @Default(true) bool useContext,
