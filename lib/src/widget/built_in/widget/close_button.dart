@@ -6,10 +6,12 @@ class ToastCloseButton extends StatelessWidget {
     super.key,
     this.onCloseTap,
     required this.showCloseButton,
+    this.customCloseButton,
   });
 
   final VoidCallback? onCloseTap;
   final bool showCloseButton;
+  final Widget? customCloseButton;
 
   @override
   Widget build(BuildContext context) {
@@ -35,24 +37,27 @@ class ToastCloseButton extends StatelessWidget {
             );
           },
           child: showCloseButton
-              ? SizedBox.square(
-                  dimension: 30,
-                  child: Material(
-                    key: const ValueKey('close_button_visible'),
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(5),
-                    child: Builder(builder: (context) {
-                      return InkWell(
-                        onTap: onCloseTap,
-                        borderRadius: BorderRadius.circular(5),
-                        child: Icon(
-                          toastTheme.closeIcon,
-                          color: toastTheme.closeIconColor,
-                          size: 18,
+              ? SizedBox(
+                  key: const ValueKey('close_button_visible'),
+                  child: customCloseButton ??
+                      SizedBox.square(
+                        dimension: 30,
+                        child: Material(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(5),
+                          child: Builder(builder: (context) {
+                            return InkWell(
+                              onTap: onCloseTap,
+                              borderRadius: BorderRadius.circular(5),
+                              child: Icon(
+                                toastTheme.closeIcon,
+                                color: toastTheme.closeIconColor,
+                                size: 18,
+                              ),
+                            );
+                          }),
                         ),
-                      );
-                    }),
-                  ),
+                      ),
                 )
               : const SizedBox.shrink(
                   key: ValueKey('close_button_hidden'),

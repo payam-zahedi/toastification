@@ -15,6 +15,7 @@ class MinimalToastWidget extends StatelessWidget {
     this.icon,
     this.onCloseTap,
     this.showCloseButton = true,
+    this.customCloseButton,
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -26,6 +27,7 @@ class MinimalToastWidget extends StatelessWidget {
 
   final VoidCallback? onCloseTap;
   final bool showCloseButton;
+  final Widget? customCloseButton;
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
@@ -91,6 +93,7 @@ class MinimalToastWidget extends StatelessWidget {
           ToastCloseButton(
             onCloseTap: onCloseTap,
             showCloseButton: showCloseButton,
+            customCloseButton: customCloseButton,
           ),
         ],
       ),
