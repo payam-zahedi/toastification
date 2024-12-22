@@ -16,6 +16,7 @@ class FilledToastWidget extends StatelessWidget {
     this.showCloseButton = true,
     this.progressBarValue,
     this.progressBarWidget,
+    this.actionButtons
   });
 
   final Widget? title;
@@ -27,6 +28,7 @@ class FilledToastWidget extends StatelessWidget {
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
+  final List<Widget>? actionButtons;
 
   @override
   Widget build(BuildContext context) {
@@ -55,33 +57,41 @@ class FilledToastWidget extends StatelessWidget {
         boxShadow: toastTheme.boxShadow,
       ),
       padding: toastTheme.padding,
-      child: Row(
+      child: Column(
         children: [
-          Offstage(
-            offstage: !toastTheme.showIcon,
-            child: Padding(
-              padding: const EdgeInsetsDirectional.only(end: 12),
-              child: icon ??
-                  Icon(
-                    toastTheme.icon,
-                    size: 24,
-                    color: toastTheme.foreground ?? toastTheme.iconColor,
-                  ),
-            ),
+          Row(
+            children: [
+              Offstage(
+                offstage: !toastTheme.showIcon,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 12),
+                  child: icon ??
+                      Icon(
+                        toastTheme.icon,
+                        size: 24,
+                        color: toastTheme.foreground ?? toastTheme.iconColor,
+                      ),
+                ),
+              ),
+              Expanded(
+                child: BuiltInContent(
+                  title: title,
+                  description: description,
+                  progressBarValue: progressBarValue,
+                  progressBarWidget: progressBarWidget,
+                ),
+              ),
+              const SizedBox(width: 8),
+              ToastCloseButton(
+                onCloseTap: onCloseTap,
+                showCloseButton: showCloseButton,
+              ),
+            ],
           ),
-          Expanded(
-            child: BuiltInContent(
-              title: title,
-              description: description,
-              progressBarValue: progressBarValue,
-              progressBarWidget: progressBarWidget,
-            ),
-          ),
-          const SizedBox(width: 8),
-          ToastCloseButton(
-            onCloseTap: onCloseTap,
-            showCloseButton: showCloseButton,
-          ),
+          const SizedBox(height: 10),
+          Row(
+            children: actionButtons ?? [],
+          )
         ],
       ),
     );

@@ -260,6 +260,7 @@ class Toastification {
     DismissDirection? dismissDirection,
     bool? pauseOnHover,
     bool? applyBlurEffect,
+    List<Widget>? actionButtons,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     return showCustom(
@@ -297,7 +298,8 @@ class Toastification {
           dismissDirection: dismissDirection,
           pauseOnHover: pauseOnHover,
           applyBlurEffect: applyBlurEffect,
-          callbacks: callbacks,
+          callbacks: callbacks,      
+          actionButtons: actionButtons,    
         );
       },
     );
