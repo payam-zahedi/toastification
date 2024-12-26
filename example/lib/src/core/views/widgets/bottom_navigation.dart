@@ -169,9 +169,7 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
                       padding: edgeInsets,
                       minimumSize: size,
                     ),
-                    onPressed: () {
-                      onTap();
-                    },
+                    onPressed: onTap,
                     icon: const Icon(Iconsax.monitor_copy, size: 20),
                     label: const Text('Preview on Screen'),
                   );
