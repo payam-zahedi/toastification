@@ -11,8 +11,11 @@ final themeVariantProvider = StateProvider<bool>((ref) {
   return false;
 });
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   usePathUrlStrategy();
+
   runApp(const ProviderScope(child: ToastificationApp()));
 }
 

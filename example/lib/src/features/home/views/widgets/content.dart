@@ -8,9 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContentWidget extends StatelessWidget {
-  const ContentWidget({
-    super.key,
-  });
+  const ContentWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +18,58 @@ class ContentWidget extends StatelessWidget {
   }
 }
 
-class _ContentDesktop extends ConsumerWidget {
+class _ContentDesktop extends ConsumerStatefulWidget {
   const _ContentDesktop();
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_ContentDesktop> createState() => _ContentDesktopState();
+}
+
+class _ContentDesktopState extends ConsumerState<_ContentDesktop> {
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the controllers
+    final toastDetail = ref.read(toastDetailControllerProvider);
+    _titleController = TextEditingController(
+      text: (toastDetail.title as Text).data != 'Component updates available.'
+          ? (toastDetail.title as Text).data
+          : '',
+    );
+    _descriptionController = TextEditingController(
+      text: (toastDetail.description as Text).data !=
+              'Component updates available.'
+          ? (toastDetail.description as Text).data
+          : '',
+    );
+
+    // Add listeners to update the provider when text changes
+    _titleController.addListener(() {
+      ref
+          .read(toastDetailControllerProvider.notifier)
+          .changeTitle(_titleController.text);
+    });
+
+    _descriptionController.addListener(() {
+      ref
+          .read(toastDetailControllerProvider.notifier)
+          .changeDescription(_descriptionController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final textDirection = ref.watch(toastDetailControllerProvider).direction ??
         Directionality.of(context);
 
@@ -33,7 +79,6 @@ class _ContentDesktop extends ConsumerWidget {
         SizedBox(
           width: 164,
           child: Column(
-            // three bordered containers
             children: [
               const BorderedContainer(
                 height: 48,
@@ -44,7 +89,6 @@ class _ContentDesktop extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Add Section'),
-                    // soon to be icon
                     SoonWidget(),
                   ],
                 ),
@@ -118,37 +162,37 @@ class _ContentDesktop extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: const InputDecoration(
-                        hintText: 'Type the title text here..',
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _titleController,
+                        decoration: const InputDecoration(
+                          hintText: 'Type the title text here..',
+                        ),
+                        onChanged: (value) {
+                          ref
+                              .read(toastDetailControllerProvider.notifier)
+                              .changeTitle(value);
+                        },
                       ),
-                      onChanged: (value) {
-                        ref
-                            .read(toastDetailControllerProvider.notifier)
-                            .changeTitle(value);
-                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               SizedBox(
                 height: 106,
                 child: TextField(
+                  controller: _descriptionController,
                   expands: true,
                   maxLines: null,
                   textAlignVertical: TextAlignVertical.top,
                   decoration: const InputDecoration(
                     hintText: 'Type the body text here..',
                   ),
-                  onChanged: (value) {
-                    ref
-                        .read(toastDetailControllerProvider.notifier)
-                        .changeDescription(value);
-                  },
                 ),
               ),
             ],
@@ -159,11 +203,58 @@ class _ContentDesktop extends ConsumerWidget {
   }
 }
 
-class _ContentMobile extends ConsumerWidget {
+class _ContentMobile extends ConsumerStatefulWidget {
   const _ContentMobile();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_ContentMobile> createState() => _ContentMobileState();
+}
+
+class _ContentMobileState extends ConsumerState<_ContentMobile> {
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize the controllers
+    final toastDetail = ref.read(toastDetailControllerProvider);
+    _titleController = TextEditingController(
+      text: (toastDetail.title as Text).data != 'Component updates available.'
+          ? (toastDetail.title as Text).data
+          : '',
+    );
+    _descriptionController = TextEditingController(
+      text: (toastDetail.description as Text).data !=
+              'Component updates available.'
+          ? (toastDetail.description as Text).data
+          : '',
+    );
+
+    // Add listeners to update the provider when text changes
+    _titleController.addListener(() {
+      ref
+          .read(toastDetailControllerProvider.notifier)
+          .changeTitle(_titleController.text);
+    });
+
+    _descriptionController.addListener(() {
+      ref
+          .read(toastDetailControllerProvider.notifier)
+          .changeDescription(_descriptionController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final textDirection = ref.watch(toastDetailControllerProvider).direction ??
         Directionality.of(context);
 
@@ -172,7 +263,6 @@ class _ContentMobile extends ConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Row(
-          // three bordered containers
           children: [
             Expanded(
               child: BorderedContainer(
@@ -188,8 +278,6 @@ class _ContentMobile extends ConsumerWidget {
                         overflow: TextOverflow.clip,
                       ),
                     ),
-
-                    // soon to be icon
                     Align(
                       alignment: AlignmentDirectional.centerEnd,
                       child: SoonWidget(),
@@ -215,33 +303,26 @@ class _ContentMobile extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         TextField(
+          controller: _titleController,
           decoration: const InputDecoration(
             hintText: 'Type the title text here..',
           ),
-          onChanged: (value) {
-            ref.read(toastDetailControllerProvider.notifier).changeTitle(value);
-          },
         ),
         const SizedBox(height: 16),
         SizedBox(
           height: 106,
           child: TextField(
+            controller: _descriptionController,
             expands: true,
             maxLines: null,
             textAlignVertical: TextAlignVertical.top,
             decoration: const InputDecoration(
               hintText: 'Type the body text here..',
             ),
-            onChanged: (value) {
-              ref
-                  .read(toastDetailControllerProvider.notifier)
-                  .changeDescription(value);
-            },
           ),
         ),
         const SizedBox(height: 16),
         Row(
-          // three bordered containers
           children: [
             Expanded(
               child: BorderedContainer(

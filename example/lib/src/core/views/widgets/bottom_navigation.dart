@@ -143,31 +143,10 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
           minimumSize: size,
         ),
         onPressed: () {
-          final toastDetail = ref.read(toastDetailControllerProvider);
-
-          showCurrentToast(
-            context,
-            toastDetail.copyWith(
-              closeButton: ToastCloseButton(
-                showType: toastDetail.closeButton.showType,
-                buttonBuilder: (context, onTap) {
-                  return FilledButton(
-                    style: FilledButton.styleFrom(
-                      padding: edgeInsets,
-                      minimumSize: size,
-                    ),
-                    onPressed: () {
-                      onTap();
-                    },
-                    child: const Text('Close'),
-                  );
-                },
-              ),
-            ),
-          );
+          ref.read(toastDetailControllerProvider.notifier).clearState(true);
         },
-        label: const Text('Save My Toast'),
-        icon: const Icon(Iconsax.save_add_copy, size: 20),
+        label: const Text('Reset State'),
+        icon: const Icon(Iconsax.refresh_copy, size: 20),
       ),
       tablet: TextButton(
         style: TextButton.styleFrom(

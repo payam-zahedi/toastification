@@ -23,6 +23,9 @@ class ToastificationType {
     return ToastificationType._(name, color, icon);
   }
 
+  static List<ToastificationType> get defaultValues =>
+      [info, success, warning, error];
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
