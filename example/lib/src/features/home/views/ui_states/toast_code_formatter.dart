@@ -16,7 +16,7 @@ class ToastCodeFormatter {
       code.writeln('context: context,');
     }
 
-    code.writeln('type: ${toastDetail.type.name},');
+    code.writeln('type: ${toastDetail.type},');
     code.writeln('style: ${toastDetail.style},');
 
     if (toastDetail.title != null) {
@@ -93,9 +93,9 @@ class ToastCodeFormatter {
       code.writeln('\tdirection: ${toastDetail.direction},');
     }
 
-    if (toastDetail.closeButtonShowType != CloseButtonShowType.always) {
+    if (toastDetail.closeButton.showType != CloseButtonShowType.always) {
       code.writeln(
-        '\tcloseButtonShowType: ${toastDetail.closeButtonShowType.toValueString()},',
+        '\tcloseButton: ToastCloseButton(showType: ${toastDetail.closeButton.showType.toValueString()}),',
       );
     }
 

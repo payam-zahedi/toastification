@@ -118,6 +118,5 @@ void showCurrentToast(BuildContext context, ToastDetail toastDetail) {
     showProgressBar: toastDetail.showProgressBar,
     applyBlurEffect: toastDetail.applyBlurEffect,
     closeButton: toastDetail.closeButton,
-    closeButtonShowType: toastDetail.closeButtonShowType,
   );
 }

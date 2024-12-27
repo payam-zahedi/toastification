@@ -561,12 +561,13 @@ class _CloseSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-
-    final closeButtonShowType = ref.watch(
+    final closeButton = ref.watch(
       toastDetailControllerProvider.select(
-        (value) => value.closeButtonShowType,
+        (value) => value.closeButton,
       ),
     );
+
+    final closeButtonShowType = closeButton.showType;
 
     return SubSection(
       title: 'CLOSE',
@@ -632,10 +633,11 @@ class _CloseSection extends ConsumerWidget {
                   );
                 },
               ).toList(),
-              onChanged: (value) {
+              onChanged: (closeType) {
                 ref
                     .read(toastDetailControllerProvider.notifier)
-                    .changeCloseButtonShowType(value!);
+                    .changeCloseButton(
+                        closeButton.copyWith(showType: closeType));
               },
             ),
           ),

@@ -89,8 +89,6 @@ class ToastPreview extends ConsumerWidget {
       direction: toastDetail.direction,
       showProgressBar: toastDetail.showProgressBar,
       applyBlurEffect: toastDetail.applyBlurEffect,
-      // TODO: replace with the actual value
-      // closeButtonShowType: toastDetail.closeButtonShowType,
       closeButton: toastDetail.closeButton,
       showIcon: toastDetail.showIcon,
       onCloseTap: () {},
