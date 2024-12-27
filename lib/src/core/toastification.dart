@@ -254,7 +254,7 @@ class Toastification {
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
     @Deprecated(
-        'This parameter is deprecated instead use closeButton parameter\n This parameter will be removed in the next major version')
+      'IMPORTANT: The closeButtonShowType parameter is deprecated and will be removed in the next major version. Use the closeButton parameter instead.')
     CloseButtonShowType? closeButtonShowType,
     ToastCloseButton closeButton = const ToastCloseButton(),
     bool? closeOnClick,

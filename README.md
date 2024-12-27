@@ -112,9 +112,9 @@ toastification.show(
   showProgressBar: true,
   closeButton: ToastCloseButton(
     showType: CloseButtonShowType.onHover,
-    buttonBuilder: (context, onTap) {
+    buttonBuilder: (context, onCloseTap) {
       return OutlinedButton.icon(
-        onPressed: onTap,
+        onPressed: onCloseTap,
         icon: const Icon(Icons.close, size: 20),
         label: const Text('Close'),
       );

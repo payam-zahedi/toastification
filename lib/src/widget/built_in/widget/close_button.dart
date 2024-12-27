@@ -2,16 +2,31 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/context_ext.dart';
 
+/// Signature for a function that builds a custom close button widget.
+///
+/// [context] The build context.
+/// [onCloseTap] Callback function when the close button is tapped.
 typedef CloseButtonBuilder = Widget Function(
     BuildContext context, VoidCallback onCloseTap);
 
+/// Configuration class for toast close button customization.
+///
+/// This class allows you to customize the behavior and appearance of the close button
+/// in toast notifications.
 class ToastCloseButton extends Equatable {
+  /// Creates a [ToastCloseButton] instance.
+  ///
+  /// [showType] determines when the close button should be visible.
+  /// [buttonBuilder] optional custom builder for the close button widget.
   const ToastCloseButton({
     this.showType = CloseButtonShowType.always,
     this.buttonBuilder,
   });
 
+  /// Defines when the close button should be shown
   final CloseButtonShowType showType;
+  
+  /// Custom builder for the close button widget
   final CloseButtonBuilder? buttonBuilder;
 
   ToastCloseButton copyWith({
@@ -31,15 +46,18 @@ class ToastCloseButton extends Equatable {
   List<Object?> get props => [showType, buttonBuilder];
 }
 
-/// Using this enum you can define the behavior of the toast close button
+/// Defines the visibility behavior of the toast close button.
+///
+/// This enum provides three different modes for controlling when
+/// the close button should be visible in the toast notification.
 enum CloseButtonShowType {
-  /// [always] - show the close button always
+  /// Shows the close button at all times
   always._('Always'),
 
-  /// [onHover] - show the close button only when the mouse is hovering the toast
+  /// Shows the close button only when the mouse hovers over the toast
   onHover._('On Hover'),
 
-  /// [none] - do not show the close button
+  /// Never shows the close button
   none._('None');
 
   const CloseButtonShowType._(this.title);
@@ -52,7 +70,16 @@ enum CloseButtonShowType {
   String toValueString() => 'CloseButtonShowType.$name';
 }
 
+/// A widget that manages the display and animation of the toast close button.
+///
+/// This widget handles the visibility transitions and positioning of the close button
+/// based on the provided configuration.
 class ToastCloseButtonHolder extends StatelessWidget {
+  /// Creates a [ToastCloseButtonHolder] instance.
+  ///
+  /// [onCloseTap] Callback function when the close button is tapped.
+  /// [showCloseButton] Controls the visibility of the close button.
+  /// [toastCloseButton] Configuration for the close button appearance and behavior.
   const ToastCloseButtonHolder({
     super.key,
     required this.onCloseTap,
@@ -101,11 +128,16 @@ class ToastCloseButtonHolder extends StatelessWidget {
   }
 }
 
+/// The default close button implementation.
+///
+/// This widget provides the standard close button appearance and behavior
+/// when no custom button builder is provided.
 class _DefaultCloseButton extends StatelessWidget {
   const _DefaultCloseButton({
     required this.onCloseTap,
   });
 
+  /// Callback function executed when the close button is tapped
   final VoidCallback? onCloseTap;
 
   @override
