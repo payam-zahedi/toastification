@@ -103,9 +103,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   style: ToastificationStyle.fillColored,
-                                  toast: const FilledToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                  toast: FilledToastWidget(
+                                    title: const Text('The Title'),
+                                    description: const Text('The Description'),
+                                    onCloseTap: () {},
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -119,9 +120,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   style: ToastificationStyle.flat,
-                                  toast: const FlatToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                  toast: FlatToastWidget(
+                                    title: const Text('The Title'),
+                                    description: const Text('The Description'),
+                                    onCloseTap: () {},
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -139,9 +141,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   style: ToastificationStyle.flatColored,
-                                  toast: const FlatColoredToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                  toast: FlatColoredToastWidget(
+                                    title: const Text('The Title'),
+                                    description: const Text('The Description'),
+                                    onCloseTap: () {},
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -155,9 +158,10 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               Expanded(
                                 child: _ItemHolder(
                                   style: ToastificationStyle.minimal,
-                                  toast: const MinimalToastWidget(
-                                    title: Text('The Title'),
-                                    description: Text('The Description'),
+                                  toast: MinimalToastWidget(
+                                    title: const Text('The Title'),
+                                    description: const Text('The Description'),
+                                    onCloseTap: () {},
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(
@@ -176,8 +180,9 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                                 child: _ItemHolder(
                                   isCenter: true,
                                   style: ToastificationStyle.simple,
-                                  toast: const SimpleToastWidget(
-                                    title: Text('Simple Title Toast'),
+                                  toast: SimpleToastWidget(
+                                    title: const Text('Simple Title Toast'),
+                                    onCloseTap: () {},
                                   ),
                                   onTap: () {
                                     widget.onStyleChanged(

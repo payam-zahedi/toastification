@@ -46,8 +46,7 @@ class ToastDetail with _$ToastDetail {
     @Default(Duration(seconds: 4)) Duration? autoCloseDuration,
     Duration? animationDuration,
     @Default(BounceAnimationType()) AnimationType animationType,
-    @Default(CloseButtonShowType.always)
-    CloseButtonShowType closeButtonShowType,
+    @Default(ToastCloseButton()) ToastCloseButton closeButton,
     @Default(true) bool useContext,
     @Default(false) bool showProgressBar,
     @Default(true) bool closeOnClick,

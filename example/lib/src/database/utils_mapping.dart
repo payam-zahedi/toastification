@@ -84,7 +84,7 @@ extension ToastDetailDrift on ToastDetail {
       autoCloseDuration: Value(autoCloseDuration?.inMilliseconds ?? 4000),
       animationDuration: Value(animationDuration?.inMilliseconds),
       animationType: Value(animationType.name),
-      closeButtonShowType: Value(closeButtonShowType.index),
+      closeButtonShowType: Value(closeButton.showType.index),
       useContext: Value(useContext),
       showProgressBar: Value(showProgressBar),
       closeOnClick: Value(closeOnClick),
@@ -118,8 +118,9 @@ extension ToastDetailDrift on ToastDetail {
           ? Duration(milliseconds: data.animationDuration!)
           : null,
       animationType: UtilsMapping.animationTypeFromName(data.animationType),
-      closeButtonShowType:
-          CloseButtonShowType.values[data.closeButtonShowType ?? 0],
+      closeButton: ToastCloseButton(
+        showType: CloseButtonShowType.values[data.closeButtonShowType ?? 0],
+      ),
       useContext: data.useContext,
       showProgressBar: data.showProgressBar,
       closeOnClick: data.closeOnClick,

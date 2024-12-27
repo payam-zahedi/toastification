@@ -161,7 +161,6 @@ class _ContentDesktopState extends ConsumerState<_ContentDesktop> {
                   const IconPicker(),
                 ],
               ),
-              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
@@ -182,7 +181,6 @@ class _ContentDesktopState extends ConsumerState<_ContentDesktop> {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
               SizedBox(
                 height: 106,
                 child: TextField(

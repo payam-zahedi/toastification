@@ -253,7 +253,10 @@ class Toastification {
     TextDirection? direction,
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
+    @Deprecated(
+      'IMPORTANT: The closeButtonShowType parameter is deprecated and will be removed in the next major version. Use the closeButton parameter instead.')
     CloseButtonShowType? closeButtonShowType,
+    ToastCloseButton closeButton = const ToastCloseButton(),
     bool? closeOnClick,
     bool? dragToClose,
     bool? showIcon,
@@ -262,6 +265,13 @@ class Toastification {
     bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
+    // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
+    var toastCloseButton = closeButton;
+    if (closeButtonShowType != null &&
+        closeButtonShowType != closeButton.showType) {
+      toastCloseButton = closeButton.copyWith(showType: closeButtonShowType);
+    }
+
     return showCustom(
       context: context,
       overlayState: overlayState,
@@ -291,7 +301,7 @@ class Toastification {
           showIcon: showIcon,
           showProgressBar: showProgressBar,
           progressBarTheme: progressBarTheme,
-          closeButtonShowType: closeButtonShowType,
+          closeButton: toastCloseButton,
           closeOnClick: closeOnClick,
           dragToClose: dragToClose,
           dismissDirection: dismissDirection,

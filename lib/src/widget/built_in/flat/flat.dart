@@ -12,8 +12,9 @@ class FlatToastWidget extends StatelessWidget {
     this.title,
     this.description,
     this.icon,
-    this.onCloseTap,
+    required this.onCloseTap,
     this.showCloseButton = true,
+    this.closeButton = const ToastCloseButton(),
     this.progressBarValue,
     this.progressBarWidget,
   });
@@ -23,8 +24,9 @@ class FlatToastWidget extends StatelessWidget {
 
   final Widget? icon;
 
-  final VoidCallback? onCloseTap;
+  final VoidCallback onCloseTap;
   final bool showCloseButton;
+  final ToastCloseButton closeButton;
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
@@ -75,9 +77,10 @@ class FlatToastWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          ToastCloseButton(
+          ToastCloseButtonHolder(
             onCloseTap: onCloseTap,
             showCloseButton: showCloseButton,
+            toastCloseButton: closeButton,
           ),
         ],
       ),

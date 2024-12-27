@@ -33,8 +33,7 @@ mixin _$ToastDetail {
   Duration? get autoCloseDuration => throw _privateConstructorUsedError;
   Duration? get animationDuration => throw _privateConstructorUsedError;
   AnimationType get animationType => throw _privateConstructorUsedError;
-  CloseButtonShowType get closeButtonShowType =>
-      throw _privateConstructorUsedError;
+  ToastCloseButton get closeButton => throw _privateConstructorUsedError;
   bool get useContext => throw _privateConstructorUsedError;
   bool get showProgressBar => throw _privateConstructorUsedError;
   bool get closeOnClick => throw _privateConstructorUsedError;
@@ -74,7 +73,7 @@ abstract class $ToastDetailCopyWith<$Res> {
       Duration? autoCloseDuration,
       Duration? animationDuration,
       AnimationType animationType,
-      CloseButtonShowType closeButtonShowType,
+      ToastCloseButton closeButton,
       bool useContext,
       bool showProgressBar,
       bool closeOnClick,
@@ -118,7 +117,7 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
     Object? animationType = null,
-    Object? closeButtonShowType = null,
+    Object? closeButton = null,
     Object? useContext = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
@@ -196,10 +195,10 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.animationType
           : animationType // ignore: cast_nullable_to_non_nullable
               as AnimationType,
-      closeButtonShowType: null == closeButtonShowType
-          ? _value.closeButtonShowType
-          : closeButtonShowType // ignore: cast_nullable_to_non_nullable
-              as CloseButtonShowType,
+      closeButton: null == closeButton
+          ? _value.closeButton
+          : closeButton // ignore: cast_nullable_to_non_nullable
+              as ToastCloseButton,
       useContext: null == useContext
           ? _value.useContext
           : useContext // ignore: cast_nullable_to_non_nullable
@@ -272,7 +271,7 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       Duration? autoCloseDuration,
       Duration? animationDuration,
       AnimationType animationType,
-      CloseButtonShowType closeButtonShowType,
+      ToastCloseButton closeButton,
       bool useContext,
       bool showProgressBar,
       bool closeOnClick,
@@ -315,7 +314,7 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? autoCloseDuration = freezed,
     Object? animationDuration = freezed,
     Object? animationType = null,
-    Object? closeButtonShowType = null,
+    Object? closeButton = null,
     Object? useContext = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
@@ -393,10 +392,10 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.animationType
           : animationType // ignore: cast_nullable_to_non_nullable
               as AnimationType,
-      closeButtonShowType: null == closeButtonShowType
-          ? _value.closeButtonShowType
-          : closeButtonShowType // ignore: cast_nullable_to_non_nullable
-              as CloseButtonShowType,
+      closeButton: null == closeButton
+          ? _value.closeButton
+          : closeButton // ignore: cast_nullable_to_non_nullable
+              as ToastCloseButton,
       useContext: null == useContext
           ? _value.useContext
           : useContext // ignore: cast_nullable_to_non_nullable
@@ -450,7 +449,7 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.autoCloseDuration = const Duration(seconds: 4),
       this.animationDuration,
       this.animationType = const BounceAnimationType(),
-      this.closeButtonShowType = CloseButtonShowType.always,
+      this.closeButton = const ToastCloseButton(),
       this.useContext = true,
       this.showProgressBar = false,
       this.closeOnClick = true,
@@ -503,7 +502,7 @@ class _$ToastDetailImpl implements _ToastDetail {
   final AnimationType animationType;
   @override
   @JsonKey()
-  final CloseButtonShowType closeButtonShowType;
+  final ToastCloseButton closeButton;
   @override
   @JsonKey()
   final bool useContext;
@@ -528,7 +527,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButton: $closeButton, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
   }
 
   @override
@@ -552,8 +551,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.foregroundColor == foregroundColor) &&
             (identical(other.iconColor, iconColor) ||
                 other.iconColor == iconColor) &&
-            const DeepCollectionEquality()
-                .equals(other.borderRadius, borderRadius) &&
+            (identical(other.borderRadius, borderRadius) ||
+                other.borderRadius == borderRadius) &&
             (identical(other.borderSide, borderSide) ||
                 other.borderSide == borderSide) &&
             (identical(other.shadow, shadow) || other.shadow == shadow) &&
@@ -565,8 +564,8 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.animationDuration == animationDuration) &&
             (identical(other.animationType, animationType) ||
                 other.animationType == animationType) &&
-            (identical(other.closeButtonShowType, closeButtonShowType) ||
-                other.closeButtonShowType == closeButtonShowType) &&
+            (identical(other.closeButton, closeButton) ||
+                other.closeButton == closeButton) &&
             (identical(other.useContext, useContext) ||
                 other.useContext == useContext) &&
             (identical(other.showProgressBar, showProgressBar) ||
@@ -596,14 +595,14 @@ class _$ToastDetailImpl implements _ToastDetail {
         backgroundColor,
         foregroundColor,
         iconColor,
-        const DeepCollectionEquality().hash(borderRadius),
+        borderRadius,
         borderSide,
         shadow,
         direction,
         autoCloseDuration,
         animationDuration,
         animationType,
-        closeButtonShowType,
+        closeButton,
         useContext,
         showProgressBar,
         closeOnClick,
@@ -641,7 +640,7 @@ abstract class _ToastDetail implements ToastDetail {
       final Duration? autoCloseDuration,
       final Duration? animationDuration,
       final AnimationType animationType,
-      final CloseButtonShowType closeButtonShowType,
+      final ToastCloseButton closeButton,
       final bool useContext,
       final bool showProgressBar,
       final bool closeOnClick,
@@ -685,7 +684,7 @@ abstract class _ToastDetail implements ToastDetail {
   @override
   AnimationType get animationType;
   @override
-  CloseButtonShowType get closeButtonShowType;
+  ToastCloseButton get closeButton;
   @override
   bool get useContext;
   @override

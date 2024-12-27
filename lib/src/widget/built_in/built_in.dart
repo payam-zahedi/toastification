@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/context_ext.dart';
 
-/// Using this enum you can define the behavior of the toast close button
-enum CloseButtonShowType {
-  /// [always] - show the close button always
-  always._('Always'),
-
-  /// [onHover] - show the close button only when the mouse is hovering the toast
-  onHover._('On Hover'),
-
-  /// [none] - do not show the close button
-  none._('None');
-
-  const CloseButtonShowType._(this.title);
-
-  final String title;
-
-  @override
-  String toString() => title;
-
-  String toValueString() => 'CloseButtonShowType.$name';
-}
-
 /// Creates the built-in toastification content - title, description, progress bar
 ///
 /// This widget is used by the built-in toastification widgets
