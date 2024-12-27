@@ -163,13 +163,13 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
             toastDetail.copyWith(
               closeButton: ToastCloseButton(
                 showType: toastDetail.closeButton.showType,
-                buttonBuilder: (context, onTap) {
+                buttonBuilder: (context, onClose) {
                   return OutlinedButton.icon(
                     style: OutlinedButton.styleFrom(
                       padding: edgeInsets,
                       minimumSize: size,
                     ),
-                    onPressed: onTap,
+                    onPressed: onClose,
                     icon: const Icon(Iconsax.monitor_copy, size: 20),
                     label: const Text('Preview on Screen'),
                   );
