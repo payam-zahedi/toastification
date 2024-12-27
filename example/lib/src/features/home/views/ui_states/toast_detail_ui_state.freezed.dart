@@ -34,8 +34,6 @@ mixin _$ToastDetail {
   Duration? get animationDuration => throw _privateConstructorUsedError;
   AnimationType get animationType => throw _privateConstructorUsedError;
   ToastCloseButton get closeButton => throw _privateConstructorUsedError;
-  CloseButtonShowType get closeButtonShowType =>
-      throw _privateConstructorUsedError;
   bool get useContext => throw _privateConstructorUsedError;
   bool get showProgressBar => throw _privateConstructorUsedError;
   bool get closeOnClick => throw _privateConstructorUsedError;
@@ -76,7 +74,6 @@ abstract class $ToastDetailCopyWith<$Res> {
       Duration? animationDuration,
       AnimationType animationType,
       ToastCloseButton closeButton,
-      CloseButtonShowType closeButtonShowType,
       bool useContext,
       bool showProgressBar,
       bool closeOnClick,
@@ -121,7 +118,6 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
     Object? animationDuration = freezed,
     Object? animationType = null,
     Object? closeButton = null,
-    Object? closeButtonShowType = null,
     Object? useContext = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
@@ -203,10 +199,6 @@ class _$ToastDetailCopyWithImpl<$Res, $Val extends ToastDetail>
           ? _value.closeButton
           : closeButton // ignore: cast_nullable_to_non_nullable
               as ToastCloseButton,
-      closeButtonShowType: null == closeButtonShowType
-          ? _value.closeButtonShowType
-          : closeButtonShowType // ignore: cast_nullable_to_non_nullable
-              as CloseButtonShowType,
       useContext: null == useContext
           ? _value.useContext
           : useContext // ignore: cast_nullable_to_non_nullable
@@ -280,7 +272,6 @@ abstract class _$$ToastDetailImplCopyWith<$Res>
       Duration? animationDuration,
       AnimationType animationType,
       ToastCloseButton closeButton,
-      CloseButtonShowType closeButtonShowType,
       bool useContext,
       bool showProgressBar,
       bool closeOnClick,
@@ -324,7 +315,6 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
     Object? animationDuration = freezed,
     Object? animationType = null,
     Object? closeButton = null,
-    Object? closeButtonShowType = null,
     Object? useContext = null,
     Object? showProgressBar = null,
     Object? closeOnClick = null,
@@ -406,10 +396,6 @@ class __$$ToastDetailImplCopyWithImpl<$Res>
           ? _value.closeButton
           : closeButton // ignore: cast_nullable_to_non_nullable
               as ToastCloseButton,
-      closeButtonShowType: null == closeButtonShowType
-          ? _value.closeButtonShowType
-          : closeButtonShowType // ignore: cast_nullable_to_non_nullable
-              as CloseButtonShowType,
       useContext: null == useContext
           ? _value.useContext
           : useContext // ignore: cast_nullable_to_non_nullable
@@ -464,7 +450,6 @@ class _$ToastDetailImpl implements _ToastDetail {
       this.animationDuration,
       this.animationType = const BounceAnimationType(),
       this.closeButton = const ToastCloseButton(),
-      this.closeButtonShowType = CloseButtonShowType.always,
       this.useContext = true,
       this.showProgressBar = false,
       this.closeOnClick = true,
@@ -520,9 +505,6 @@ class _$ToastDetailImpl implements _ToastDetail {
   final ToastCloseButton closeButton;
   @override
   @JsonKey()
-  final CloseButtonShowType closeButtonShowType;
-  @override
-  @JsonKey()
   final bool useContext;
   @override
   @JsonKey()
@@ -545,7 +527,7 @@ class _$ToastDetailImpl implements _ToastDetail {
 
   @override
   String toString() {
-    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButton: $closeButton, closeButtonShowType: $closeButtonShowType, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
+    return 'ToastDetail(type: $type, style: $style, alignment: $alignment, title: $title, description: $description, icon: $icon, primaryColor: $primaryColor, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, iconColor: $iconColor, borderRadius: $borderRadius, borderSide: $borderSide, shadow: $shadow, direction: $direction, autoCloseDuration: $autoCloseDuration, animationDuration: $animationDuration, animationType: $animationType, closeButton: $closeButton, useContext: $useContext, showProgressBar: $showProgressBar, closeOnClick: $closeOnClick, pauseOnHover: $pauseOnHover, dragToClose: $dragToClose, applyBlurEffect: $applyBlurEffect, showIcon: $showIcon)';
   }
 
   @override
@@ -584,8 +566,6 @@ class _$ToastDetailImpl implements _ToastDetail {
                 other.animationType == animationType) &&
             (identical(other.closeButton, closeButton) ||
                 other.closeButton == closeButton) &&
-            (identical(other.closeButtonShowType, closeButtonShowType) ||
-                other.closeButtonShowType == closeButtonShowType) &&
             (identical(other.useContext, useContext) ||
                 other.useContext == useContext) &&
             (identical(other.showProgressBar, showProgressBar) ||
@@ -623,7 +603,6 @@ class _$ToastDetailImpl implements _ToastDetail {
         animationDuration,
         animationType,
         closeButton,
-        closeButtonShowType,
         useContext,
         showProgressBar,
         closeOnClick,
@@ -662,7 +641,6 @@ abstract class _ToastDetail implements ToastDetail {
       final Duration? animationDuration,
       final AnimationType animationType,
       final ToastCloseButton closeButton,
-      final CloseButtonShowType closeButtonShowType,
       final bool useContext,
       final bool showProgressBar,
       final bool closeOnClick,
@@ -707,8 +685,6 @@ abstract class _ToastDetail implements ToastDetail {
   AnimationType get animationType;
   @override
   ToastCloseButton get closeButton;
-  @override
-  CloseButtonShowType get closeButtonShowType;
   @override
   bool get useContext;
   @override
