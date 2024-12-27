@@ -33,21 +33,24 @@ class BorderedContainer extends StatelessWidget {
     final theme = Theme.of(context);
 
     final background = active
-        ? theme.colorScheme.primary.withOpacity(.1)
+        ? theme.colorScheme.primary.withValues(alpha: 0.1)
         : theme.colorScheme.surface;
 
-    final disableBackground = theme.colorScheme.onSurface.withOpacity(.05);
+    final disableBackground =
+        theme.colorScheme.onSurface.withValues(alpha: .05);
 
     final foreground = active
         ? theme.colorScheme.primary
         : theme.colorScheme.onPrimaryContainer;
 
-    final disableForeground = theme.colorScheme.onSurface.withOpacity(.35);
+    final disableForeground =
+        theme.colorScheme.onSurface.withValues(alpha: .35);
 
     final borderColor =
         active ? theme.colorScheme.primary : theme.colorScheme.outline;
 
-    final disableBorderColor = theme.colorScheme.onSurface.withOpacity(.05);
+    final disableBorderColor =
+        theme.colorScheme.onSurface.withValues(alpha: .05);
 
     final borderSize = enabled
         ? active
@@ -131,7 +134,7 @@ class ShadowContainer extends StatelessWidget {
     final theme = Theme.of(context);
 
     final backgroundColor = active
-        ? theme.colorScheme.primary.withOpacity(.1)
+        ? theme.colorScheme.primary.withValues(alpha: .1)
         : theme.colorScheme.surface;
 
     final foreground = active

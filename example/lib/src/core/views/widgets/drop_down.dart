@@ -42,18 +42,18 @@ class BorderedDropDown<T> extends StatelessWidget {
                       const EdgeInsetsDirectional.symmetric(horizontal: 12),
                   child: icon,
                 ),
-          prefixIconColor: theme.colorScheme.onSurface.withOpacity(.2),
+          prefixIconColor: theme.colorScheme.onSurface.withValues(alpha: .2),
           hintText: hint,
           hintStyle: theme.textTheme.bodyMedium?.copyWith(
             height: 1.1,
           ),
           enabled: available,
           filled: !available,
-          fillColor: theme.colorScheme.onSurface.withOpacity(.05),
+          fillColor: theme.colorScheme.onSurface.withValues(alpha: .05),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(
-              color: theme.colorScheme.onSurface.withOpacity(.05),
+              color: theme.colorScheme.onSurface.withValues(alpha: .05),
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -70,7 +70,7 @@ class BorderedDropDown<T> extends StatelessWidget {
                     hint,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       height: 1.1,
-                      color: theme.colorScheme.onSurface.withOpacity(.35),
+                      color: theme.colorScheme.onSurface.withValues(alpha: .35),
                     ),
                   ),
                   const SizedBox(width: 4),
@@ -110,7 +110,7 @@ class BorderedDropDown<T> extends StatelessWidget {
                   item.value.toString(),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     height: 1.1,
-                    color: theme.colorScheme.onSurface.withOpacity(.3),
+                    color: theme.colorScheme.onSurface.withValues(alpha: .3),
                     fontWeight: FontWeight.w400,
                   ),
                 ),

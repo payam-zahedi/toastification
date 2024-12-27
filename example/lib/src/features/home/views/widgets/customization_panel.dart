@@ -138,7 +138,7 @@ class CustomizeTitle extends StatelessWidget {
               mobile: 14,
             ),
             fontWeight: FontWeight.w500,
-            color: titleColor.withOpacity(.4),
+            color: titleColor.withValues(alpha: .4),
             height: 1.2,
           ),
         ),
@@ -690,7 +690,7 @@ class _ProgressBarSection extends ConsumerWidget {
               title: 'Timeout',
               icon: Icon(
                 Iconsax.timer_1_copy,
-                color: theme.colorScheme.onSurface.withOpacity(.2),
+                color: theme.colorScheme.onSurface.withValues(alpha: .2),
               ),
               value: timeoutValue,
               valueSuffix: 's',

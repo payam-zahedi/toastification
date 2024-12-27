@@ -168,7 +168,7 @@ class _InformationWidget extends ConsumerWidget {
             'With Toastification, you can add and manage multiple toast messages\n simultaneously with ease. Additionally, we\'ve included some predefined toast\n widgets that can help you show the state of your application.',
             textAlign: textAlign,
             style: theme.textTheme.bodyMedium?.copyWith(
-              color: theme.colorScheme.surface.withOpacity(.4),
+              color: theme.colorScheme.surface.withValues(alpha: .4),
               fontSize: isBig ? bigDescription : mediumDescription,
               fontWeight: FontWeight.w300,
               height: 1.4,

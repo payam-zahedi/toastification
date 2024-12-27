@@ -38,7 +38,7 @@ class UtilsMapping {
 
   static String? colorToHex(Color? color) {
     return color != null
-        ? '#${color.value.toRadixString(16).padLeft(8, '0')}'
+        ? '#${color.intValue.toRadixString(16).padLeft(8, '0')}'
         : null;
   }
 

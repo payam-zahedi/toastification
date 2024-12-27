@@ -93,7 +93,7 @@ class _CustomColorPickerState extends State<CustomColorPicker> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                                 side: BorderSide(
-                                  color: Colors.black.withOpacity(.05),
+                                  color: Colors.black.withValues(alpha: .05),
                                 ),
                               ),
                             ),
@@ -164,21 +164,5 @@ class _CustomColorPickerState extends State<CustomColorPicker> {
         ],
       ),
     );
-  }
-}
-
-extension HexColor on Color {
-  String get pureHex {
-    return value.toRadixString(16).padLeft(8, '0').toUpperCase();
-  }
-
-  String get hexStr {
-    final hexValue = pureHex;
-
-    if (hexValue.startsWith('FF')) {
-      return '#${hexValue.substring(2)}';
-    }
-
-    return hexValue;
   }
 }

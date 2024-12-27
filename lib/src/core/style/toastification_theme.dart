@@ -61,8 +61,9 @@ class ToastificationTheme extends Equatable {
   Color? get background => _backgroundColor;
   Color? get foreground => _foregroundColor;
 
-  Color get decorationColor =>
-      _applyBlurEffect ? backgroundColor.withOpacity(0.5) : backgroundColor;
+  Color get decorationColor => _applyBlurEffect
+      ? backgroundColor.withValues(alpha: 0.5)
+      : backgroundColor;
   EdgeInsetsGeometry get padding => _padding ?? selectedStyle.padding;
   BorderRadiusGeometry get borderRadius =>
       _borderRadius ?? selectedStyle.borderRadius;
@@ -84,7 +85,7 @@ class ToastificationTheme extends Equatable {
 
   IconData get closeIcon => selectedStyle.closeIcon;
   Color get closeIconColor =>
-      foreground?.withOpacity(.4) ?? selectedStyle.closeIconColor;
+      foreground?.withValues(alpha: .4) ?? selectedStyle.closeIconColor;
 
   TextStyle? get titleTextStyle => selectedStyle.titleTextStyle?.copyWith(
         color: foregroundColor,
@@ -95,7 +96,7 @@ class ToastificationTheme extends Equatable {
 
   TextStyle? get descriptionTextStyle =>
       selectedStyle.descriptionTextStyle?.copyWith(
-        color: foregroundColor.withOpacity(.7),
+        color: foregroundColor.withValues(alpha: .7),
         fontSize: 14,
         fontWeight: FontWeight.w300,
         height: 1.2,

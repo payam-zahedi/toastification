@@ -93,7 +93,7 @@ class SubSection extends StatelessWidget {
       style: theme.textTheme.titleMedium?.copyWith(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: theme.colorScheme.onSurface.withOpacity(.4),
+        color: theme.colorScheme.onSurface.withValues(alpha: .4),
       ),
     );
 

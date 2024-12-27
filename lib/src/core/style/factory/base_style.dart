@@ -22,7 +22,7 @@ abstract class BaseStyle implements BuiltInStyle {
   IconData get closeIcon => Icons.close;
 
   @override
-  Color get closeIconColor => foregroundColor.withOpacity(.4);
+  Color get closeIconColor => foregroundColor.withValues(alpha: .4);
 
   @override
   BorderRadiusGeometry get borderRadius =>
@@ -51,7 +51,7 @@ abstract class BaseStyle implements BuiltInStyle {
 
   @override
   TextStyle? get descriptionTextStyle => theme.textTheme.titleSmall?.copyWith(
-        color: foregroundColor.withOpacity(.8),
+        color: foregroundColor.withValues(alpha: .8),
         fontSize: 14,
         fontWeight: FontWeight.w300,
         height: 1.2,
@@ -66,9 +66,9 @@ abstract class BaseStyle implements BuiltInStyle {
   @override
   ProgressIndicatorThemeData get progressIndicatorTheme =>
       ProgressIndicatorThemeData(
-        color: foregroundColor.withOpacity(.15),
+        color: foregroundColor.withValues(alpha: .15),
         linearMinHeight: progressIndicatorStrokeWidth,
-        linearTrackColor: foregroundColor.withOpacity(.05),
-        refreshBackgroundColor: foregroundColor.withOpacity(.05),
+        linearTrackColor: foregroundColor.withValues(alpha: .05),
+        refreshBackgroundColor: foregroundColor.withValues(alpha: .05),
       );
 }

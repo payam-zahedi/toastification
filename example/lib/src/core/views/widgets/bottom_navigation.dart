@@ -196,10 +196,10 @@ class _BottomNavigationViewState extends ConsumerState<BottomNavigationView>
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black.withOpacity(.15)),
+              border: Border.all(color: Colors.black.withValues(alpha: .15)),
               boxShadow: [
                 BoxShadow(
-                  color: theme.colorScheme.onSurface.withOpacity(.1),
+                  color: theme.colorScheme.onSurface.withValues(alpha: .1),
                   blurRadius: 48,
                   offset: const Offset(0, 24),
                 )
