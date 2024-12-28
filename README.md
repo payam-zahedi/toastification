@@ -210,6 +210,48 @@ toastification.showCustom(
 
 With showCustom(), you're only limited by your imagination. Create a toast message that stands out from the crowd and adds a touch of personality to your app!
 
+### Using GlobalNavigatorKey
+
+If you need to show toasts from places where you don't have access to the BuildContext, you can use a GlobalNavigatorKey. This is particularly handy when you are using frameworks like GetX, where you don't have access to `context`.
+
+First, create a GlobalNavigatorKey:
+‍‍
+
+```dart
+final GlobalKey<NavigatorState> globalNavigatorKey = GlobalKey<NavigatorState>();
+```
+
+Then, assign it to your MaterialApp:
+
+```dart
+MaterialApp(
+  navigatorKey: navigatorKey,
+  // ... other properties
+)
+```
+
+Now you can `show` toasts using the overlayState from the navigatorKey:
+
+```dart
+toastification.show(
+  overlayState: navigatorKey.currentState?.overlay,
+  autoCloseDuration: const Duration(seconds: 5),
+  title: Text('Hello, World!'),
+);
+```
+
+If you want to use `showCustom` instead, you can use it like this:
+
+```dart
+toastification.showCustom(
+  overlayState: navigatorKey.currentState?.overlay,
+  autoCloseDuration: const Duration(seconds: 5),
+  builder: (BuildContext context, ToastificationItem holder) {
+     // Your custom toast widget
+  },
+);
+```
+
 ## Custom Animations
 
 You can customize the animation of the toast notification by providing a Duration for the animation duration and implementing your own animation builder function using the animationBuilder parameter. Here's an example of how to use custom animations:
