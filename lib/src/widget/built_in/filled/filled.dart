@@ -50,7 +50,7 @@ class FilledToastWidget extends StatelessWidget {
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
         color: toastTheme.applyBlurEffect
-            ? backgroundColor.withOpacity(0.8)
+            ? backgroundColor.withValues(alpha: 0.8)
             : backgroundColor,
         borderRadius: toastTheme.borderRadius,
         border: toastTheme.decorationBorder,

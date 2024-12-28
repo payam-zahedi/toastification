@@ -92,8 +92,8 @@ class ToastStylePickerState extends State<ToastStylePicker> {
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
-                                color:
-                                    theme.colorScheme.onSurface.withOpacity(.4),
+                                color: theme.colorScheme.onSurface
+                                    .withValues(alpha: .4),
                               ),
                             ),
                           ),

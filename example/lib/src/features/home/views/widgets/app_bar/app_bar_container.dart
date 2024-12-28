@@ -33,7 +33,7 @@ class AppBarContainer extends StatelessWidget {
         border: !isElevated
             ? const Border()
             : Border.all(
-                color: colorScheme.onSurface.withOpacity(.08),
+                color: colorScheme.onSurface.withValues(alpha: .08),
                 width: 1,
               ),
         boxShadow: [
@@ -44,7 +44,7 @@ class AppBarContainer extends StatelessWidget {
                   offset: Offset(0, 0),
                 )
               : BoxShadow(
-                  color: colorScheme.onSurface.withOpacity(.1),
+                  color: colorScheme.onSurface.withValues(alpha: .1),
                   blurRadius: 48,
                   spreadRadius: -24,
                   offset: const Offset(0, 24),

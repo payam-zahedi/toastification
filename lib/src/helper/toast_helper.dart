@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:toastification/src/helper/color_helper.dart';
 
 /// ToastHelper is a helper class that contains some useful utility methods like [convertRange] and [createMaterialColor]
 class ToastHelper {
@@ -39,7 +40,7 @@ class ToastHelper {
     final strengths = <double>[.05];
     final swatch = <int, Color>{};
 
-    final r = color.red, g = color.green, b = color.blue;
+    final r = color.intRed, g = color.intGreen, b = color.intBlue;
 
     for (var i = 1; i < 10; i++) {
       strengths.add(0.1 * i);
@@ -55,6 +56,8 @@ class ToastHelper {
       );
     }
 
-    return MaterialColor(color.value, swatch);
+    final colorIntValue = color.intValue;
+
+    return MaterialColor(colorIntValue, swatch);
   }
 }

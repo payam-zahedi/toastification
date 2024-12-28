@@ -1,4 +1,4 @@
-library toastification;
+library;
 
 // core
 export 'src/core/toastification.dart';
@@ -12,6 +12,7 @@ export 'src/core/constants_values.dart';
 export 'src/core/style/toastification_style.dart';
 export 'src/core/style/factory/style_factory.dart';
 export 'src/widget/toastification_config_provider.dart';
+export 'src/helper/color_helper.dart';
 
 export 'src/core/style/toastification_theme_provider.dart';
 

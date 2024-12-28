@@ -18,7 +18,7 @@ dependencies:
   dart_style: ^2.3.2
   flutter_svg: ^2.0.6
   font_awesome_flutter: ^10.4.0
-  flutter_sticky_header: ^0.6.5
+  flutter_sticky_header: ^0.7.0
   highlight: ^0.7.0
   flutter_highlight: ^0.7.0
   responsive_framework: ^0.2.0

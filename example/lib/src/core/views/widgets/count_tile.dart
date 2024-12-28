@@ -61,7 +61,8 @@ class CountTile extends StatelessWidget {
                   TextSpan(
                     text: ' $valueSuffix',
                     style: DefaultTextStyle.of(context).style.copyWith(
-                          color: theme.colorScheme.onSurface.withOpacity(.5),
+                          color:
+                              theme.colorScheme.onSurface.withValues(alpha: .5),
                           fontWeight: FontWeight.w300,
                           height: 1,
                         ),

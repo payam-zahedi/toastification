@@ -121,7 +121,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
         elevation: 0,
         side: BorderSide(
           width: 1,
-          color: scheme.onSurface.withOpacity(.1),
+          color: scheme.onSurface.withValues(alpha: .1),
         ),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -143,7 +143,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
       hintStyle: textTheme.bodyMedium?.copyWith(
-        color: scheme.onSurface.withOpacity(.5),
+        color: scheme.onSurface.withValues(alpha: .5),
         fontWeight: FontWeight.w400,
       ),
       border: OutlineInputBorder(
