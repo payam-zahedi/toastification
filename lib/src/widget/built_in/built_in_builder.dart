@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -92,9 +91,9 @@ class BuiltInBuilder extends StatelessWidget {
     final pauseOnHover = this.pauseOnHover ?? true;
     final dragToClose = this.dragToClose ?? true;
 
-    final primaryColor = ToastHelper.convertToMaterialColor(this.primaryColor);
+    final primaryColor = ColorUtils.convertToMaterialColor(this.primaryColor);
     final backgroundColor =
-        ToastHelper.convertToMaterialColor(this.backgroundColor);
+        ColorUtils.convertToMaterialColor(this.backgroundColor);
 
     return _BuiltInContainer(
       item: item,
@@ -233,13 +232,13 @@ class BuiltInToastBuilder extends StatelessWidget {
       themeBuilder: (theme) {
         return theme.copyWith(
           backgroundColor: backgroundColor != null
-              ? ToastHelper.createMaterialColor(backgroundColor!)
+              ? ColorUtils.createMaterialColor(backgroundColor!)
               : null,
           primaryColor: primaryColor != null
-              ? ToastHelper.createMaterialColor(primaryColor!)
+              ? ColorUtils.createMaterialColor(primaryColor!)
               : null,
           foregroundColor: foregroundColor != null
-              ? ToastHelper.createMaterialColor(foregroundColor!)
+              ? ColorUtils.createMaterialColor(foregroundColor!)
               : null,
           padding: padding ?? theme.padding,
           borderRadius: borderRadius ?? theme.borderRadius,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/helper/toast_helper.dart';
+import 'package:toastification/src/utils/common_utils.dart';
 import 'package:toastification/toastification.dart';
 
 /// This class is responsible for creating the default animation for the toastification
@@ -113,7 +113,7 @@ class _ToastTimerAnimationBuilderState extends State<ToastTimerAnimationBuilder>
   void _initAnimation() {
     if (widget.item.hasTimer) {
       controller = AnimationController(
-        value: ToastHelper.convertRange(
+        value: CommonUtils.convertRange(
           0,
           widget.item.originalDuration!.inMicroseconds.toDouble(),
           0,

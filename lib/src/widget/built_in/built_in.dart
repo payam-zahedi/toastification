@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/context_ext.dart';
+import 'package:toastification/src/utils/toast_theme_utils.dart';
 
 /// Creates the built-in toastification content - title, description, progress bar
 ///

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:toastification/src/core/constants_values.dart';
+import 'package:toastification/src/utils/constants_values.dart';
 
 class ToastificationType {
   final String name;

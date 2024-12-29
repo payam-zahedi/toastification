@@ -8,11 +8,11 @@ export 'src/core/toastification_callbacks.dart';
 export 'src/core/toastification_overlay_state.dart'
     hide findToastificationOverlayState, ToastificationOverlayState;
 export 'src/core/toastification_type.dart';
-export 'src/core/constants_values.dart';
+export 'src/utils/constants_values.dart';
 export 'src/core/style/toastification_style.dart';
 export 'src/core/style/factory/style_factory.dart';
 export 'src/widget/toastification_config_provider.dart';
-export 'src/helper/color_helper.dart';
+export 'src/utils/color_utils.dart';
 
 export 'src/core/style/toastification_theme_provider.dart';
 

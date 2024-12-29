@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/helper/toast_helper.dart';
 import 'package:toastification/toastification.dart';
 
 // TODO(payam): rename this class and subclass to something more meaningful - default
@@ -10,10 +9,10 @@ abstract class BaseStyle implements BuiltInStyle {
   final ThemeData theme;
 
   @override
-  MaterialColor get primaryColor => ToastHelper.createMaterialColor(type.color);
+  MaterialColor get primaryColor => ColorUtils.createMaterialColor(type.color);
 
   @override
-  Color get foregroundColor => ToastHelper.createMaterialColor(Colors.white);
+  Color get foregroundColor => ColorUtils.createMaterialColor(Colors.white);
 
   @override
   IconData get icon => type.icon;

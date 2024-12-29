@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/context_ext.dart';
+import 'package:toastification/src/utils/toast_theme_utils.dart';
 
 /// Signature for a function that builds a custom close button widget.
 ///
