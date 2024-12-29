@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style/toastification_inherited.dart';
-import 'package:toastification/src/core/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/style/toastification_theme.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastificationThemeProvider extends StatelessWidget {
@@ -33,5 +32,28 @@ class ToastificationThemeProvider extends StatelessWidget {
       theme: theme,
       child: child,
     );
+  }
+}
+
+// TODO: make this class private
+class ToastificationThemeInherited extends InheritedWidget {
+  final ToastificationTheme theme;
+
+  const ToastificationThemeInherited({
+    super.key,
+    required this.theme,
+    required super.child,
+  });
+
+  static ToastificationThemeInherited of(BuildContext context) {
+    final ToastificationThemeInherited? result = context
+        .dependOnInheritedWidgetOfExactType<ToastificationThemeInherited>();
+    assert(result != null, 'No ToastificationThemeInherited found in context');
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(ToastificationThemeInherited oldWidget) {
+    return theme != oldWidget.theme;
   }
 }

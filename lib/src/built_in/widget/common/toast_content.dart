@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
 
-/// Creates the built-in toastification content - title, description, progress bar
+/// Creates the toastification content - title, description, progress bar
 ///
-/// This widget is used by the built-in toastification widgets
-class BuiltInContent extends StatelessWidget {
-  const BuiltInContent({
+/// This widget is used by the toastification widgets
+class ToastContent extends StatelessWidget {
+  const ToastContent({
     super.key,
     this.title,
     this.description,
@@ -58,3 +58,4 @@ class BuiltInContent extends StatelessWidget {
     );
   }
 }
+

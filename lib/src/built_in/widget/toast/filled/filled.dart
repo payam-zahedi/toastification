@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
-import 'package:toastification/src/core/style/toastification_theme.dart';
-import 'package:toastification/src/widget/built_in/built_in.dart';
-import 'package:toastification/src/widget/built_in/widget/close_button.dart';
+import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/widget/common/toast_content.dart';
+import 'package:toastification/src/built_in/widget/common/close_button.dart';
 
 class FilledToastWidget extends StatelessWidget {
   const FilledToastWidget({
@@ -72,7 +72,7 @@ class FilledToastWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: BuiltInContent(
+            child: ToastContent(
               title: title,
               description: description,
               progressBarValue: progressBarValue,

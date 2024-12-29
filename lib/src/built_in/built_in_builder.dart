@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:toastification/src/widget/built_in/widget/on_hover_builder.dart';
+import 'package:toastification/src/built_in/widget/common/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
 
 class BuiltInBuilder extends StatelessWidget {

@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
-import 'package:toastification/src/core/style/toastification_theme.dart';
-import 'package:toastification/src/widget/built_in/widget/close_button.dart';
-import 'package:toastification/toastification.dart';
+import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/widget/common/toast_content.dart';
+import 'package:toastification/src/built_in/widget/common/close_button.dart';
 
-class FlatColoredToastWidget extends StatelessWidget {
-  const FlatColoredToastWidget({
+class FlatToastWidget extends StatelessWidget {
+  const FlatToastWidget({
     super.key,
     this.title,
     this.description,
@@ -50,11 +50,7 @@ class FlatColoredToastWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: toastTheme.decorationColor,
         borderRadius: toastTheme.borderRadius,
-        border: Border.fromBorderSide(
-          toastTheme.borderSide ??
-              toastTheme.selectedStyle.borderSide
-                  .copyWith(color: toastTheme.primaryColor),
-        ),
+        border: toastTheme.decorationBorder,
         boxShadow: toastTheme.boxShadow,
       ),
       padding: toastTheme.padding,
@@ -73,7 +69,7 @@ class FlatColoredToastWidget extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: BuiltInContent(
+            child: ToastContent(
               title: title,
               description: description,
               progressBarValue: progressBarValue,

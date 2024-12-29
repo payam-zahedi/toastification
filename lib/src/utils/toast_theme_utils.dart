@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style/toastification_inherited.dart';
-import 'package:toastification/src/core/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/toastification.dart';
 
 extension ContextExt on BuildContext {
   ToastificationTheme get toastTheme =>

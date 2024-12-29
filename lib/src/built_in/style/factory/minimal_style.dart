@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/core/style/factory/base_style.dart';
+import 'package:toastification/src/built_in/style/factory/base_style.dart';
 
 class MinimalStyle extends BaseStyle {
   MinimalStyle(super.type, super.theme);
