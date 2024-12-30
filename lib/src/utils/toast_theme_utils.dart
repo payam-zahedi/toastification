@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/style/toastification_theme_data.dart';
 import 'package:toastification/toastification.dart';
 
 extension ContextExt on BuildContext {
-  ToastificationTheme get toastTheme =>
+  ToastificationThemeData get toastTheme =>
       ToastificationThemeInherited.of(this).theme;
 }

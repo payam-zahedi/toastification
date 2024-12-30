@@ -36,7 +36,6 @@ class ToastificationType {
   @override
   int get hashCode => name.hashCode;
 
-
   @override
   String toString() {
     return 'ToastificationType.$name';

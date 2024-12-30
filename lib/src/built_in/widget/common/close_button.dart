@@ -25,7 +25,7 @@ class ToastCloseButton extends Equatable {
 
   /// Defines when the close button should be shown
   final CloseButtonShowType showType;
-  
+
   /// Custom builder for the close button widget
   final CloseButtonBuilder? buttonBuilder;
 

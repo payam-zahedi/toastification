@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
-import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/style/toastification_theme_data.dart';
 import 'package:toastification/src/built_in/widget/common/toast_content.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 
@@ -56,7 +56,7 @@ class MinimalToastWidget extends StatelessWidget {
     );
   }
 
-  Widget buildBody(ToastificationTheme toastTheme) {
+  Widget buildBody(ToastificationThemeData toastTheme) {
     Widget body = Container(
       decoration: BoxDecoration(
         color: toastTheme.decorationColor,
@@ -77,7 +77,8 @@ class MinimalToastWidget extends StatelessWidget {
                   Icon(
                     toastTheme.icon,
                     size: 24,
-                    color: toastTheme.primary ?? toastTheme.iconColor,
+                    color:
+                        toastTheme.providedPrimaryColor ?? toastTheme.iconColor,
                   ),
             ),
           ),

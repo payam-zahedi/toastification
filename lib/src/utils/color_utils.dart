@@ -6,13 +6,13 @@ class ColorUtils {
   const ColorUtils._();
 
   /// Converts a [Color] to [MaterialColor] if possible.
-  /// 
+  ///
   /// This method attempts to:
   /// 1. Return null if the input color is null
   /// 2. Return the color directly if it's already a [MaterialColor]
   /// 3. Find a matching primary color from [Colors.primaries]
   /// 4. Create a new [MaterialColor] if no match is found
-  /// 
+  ///
   /// Returns a [MaterialColor] instance or null if the input is null.
   static MaterialColor? convertToMaterialColor(Color? color) {
     if (color == null) return null;
@@ -26,12 +26,12 @@ class ColorUtils {
   }
 
   /// Creates a custom [MaterialColor] swatch from a base [Color].
-  /// 
+  ///
   /// Generates a complete swatch of shades based on the input color by:
   /// - Creating 10 different strength variations of the color
   /// - Adjusting RGB values for each strength level
   /// - Maintaining the alpha channel at 1.0 (fully opaque)
-  /// 
+  ///
   /// Returns a [MaterialColor] with the generated swatch map.
   static MaterialColor createMaterialColor(Color color) {
     final strengths = <double>[.05];
@@ -60,19 +60,19 @@ class ColorUtils {
 }
 
 /// Extension on [Color] to provide integer-based color component access.
-/// 
+///
 /// Adds functionality to get color components (ARGB) as 8-bit integers
 /// and retrieve the complete color value as a 32-bit integer.
 extension IntColorComponents on Color {
   /// Alpha component as an 8-bit integer (0-255)
   int get intAlpha => _floatToInt8(a);
-  
+
   /// Red component as an 8-bit integer (0-255)
   int get intRed => _floatToInt8(r);
-  
+
   /// Green component as an 8-bit integer (0-255)
   int get intGreen => _floatToInt8(g);
-  
+
   /// Blue component as an 8-bit integer (0-255)
   int get intBlue => _floatToInt8(b);
 
@@ -84,4 +84,3 @@ extension IntColorComponents on Color {
     return (x * 255.0).round() & 0xff;
   }
 }
-

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
-import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/style/toastification_theme_data.dart';
 import 'package:toastification/toastification.dart';
 
 class SimpleToastWidget extends StatelessWidget {
@@ -33,7 +33,7 @@ class SimpleToastWidget extends StatelessWidget {
   }
 
   Widget buildContent({
-    required ToastificationTheme toastTheme,
+    required ToastificationThemeData toastTheme,
   }) {
     Widget body;
 

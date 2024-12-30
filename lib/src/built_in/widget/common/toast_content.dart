@@ -21,15 +21,17 @@ class ToastContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final defaultTheme = context.toastTheme;
+
     Widget content = DefaultTextStyle.merge(
-      style: context.toastTheme.titleTextStyle,
+      style: defaultTheme.titleTextStyle,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
       child: title ?? const SizedBox(),
     );
 
     final showColumn =
-        description != null || context.toastTheme.showProgressBar == true;
+        description != null || defaultTheme.showProgressBar == true;
     if (!showColumn) {
       return content;
     }
@@ -42,14 +44,14 @@ class ToastContent extends StatelessWidget {
         if (description != null) ...[
           if (title != null) const SizedBox(height: 6),
           DefaultTextStyle.merge(
-            style: context.toastTheme.descriptionTextStyle,
+            style: defaultTheme.descriptionTextStyle,
             child: description!,
           ),
         ],
-        if (context.toastTheme.showProgressBar) ...[
+        if (defaultTheme.showProgressBar) ...[
           if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
-            data: context.toastTheme.progressIndicatorTheme,
+            data: defaultTheme.progressIndicatorTheme,
             child: progressBarWidget ??
                 LinearProgressIndicator(value: progressBarValue),
           ),
@@ -58,4 +60,3 @@ class ToastContent extends StatelessWidget {
     );
   }
 }
-

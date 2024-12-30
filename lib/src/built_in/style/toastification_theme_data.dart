@@ -3,25 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 // TODO(payam): refactor this class and add more comments
-class ToastificationTheme extends Equatable {
-  final BuiltInStyle selectedStyle;
-  final ThemeData themeData;
-
-  // User customizable properties
-  final MaterialColor? _primaryColor;
-  final MaterialColor? _backgroundColor;
-  final Color? _foregroundColor;
-  final EdgeInsetsGeometry? _padding;
-  final BorderRadiusGeometry? _borderRadius;
-  final BorderSide? _borderSide;
-  final List<BoxShadow>? _boxShadow;
-  final bool _showProgressBar;
-  final bool _applyBlurEffect;
-  final bool _showIcon;
-  final TextDirection _direction;
-  final ProgressIndicatorThemeData? _progressIndicatorTheme;
-
-  const ToastificationTheme({
+class ToastificationThemeData extends Equatable {
+  const ToastificationThemeData({
     required this.selectedStyle,
     required this.themeData,
     MaterialColor? primaryColor,
@@ -50,6 +33,23 @@ class ToastificationTheme extends Equatable {
         _showIcon = showIcon,
         _progressIndicatorTheme = progressIndicatorTheme;
 
+  final BuiltInStyle selectedStyle;
+  final ThemeData themeData;
+
+  // User customizable properties
+  final MaterialColor? _primaryColor;
+  final MaterialColor? _backgroundColor;
+  final Color? _foregroundColor;
+  final EdgeInsetsGeometry? _padding;
+  final BorderRadiusGeometry? _borderRadius;
+  final BorderSide? _borderSide;
+  final List<BoxShadow>? _boxShadow;
+  final bool _showProgressBar;
+  final bool _applyBlurEffect;
+  final bool _showIcon;
+  final TextDirection _direction;
+  final ProgressIndicatorThemeData? _progressIndicatorTheme;
+
   // Getters that prioritize user-set values over default style values
   MaterialColor get primaryColor => _primaryColor ?? selectedStyle.primaryColor;
   Color get backgroundColor =>
@@ -57,7 +57,7 @@ class ToastificationTheme extends Equatable {
   Color get foregroundColor =>
       _foregroundColor ?? selectedStyle.foregroundColor;
 
-  MaterialColor? get primary => _primaryColor;
+  MaterialColor? get providedPrimaryColor => _primaryColor;
   Color? get background => _backgroundColor;
   Color? get foreground => _foregroundColor;
 
@@ -115,7 +115,7 @@ class ToastificationTheme extends Equatable {
       );
 
   // Method to create a new instance with updated properties
-  ToastificationTheme copyWith({
+  ToastificationThemeData copyWith({
     MaterialColor? primaryColor,
     MaterialColor? backgroundColor,
     Color? foregroundColor,
@@ -129,7 +129,7 @@ class ToastificationTheme extends Equatable {
     bool? showIcon,
     ProgressIndicatorThemeData? progressIndicatorTheme,
   }) {
-    return ToastificationTheme(
+    return ToastificationThemeData(
       selectedStyle: selectedStyle,
       themeData: themeData,
       primaryColor: primaryColor ?? _primaryColor,

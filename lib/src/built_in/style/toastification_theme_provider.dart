@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/built_in/style/toastification_theme.dart';
+import 'package:toastification/src/built_in/style/toastification_theme_data.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastificationThemeProvider extends StatelessWidget {
@@ -7,7 +7,7 @@ class ToastificationThemeProvider extends StatelessWidget {
   final TextDirection textDirection;
   final Widget child;
 
-  final ToastificationTheme Function(ToastificationTheme)? themeBuilder;
+  final ToastificationThemeData Function(ToastificationThemeData)? themeBuilder;
 
   const ToastificationThemeProvider({
     super.key,
@@ -19,7 +19,7 @@ class ToastificationThemeProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ToastificationTheme theme = ToastificationTheme(
+    ToastificationThemeData theme = ToastificationThemeData(
       selectedStyle: selectedStyle,
       themeData: Theme.of(context),
       direction: textDirection,
@@ -37,7 +37,7 @@ class ToastificationThemeProvider extends StatelessWidget {
 
 // TODO: make this class private
 class ToastificationThemeInherited extends InheritedWidget {
-  final ToastificationTheme theme;
+  final ToastificationThemeData theme;
 
   const ToastificationThemeInherited({
     super.key,
