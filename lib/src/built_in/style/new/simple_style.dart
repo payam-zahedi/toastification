@@ -5,8 +5,8 @@ import 'package:toastification/src/utils/color_utils.dart';
 class SimpleToastStyle extends BaseToastStyle {
   SimpleToastStyle({
     required super.type,
-    required super.providedValues,
-    required super.flutterTheme,
+    super.providedValues,
+    super.flutterTheme,
   });
 
   @override

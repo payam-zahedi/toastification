@@ -5,8 +5,8 @@ import 'package:toastification/src/utils/color_utils.dart';
 class FlatColoredToastStyle extends BaseToastStyle {
   FlatColoredToastStyle({
     required super.type,
-    required super.providedValues,
-    required super.flutterTheme,
+    super.providedValues,
+    super.flutterTheme,
   });
 
   @override
@@ -22,11 +22,11 @@ class FlatColoredToastStyle extends BaseToastStyle {
 
   @override
   Color get iconColor =>
-      providedValues.foregroundColor ?? defaults.foregroundColor;
+      providedValues?.foregroundColor ?? defaults.foregroundColor;
 
   @override
   BorderSide get borderSide =>
-      providedValues.borderSide ??
+      providedValues?.borderSide ??
       BorderSide(
         color: primaryColor,
         width: 1.5,

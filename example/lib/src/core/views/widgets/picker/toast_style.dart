@@ -273,14 +273,6 @@ class _ItemHolder extends ConsumerWidget {
           toastStyle: NewStyleFactory.createStyle(
             style: style,
             type: toastDetail.type,
-            providedValues: StyleValues(
-              primaryColor: toastDetail.primaryColor?.toMaterialColor,
-              backgroundColor: toastDetail.backgroundColor,
-              foregroundColor: toastDetail.foregroundColor,
-              borderRadius: toastDetail.borderRadius,
-              borderSide: toastDetail.borderSide,
-              progressIndicatorStrokeWidth: 2.0,
-            ),
             flutterTheme: theme.themeData,
           ),
         );

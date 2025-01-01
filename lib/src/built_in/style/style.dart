@@ -6,23 +6,22 @@ import 'package:toastification/toastification.dart';
 abstract class BaseToastStyle {
   const BaseToastStyle({
     required this.type,
-    // TODO: providedValues should be optional
-    required this.providedValues,
-    required this.flutterTheme,
+    this.providedValues,
+    this.flutterTheme,
   });
 
   final ToastificationType type;
-  final StyleValues providedValues;
-  final ThemeData flutterTheme;
+  final StyleValues? providedValues;
+  final ThemeData? flutterTheme;
 
   DefaultStyleValues get defaults;
 
   MaterialColor get primaryColor =>
-      providedValues.primaryColor ?? defaults.primaryColor;
+      providedValues?.primaryColor ?? defaults.primaryColor;
   Color get backgroundColor =>
-      providedValues.backgroundColor ?? defaults.backgroundColor;
+      providedValues?.backgroundColor ?? defaults.backgroundColor;
   Color get foregroundColor =>
-      providedValues.foregroundColor ?? defaults.foregroundColor;
+      providedValues?.foregroundColor ?? defaults.foregroundColor;
 
   /// Returns a blurred version of the background color
   /// usually add some transparency to the color
@@ -34,12 +33,13 @@ abstract class BaseToastStyle {
   IconData get closeIcon => Icons.close;
   Color get closeIconColor => foregroundColor.withValues(alpha: .4);
 
-  EdgeInsetsGeometry get padding => providedValues.padding ?? defaults.padding;
-  BorderSide get borderSide => providedValues.borderSide ?? defaults.borderSide;
+  EdgeInsetsGeometry get padding => providedValues?.padding ?? defaults.padding;
+  BorderSide get borderSide =>
+      providedValues?.borderSide ?? defaults.borderSide;
   BorderRadiusGeometry get borderRadius =>
-      providedValues.borderRadius ?? defaults.borderRadius;
+      providedValues?.borderRadius ?? defaults.borderRadius;
 
-  TextStyle? get titleTextStyle => flutterTheme.textTheme.titleSmall?.copyWith(
+  TextStyle? get titleTextStyle => flutterTheme?.textTheme.titleSmall?.copyWith(
         color: foregroundColor,
         fontSize: 14,
         fontWeight: FontWeight.w500,
@@ -47,7 +47,7 @@ abstract class BaseToastStyle {
       );
 
   TextStyle? get descriptionTextStyle =>
-      flutterTheme.textTheme.titleSmall?.copyWith(
+      flutterTheme?.textTheme.titleSmall?.copyWith(
         color: foregroundColor.withValues(alpha: .8),
         fontSize: 14,
         fontWeight: FontWeight.w300,
@@ -58,7 +58,7 @@ abstract class BaseToastStyle {
   List<BoxShadow> get boxShadow => [];
 
   double get progressIndicatorStrokeWidth =>
-      providedValues.progressIndicatorStrokeWidth ??
+      providedValues?.progressIndicatorStrokeWidth ??
       defaults.progressIndicatorStrokeWidth;
 
   ProgressIndicatorThemeData get progressIndicatorTheme =>

@@ -10,8 +10,8 @@ class NewStyleFactory {
   static BaseToastStyle createStyle({
     required ToastificationStyle style,
     required ToastificationType type,
-    required StyleValues providedValues,
-    required ThemeData flutterTheme,
+    StyleValues? providedValues,
+    ThemeData? flutterTheme,
   }) {
     return switch (style) {
       ToastificationStyle.minimal => MinimalToastStyle(

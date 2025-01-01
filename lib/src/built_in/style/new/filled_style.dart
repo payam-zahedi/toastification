@@ -5,8 +5,8 @@ import 'package:toastification/src/utils/color_utils.dart';
 class FilledToastStyle extends BaseToastStyle {
   FilledToastStyle({
     required super.type,
-    required super.providedValues,
-    required super.flutterTheme,
+    super.providedValues,
+    super.flutterTheme,
   });
 
   @override
@@ -25,7 +25,7 @@ class FilledToastStyle extends BaseToastStyle {
 
   @override
   Color get iconColor =>
-      providedValues.foregroundColor ?? defaults.foregroundColor;
+      providedValues?.foregroundColor ?? defaults.foregroundColor;
 
   @override
   ProgressIndicatorThemeData get progressIndicatorTheme =>
