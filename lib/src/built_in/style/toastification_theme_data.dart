@@ -21,10 +21,7 @@ class ToastificationThemeData extends Equatable {
     bool applyBlurEffect = false,
     bool showIcon = true,
     ProgressIndicatorThemeData? progressIndicatorTheme,
-  })  : _primaryColor = primaryColor,
-        _backgroundColor = backgroundColor,
-        _foregroundColor = foregroundColor,
-        _padding = padding,
+  })  : _padding = padding,
         _borderRadius = borderRadius,
         _borderSide = borderSide,
         _boxShadow = boxShadow,
@@ -38,10 +35,6 @@ class ToastificationThemeData extends Equatable {
   final BaseToastStyle? toastStyle;
   final ThemeData themeData;
 
-  // User customizable properties
-  final MaterialColor? _primaryColor;
-  final MaterialColor? _backgroundColor;
-  final Color? _foregroundColor;
   final EdgeInsetsGeometry? _padding;
   final BorderRadiusGeometry? _borderRadius;
   final BorderSide? _borderSide;
@@ -53,19 +46,7 @@ class ToastificationThemeData extends Equatable {
   final ProgressIndicatorThemeData? _progressIndicatorTheme;
 
   // Getters that prioritize user-set values over default style values
-  MaterialColor get primaryColor => _primaryColor ?? selectedStyle.primaryColor;
-  Color get backgroundColor =>
-      _backgroundColor ?? selectedStyle.backgroundColor;
-  Color get foregroundColor =>
-      _foregroundColor ?? selectedStyle.foregroundColor;
 
-  MaterialColor? get providedPrimaryColor => _primaryColor;
-  Color? get background => _backgroundColor;
-  Color? get foreground => _foregroundColor;
-
-  Color get decorationColor => _applyBlurEffect
-      ? backgroundColor.withValues(alpha: 0.5)
-      : backgroundColor;
   EdgeInsetsGeometry get padding => _padding ?? selectedStyle.padding;
   BorderRadiusGeometry get borderRadius =>
       _borderRadius ?? selectedStyle.borderRadius;
@@ -78,32 +59,16 @@ class ToastificationThemeData extends Equatable {
   bool get showProgressBar => _showProgressBar;
   bool get applyBlurEffect => _applyBlurEffect;
   bool get showIcon => _showIcon;
-  ProgressIndicatorThemeData get progressIndicatorTheme =>
-      _progressIndicatorTheme ?? selectedStyle.progressIndicatorTheme;
+  ProgressIndicatorThemeData? get progressIndicatorTheme =>
+      _progressIndicatorTheme;
 
   // Additional getters that depend on the above properties
   IconData get icon => selectedStyle.icon;
   Color get iconColor => selectedStyle.iconColor;
 
   IconData get closeIcon => selectedStyle.closeIcon;
-  Color get closeIconColor =>
-      foreground?.withValues(alpha: .4) ?? selectedStyle.closeIconColor;
 
-  TextStyle? get titleTextStyle => selectedStyle.titleTextStyle?.copyWith(
-        color: foregroundColor,
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        height: 1.2,
-      );
-
-  TextStyle? get descriptionTextStyle =>
-      selectedStyle.descriptionTextStyle?.copyWith(
-        color: foregroundColor.withValues(alpha: .7),
-        fontSize: 14,
-        fontWeight: FontWeight.w300,
-        height: 1.2,
-      );
-
+// TODO: we have to remvoe this method
   BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) =>
       BorderRadiusDirectional.only(
         topEnd: borderRadius.topRight.clamp(
@@ -136,9 +101,6 @@ class ToastificationThemeData extends Equatable {
       toastStyle: toastStyle ?? this.toastStyle,
       selectedStyle: selectedStyle,
       themeData: themeData,
-      primaryColor: primaryColor ?? _primaryColor,
-      backgroundColor: backgroundColor ?? _backgroundColor,
-      foregroundColor: foregroundColor ?? _foregroundColor,
       padding: padding ?? _padding,
       borderRadius: borderRadius ?? _borderRadius,
       borderSide: borderSide ?? _borderSide,
@@ -156,9 +118,6 @@ class ToastificationThemeData extends Equatable {
         selectedStyle,
         themeData,
         toastStyle,
-        _primaryColor,
-        _backgroundColor,
-        _foregroundColor,
         _padding,
         _borderRadius,
         _borderSide,

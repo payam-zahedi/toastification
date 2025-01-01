@@ -28,7 +28,7 @@ class FilledToastStyle extends BaseToastStyle {
       providedValues?.foregroundColor ?? defaults.foregroundColor;
 
   @override
-  ProgressIndicatorThemeData get progressIndicatorTheme =>
+  ProgressIndicatorThemeData get defaultProgressIndicatorTheme =>
       ProgressIndicatorThemeData(
         color: foregroundColor.withValues(alpha: .30),
         linearMinHeight: progressIndicatorStrokeWidth,

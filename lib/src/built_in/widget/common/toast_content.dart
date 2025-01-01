@@ -22,9 +22,10 @@ class ToastContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultTheme = context.toastTheme;
+    final toastStyle = defaultTheme.toastStyle!;
 
     Widget content = DefaultTextStyle.merge(
-      style: defaultTheme.titleTextStyle,
+      style: toastStyle.titleTextStyle,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
       child: title ?? const SizedBox(),
@@ -44,14 +45,14 @@ class ToastContent extends StatelessWidget {
         if (description != null) ...[
           if (title != null) const SizedBox(height: 6),
           DefaultTextStyle.merge(
-            style: defaultTheme.descriptionTextStyle,
+            style: toastStyle.descriptionTextStyle,
             child: description!,
           ),
         ],
         if (defaultTheme.showProgressBar) ...[
           if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
-            data: defaultTheme.progressIndicatorTheme,
+            data: toastStyle.progressIndicatorTheme,
             child: progressBarWidget ??
                 LinearProgressIndicator(value: progressBarValue),
           ),

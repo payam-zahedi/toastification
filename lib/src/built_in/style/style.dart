@@ -62,6 +62,9 @@ abstract class BaseToastStyle {
       defaults.progressIndicatorStrokeWidth;
 
   ProgressIndicatorThemeData get progressIndicatorTheme =>
+      providedValues?.progressIndicatorTheme ?? defaultProgressIndicatorTheme;
+
+  ProgressIndicatorThemeData get defaultProgressIndicatorTheme =>
       ProgressIndicatorThemeData(
         color: foregroundColor.withValues(alpha: .15),
         linearMinHeight: progressIndicatorStrokeWidth,
@@ -120,6 +123,7 @@ class StyleValues extends Equatable {
     this.borderSide,
     this.borderRadius,
     this.progressIndicatorStrokeWidth,
+    this.progressIndicatorTheme,
   });
 
   final MaterialColor? primaryColor;
@@ -129,6 +133,7 @@ class StyleValues extends Equatable {
   final BorderSide? borderSide;
   final BorderRadiusGeometry? borderRadius;
   final double? progressIndicatorStrokeWidth;
+  final ProgressIndicatorThemeData? progressIndicatorTheme;
 
   @override
   List<Object?> get props => [
@@ -139,5 +144,6 @@ class StyleValues extends Equatable {
         borderSide,
         borderRadius,
         progressIndicatorStrokeWidth,
+        progressIndicatorTheme,
       ];
 }

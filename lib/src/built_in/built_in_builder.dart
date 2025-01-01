@@ -242,6 +242,7 @@ class BuiltInToastBuilder extends StatelessWidget {
               borderRadius: borderRadius,
               borderSide: borderSide,
               progressIndicatorStrokeWidth: 2.0,
+              progressIndicatorTheme: progressBarTheme,
             ),
             flutterTheme: theme.themeData,
           ),
