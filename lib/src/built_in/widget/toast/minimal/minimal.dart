@@ -6,7 +6,6 @@ import 'package:toastification/src/built_in/style/toastification_theme_data.dart
 import 'package:toastification/src/built_in/widget/common/toast_content.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 
-//todo we should set resolve
 class MinimalToastWidget extends StatelessWidget {
   const MinimalToastWidget({
     super.key,
@@ -33,19 +32,21 @@ class MinimalToastWidget extends StatelessWidget {
   final Widget? progressBarWidget;
   @override
   Widget build(BuildContext context) {
+    final toastStyle = context.toastTheme.toastStyle!;
+
     return Directionality(
       textDirection: context.toastTheme.direction,
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color: context.toastTheme.iconColor),
+            .copyWith(color: toastStyle.iconColor),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 64),
           child: Material(
             color: Colors.transparent,
             shape: LinearBorder.start(
               side: BorderSide(
-                color: context.toastTheme.primaryColor,
+                color: toastStyle.primaryColor,
                 width: 3,
               ),
             ),
@@ -57,16 +58,21 @@ class MinimalToastWidget extends StatelessWidget {
   }
 
   Widget buildBody(ToastificationThemeData toastTheme) {
+    final toastStyle = toastTheme.toastStyle!;
+
     Widget body = Container(
       decoration: BoxDecoration(
-        color: toastTheme.decorationColor,
-        borderRadius: toastTheme.effectiveBorderRadius(
-          toastTheme.borderRadius.resolve(toastTheme.direction),
+        color: toastStyle.blurredBackgroundColor(
+          toastTheme.applyBlurEffect,
+          toastStyle.backgroundColor,
         ),
-        border: toastTheme.decorationBorder,
-        boxShadow: toastTheme.boxShadow,
+        borderRadius: effectiveBorderRadius(
+          toastStyle.borderRadius.resolve(toastTheme.direction),
+        ),
+        border: Border.fromBorderSide(toastStyle.borderSide),
+        boxShadow: toastStyle.boxShadow,
       ),
-      padding: toastTheme.padding,
+      padding: toastStyle.padding,
       child: Row(
         children: [
           Offstage(
@@ -75,10 +81,9 @@ class MinimalToastWidget extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(end: 12),
               child: icon ??
                   Icon(
-                    toastTheme.icon,
+                    toastStyle.icon,
                     size: 24,
-                    color:
-                        toastTheme.providedPrimaryColor ?? toastTheme.iconColor,
+                    color: toastStyle.iconColor,
                   ),
             ),
           ),
@@ -102,8 +107,8 @@ class MinimalToastWidget extends StatelessWidget {
 
     if (toastTheme.applyBlurEffect) {
       body = body = ClipRRect(
-        borderRadius: toastTheme.effectiveBorderRadius(
-          toastTheme.borderRadius.resolve(toastTheme.direction),
+        borderRadius: effectiveBorderRadius(
+          toastStyle.borderRadius.resolve(toastTheme.direction),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
@@ -114,4 +119,16 @@ class MinimalToastWidget extends StatelessWidget {
 
     return body;
   }
+
+  BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) =>
+      BorderRadiusDirectional.only(
+        topEnd: borderRadius.topRight.clamp(
+          minimum: const Radius.circular(0),
+          maximum: const Radius.circular(30),
+        ),
+        bottomEnd: borderRadius.bottomRight.clamp(
+          minimum: const Radius.circular(0),
+          maximum: const Radius.circular(30),
+        ),
+      );
 }

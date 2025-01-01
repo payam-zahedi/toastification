@@ -142,7 +142,7 @@ class _DefaultCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toastTheme = context.toastTheme;
+    final toastStyle = context.toastTheme.toastStyle!;
 
     return SizedBox.square(
       dimension: 30,
@@ -155,8 +155,8 @@ class _DefaultCloseButton extends StatelessWidget {
               onTap: onCloseTap,
               borderRadius: BorderRadius.circular(5),
               child: Icon(
-                toastTheme.closeIcon,
-                color: toastTheme.closeIconColor,
+                toastStyle.closeIcon,
+                color: toastStyle.closeIconColor,
                 size: 18,
               ),
             );

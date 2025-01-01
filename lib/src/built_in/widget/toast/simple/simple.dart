@@ -32,9 +32,9 @@ class SimpleToastWidget extends StatelessWidget {
     );
   }
 
-  Widget buildContent({
-    required ToastificationThemeData toastTheme,
-  }) {
+  Widget buildContent({required ToastificationThemeData toastTheme}) {
+    final toastStyle = toastTheme.toastStyle!;
+
     Widget body;
 
     body = Row(
@@ -60,18 +60,21 @@ class SimpleToastWidget extends StatelessWidget {
 
     body = Container(
       decoration: BoxDecoration(
-        color: toastTheme.decorationColor,
-        border: toastTheme.decorationBorder,
-        boxShadow: toastTheme.boxShadow,
-        borderRadius: toastTheme.borderRadius,
+        color: toastStyle.blurredBackgroundColor(
+          toastTheme.applyBlurEffect,
+          toastStyle.backgroundColor,
+        ),
+        border: Border.fromBorderSide(toastStyle.borderSide),
+        boxShadow: toastStyle.boxShadow,
+        borderRadius: toastStyle.borderRadius,
       ),
-      padding: toastTheme.padding,
+      padding: toastStyle.padding,
       child: body,
     );
 
     if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: toastTheme.borderRadius,
+        borderRadius: toastStyle.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

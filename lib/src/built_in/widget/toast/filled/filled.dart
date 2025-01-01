@@ -37,26 +37,28 @@ class FilledToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color: context.toastTheme.iconColor),
+            .copyWith(color: context.toastTheme.toastStyle!.iconColor),
         child: buildBody(context.toastTheme),
       ),
     );
   }
 
   Widget buildBody(ToastificationThemeData toastTheme) {
-    final backgroundColor = toastTheme.primaryColor;
+    final toastStyle = toastTheme.toastStyle!;
+    final backgroundColor = toastStyle.primaryColor;
 
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: toastTheme.applyBlurEffect
-            ? backgroundColor.withValues(alpha: 0.8)
-            : backgroundColor,
-        borderRadius: toastTheme.borderRadius,
-        border: toastTheme.decorationBorder,
-        boxShadow: toastTheme.boxShadow,
+        color: toastStyle.blurredBackgroundColor(
+          toastTheme.applyBlurEffect,
+          backgroundColor,
+        ),
+        borderRadius: toastStyle.borderRadius,
+        border: Border.fromBorderSide(toastStyle.borderSide),
+        boxShadow: toastStyle.boxShadow,
       ),
-      padding: toastTheme.padding,
+      padding: toastStyle.padding,
       child: Row(
         children: [
           Offstage(
@@ -65,9 +67,9 @@ class FilledToastWidget extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(end: 12),
               child: icon ??
                   Icon(
-                    toastTheme.icon,
+                    toastStyle.icon,
                     size: 24,
-                    color: toastTheme.foreground ?? toastTheme.iconColor,
+                    color: toastStyle.iconColor,
                   ),
             ),
           ),
@@ -91,7 +93,7 @@ class FilledToastWidget extends StatelessWidget {
 
     if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: toastTheme.borderRadius,
+        borderRadius: toastStyle.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

@@ -45,19 +45,19 @@ class FlatColoredToastWidget extends StatelessWidget {
   }
 
   Widget buildBody(ToastificationThemeData toastTheme) {
+    final toastStyle = toastTheme.toastStyle!;
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: toastTheme.decorationColor,
-        borderRadius: toastTheme.borderRadius,
-        border: Border.fromBorderSide(
-          toastTheme.borderSide ??
-              toastTheme.selectedStyle.borderSide
-                  .copyWith(color: toastTheme.primaryColor),
+        color: toastStyle.blurredBackgroundColor(
+          toastTheme.applyBlurEffect,
+          toastStyle.backgroundColor,
         ),
-        boxShadow: toastTheme.boxShadow,
+        borderRadius: toastStyle.borderRadius,
+        border: Border.fromBorderSide(toastStyle.borderSide),
+        boxShadow: toastStyle.boxShadow,
       ),
-      padding: toastTheme.padding,
+      padding: toastStyle.padding,
       child: Row(
         children: [
           Offstage(
@@ -66,10 +66,10 @@ class FlatColoredToastWidget extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(end: 12),
               child: icon ??
                   Icon(
-                    toastTheme.icon,
+                    toastStyle.icon,
                     size: 24,
                     // TODO: check this in preview
-                    color: toastTheme.foreground ?? toastTheme.iconColor,
+                    color: toastStyle.iconColor,
                   ),
             ),
           ),
@@ -93,7 +93,7 @@ class FlatColoredToastWidget extends StatelessWidget {
 
     if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: toastTheme.borderRadius,
+        borderRadius: toastStyle.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

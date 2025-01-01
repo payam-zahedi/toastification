@@ -38,22 +38,26 @@ class FlatToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color: context.toastTheme.iconColor),
+            .copyWith(color: context.toastTheme.toastStyle!.iconColor),
         child: buildBody(context.toastTheme),
       ),
     );
   }
 
   Widget buildBody(ToastificationThemeData toastTheme) {
+    final toastStyle = toastTheme.toastStyle!;
     Widget body = Container(
       constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
-        color: toastTheme.decorationColor,
-        borderRadius: toastTheme.borderRadius,
-        border: toastTheme.decorationBorder,
-        boxShadow: toastTheme.boxShadow,
+        color: toastStyle.blurredBackgroundColor(
+          toastTheme.applyBlurEffect,
+          toastStyle.backgroundColor,
+        ),
+        borderRadius: toastStyle.borderRadius,
+        border: Border.fromBorderSide(toastStyle.borderSide),
+        boxShadow: toastStyle.boxShadow,
       ),
-      padding: toastTheme.padding,
+      padding: toastStyle.padding,
       child: Row(
         children: [
           Offstage(
@@ -62,10 +66,9 @@ class FlatToastWidget extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(end: 12),
               child: icon ??
                   Icon(
-                    toastTheme.icon,
+                    toastStyle.icon,
                     size: 24,
-                    color:
-                        toastTheme.providedPrimaryColor ?? toastTheme.iconColor,
+                    color: toastStyle.iconColor,
                   ),
             ),
           ),
