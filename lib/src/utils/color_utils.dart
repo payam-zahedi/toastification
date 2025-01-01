@@ -83,4 +83,6 @@ extension IntColorComponents on Color {
   int _floatToInt8(double x) {
     return (x * 255.0).round() & 0xff;
   }
+
+  MaterialColor get toMaterialColor => ColorUtils.convertToMaterialColor(this)!;
 }
