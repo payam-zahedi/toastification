@@ -92,7 +92,7 @@ class FlatToastWidget extends StatelessWidget {
 
     if (toastTheme.applyBlurEffect) {
       body = ClipRRect(
-        borderRadius: toastTheme.borderRadius,
+        borderRadius: toastStyle.borderRadius,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,

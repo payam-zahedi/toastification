@@ -264,19 +264,17 @@ class _ItemHolder extends ConsumerWidget {
     final theme = Theme.of(context);
     final toastDetail = ref.watch(toastDetailControllerProvider);
 
-    Widget child = ToastificationThemeProvider(
-      selectedStyle: StyleFactory.createStyle(style, toastDetail.type, theme),
-      textDirection: TextDirection.ltr,
+    Widget child = ToastificationTheme(
+      themeData: ToastificationThemeData(
+        toastStyle: StyleFactory.createStyle(
+          style: style,
+          type: toastDetail.type,
+          flutterTheme: theme,
+        ),
+        flutterTheme: theme,
+        direction: TextDirection.ltr,
+      ),
       child: toast,
-      themeBuilder: (theme) {
-        return theme.copyWith(
-          toastStyle: NewStyleFactory.createStyle(
-            style: style,
-            type: toastDetail.type,
-            flutterTheme: theme.themeData,
-          ),
-        );
-      },
     );
 
     if (isCenter) {

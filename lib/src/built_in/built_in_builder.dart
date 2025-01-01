@@ -210,10 +210,11 @@ class BuiltInToastBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = this.style ?? ToastificationStyle.flat;
+    final flutterTheme = Theme.of(context);
 
+    final effectiveStyle = style ?? ToastificationStyle.flat;
+    final effectiveType = type ?? ToastificationType.success;
     final showProgressBar = (this.showProgressBar ?? false) && item != null;
-
     final progressBarWidget = showProgressBar
         ? ToastTimerAnimationBuilder(
             item: item!,
@@ -223,51 +224,31 @@ class BuiltInToastBuilder extends StatelessWidget {
           )
         : null;
 
-    return ToastificationThemeProvider(
-      selectedStyle: StyleFactory.createStyle(
-        style,
-        type ?? ToastificationType.success,
-        Theme.of(context),
+    final toastificationThemeData = ToastificationThemeData(
+      toastStyle: StyleFactory.createStyle(
+        style: effectiveStyle,
+        type: effectiveType,
+        providedValues: StyleValues(
+          primaryColor: primaryColor?.toMaterialColor,
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+          padding: padding,
+          borderRadius: borderRadius,
+          borderSide: borderSide,
+          progressIndicatorStrokeWidth: 2.0,
+          progressIndicatorTheme: progressBarTheme,
+        ),
+        flutterTheme: flutterTheme,
       ),
-      themeBuilder: (theme) {
-        return theme.copyWith(
-          toastStyle: NewStyleFactory.createStyle(
-            style: style,
-            type: type ?? ToastificationType.success,
-            providedValues: StyleValues(
-              primaryColor: primaryColor?.toMaterialColor,
-              backgroundColor: backgroundColor,
-              foregroundColor: foregroundColor,
-              padding: padding,
-              borderRadius: borderRadius,
-              borderSide: borderSide,
-              progressIndicatorStrokeWidth: 2.0,
-              progressIndicatorTheme: progressBarTheme,
-            ),
-            flutterTheme: theme.themeData,
-          ),
-          backgroundColor: backgroundColor != null
-              ? ColorUtils.createMaterialColor(backgroundColor!)
-              : null,
-          primaryColor: primaryColor != null
-              ? ColorUtils.createMaterialColor(primaryColor!)
-              : null,
-          foregroundColor: foregroundColor != null
-              ? ColorUtils.createMaterialColor(foregroundColor!)
-              : null,
-          padding: padding ?? theme.padding,
-          borderRadius: borderRadius ?? theme.borderRadius,
-          borderSide: borderSide ?? theme.borderSide,
-          boxShadow: boxShadow ?? theme.boxShadow,
-          direction: direction ?? Directionality.of(context),
-          showProgressBar: this.showProgressBar == true,
-          applyBlurEffect: applyBlurEffect ?? false,
-          showIcon: showIcon ?? true,
-          progressIndicatorTheme:
-              progressBarTheme ?? theme.progressIndicatorTheme,
-        );
-      },
-      textDirection: direction ?? Directionality.of(context),
+      flutterTheme: flutterTheme,
+      direction: direction ?? Directionality.of(context),
+      showProgressBar: this.showProgressBar == true,
+      applyBlurEffect: applyBlurEffect ?? false,
+      showIcon: showIcon ?? true,
+    );
+
+    return ToastificationTheme(
+      themeData: toastificationThemeData,
       child: OnHoverShow(
         enabled: closeButton.showType == CloseButtonShowType.onHover,
         childBuilder: (context, showWidget) {
@@ -276,7 +257,7 @@ class BuiltInToastBuilder extends StatelessWidget {
             _ => showWidget,
           };
 
-          return switch (style) {
+          return switch (effectiveStyle) {
             ToastificationStyle.flat => FlatToastWidget(
                 title: title,
                 description: description,

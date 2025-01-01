@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
-import 'package:toastification/src/built_in/style/toastification_theme_data.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 import 'package:toastification/toastification.dart';
 
@@ -38,7 +37,7 @@ class FlatColoredToastWidget extends StatelessWidget {
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color: context.toastTheme.iconColor),
+            .copyWith(color: context.toastTheme.toastStyle!.iconColor),
         child: buildBody(context.toastTheme),
       ),
     );

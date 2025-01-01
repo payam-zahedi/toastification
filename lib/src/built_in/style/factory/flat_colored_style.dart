@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/built_in/style/factory/base_style.dart';
+import 'package:toastification/src/built_in/style/style.dart';
+import 'package:toastification/src/utils/color_utils.dart';
 
-class FlatColoredStyle extends BaseStyle {
-  FlatColoredStyle(super.type, super.theme);
+class FlatColoredToastStyle extends BaseToastStyle {
+  FlatColoredToastStyle({
+    required super.type,
+    super.providedValues,
+    super.flutterTheme,
+  });
 
   @override
-  Color get backgroundColor => primaryColor.shade50;
-
-  @override
-  BorderSide get borderSide => BorderSide(
-        color: primaryColor,
-        width: 1.5,
+  DefaultStyleValues get defaults => DefaultStyleValues(
+        primaryColor: type.color.toMaterialColor,
+        backgroundColor: type.color.toMaterialColor.shade50,
+        foregroundColor: Colors.black,
       );
 
   @override
-  double get elevation => 0.0;
+  Color get backgroundColor => primaryColor.shade50;
+  // providedValues.primaryColor ?? primaryColor.shade50;
 
   @override
-  Color get foregroundColor => Colors.black;
+  Color get iconColor =>
+      providedValues?.foregroundColor ?? defaults.foregroundColor;
 
   @override
-  Color get iconColor => foregroundColor;
+  BorderSide get borderSide =>
+      providedValues?.borderSide ??
+      BorderSide(
+        color: primaryColor,
+        width: 1.5,
+      );
 }
