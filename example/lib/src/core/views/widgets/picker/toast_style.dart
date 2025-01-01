@@ -268,6 +268,23 @@ class _ItemHolder extends ConsumerWidget {
       selectedStyle: StyleFactory.createStyle(style, toastDetail.type, theme),
       textDirection: TextDirection.ltr,
       child: toast,
+      themeBuilder: (theme) {
+        return theme.copyWith(
+          toastStyle: NewStyleFactory.createStyle(
+            style: style,
+            type: toastDetail.type,
+            providedValues: StyleValues(
+              primaryColor: toastDetail.primaryColor?.toMaterialColor,
+              backgroundColor: toastDetail.backgroundColor,
+              foregroundColor: toastDetail.foregroundColor,
+              borderRadius: toastDetail.borderRadius,
+              borderSide: toastDetail.borderSide,
+              progressIndicatorStrokeWidth: 2.0,
+            ),
+            flutterTheme: theme.themeData,
+          ),
+        );
+      },
     );
 
     if (isCenter) {

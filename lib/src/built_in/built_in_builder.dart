@@ -231,6 +231,20 @@ class BuiltInToastBuilder extends StatelessWidget {
       ),
       themeBuilder: (theme) {
         return theme.copyWith(
+          toastStyle: NewStyleFactory.createStyle(
+            style: style,
+            type: type ?? ToastificationType.success,
+            providedValues: StyleValues(
+              primaryColor: primaryColor?.toMaterialColor,
+              backgroundColor: backgroundColor,
+              foregroundColor: foregroundColor,
+              padding: padding,
+              borderRadius: borderRadius,
+              borderSide: borderSide,
+              progressIndicatorStrokeWidth: 2.0,
+            ),
+            flutterTheme: theme.themeData,
+          ),
           backgroundColor: backgroundColor != null
               ? ColorUtils.createMaterialColor(backgroundColor!)
               : null,

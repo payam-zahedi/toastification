@@ -7,6 +7,7 @@ class ToastificationThemeData extends Equatable {
   const ToastificationThemeData({
     required this.selectedStyle,
     required this.themeData,
+    this.toastStyle,
     MaterialColor? primaryColor,
     MaterialColor? backgroundColor,
     Color? foregroundColor,
@@ -34,6 +35,7 @@ class ToastificationThemeData extends Equatable {
         _progressIndicatorTheme = progressIndicatorTheme;
 
   final BuiltInStyle selectedStyle;
+  final BaseToastStyle? toastStyle;
   final ThemeData themeData;
 
   // User customizable properties
@@ -116,6 +118,7 @@ class ToastificationThemeData extends Equatable {
 
   // Method to create a new instance with updated properties
   ToastificationThemeData copyWith({
+    BaseToastStyle? toastStyle,
     MaterialColor? primaryColor,
     MaterialColor? backgroundColor,
     Color? foregroundColor,
@@ -130,6 +133,7 @@ class ToastificationThemeData extends Equatable {
     ProgressIndicatorThemeData? progressIndicatorTheme,
   }) {
     return ToastificationThemeData(
+      toastStyle: toastStyle ?? this.toastStyle,
       selectedStyle: selectedStyle,
       themeData: themeData,
       primaryColor: primaryColor ?? _primaryColor,
@@ -151,6 +155,7 @@ class ToastificationThemeData extends Equatable {
   List<Object?> get props => [
         selectedStyle,
         themeData,
+        toastStyle,
         _primaryColor,
         _backgroundColor,
         _foregroundColor,
