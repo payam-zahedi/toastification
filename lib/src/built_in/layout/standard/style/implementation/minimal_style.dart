@@ -12,8 +12,8 @@ class MinimalToastStyle extends BaseToastStyle {
   @override
   DefaultStyleValues get defaults => DefaultStyleValues(
         primaryColor: type.color.toMaterialColor,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        surfaceLight: Colors.white,
+        surfaceDark: Colors.black,
         borderSide: const BorderSide(
           color: Color(0xffEBEBEB),
           width: 1.5,

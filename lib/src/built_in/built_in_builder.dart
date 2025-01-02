@@ -231,8 +231,8 @@ class BuiltInToastBuilder extends StatelessWidget {
         type: effectiveType,
         providedValues: StandardStyleValues(
           primaryColor: primaryColor?.toMaterialColor,
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
+          surfaceLight: backgroundColor,
+          surfaceDark: foregroundColor,
           padding: padding,
           borderRadius: borderRadius,
           borderSide: borderSide,

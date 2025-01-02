@@ -31,9 +31,9 @@ abstract class BaseToastStyle {
   MaterialColor get primaryColor =>
       providedValues?.primaryColor ?? defaults.primaryColor;
   Color get backgroundColor =>
-      providedValues?.backgroundColor ?? defaults.backgroundColor;
+      providedValues?.surfaceLight ?? defaults.surfaceLight;
   Color get foregroundColor =>
-      providedValues?.foregroundColor ?? defaults.foregroundColor;
+      providedValues?.surfaceDark ?? defaults.surfaceDark;
 
   /// Returns a blurred version of the background color
   /// usually add some transparency to the color
@@ -88,8 +88,8 @@ abstract class BaseToastStyle {
 class DefaultStyleValues extends StandardStyleValues {
   const DefaultStyleValues({
     required MaterialColor primaryColor,
-    required Color backgroundColor,
-    required Color foregroundColor,
+    required Color surfaceLight,
+    required Color surfaceDark,
     EdgeInsetsGeometry padding =
         const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16),
     BorderSide borderSide = const BorderSide(color: Colors.black12),
@@ -99,8 +99,8 @@ class DefaultStyleValues extends StandardStyleValues {
     double progressIndicatorStrokeWidth = 2.0,
   }) : super(
           primaryColor: primaryColor,
-          backgroundColor: backgroundColor,
-          foregroundColor: foregroundColor,
+          surfaceLight: surfaceLight,
+          surfaceDark: surfaceDark,
           padding: padding,
           borderSide: borderSide,
           borderRadius: borderRadius,
@@ -110,9 +110,9 @@ class DefaultStyleValues extends StandardStyleValues {
   @override
   MaterialColor get primaryColor => super.primaryColor!;
   @override
-  Color get backgroundColor => super.backgroundColor!;
+  Color get surfaceLight => super.surfaceLight!;
   @override
-  Color get foregroundColor => super.foregroundColor!;
+  Color get surfaceDark => super.surfaceDark!;
   @override
   EdgeInsetsGeometry get padding => super.padding!;
   @override
@@ -127,10 +127,8 @@ class DefaultStyleValues extends StandardStyleValues {
 class StandardStyleValues extends Equatable {
   const StandardStyleValues({
     this.primaryColor,
-    // TODO: rename it to surfaceLight
-    this.backgroundColor,
-    // TODO: rename it to surfaceDark
-    this.foregroundColor,
+    this.surfaceLight,
+    this.surfaceDark,
     this.padding,
     this.borderSide,
     this.borderRadius,
@@ -139,8 +137,8 @@ class StandardStyleValues extends Equatable {
   });
 
   final MaterialColor? primaryColor;
-  final Color? backgroundColor;
-  final Color? foregroundColor;
+  final Color? surfaceLight;
+  final Color? surfaceDark;
   final EdgeInsetsGeometry? padding;
   final BorderSide? borderSide;
   final BorderRadiusGeometry? borderRadius;
@@ -150,8 +148,8 @@ class StandardStyleValues extends Equatable {
   @override
   List<Object?> get props => [
         primaryColor,
-        backgroundColor,
-        foregroundColor,
+        surfaceLight,
+        surfaceDark,
         padding,
         borderSide,
         borderRadius,

@@ -46,8 +46,8 @@ class _IconPickerState extends ConsumerState<IconPicker> {
       flutterTheme: Theme.of(context),
       providedValues: StandardStyleValues(
         primaryColor: primaryColor?.toMaterialColor,
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
+        surfaceLight: backgroundColor,
+        surfaceDark: foregroundColor,
       ),
     );
 
