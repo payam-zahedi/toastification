@@ -334,7 +334,7 @@ class _StyleSection extends ConsumerWidget {
     );
 
     final builtInStyle = StandardToastStyleFactory.createStyle(
-      style: style,
+      style: style.toStandard,
       type: type,
       flutterTheme: Theme.of(context),
     );

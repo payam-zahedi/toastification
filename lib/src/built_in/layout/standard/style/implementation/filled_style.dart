@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/built_in/layout/standard/style/style.dart';
 import 'package:toastification/src/utils/color_utils.dart';
 
-class FilledToastStyle extends BaseToastStyle {
-  FilledToastStyle({
+class FilledStandardToastStyle extends BaseStandardToastStyle {
+  FilledStandardToastStyle({
     required super.type,
     super.providedValues,
     super.flutterTheme,
   });
- 
+
   @override
   DefaultStyleValues get defaults => DefaultStyleValues(
         primaryColor: type.color.toMaterialColor,

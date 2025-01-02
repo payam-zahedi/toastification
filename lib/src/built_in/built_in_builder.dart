@@ -212,7 +212,8 @@ class BuiltInToastBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     final flutterTheme = Theme.of(context);
 
-    final effectiveStyle = style ?? ToastificationStyle.flat;
+    // TODO: in v4.0 we need to update ToastificationStyle property
+    final effectiveStyle = (style ?? ToastificationStyle.flat).toStandard;
     final effectiveType = type ?? ToastificationType.success;
     final showProgressBar = (this.showProgressBar ?? false) && item != null;
     final progressBarWidget = showProgressBar

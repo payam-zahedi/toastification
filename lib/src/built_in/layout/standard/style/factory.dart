@@ -4,34 +4,34 @@ import 'package:toastification/toastification.dart';
 class StandardToastStyleFactory {
   const StandardToastStyleFactory._();
 
-  static BaseToastStyle createStyle({
-    required ToastificationStyle style,
+  static BaseStandardToastStyle createStyle({
+    required StandardStyle style,
     required ToastificationType type,
     StandardStyleValues? providedValues,
     ThemeData? flutterTheme,
   }) {
     return switch (style) {
-      ToastificationStyle.minimal => MinimalToastStyle(
+      StandardStyle.minimal => MinimalStandardToastStyle(
           type: type,
           providedValues: providedValues,
           flutterTheme: flutterTheme,
         ),
-      ToastificationStyle.fillColored => FilledToastStyle(
+      StandardStyle.fillColored => FilledStandardToastStyle(
           type: type,
           providedValues: providedValues,
           flutterTheme: flutterTheme,
         ),
-      ToastificationStyle.flatColored => FlatColoredToastStyle(
+      StandardStyle.flatColored => FlatStandardColoredToastStyle(
           type: type,
           providedValues: providedValues,
           flutterTheme: flutterTheme,
         ),
-      ToastificationStyle.flat => FlatToastStyle(
+      StandardStyle.flat => FlatStandardToastStyle(
           type: type,
           providedValues: providedValues,
           flutterTheme: flutterTheme,
         ),
-      ToastificationStyle.simple => SimpleToastStyle(
+      StandardStyle.simple => SimpleStandardToastStyle(
           type: type,
           providedValues: providedValues,
           flutterTheme: flutterTheme,

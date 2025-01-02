@@ -245,11 +245,11 @@ class _ItemHolder extends ConsumerWidget {
       onCloseTap: () {},
     );
 
-    // TODO: check if we can make ToastificationTheme private 
+    // TODO: check if we can make ToastificationTheme private
     Widget child = ToastificationTheme(
       themeData: ToastificationThemeData(
         toastStyle: StandardToastStyleFactory.createStyle(
-          style: style,
+          style: style.toStandard,
           type: toastDetail.type,
           flutterTheme: theme,
         ),

@@ -15,8 +15,8 @@ enum StandardStyle {
 
 // TODO: convert this to sealed class
 /// Base abstract class for built-in styles
-abstract class BaseToastStyle {
-  const BaseToastStyle({
+abstract class BaseStandardToastStyle {
+  const BaseStandardToastStyle({
     required this.type,
     this.providedValues,
     this.flutterTheme,
