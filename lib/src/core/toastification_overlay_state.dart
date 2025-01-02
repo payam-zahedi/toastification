@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_config.dart';
-import 'package:toastification/src/widget/toastification_config_provider.dart';
+import 'package:toastification/src/core/widget/toastification_config_provider.dart';
 
 /// Key used to locate the [ToastificationOverlayState].
 final GlobalKey<ToastificationOverlayState> _keyFinder =

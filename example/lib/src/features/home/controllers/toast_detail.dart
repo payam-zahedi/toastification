@@ -142,7 +142,7 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
   void changeCloseButton(ToastCloseButton closeButton) {
     _updateAndSave((current) => current.copyWith(closeButton: closeButton));
   }
-  
+
   void changeCloseOnClick(bool closeOnClick) {
     _updateAndSave((current) => current.copyWith(closeOnClick: closeOnClick));
   }
