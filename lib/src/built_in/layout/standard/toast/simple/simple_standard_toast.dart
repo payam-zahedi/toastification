@@ -4,8 +4,9 @@ import 'package:toastification/src/built_in/widget/common/close_button.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
 import 'package:toastification/toastification.dart';
 
-class SimpleToastWidget extends StatelessWidget {
-  const SimpleToastWidget({
+class SimpleStandardToastWidget extends StatelessWidget
+    implements StandardToastWidget {
+  const SimpleStandardToastWidget({
     super.key,
     this.title,
     this.showCloseButton = true,
@@ -24,14 +25,13 @@ class SimpleToastWidget extends StatelessWidget {
     return Directionality(
       textDirection: context.toastTheme.direction,
       child: Center(
-        child: buildContent(
-          toastTheme: context.toastTheme,
-        ),
+        child: buildBody(context.toastTheme),
       ),
     );
   }
 
-  Widget buildContent({required ToastificationThemeData toastTheme}) {
+  @override
+  Widget buildBody(ToastificationThemeData toastTheme) {
     final toastStyle = toastTheme.toastStyle!;
 
     Widget body;

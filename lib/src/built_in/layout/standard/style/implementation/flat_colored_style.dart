@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/built_in/style/style.dart';
+import 'package:toastification/src/built_in/layout/standard/style/style.dart';
 import 'package:toastification/src/utils/color_utils.dart';
 
 class FlatColoredToastStyle extends BaseToastStyle {

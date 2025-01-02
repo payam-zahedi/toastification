@@ -2,6 +2,18 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
+/// enum to define the style of the built-in toastification
+enum StandardStyle {
+  minimal,
+  fillColored,
+  flatColored,
+  flat,
+
+  /// a simple toast message just show the given title without any icon or extra widget
+  simple,
+}
+
+// TODO: convert this to sealed class
 /// Base abstract class for built-in styles
 abstract class BaseToastStyle {
   const BaseToastStyle({
@@ -11,7 +23,7 @@ abstract class BaseToastStyle {
   });
 
   final ToastificationType type;
-  final StyleValues? providedValues;
+  final StandardStyleValues? providedValues;
   final ThemeData? flutterTheme;
 
   DefaultStyleValues get defaults;
@@ -73,7 +85,7 @@ abstract class BaseToastStyle {
       );
 }
 
-class DefaultStyleValues extends StyleValues {
+class DefaultStyleValues extends StandardStyleValues {
   const DefaultStyleValues({
     required MaterialColor primaryColor,
     required Color backgroundColor,
@@ -112,8 +124,8 @@ class DefaultStyleValues extends StyleValues {
       super.progressIndicatorStrokeWidth!;
 }
 
-class StyleValues extends Equatable {
-  const StyleValues({
+class StandardStyleValues extends Equatable {
+  const StandardStyleValues({
     this.primaryColor,
     // TODO: rename it to surfaceLight
     this.backgroundColor,
@@ -146,4 +158,17 @@ class StyleValues extends Equatable {
         progressIndicatorStrokeWidth,
         progressIndicatorTheme,
       ];
+}
+
+// TODO: remove this when the toastification package is updated
+extension ToastStyleExtension on ToastificationStyle {
+  StandardStyle get toStandard {
+    return switch (this) {
+      ToastificationStyle.flat => StandardStyle.flat,
+      ToastificationStyle.flatColored => StandardStyle.flatColored,
+      ToastificationStyle.fillColored => StandardStyle.fillColored,
+      ToastificationStyle.minimal => StandardStyle.minimal,
+      ToastificationStyle.simple => StandardStyle.simple,
+    };
+  }
 }

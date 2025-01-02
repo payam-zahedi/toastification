@@ -40,11 +40,11 @@ class _IconPickerState extends ConsumerState<IconPicker> {
     );
 
     final icon = ref.watch(toastDetailControllerProvider).icon;
-    final defaultStyle = StyleFactory.createStyle(
+    final defaultStyle = StandardToastStyleFactory.createStyle(
       style: style,
       type: type,
       flutterTheme: Theme.of(context),
-      providedValues: StyleValues(
+      providedValues: StandardStyleValues(
         primaryColor: primaryColor?.toMaterialColor,
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,

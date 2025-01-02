@@ -333,7 +333,7 @@ class _StyleSection extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
-    final builtInStyle = StyleFactory.createStyle(
+    final builtInStyle = StandardToastStyleFactory.createStyle(
       style: style,
       type: type,
       flutterTheme: Theme.of(context),

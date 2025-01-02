@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-class StyleFactory {
-  const StyleFactory._();
+class StandardToastStyleFactory {
+  const StandardToastStyleFactory._();
 
   static BaseToastStyle createStyle({
     required ToastificationStyle style,
     required ToastificationType type,
-    StyleValues? providedValues,
+    StandardStyleValues? providedValues,
     ThemeData? flutterTheme,
   }) {
     return switch (style) {

@@ -1,13 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:toastification/src/built_in/layout/standard/toast/base_standard.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
-import 'package:toastification/src/built_in/style/toastification_theme_data.dart';
+import 'package:toastification/src/built_in/theme/toastification_theme_data.dart';
 import 'package:toastification/src/built_in/widget/common/toast_content.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 
-class FilledToastWidget extends StatelessWidget {
-  const FilledToastWidget({
+class MinimalStandardToastWidget extends StatelessWidget
+    implements StandardToastWidget {
+  const MinimalStandardToastWidget({
     super.key,
     this.title,
     this.description,
@@ -21,6 +23,7 @@ class FilledToastWidget extends StatelessWidget {
 
   final Widget? title;
   final Widget? description;
+
   final Widget? icon;
 
   final VoidCallback onCloseTap;
@@ -29,32 +32,46 @@ class FilledToastWidget extends StatelessWidget {
 
   final double? progressBarValue;
   final Widget? progressBarWidget;
-
   @override
   Widget build(BuildContext context) {
+    final toastStyle = context.toastTheme.toastStyle!;
+
     return Directionality(
       textDirection: context.toastTheme.direction,
       child: IconTheme(
         data: Theme.of(context)
             .primaryIconTheme
-            .copyWith(color: context.toastTheme.toastStyle!.iconColor),
-        child: buildBody(context.toastTheme),
+            .copyWith(color: toastStyle.iconColor),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 64),
+          child: Material(
+            color: Colors.transparent,
+            shape: LinearBorder.start(
+              side: BorderSide(
+                color: toastStyle.primaryColor,
+                width: 3,
+              ),
+            ),
+            child: buildBody(context.toastTheme),
+          ),
+        ),
       ),
     );
   }
 
+  @override
   Widget buildBody(ToastificationThemeData toastTheme) {
     final toastStyle = toastTheme.toastStyle!;
-    final backgroundColor = toastStyle.primaryColor;
 
     Widget body = Container(
-      constraints: const BoxConstraints(minHeight: 64),
       decoration: BoxDecoration(
         color: toastStyle.blurredBackgroundColor(
           toastTheme.applyBlurEffect,
-          backgroundColor,
+          toastStyle.backgroundColor,
         ),
-        borderRadius: toastStyle.borderRadius,
+        borderRadius: effectiveBorderRadius(
+          toastStyle.borderRadius.resolve(toastTheme.direction),
+        ),
         border: Border.fromBorderSide(toastStyle.borderSide),
         boxShadow: toastStyle.boxShadow,
       ),
@@ -92,8 +109,10 @@ class FilledToastWidget extends StatelessWidget {
     );
 
     if (toastTheme.applyBlurEffect) {
-      body = ClipRRect(
-        borderRadius: toastStyle.borderRadius,
+      body = body = ClipRRect(
+        borderRadius: effectiveBorderRadius(
+          toastStyle.borderRadius.resolve(toastTheme.direction),
+        ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: body,
@@ -103,4 +122,16 @@ class FilledToastWidget extends StatelessWidget {
 
     return body;
   }
+
+  BorderRadiusGeometry effectiveBorderRadius(BorderRadius borderRadius) =>
+      BorderRadiusDirectional.only(
+        topEnd: borderRadius.topRight.clamp(
+          minimum: const Radius.circular(0),
+          maximum: const Radius.circular(30),
+        ),
+        bottomEnd: borderRadius.bottomRight.clamp(
+          minimum: const Radius.circular(0),
+          maximum: const Radius.circular(30),
+        ),
+      );
 }

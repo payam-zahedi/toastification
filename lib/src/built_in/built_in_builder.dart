@@ -224,18 +224,19 @@ class BuiltInToastBuilder extends StatelessWidget {
           )
         : null;
 
+    // TODO: Maybe we can use Abstract factory to have toast style and toast widget
     final toastificationThemeData = ToastificationThemeData(
-      toastStyle: StyleFactory.createStyle(
+      toastStyle: StandardToastStyleFactory.createStyle(
         style: effectiveStyle,
         type: effectiveType,
-        providedValues: StyleValues(
+        providedValues: StandardStyleValues(
           primaryColor: primaryColor?.toMaterialColor,
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
           padding: padding,
           borderRadius: borderRadius,
           borderSide: borderSide,
-          progressIndicatorStrokeWidth: 2.0,
+          progressIndicatorStrokeWidth: progressBarTheme?.linearMinHeight,
           progressIndicatorTheme: progressBarTheme,
         ),
         flutterTheme: flutterTheme,
@@ -257,50 +258,16 @@ class BuiltInToastBuilder extends StatelessWidget {
             _ => showWidget,
           };
 
-          return switch (effectiveStyle) {
-            ToastificationStyle.flat => FlatToastWidget(
-                title: title,
-                description: description,
-                icon: icon,
-                showCloseButton: showCloseWidget,
-                onCloseTap: onCloseTap,
-                closeButton: closeButton,
-                progressBarWidget: progressBarWidget,
-              ),
-            ToastificationStyle.flatColored => FlatColoredToastWidget(
-                title: title,
-                description: description,
-                icon: icon,
-                showCloseButton: showCloseWidget,
-                onCloseTap: onCloseTap,
-                closeButton: closeButton,
-                progressBarWidget: progressBarWidget,
-              ),
-            ToastificationStyle.fillColored => FilledToastWidget(
-                title: title,
-                description: description,
-                icon: icon,
-                onCloseTap: onCloseTap,
-                showCloseButton: showCloseWidget,
-                closeButton: closeButton,
-                progressBarWidget: progressBarWidget,
-              ),
-            ToastificationStyle.minimal => MinimalToastWidget(
-                title: title,
-                description: description,
-                icon: icon,
-                showCloseButton: showCloseWidget,
-                onCloseTap: onCloseTap,
-                closeButton: closeButton,
-                progressBarWidget: progressBarWidget,
-              ),
-            ToastificationStyle.simple => SimpleToastWidget(
-                title: title,
-                showCloseButton: showCloseWidget,
-                onCloseTap: onCloseTap,
-                closeButton: closeButton,
-              ),
-          };
+          return StandardToastWidgetFactory.createStandardToastWidget(
+            style: StandardStyle.flat,
+            title: title,
+            description: description,
+            icon: icon,
+            showCloseButton: showCloseWidget,
+            onCloseTap: onCloseTap,
+            closeButton: closeButton,
+            progressBarWidget: progressBarWidget,
+          );
         },
       ),
     );

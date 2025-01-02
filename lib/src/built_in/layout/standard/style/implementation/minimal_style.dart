@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:toastification/src/built_in/style/style.dart';
+import 'package:toastification/src/built_in/layout/standard/style/style.dart';
 import 'package:toastification/src/utils/color_utils.dart';
 
-class SimpleToastStyle extends BaseToastStyle {
-  SimpleToastStyle({
+class MinimalToastStyle extends BaseToastStyle {
+  MinimalToastStyle({
     required super.type,
     super.providedValues,
     super.flutterTheme,
@@ -21,5 +21,5 @@ class SimpleToastStyle extends BaseToastStyle {
       );
 
   @override
-  Color get iconColor => primaryColor;
+  Color get iconColor => providedValues?.primaryColor ?? defaults.primaryColor;
 }
