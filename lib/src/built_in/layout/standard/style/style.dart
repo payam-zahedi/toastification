@@ -15,7 +15,7 @@ enum StandardStyle {
 
 // TODO: convert this to sealed class
 /// Base abstract class for built-in styles
-abstract class BaseStandardToastStyle {
+abstract class BaseStandardToastStyle extends Equatable {
   const BaseStandardToastStyle({
     required this.type,
     this.providedValues,
@@ -83,6 +83,13 @@ abstract class BaseStandardToastStyle {
         linearTrackColor: foregroundColor.withValues(alpha: .05),
         refreshBackgroundColor: foregroundColor.withValues(alpha: .05),
       );
+
+  @override
+  List<Object?> get props => [
+        type,
+        providedValues,
+        flutterTheme,
+      ];
 }
 
 class DefaultStyleValues extends StandardStyleValues {
@@ -122,6 +129,17 @@ class DefaultStyleValues extends StandardStyleValues {
   @override
   double get progressIndicatorStrokeWidth =>
       super.progressIndicatorStrokeWidth!;
+
+  @override
+  List<Object> get props => [
+        primaryColor,
+        surfaceLight,
+        surfaceDark,
+        padding,
+        borderSide,
+        borderRadius,
+        progressIndicatorStrokeWidth,
+      ];
 }
 
 class StandardStyleValues extends Equatable {
@@ -144,6 +162,9 @@ class StandardStyleValues extends Equatable {
   final BorderRadiusGeometry? borderRadius;
   final double? progressIndicatorStrokeWidth;
   final ProgressIndicatorThemeData? progressIndicatorTheme;
+
+  @override
+  bool get stringify => true;
 
   @override
   List<Object?> get props => [

@@ -21,11 +21,15 @@ dependencies:
   pausable_timer: ^3.1.0+3
   collection: ^1.18.0
   iconsax_flutter: ^1.0.0
+  http: ^1.2.2
   
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  test: ^1.25.8
+  mockito: ^5.4.5
+  build_runner: ^2.4.14
 
 # flutter:

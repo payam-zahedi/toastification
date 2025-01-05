@@ -3,7 +3,7 @@ import 'package:toastification/src/built_in/layout/standard/style/style.dart';
 import 'package:toastification/src/utils/color_utils.dart';
 
 class FilledStandardToastStyle extends BaseStandardToastStyle {
-  FilledStandardToastStyle({
+  const FilledStandardToastStyle({
     required super.type,
     super.providedValues,
     super.flutterTheme,
