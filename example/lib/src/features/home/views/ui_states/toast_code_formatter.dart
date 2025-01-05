@@ -57,6 +57,7 @@ class ToastCodeFormatter {
           '\tanimationBuilder: ${toastDetail.animationType.buildCode()},');
     }
 
+    // TODO: fix issue with new color toString method
     if (toastDetail.primaryColor != null) {
       code.writeln('\tprimaryColor: ${toastDetail.primaryColor},');
     }

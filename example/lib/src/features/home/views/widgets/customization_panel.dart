@@ -333,8 +333,11 @@ class _StyleSection extends ConsumerWidget {
       toastDetailControllerProvider.select((value) => value.style),
     );
 
-    final builtInStyle =
-        StyleFactory.createStyle(style, type, Theme.of(context));
+    final builtInStyle = StandardToastStyleFactory.createStyle(
+      style: style.toStandard,
+      type: type,
+      flutterTheme: Theme.of(context),
+    );
 
     Color primaryColor = ref.watch(toastDetailControllerProvider
             .select((value) => value.primaryColor)) ??

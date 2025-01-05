@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/core/toastification_overlay_state.dart';
-import 'package:toastification/src/widget/built_in/built_in_builder.dart';
+import 'package:toastification/src/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';
 
 // TODO(payam): add navigator observer
