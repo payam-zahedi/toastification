@@ -2,10 +2,17 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
-const _defaultAlignment = AlignmentDirectional.topEnd;
-const _itemAnimationDuration = Duration(milliseconds: 600);
-const _defaultWidth = 400.0;
-const _defaultClipBehavior = Clip.none;
+@visibleForTesting
+const defaultAlignment = AlignmentDirectional.topEnd;
+
+@visibleForTesting
+const defaultItemAnimationDuration = Duration(milliseconds: 600);
+
+@visibleForTesting
+const defaultWidth = 400.0;
+
+@visibleForTesting
+const defaultClipBehavior = Clip.none;
 
 typedef ToastificationMarginBuilder = EdgeInsetsGeometry Function(
   BuildContext context,
@@ -24,12 +31,12 @@ typedef ToastificationMarginBuilder = EdgeInsetsGeometry Function(
 ///
 class ToastificationConfig extends Equatable {
   const ToastificationConfig({
-    this.alignment = _defaultAlignment,
-    this.itemWidth = _defaultWidth,
-    this.clipBehavior = _defaultClipBehavior,
-    this.animationDuration = _itemAnimationDuration,
-    this.animationBuilder = _defaultAnimationBuilderConfig,
-    this.marginBuilder = _defaultMarginBuilder,
+    this.alignment = defaultAlignment,
+    this.itemWidth = defaultWidth,
+    this.clipBehavior = defaultClipBehavior,
+    this.animationDuration = defaultItemAnimationDuration,
+    this.animationBuilder = defaultAnimationBuilderConfig,
+    this.marginBuilder = defaultMarginBuilder,
     this.applyMediaQueryViewInsets = true,
     this.maxToastLimit = 10,
   });
@@ -68,6 +75,7 @@ class ToastificationConfig extends Equatable {
     Duration? animationDuration,
     ToastificationAnimationBuilder? animationBuilder,
     ToastificationMarginBuilder? marginBuilder,
+    int? maxToastLimit,
     bool? applyMediaQueryViewInsets,
   }) {
     return ToastificationConfig(
@@ -77,6 +85,7 @@ class ToastificationConfig extends Equatable {
       animationDuration: animationDuration ?? this.animationDuration,
       animationBuilder: animationBuilder ?? this.animationBuilder,
       marginBuilder: marginBuilder ?? this.marginBuilder,
+      maxToastLimit: maxToastLimit ?? this.maxToastLimit,
       applyMediaQueryViewInsets:
           applyMediaQueryViewInsets ?? this.applyMediaQueryViewInsets,
     );
@@ -89,12 +98,14 @@ class ToastificationConfig extends Equatable {
         clipBehavior,
         animationDuration,
         marginBuilder,
+        maxToastLimit,
         applyMediaQueryViewInsets,
       ];
 }
 
 /// Default animation builder for [Toastification]
-Widget _defaultAnimationBuilderConfig(
+@visibleForTesting
+Widget defaultAnimationBuilderConfig(
   BuildContext context,
   Animation<double> animation,
   Alignment alignment,
@@ -108,7 +119,8 @@ Widget _defaultAnimationBuilderConfig(
 }
 
 /// Default margin builder for [Toastification]
-EdgeInsetsGeometry _defaultMarginBuilder(
+@visibleForTesting
+EdgeInsetsGeometry defaultMarginBuilder(
   BuildContext context,
   AlignmentGeometry alignment,
 ) {

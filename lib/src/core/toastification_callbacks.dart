@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
@@ -5,7 +6,7 @@ import 'package:toastification/toastification.dart';
 /// Used to listen for various events in the lifecycle of the [Toastification].
 /// All of the callbacks are optional.
 ///
-class ToastificationCallbacks {
+class ToastificationCallbacks extends Equatable {
   /// Creates a set of callbacks that you can provide to a [Toastification] widget.
   const ToastificationCallbacks({
     this.onTap,
@@ -28,4 +29,12 @@ class ToastificationCallbacks {
 
   /// Called when the toast is dismissed by a user gesture (e.g. a swipe).
   final ValueChanged<ToastificationItem>? onDismissed;
+
+  @override
+  List<Object?> get props => [
+        onTap,
+        onCloseButtonTap,
+        onAutoCompleteCompleted,
+        onDismissed,
+      ];
 }
