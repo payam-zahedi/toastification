@@ -14,6 +14,15 @@ class ToastificationManager {
     required this.config,
   });
 
+  /// this is the delay for showing the overlay entry
+  /// We need this delay because we want to show the item animation after
+  /// the overlay created
+  ///
+  /// When we want to show first toast, we need to wait for the overlay to be created
+  /// and then show the toast item.
+  @visibleForTesting
+  static final kCreateOverlayDelay = const Duration(milliseconds: 100);
+
   final Alignment alignment;
 
   final ToastificationConfig config;
@@ -26,14 +35,6 @@ class ToastificationManager {
   /// this is the list of items that are currently shown
   /// if the list is empty, the overlay entry will be removed
   final List<ToastificationItem> _notifications = [];
-
-  /// this is the delay for showing the overlay entry
-  /// We need this delay because we want to show the item animation after
-  /// the overlay created
-  ///
-  /// When we want to show first toast, we need to wait for the overlay to be created
-  /// and then show the toast item.
-  final _createOverlayDelay = const Duration(milliseconds: 100);
 
   /// this is the delay for removing the overlay entry
   ///
@@ -69,7 +70,7 @@ class ToastificationManager {
 
     if (_overlayEntry == null) {
       _createNotificationHolder(overlayState);
-      delay = _createOverlayDelay;
+      delay = kCreateOverlayDelay;
     }
 
     Future.delayed(
