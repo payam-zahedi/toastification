@@ -68,5 +68,27 @@ void main() {
       expect(customType1, isNot(customType3));
       expect(customType1.hashCode, isNot(customType3.hashCode));
     });
+
+    test('defaultValues contains all built-in types', () {
+      final defaults = ToastificationType.defaultValues;
+      expect(defaults.length, 4);
+      expect(defaults.contains(ToastificationType.info), true);
+      expect(defaults.contains(ToastificationType.success), true);
+      expect(defaults.contains(ToastificationType.warning), true);
+      expect(defaults.contains(ToastificationType.error), true);
+    });
+
+    test('toString returns correct string representation', () {
+      expect(ToastificationType.info.toString(), 'ToastificationType.info');
+      expect(
+          ToastificationType.success.toString(), 'ToastificationType.success');
+      expect(
+          ToastificationType.warning.toString(), 'ToastificationType.warning');
+      expect(ToastificationType.error.toString(), 'ToastificationType.error');
+
+      const customType =
+          ToastificationType.custom('custom', Colors.purple, Iconsax.star);
+      expect(customType.toString(), 'ToastificationType.custom');
+    });
   });
 }
