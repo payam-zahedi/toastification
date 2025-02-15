@@ -32,6 +32,7 @@ void main() {
       );
 
       expect(mockItem.timeStatus, equals(ToastTimeStatus.started));
+
       /// since the timer is started, the captured value should not be 0.0
       expect(capturedValue, isNot(equals(0.0)));
     });
