@@ -21,7 +21,7 @@ class ToastificationManager {
   /// When we want to show first toast, we need to wait for the overlay to be created
   /// and then show the toast item.
   @visibleForTesting
-  static final kCreateOverlayDelay = const Duration(milliseconds: 100);
+  static final kCreateOverlayDelay = const Duration(milliseconds: 20);
 
   final Alignment alignment;
 
