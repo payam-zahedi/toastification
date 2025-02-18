@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:toastification/src/core/widget/toast_animation.dart';
 import 'package:toastification/toastification.dart';
 
 void main() {
