@@ -18,10 +18,8 @@ class ToastificationType {
   static const error =
       ToastificationType._('error', errorColor, Iconsax.close_circle_copy);
 
-  // Factory for custom types
-  static ToastificationType custom(String name, Color color, IconData icon) {
-    return ToastificationType._(name, color, icon);
-  }
+  const factory ToastificationType.custom(
+      String name, Color color, IconData icon) = ToastificationType._;
 
   static List<ToastificationType> get defaultValues =>
       [info, success, warning, error];

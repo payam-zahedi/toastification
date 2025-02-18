@@ -86,7 +86,8 @@ class Toastification {
   /// list of managers for each [Alignment] object
   ///
   /// for each [Alignment] object we will create a [ToastificationManager]
-  final Map<Alignment, ToastificationManager> _managers = {};
+  @visibleForTesting
+  final Map<Alignment, ToastificationManager> managers = {};
 
   /// shows a custom notification
   ///
@@ -150,7 +151,7 @@ class Toastification {
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
 
-    final manager = _managers.putIfAbsent(
+    final manager = managers.putIfAbsent(
       effectiveAlignment,
       () => ToastificationManager(
         alignment: effectiveAlignment,
@@ -240,11 +241,11 @@ class Toastification {
     OverlayState? overlayState,
     AlignmentGeometry? alignment,
     Duration? autoCloseDuration,
+    Duration? animationDuration,
     ToastificationAnimationBuilder? animationBuilder,
     ToastificationType? type,
     ToastificationStyle? style,
     Widget? title,
-    Duration? animationDuration,
     Widget? description,
     Widget? icon,
     Color? primaryColor,
@@ -323,7 +324,7 @@ class Toastification {
   /// if there is no notification with the given [id] it will return null
   ToastificationItem? findToastificationItem(String id) {
     try {
-      for (final manager in _managers.values) {
+      for (final manager in managers.values) {
         final foundValue = manager.findToastificationItem(id);
 
         if (foundValue != null) {
@@ -344,7 +345,7 @@ class Toastification {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
-    final manager = _managers[notification.alignment];
+    final manager = managers[notification.alignment];
 
     if (manager != null) {
       manager.dismiss(notification, showRemoveAnimation: showRemoveAnimation);
@@ -356,7 +357,7 @@ class Toastification {
   /// The [delayForAnimation] parameter is used to determine
   /// whether to wait for the animation to finish or not.
   void dismissAll({bool delayForAnimation = true}) {
-    for (final manager in _managers.values) {
+    for (final manager in managers.values) {
       manager.dismissAll(delayForAnimation: delayForAnimation);
     }
   }
