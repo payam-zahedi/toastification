@@ -1,4 +1,6 @@
-# Toastification [![pub package](https://img.shields.io/pub/v/toastification?color=blue&style=plastic)](https://pub.dartlang.org/packages/toastification)
+# Toastification 
+
+[![pub package](https://img.shields.io/pub/v/toastification?color=blue&style=plastic)](https://pub.dartlang.org/packages/toastification) [![codecov](https://codecov.io/gh/payam-zahedi/toastification/graph/badge.svg?token=UTQX773WXM)](https://codecov.io/gh/payam-zahedi/toastification)
 
 <p align="left">
 <img src="https://github.com/payam-zahedi/toastification/blob/main/doc/image/intro.png?raw=true" width="100%" alt="Styles" />
