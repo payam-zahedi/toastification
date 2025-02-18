@@ -14,6 +14,7 @@ class ToastificationManager {
     required this.config,
   });
 
+  // TODO(payam): remove this feild and update tests
   /// this is the delay for showing the overlay entry
   /// We need this delay because we want to show the item animation after
   /// the overlay created
@@ -21,7 +22,7 @@ class ToastificationManager {
   /// When we want to show first toast, we need to wait for the overlay to be created
   /// and then show the toast item.
   @visibleForTesting
-  static final kCreateOverlayDelay = const Duration(milliseconds: 20);
+  static final kCreateOverlayDelay = const Duration(milliseconds: 0);
 
   final Alignment alignment;
 
@@ -70,16 +71,12 @@ class ToastificationManager {
       },
     );
 
-    Duration delay = const Duration(milliseconds: 10);
-
     if (overlayEntry == null) {
       _createNotificationHolder(overlayState);
-      delay = kCreateOverlayDelay;
     }
 
-    Future.delayed(
-      delay,
-      () {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
         notifications.insert(0, item);
 
         listGlobalKey.currentState?.insertItem(
