@@ -2,11 +2,11 @@
 
 - feat: add inherited widget to pass properties to built in widgets by @alirezat66
 - feat: restructure toasts by @alirezat66
-- Update CONTRIBUTING.md link in README.md by @AntonioAEMartins
-- Update ToastificationStyle Section with 5 Predefined Styles and Updated Image by @AntonioAEMartins
+- fix: Update CONTRIBUTING.md link in README.md by @AntonioAEMartins
+- feat: Update ToastificationStyle Section with 5 Predefined Styles and Updated Image by @AntonioAEMartins
 - refactor: use super parameters & trailing commas by @codered-sjy
-- Update Documentation: Added dismissAll Method Explanation by @Arthur-Barreto
-- Enhance SimpleToastWidget with Close Button by @AntonioAEMartins
+- doc: Added dismissAll Method Explanation by @Arthur-Barreto
+- feat: Enhance SimpleToastWidget with Close Button by @AntonioAEMartins
 - fix: increase BuiltInContent maxLines to 2 and add TextOverflow.ellipsis by @payam-zahedi
 - feat: Add dismissFirst and dismissLast methods to docs by @AntonioAEMartins
 - feat: Add `maxToastLimit` to ToastificationConfig and Improve Toast Management by @AntonioAEMartins
