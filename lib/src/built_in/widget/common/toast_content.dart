@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
+import 'package:toastification/toastification.dart';
 
 /// Creates the toastification content - title, description, progress bar
 ///
@@ -23,10 +24,11 @@ class ToastContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final defaultTheme = context.toastTheme;
     final toastStyle = defaultTheme.toastStyle!;
+    final config = ToastificationConfigProvider.maybeOf(context)?.config;
 
     Widget content = DefaultTextStyle.merge(
       style: toastStyle.titleTextStyle,
-      maxLines: 2,
+      maxLines: config?.maxTitleLines ?? 2,
       overflow: TextOverflow.ellipsis,
       child: title ?? const SizedBox(),
     );
@@ -46,6 +48,7 @@ class ToastContent extends StatelessWidget {
           if (title != null) const SizedBox(height: 6),
           DefaultTextStyle.merge(
             style: toastStyle.descriptionTextStyle,
+            maxLines: config?.maxDescriptionLines,
             child: description!,
           ),
         ],
