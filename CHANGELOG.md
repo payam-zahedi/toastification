@@ -1,25 +1,49 @@
+## 3.0.0
+
+- feat: add inherited widget to pass properties to built in widgets by @alirezat66
+- feat: restructure toasts by @alirezat66
+- fix: Update CONTRIBUTING.md link in README.md by @AntonioAEMartins
+- feat: Update ToastificationStyle Section with 5 Predefined Styles and Updated Image by @AntonioAEMartins
+- refactor: use super parameters & trailing commas by @codered-sjy
+- doc: Added dismissAll Method Explanation by @Arthur-Barreto
+- feat: Enhance SimpleToastWidget with Close Button by @AntonioAEMartins
+- fix: increase BuiltInContent maxLines to 2 and add TextOverflow.ellipsis by @payam-zahedi
+- feat: Add dismissFirst and dismissLast methods to docs by @AntonioAEMartins
+- feat: Add `maxToastLimit` to ToastificationConfig and Improve Toast Management by @AntonioAEMartins
+- feat: Save User's Last State in Toast Builder – Implemented State Persistence Using Drift (Issue 73) by @AntonioAEMartins
+- feat: add customizable close button by @reza00farjam
+- fix: using navigator key to show toasts by @payam-zahedi
+- feat: upgrade flutter version 3.27.1 by @payam-zahedi
+- refactor: refactoring core of the package by @payam-zahedi
+- feat: adding test for core of the package by @payam-zahedi
+
 ## 2.3.0
-* fix: AnimationController.dispose() called more than once. on multiple action show by @AntonioAEMartins
-* fix: add extra bottom margin to account for keyboard by @MrLightful 
-* refactor: toast config and applyMediaQueryViewInsets as property by @payam-zahedi
-* fix: add Media Query view padding as a margin to toast overlay by @payam-zahedi
-* fix: add max line limit for title and description by @payam-zahedi
+
+- fix: AnimationController.dispose() called more than once. on multiple action show by @AntonioAEMartins
+- fix: add extra bottom margin to account for keyboard by @MrLightful
+- refactor: toast config and applyMediaQueryViewInsets as property by @payam-zahedi
+- fix: add Media Query view padding as a margin to toast overlay by @payam-zahedi
+- fix: add max line limit for title and description by @payam-zahedi
 
 ## 2.2.0
-* Fix offset in description when title is null by @romatallinn
-* fix: Cannot hide the icon if the style is FlatColored by @sandunrajitha
-* fix: remove padding on top of toast list and make it tappable by @payam-zahedi
+
+- Fix offset in description when title is null by @romatallinn
+- fix: Cannot hide the icon if the style is FlatColored by @sandunrajitha
+- fix: remove padding on top of toast list and make it tappable by @payam-zahedi
 
 ## 2.1.0
-* fix: Add clipBehavior for ToastificationConfig by @komakur
-* feat: Add dismiss icon possibility by @alirezat66
+
+- fix: Add clipBehavior for ToastificationConfig by @komakur
+- feat: Add dismiss icon possibility by @alirezat66
 
 ## 2.0.0
-* Feature: optional context by @SamadiPour
-* Add optional BorderSide option by @LampeMW
+
+- Feature: optional context by @SamadiPour
+- Add optional BorderSide option by @LampeMW
 
 ## 1.2.1
-* Enhancement: [Website] Adding Icon Picker Component by @mahmoud-eslami
+
+- Enhancement: [Website] Adding Icon Picker Component by @mahmoud-eslami
 
 ## 1.2.0
 

@@ -1,11 +1,15 @@
 import 'package:dart_style/dart_style.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastCodeFormatter {
-  static final _formatter = DartFormatter(lineEnding: '\n\t');
+  static final _formatter = DartFormatter(
+    languageVersion: DartFormatter.latestLanguageVersion,
+    lineEnding: '\n\t',
+  );
 
   static String format(ToastDetail toastDetail) {
     final StringBuffer code = StringBuffer();
@@ -57,17 +61,19 @@ class ToastCodeFormatter {
           '\tanimationBuilder: ${toastDetail.animationType.buildCode()},');
     }
 
-    // TODO: fix issue with new color toString method
     if (toastDetail.primaryColor != null) {
-      code.writeln('\tprimaryColor: ${toastDetail.primaryColor},');
+      code.writeln(
+          '\tprimaryColor: Color(0x${toastDetail.primaryColor!.hexAlpha}),');
     }
 
     if (toastDetail.backgroundColor != null) {
-      code.writeln('\tbackgroundColor: ${toastDetail.backgroundColor},');
+      code.writeln(
+          '\tbackgroundColor: Color(0x${toastDetail.backgroundColor!.hexAlpha}),');
     }
 
     if (toastDetail.foregroundColor != null) {
-      code.writeln('\tforegroundColor: ${toastDetail.foregroundColor},');
+      code.writeln(
+          '\tforegroundColor: Color(0x${toastDetail.foregroundColor!.hexAlpha}),');
     }
 
     if (toastDetail.iconColor != null) {

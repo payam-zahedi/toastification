@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:toastification/src/core/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -13,15 +14,6 @@ class ToastificationManager {
     required this.alignment,
     required this.config,
   });
-
-  /// this is the delay for showing the overlay entry
-  /// We need this delay because we want to show the item animation after
-  /// the overlay created
-  ///
-  /// When we want to show first toast, we need to wait for the overlay to be created
-  /// and then show the toast item.
-  @visibleForTesting
-  static final kCreateOverlayDelay = const Duration(milliseconds: 100);
 
   final Alignment alignment;
 
@@ -52,6 +44,7 @@ class ToastificationManager {
   /// otherwise we will just add the [item] to the [notifications] list.
   ToastificationItem showCustom({
     required OverlayState overlayState,
+    required SchedulerBinding scheduler,
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
@@ -70,30 +63,29 @@ class ToastificationManager {
       },
     );
 
-    Duration delay = const Duration(milliseconds: 10);
-
     if (overlayEntry == null) {
       _createNotificationHolder(overlayState);
-      delay = kCreateOverlayDelay;
     }
 
-    Future.delayed(
-      delay,
-      () {
-        notifications.insert(0, item);
-
-        listGlobalKey.currentState?.insertItem(
-          0,
-          duration: _createAnimationDuration(item),
-        );
-
-        while (notifications.length > config.maxToastLimit) {
-          dismissLast();
-        }
-      },
-    );
+    scheduler.addPostFrameCallback((_) {
+      _addItemToList(item);
+    });
 
     return item;
+  }
+
+  void _addItemToList(ToastificationItem item) {
+    if (notifications.contains(item)) return;
+
+    notifications.insert(0, item);
+    listGlobalKey.currentState?.insertItem(
+      0,
+      duration: _createAnimationDuration(item),
+    );
+
+    while (notifications.length > config.maxToastLimit) {
+      dismissLast();
+    }
   }
 
   /// Finds the [ToastificationItem] with the given [id].
