@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastCodeFormatter {
-  static final _formatter = DartFormatter(lineEnding: '\n\t');
+  static final _formatter = DartFormatter(
+    languageVersion: DartFormatter.latestLanguageVersion,
+    lineEnding: '\n\t',
+  );
 
   static String format(ToastDetail toastDetail) {
     final StringBuffer code = StringBuffer();
