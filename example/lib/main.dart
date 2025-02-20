@@ -27,6 +27,12 @@ class ToastificationApp extends ConsumerWidget {
     final useInterFont = ref.watch(themeVariantProvider);
 
     return ToastificationWrapper(
+      config: ToastificationConfig(
+        maxTitleLines: 2,
+        maxDescriptionLines: 6,
+        marginBuilder: (context, alignment) =>
+            const EdgeInsets.fromLTRB(0, 16, 0, 110),
+      ),
       child: MaterialApp(
         title: 'Toastification',
         theme: useInterFont ? lightInterTheme : lightJakartaTheme,
