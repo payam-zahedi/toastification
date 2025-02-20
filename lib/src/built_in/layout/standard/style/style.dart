@@ -66,6 +66,12 @@ abstract class BaseStandardToastStyle extends Equatable {
         height: 1.2,
       );
 
+  int get titleMaxLines =>
+      providedValues?.titleMaxLines ?? defaults.titleMaxLines;
+
+  int get descriptionMaxLines =>
+      providedValues?.descriptionMaxLines ?? defaults.descriptionMaxLines;
+
   double get elevation => 0.0;
   List<BoxShadow> get boxShadow => [];
 
@@ -103,6 +109,8 @@ class DefaultStyleValues extends StandardStyleValues {
     BorderRadiusGeometry borderRadius = const BorderRadius.all(
       Radius.circular(12),
     ),
+    int titleMaxLines = 2,
+    int descriptionMaxLines = 6,
     double progressIndicatorStrokeWidth = 2.0,
   }) : super(
           primaryColor: primaryColor,
@@ -111,6 +119,8 @@ class DefaultStyleValues extends StandardStyleValues {
           padding: padding,
           borderSide: borderSide,
           borderRadius: borderRadius,
+          titleMaxLines: titleMaxLines,
+          descriptionMaxLines: descriptionMaxLines,
           progressIndicatorStrokeWidth: progressIndicatorStrokeWidth,
         );
 
@@ -126,6 +136,13 @@ class DefaultStyleValues extends StandardStyleValues {
   BorderSide get borderSide => super.borderSide!;
   @override
   BorderRadiusGeometry get borderRadius => super.borderRadius!;
+
+  @override
+  int get titleMaxLines => super.titleMaxLines!;
+
+  @override
+  int get descriptionMaxLines => super.descriptionMaxLines!;
+
   @override
   double get progressIndicatorStrokeWidth =>
       super.progressIndicatorStrokeWidth!;
@@ -138,6 +155,8 @@ class DefaultStyleValues extends StandardStyleValues {
         padding,
         borderSide,
         borderRadius,
+        titleMaxLines,
+        descriptionMaxLines,
         progressIndicatorStrokeWidth,
       ];
 }
@@ -150,6 +169,8 @@ class StandardStyleValues extends Equatable {
     this.padding,
     this.borderSide,
     this.borderRadius,
+    this.titleMaxLines,
+    this.descriptionMaxLines,
     this.progressIndicatorStrokeWidth,
     this.progressIndicatorTheme,
   });
@@ -160,6 +181,10 @@ class StandardStyleValues extends Equatable {
   final EdgeInsetsGeometry? padding;
   final BorderSide? borderSide;
   final BorderRadiusGeometry? borderRadius;
+
+  final int? titleMaxLines;
+  final int? descriptionMaxLines;
+
   final double? progressIndicatorStrokeWidth;
   final ProgressIndicatorThemeData? progressIndicatorTheme;
 
@@ -174,6 +199,8 @@ class StandardStyleValues extends Equatable {
         padding,
         borderSide,
         borderRadius,
+        titleMaxLines,
+        descriptionMaxLines,
         progressIndicatorStrokeWidth,
         progressIndicatorTheme,
       ];

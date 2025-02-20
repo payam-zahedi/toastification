@@ -9,7 +9,6 @@ import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:toastification/toastification.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,26 +32,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ToastificationConfigProvider(
-      config: ToastificationConfig(
-        marginBuilder: (context, alignment) =>
-            const EdgeInsets.fromLTRB(0, 16, 0, 110),
-      ),
-      child: Scrollbar(
-        child: Scaffold(
-          extendBody: true,
-          bottomNavigationBar: const BottomNavigationView(),
-          body: CustomScrollView(
-            scrollBehavior: const ScrollBehavior().copyWith(
-              scrollbars: false,
-            ),
-            primary: true,
-            slivers: const [
-              ToastAppBar(),
-              SliverToBoxAdapter(child: ToastHeader()),
-              CustomizationSection(),
-            ],
+    return Scrollbar(
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: const BottomNavigationView(),
+        body: CustomScrollView(
+          scrollBehavior: const ScrollBehavior().copyWith(
+            scrollbars: false,
           ),
+          primary: true,
+          slivers: const [
+            ToastAppBar(),
+            SliverToBoxAdapter(child: ToastHeader()),
+            CustomizationSection(),
+          ],
         ),
       ),
     );

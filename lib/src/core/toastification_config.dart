@@ -39,6 +39,8 @@ class ToastificationConfig extends Equatable {
     this.marginBuilder = defaultMarginBuilder,
     this.applyMediaQueryViewInsets = true,
     this.maxToastLimit = 10,
+    this.maxTitleLines = 2,
+    this.maxDescriptionLines = 6,
   });
 
   final AlignmentGeometry alignment;
@@ -59,6 +61,16 @@ class ToastificationConfig extends Equatable {
   /// If the number of toasts exceeds this limit, the oldest toast will be removed.
   /// The default value is 10.
   final int maxToastLimit;
+
+  /// The maximum number of lines to display for the toast title.
+  /// If the title exceeds this number of lines, it will be truncated with an ellipsis.
+  /// The default value is 2.
+  final int maxTitleLines;
+
+  /// The maximum number of lines to display for the toast description.
+  /// If the description exceeds this number of lines, it will be truncated with an ellipsis.
+  /// The default value is 2.
+  final int maxDescriptionLines;
 
   /// Whether to apply the viewInsets to the margin of the Toastification Overlay.
   /// Basically, this is used to move the Toastification Overlay up or down when the keyboard is shown.
@@ -99,6 +111,8 @@ class ToastificationConfig extends Equatable {
         animationDuration,
         marginBuilder,
         maxToastLimit,
+        maxTitleLines,
+        maxDescriptionLines,
         applyMediaQueryViewInsets,
       ];
 }
