@@ -36,6 +36,7 @@ void main() {
 
       manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
@@ -43,7 +44,7 @@ void main() {
       );
 
       // Wait for overlay creation delay
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       // Find the Text widget in the overlay
       expect(find.text('Test Toast'), findsOneWidget);
@@ -60,6 +61,7 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
@@ -67,7 +69,7 @@ void main() {
       );
 
       // Wait for overlay creation delay
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       expect(manager.overlayEntry, isNotNull);
       expect(manager.notifications, hasLength(1));
@@ -96,6 +98,7 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: customBuilder,
         animationBuilder: customAnimationBuilder,
         animationDuration: customAnimationDuration,
@@ -104,7 +107,7 @@ void main() {
       );
 
       // Wait for overlay creation delay
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       expect(item.builder, equals(customBuilder));
       expect(item.animationBuilder, equals(customAnimationBuilder));
@@ -124,6 +127,7 @@ void main() {
 
         final firstItem = manager.showCustom(
           overlayState: overlayState,
+          scheduler: tester.binding,
           builder: (context, item) => const Text('First Toast'),
           animationBuilder: null,
           animationDuration: null,
@@ -133,7 +137,7 @@ void main() {
         expect(manager.notifications.contains(firstItem), isFalse);
 
         // Wait for overlay creation delay
-        await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+        await tester.pumpAndSettle();
         expect(manager.notifications.contains(firstItem), isTrue);
       },
     );
@@ -144,6 +148,7 @@ void main() {
 
       manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
@@ -151,12 +156,13 @@ void main() {
       );
 
       // Wait for overlay creation delay
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       final overlayEntry = manager.overlayEntry;
 
       manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
@@ -182,6 +188,7 @@ void main() {
       for (var i = 0; i < 5; i++) {
         manager.showCustom(
           overlayState: overlayState,
+          scheduler: tester.binding,
           builder: (context, item) => Text('Toast $i'),
           animationBuilder: null,
           animationDuration: null,
@@ -190,38 +197,102 @@ void main() {
       }
 
       // Wait for all animations
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       expect(manager.notifications, hasLength(2));
+    });
+    testWidgets('testing frames', (tester) async {
+      final w = Container();
+      int framesCount = 0;
+
+      tester.binding.addPersistentFrameCallback((timeStamp) {
+        framesCount++;
+      });
+
+      await tester.pumpWidget(w);
+      expect(framesCount, equals(1));
+
+      // pumpWidget calls [scheduleFrame]
+      await tester.pumpWidget(w);
+      expect(framesCount, equals(2));
+
+      await tester.pump();
+      // no frame was scheduled, so framesCount is still 2
+      expect(framesCount, equals(2));
+
+      tester.binding.scheduleFrame(); // --
+      await tester.pump(); //   |
+      expect(framesCount, equals(3)); // <-
+
+      // pumpWidget calls [scheduleFrame]
+      await tester.pumpWidget(w);
+      expect(framesCount, equals(4));
     });
 
     testWidgets('should insert new notifications at the beginning',
         (WidgetTester tester) async {
       await createOverlay(tester);
 
+      expect(manager.notifications.length, equals(0));
+
       final firstItem = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('First Toast'),
         animationBuilder: null,
-        animationDuration: null,
+        animationDuration: Duration(milliseconds: 100),
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      /// To schedule a frame (and force postFrameCallback to be called) in flutter test environment
+      /// you need to call tester.binding.scheduleFrame() before tester.pump().
+      tester.binding.scheduleFrame();
+
+      // Wait for the first post-frame callback
+      await tester.pumpAndSettle();
+
+      expect(manager.notifications.length, equals(1));
+      expect(manager.notifications[0], equals(firstItem));
 
       final secondItem = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Second Toast'),
         animationBuilder: null,
-        animationDuration: null,
+        animationDuration: Duration(milliseconds: 100),
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      /// Force postFrameCallback to be called
+      tester.binding.scheduleFrame();
+
+      await tester.pumpAndSettle();
 
       expect(manager.notifications.length, equals(2));
       expect(manager.notifications[0], equals(secondItem));
       expect(manager.notifications[1], equals(firstItem));
+
+      final thirdItem = manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('Third Toast'),
+        animationBuilder: null,
+        animationDuration: Duration(milliseconds: 300),
+        callbacks: const ToastificationCallbacks(),
+      );
+
+      /// Force postFrameCallback to be called
+      tester.binding.scheduleFrame();
+
+      // Start the animation
+      await tester.pump();
+
+      await tester.pumpAndSettle();
+
+      expect(manager.notifications.length, equals(3));
+      expect(manager.notifications[0], equals(thirdItem));
+      expect(manager.notifications[1], equals(secondItem));
+      expect(manager.notifications[2], equals(firstItem));
     });
 
     testWidgets('should use provided animation duration',
@@ -232,13 +303,14 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: customDuration,
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       expect(item.animationDuration, equals(customDuration));
     });
@@ -257,13 +329,14 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       final foundItem = manager.findToastificationItem(item.id);
 
@@ -280,13 +353,14 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
       expect(manager.notifications, contains(item));
 
       manager.dismiss(item);
@@ -301,6 +375,7 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: null,
@@ -308,7 +383,7 @@ void main() {
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
       expect(item.isRunning, isTrue);
 
       manager.dismiss(item);
@@ -324,13 +399,14 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: const Duration(milliseconds: 100),
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
       expect(manager.overlayEntry, isNotNull);
 
       manager.dismiss(item);
@@ -348,6 +424,7 @@ void main() {
 
       final firstItem = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('First Toast'),
         animationBuilder: null,
         animationDuration: null,
@@ -356,13 +433,14 @@ void main() {
 
       final secondItem = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Second Toast'),
         animationBuilder: null,
         animationDuration: null,
         callbacks: const ToastificationCallbacks(),
       );
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
       final overlayEntry = manager.overlayEntry;
 
       manager.dismiss(firstItem);
@@ -379,6 +457,7 @@ void main() {
 
       final item = manager.showCustom(
         overlayState: overlayState,
+        scheduler: tester.binding,
         builder: (context, item) => const Text('Test Toast'),
         animationBuilder: null,
         animationDuration: const Duration(seconds: 1),
@@ -428,6 +507,7 @@ void main() {
       for (var i = 0; i < 3; i++) {
         manager.showCustom(
           overlayState: overlayState,
+          scheduler: tester.binding,
           builder: (context, item) => Text('Toast $i'),
           animationBuilder: null,
           animationDuration: null,
@@ -435,7 +515,7 @@ void main() {
         );
       }
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
       expect(manager.notifications.length, equals(3));
 
       manager.dismissAll(delayForAnimation: false);
@@ -453,6 +533,7 @@ void main() {
       for (var i = 0; i < 3; i++) {
         manager.showCustom(
           overlayState: overlayState,
+          scheduler: tester.binding,
           builder: (context, item) => Text('Toast $i'),
           animationBuilder: null,
           animationDuration: const Duration(milliseconds: 100),
@@ -460,7 +541,7 @@ void main() {
         );
       }
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
       expect(manager.overlayEntry, isNotNull);
 
       manager.dismissAll(delayForAnimation: false);
@@ -481,6 +562,7 @@ void main() {
       for (var text in toastTexts) {
         manager.showCustom(
           overlayState: overlayState,
+          scheduler: tester.binding,
           builder: (context, item) => Text(text),
           animationBuilder: null,
           animationDuration: const Duration(milliseconds: 300),
@@ -488,7 +570,7 @@ void main() {
         );
       }
 
-      await tester.pumpAndSettle(ToastificationManager.kCreateOverlayDelay);
+      await tester.pumpAndSettle();
 
       manager.dismissAll(delayForAnimation: true);
 

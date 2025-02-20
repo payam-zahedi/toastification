@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:toastification/src/built_in/built_in_builder.dart';
-import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/toastification.dart';
 
 /// Helper function to clean up any remaining toasts after each test
@@ -704,7 +703,7 @@ void main() {
       await tester.tap(find.byType(ElevatedButton));
       // This waiting is for the OverlayEntry to be added to the tree
       // we don't wait for the animation to completed
-      await tester.pump(ToastificationManager.kCreateOverlayDelay);
+      await tester.pump();
       // Don't wait for animation to complete
 
       final foundToast = toastification.findToastificationItem(toast.id);

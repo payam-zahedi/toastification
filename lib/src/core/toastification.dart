@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/core/toastification_overlay_state.dart';
 import 'package:toastification/src/built_in/built_in_builder.dart';
@@ -161,6 +162,7 @@ class Toastification {
 
     return manager.showCustom(
       builder: builder,
+      scheduler: SchedulerBinding.instance,
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,

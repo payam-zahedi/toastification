@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:toastification/src/core/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -13,16 +14,6 @@ class ToastificationManager {
     required this.alignment,
     required this.config,
   });
-
-  // TODO(payam): remove this feild and update tests
-  /// this is the delay for showing the overlay entry
-  /// We need this delay because we want to show the item animation after
-  /// the overlay created
-  ///
-  /// When we want to show first toast, we need to wait for the overlay to be created
-  /// and then show the toast item.
-  @visibleForTesting
-  static final kCreateOverlayDelay = const Duration(milliseconds: 0);
 
   final Alignment alignment;
 
@@ -53,6 +44,7 @@ class ToastificationManager {
   /// otherwise we will just add the [item] to the [notifications] list.
   ToastificationItem showCustom({
     required OverlayState overlayState,
+    required SchedulerBinding scheduler,
     required ToastificationBuilder builder,
     required ToastificationAnimationBuilder? animationBuilder,
     required Duration? animationDuration,
@@ -75,22 +67,25 @@ class ToastificationManager {
       _createNotificationHolder(overlayState);
     }
 
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        notifications.insert(0, item);
-
-        listGlobalKey.currentState?.insertItem(
-          0,
-          duration: _createAnimationDuration(item),
-        );
-
-        while (notifications.length > config.maxToastLimit) {
-          dismissLast();
-        }
-      },
-    );
+    scheduler.addPostFrameCallback((_) {
+      _addItemToList(item);
+    });
 
     return item;
+  }
+
+  void _addItemToList(ToastificationItem item) {
+    if (notifications.contains(item)) return;
+
+    notifications.insert(0, item);
+    listGlobalKey.currentState?.insertItem(
+      0,
+      duration: _createAnimationDuration(item),
+    );
+
+    while (notifications.length > config.maxToastLimit) {
+      dismissLast();
+    }
   }
 
   /// Finds the [ToastificationItem] with the given [id].
