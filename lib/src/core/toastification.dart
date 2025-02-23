@@ -172,7 +172,8 @@ class Toastification {
   }
 
   @Deprecated(
-      'use show or showCustom method instead, and you can pass the OverlayState as a parameter')
+    'use show or showCustom method instead, and you can pass the OverlayState as a parameter',
+  )
 
   /// using this method you can show a notification by using the [navigator] overlay
   /// you should create your own widget and pass it to the [builder] parameter
@@ -262,7 +263,8 @@ class Toastification {
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
     @Deprecated(
-        'IMPORTANT: The closeButtonShowType parameter is deprecated and will be removed in the next major version. Use the closeButton parameter instead.')
+      'IMPORTANT: The closeButtonShowType parameter is deprecated and will be removed in the next major version. Use the closeButton parameter instead.',
+    )
     CloseButtonShowType? closeButtonShowType,
     ToastCloseButton closeButton = const ToastCloseButton(),
     bool? closeOnClick,

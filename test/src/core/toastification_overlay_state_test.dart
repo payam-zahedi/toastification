@@ -123,7 +123,9 @@ void main() {
       expect(globalConfig, isNotNull);
       expect(globalConfig?.alignment, equals(Alignment.bottomCenter));
       expect(
-          globalConfig?.animationDuration, equals(const Duration(seconds: 1)));
+        globalConfig?.animationDuration,
+        equals(const Duration(seconds: 1)),
+      );
     });
   });
 }
