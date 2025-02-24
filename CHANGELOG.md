@@ -1,3 +1,6 @@
+## 3.0.1
+* fix: fix issue related to styles by @payam-zahedi
+
 ## 3.0.0
 
 - feat: add inherited widget to pass properties to built in widgets by @alirezat66
