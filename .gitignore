@@ -36,3 +36,6 @@ build/
 
 # FVM Version Cache
 .fvm/
+
+# Lab
+/lab

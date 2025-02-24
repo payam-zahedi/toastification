@@ -260,7 +260,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           };
 
           return StandardToastWidgetFactory.createStandardToastWidget(
-            style: StandardStyle.flat,
+            style: effectiveStyle,
             title: title,
             description: description,
             icon: icon,
