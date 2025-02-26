@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+const kMaxWidth = 1350.0;
+
 const smallMobileBreakpointTag = 'Small-Mobile';
 const mobileBreakpointTag = 'Mobile';
 const tabletBreakpointTag = 'Tablet';

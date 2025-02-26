@@ -33,19 +33,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      child: Scaffold(
-        extendBody: true,
-        bottomNavigationBar: const BottomNavigationView(),
-        body: CustomScrollView(
-          scrollBehavior: const ScrollBehavior().copyWith(
-            scrollbars: false,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: kMaxWidth),
+          child: Scaffold(
+            extendBody: true,
+            bottomNavigationBar: const BottomNavigationView(),
+            body: CustomScrollView(
+              scrollBehavior: const ScrollBehavior().copyWith(
+                scrollbars: false,
+              ),
+              primary: true,
+              slivers: const [
+                ToastAppBar(),
+                SliverToBoxAdapter(child: ToastHeader()),
+                CustomizationSection(),
+              ],
+            ),
           ),
-          primary: true,
-          slivers: const [
-            ToastAppBar(),
-            SliverToBoxAdapter(child: ToastHeader()),
-            CustomizationSection(),
-          ],
         ),
       ),
     );

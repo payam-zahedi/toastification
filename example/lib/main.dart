@@ -39,7 +39,6 @@ class ToastificationApp extends ConsumerWidget {
         builder: (context, child) {
           return ResponsiveWrapper.builder(
             child,
-            maxWidth: 1350,
             minWidth: 300,
             defaultScale: false,
             breakpoints: [
