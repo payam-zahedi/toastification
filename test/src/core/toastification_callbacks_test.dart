@@ -26,7 +26,9 @@ void main() {
       expect(callbacks.onTap, equals(onTap));
       expect(callbacks.onCloseButtonTap, equals(onCloseButtonTap));
       expect(
-          callbacks.onAutoCompleteCompleted, equals(onAutoCompleteCompleted));
+        callbacks.onAutoCompleteCompleted,
+        equals(onAutoCompleteCompleted),
+      );
       expect(callbacks.onDismissed, equals(onDismissed));
     });
 
