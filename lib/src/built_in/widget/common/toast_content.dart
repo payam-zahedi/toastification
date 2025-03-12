@@ -12,11 +12,13 @@ class ToastContent extends StatelessWidget {
     this.description,
     this.progressBarValue,
     this.progressBarWidget,
+    this.parentShowProgressBar = true,
   });
 
   final Widget? title;
   final Widget? description;
 
+  final bool parentShowProgressBar;
   final double? progressBarValue;
   final Widget? progressBarWidget;
 
@@ -52,7 +54,7 @@ class ToastContent extends StatelessWidget {
             child: description!,
           ),
         ],
-        if (defaultTheme.showProgressBar) ...[
+        if (defaultTheme.showProgressBar && parentShowProgressBar) ...[
           if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
             data: toastStyle.progressIndicatorTheme,

@@ -43,6 +43,7 @@ class SimpleStandardToastWidget extends StatelessWidget
         Flexible(
           fit: FlexFit.loose,
           child: ToastContent(
+            parentShowProgressBar: false,
             title: title ?? const SizedBox(),
           ),
         ),

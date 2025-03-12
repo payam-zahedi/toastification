@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:toastification/src/built_in/widget/common/on_hover_builder.dart';
 import 'package:toastification/toastification.dart';
 
+const _defaultShowProgressBar = false;
+
 class BuiltInBuilder extends StatelessWidget {
   const BuiltInBuilder({
     super.key,
@@ -85,7 +87,7 @@ class BuiltInBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final showProgressBar = (this.showProgressBar ?? true);
+    final showProgressBar = (this.showProgressBar ?? _defaultShowProgressBar);
 
     final closeOnClick = this.closeOnClick ?? false;
     final pauseOnHover = this.pauseOnHover ?? true;
@@ -98,7 +100,6 @@ class BuiltInBuilder extends StatelessWidget {
     return _BuiltInContainer(
       item: item,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      showProgressBar: showProgressBar,
       closeOnClick: closeOnClick,
       dragToClose: dragToClose,
       dismissDirection: dismissDirection,
@@ -163,7 +164,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.boxShadow,
     this.showIcon,
     required this.onCloseTap,
-    this.showProgressBar,
+    required this.showProgressBar,
     this.applyBlurEffect,
     this.progressBarTheme,
     required this.closeButton,
@@ -198,7 +199,7 @@ class BuiltInToastBuilder extends StatelessWidget {
 
   final VoidCallback onCloseTap;
 
-  final bool? showProgressBar;
+  final bool showProgressBar;
 
   final bool? showIcon;
 
@@ -214,9 +215,10 @@ class BuiltInToastBuilder extends StatelessWidget {
 
     // TODO: in v4.0 we need to update ToastificationStyle property
     final effectiveStyle = (style ?? ToastificationStyle.flat).toStandard;
+
     final effectiveType = type ?? ToastificationType.success;
-    final showProgressBar = (this.showProgressBar ?? false) && item != null;
-    final progressBarWidget = showProgressBar
+
+    final progressBarWidget = showProgressBar && item != null
         ? ToastTimerAnimationBuilder(
             item: item!,
             builder: (context, value, _) {
@@ -244,7 +246,7 @@ class BuiltInToastBuilder extends StatelessWidget {
       ),
       flutterTheme: flutterTheme,
       direction: direction ?? Directionality.of(context),
-      showProgressBar: this.showProgressBar == true,
+      showProgressBar: showProgressBar,
       applyBlurEffect: applyBlurEffect ?? false,
       showIcon: showIcon ?? true,
     );
@@ -281,7 +283,6 @@ class _BuiltInContainer extends StatelessWidget {
   const _BuiltInContainer({
     required this.item,
     required this.margin,
-    required this.showProgressBar,
     required this.closeOnClick,
     required this.pauseOnHover,
     required this.dragToClose,
@@ -293,8 +294,6 @@ class _BuiltInContainer extends StatelessWidget {
   final ToastificationItem item;
 
   final EdgeInsetsGeometry margin;
-
-  final bool showProgressBar;
 
   final bool closeOnClick;
 
