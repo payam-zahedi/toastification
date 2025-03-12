@@ -1,8 +1,12 @@
 ## 3.0.2
-* fix: update minimum flutter version to 3.27.0 by @payam-zahedi
+
+- fix(example): ensure scrollbar reaches screen edge on large screens by applying maxWidth constraints locally by @reza00farjam
+- fix: update minimum flutter version to 3.27.0 by @payam-zahedi
+- fix: fix sample toast issue by @payam-zahedi
 
 ## 3.0.1
-* fix: fix issue related to styles by @payam-zahedi
+
+- fix: fix issue related to styles by @payam-zahedi
 
 ## 3.0.0
 
