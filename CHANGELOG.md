@@ -1,3 +1,6 @@
+## 3.0.2
+* fix: update minimum flutter version to 3.27.0 by @payam-zahedi
+
 ## 3.0.1
 * fix: fix issue related to styles by @payam-zahedi
 
