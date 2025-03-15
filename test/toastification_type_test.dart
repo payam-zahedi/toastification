@@ -27,19 +27,27 @@ void main() {
     test('Default types: equality and hashCode', () {
       expect(ToastificationType.info, ToastificationType.info);
       expect(
-          ToastificationType.info.hashCode, ToastificationType.info.hashCode);
+        ToastificationType.info.hashCode,
+        ToastificationType.info.hashCode,
+      );
 
       expect(ToastificationType.success, ToastificationType.success);
-      expect(ToastificationType.success.hashCode,
-          ToastificationType.success.hashCode);
+      expect(
+        ToastificationType.success.hashCode,
+        ToastificationType.success.hashCode,
+      );
 
       expect(ToastificationType.warning, ToastificationType.warning);
-      expect(ToastificationType.warning.hashCode,
-          ToastificationType.warning.hashCode);
+      expect(
+        ToastificationType.warning.hashCode,
+        ToastificationType.warning.hashCode,
+      );
 
       expect(ToastificationType.error, ToastificationType.error);
       expect(
-          ToastificationType.error.hashCode, ToastificationType.error.hashCode);
+        ToastificationType.error.hashCode,
+        ToastificationType.error.hashCode,
+      );
     });
 
     test('Custom types: creation', () {
@@ -81,9 +89,13 @@ void main() {
     test('toString returns correct string representation', () {
       expect(ToastificationType.info.toString(), 'ToastificationType.info');
       expect(
-          ToastificationType.success.toString(), 'ToastificationType.success');
+        ToastificationType.success.toString(),
+        'ToastificationType.success',
+      );
       expect(
-          ToastificationType.warning.toString(), 'ToastificationType.warning');
+        ToastificationType.warning.toString(),
+        'ToastificationType.warning',
+      );
       expect(ToastificationType.error.toString(), 'ToastificationType.error');
 
       const customType =
