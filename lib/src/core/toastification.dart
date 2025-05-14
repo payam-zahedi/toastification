@@ -374,7 +374,7 @@ class Toastification {
     final notification = findToastificationItem(id);
 
     if (notification != null) {
-      dismiss(notification, showRemoveAnimation: true);
+      dismiss(notification, showRemoveAnimation: showRemoveAnimation);
     }
   }
 }
