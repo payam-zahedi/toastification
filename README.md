@@ -175,35 +175,85 @@ toastification.showCustom(
   context: context, // optional if you use ToastificationWrapper
   autoCloseDuration: const Duration(seconds: 5),
   alignment: Alignment.topRight,
-  builder: (BuildContext context, ToastificationItem holder) {
+  dismissDirection: DismissDirection.none,
+  animationBuilder: (context, animation, alignment, child) {
+    // Fade animation for the toast
+    return FadeTransition(opacity: animation, child: child);
+  },
+  builder: (context, holder) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.blue,
-      ),
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Custom Toast',
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          const Text('This is a custom toast message!',
-              style: TextStyle(color: Colors.white)),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Perform an action when the button is pressed
-                },
-                child: const Text('Do Something'),
-              ),
-            ],
+        color: Colors.white.withAlpha(200),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.green.withAlpha(100),
+            blurRadius: 40,
+            spreadRadius: 15,
           ),
         ],
+      ),
+      child: GestureDetector(
+        onTapDown: (_) => holder.pause(), // Pause dismiss timer on hold
+        onTapUp: (_) => holder.start(), // Resume dismiss timer on release
+        dragStartBehavior: DragStartBehavior.down,
+        child: DecoratedBox(
+          decoration: const BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(50),
+            ),
+        ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Title',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        'Custom Toast Message',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // Dismiss the toast
+                    toastification.dismissById(holder.id);
+                  },
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   },
