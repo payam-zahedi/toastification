@@ -1,3 +1,8 @@
+## 3.0.3
+
+- feat: Add Advanced Custom Toast Example by @mahdiyarz
+- feat: add block background intercation in global config by @payam-zahedi
+
 ## 3.0.2
 
 - fix(example): ensure scrollbar reaches screen edge on large screens by applying maxWidth constraints locally by @reza00farjam
