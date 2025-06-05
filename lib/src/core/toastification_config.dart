@@ -41,6 +41,7 @@ class ToastificationConfig extends Equatable {
     this.maxToastLimit = 10,
     this.maxTitleLines = 2,
     this.maxDescriptionLines = 6,
+    this.blockBackgroundInteraction = false,
   });
 
   final AlignmentGeometry alignment;
@@ -79,6 +80,11 @@ class ToastificationConfig extends Equatable {
   /// If set to true, MediaQuery.of(context).viewInsets will be added to the result of the [marginBuilder] method.
   final bool applyMediaQueryViewInsets;
 
+  /// Whether to block background interaction.
+  /// If set to true, the background will not be interactive.
+  /// The default value is false.
+  final bool blockBackgroundInteraction;
+
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
     AlignmentGeometry? alignment,
@@ -89,6 +95,7 @@ class ToastificationConfig extends Equatable {
     ToastificationMarginBuilder? marginBuilder,
     int? maxToastLimit,
     bool? applyMediaQueryViewInsets,
+    bool? blockBackgroundInteraction,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
@@ -100,6 +107,8 @@ class ToastificationConfig extends Equatable {
       maxToastLimit: maxToastLimit ?? this.maxToastLimit,
       applyMediaQueryViewInsets:
           applyMediaQueryViewInsets ?? this.applyMediaQueryViewInsets,
+      blockBackgroundInteraction:
+          blockBackgroundInteraction ?? this.blockBackgroundInteraction,
     );
   }
 
@@ -114,6 +123,7 @@ class ToastificationConfig extends Equatable {
         maxTitleLines,
         maxDescriptionLines,
         applyMediaQueryViewInsets,
+        blockBackgroundInteraction,
       ];
 }
 
