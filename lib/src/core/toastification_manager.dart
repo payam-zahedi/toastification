@@ -247,6 +247,13 @@ class ToastificationManager {
           ),
         );
 
+        if (config.blockBackgroundInteraction) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: overlay,
+          );
+        }
+
         return overlay;
       },
     );
