@@ -12,6 +12,13 @@ void main() {
         padding: EdgeInsets.all(8.0),
         borderSide: BorderSide(color: Colors.red),
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red,
+            blurRadius: 10,
+            offset: Offset(0, 10),
+          ),
+        ],
         progressIndicatorStrokeWidth: 4.0,
       );
 
@@ -21,6 +28,13 @@ void main() {
       expect(values.padding, EdgeInsets.all(8.0));
       expect(values.borderSide, BorderSide(color: Colors.red));
       expect(values.borderRadius, BorderRadius.all(Radius.circular(8.0)));
+      expect(values.boxShadow, [
+        BoxShadow(
+          color: Colors.red,
+          blurRadius: 10,
+          offset: Offset(0, 10),
+        ),
+      ]);
       expect(values.progressIndicatorStrokeWidth, 4.0);
     });
 
@@ -54,6 +68,7 @@ void main() {
       expect(values.padding, EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16));
       expect(values.borderSide, BorderSide(color: Colors.black12));
       expect(values.borderRadius, BorderRadius.all(Radius.circular(12)));
+      expect(values.boxShadow, []);
       expect(values.progressIndicatorStrokeWidth, 2.0);
     });
   });
