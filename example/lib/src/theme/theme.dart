@@ -151,7 +151,7 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
         borderSide: const BorderSide(width: 1),
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: scheme.surfaceContainerHighest,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
