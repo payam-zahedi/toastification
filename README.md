@@ -348,6 +348,7 @@ class MyApp extends StatelessWidget {
             alignment: Alignment.center,
             itemWidth: 440,
             animationDuration: Duration(milliseconds: 500),
+            blockBackgroundInteraction: false,
           ),
           child: child!,
         );
@@ -373,6 +374,7 @@ class HomePage extends StatelessWidget {
         alignment: Alignment.center,
         itemWidth: 440,
         animationDuration: Duration(milliseconds: 500),
+        blockBackgroundInteraction: false,
       ),
       child: Scaffold(
         body: HomeBody(),
@@ -381,6 +383,19 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
+##### Block Background Interaction
+
+The `blockBackgroundInteraction` parameter allows you to control whether the background should be interactive when toasts are displayed. When set to `true`, the background will be blocked from receiving touch events, ensuring that users can only interact with the toast notifications. default value is `false`.
+
+```dart
+ToastificationConfig(
+  blockBackgroundInteraction: true, // Blocks background interaction
+  // ... other configuration options
+)
+```
+
+---
 
 ## Manage Your Notifications
 
