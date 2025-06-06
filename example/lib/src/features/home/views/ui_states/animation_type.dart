@@ -90,7 +90,7 @@ class FadeAnimationType extends AnimationType {
 class ScaleAnimationType extends AnimationType {
   const ScaleAnimationType()
       : super(
-          title: 'Slide in / out',
+          title: 'Scale',
           name: 'Scale',
         );
 
