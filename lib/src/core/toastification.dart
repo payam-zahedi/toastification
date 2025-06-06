@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:toastification/src/built_in/built_in_builder.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/core/toastification_overlay_state.dart';
-import 'package:toastification/src/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';
 
 // TODO(payam): add navigator observer
@@ -123,6 +123,7 @@ class Toastification {
     OverlayState? overlayState,
     DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
+    bool? blockBackgroundInteraction,
   }) {
     context ??= overlayState?.context;
 
@@ -168,6 +169,7 @@ class Toastification {
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState!,
       callbacks: callbacks,
+      blockBackgroundInteraction: blockBackgroundInteraction,
     );
   }
 
@@ -200,6 +202,7 @@ class Toastification {
     ToastificationAnimationBuilder? animationBuilder,
     Duration? animationDuration,
     Duration? autoCloseDuration,
+    bool? blockBackgroundInteraction,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     final context = navigator.context;
@@ -214,6 +217,7 @@ class Toastification {
       autoCloseDuration: autoCloseDuration,
       overlayState: navigator.overlay,
       callbacks: callbacks,
+      blockBackgroundInteraction: blockBackgroundInteraction,
     );
   }
 
@@ -271,6 +275,7 @@ class Toastification {
     DismissDirection? dismissDirection,
     bool? pauseOnHover,
     bool? applyBlurEffect,
+    bool? blockBackgroundInteraction,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
@@ -289,6 +294,7 @@ class Toastification {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       callbacks: callbacks,
+      blockBackgroundInteraction: blockBackgroundInteraction,
       builder: (context, holder) {
         return BuiltInBuilder(
           item: holder,

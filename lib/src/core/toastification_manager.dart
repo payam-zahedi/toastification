@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:toastification/src/core/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
@@ -50,6 +50,7 @@ class ToastificationManager {
     required Duration? animationDuration,
     required ToastificationCallbacks callbacks,
     Duration? autoCloseDuration,
+    bool? blockBackgroundInteraction,
   }) {
     final item = ToastificationItem(
       builder: builder,
@@ -64,7 +65,7 @@ class ToastificationManager {
     );
 
     if (overlayEntry == null) {
-      _createNotificationHolder(overlayState);
+      _createNotificationHolder(overlayState, blockBackgroundInteraction);
     }
 
     scheduler.addPostFrameCallback((_) {
@@ -200,13 +201,13 @@ class ToastificationManager {
     dismiss(notifications.last);
   }
 
-  void _createNotificationHolder(OverlayState overlay) {
-    overlayEntry = _createOverlayEntry();
+  void _createNotificationHolder(OverlayState overlay, bool? blockBackgroundInteraction) {
+    overlayEntry = _createOverlayEntry(blockBackgroundInteraction);
     overlay.insert(overlayEntry!);
   }
 
   /// create a [OverlayEntry] as holder of the notifications
-  OverlayEntry _createOverlayEntry() {
+  OverlayEntry _createOverlayEntry([bool? blockBackgroundInteraction]) {
     return OverlayEntry(
       opaque: false,
       builder: (context) {
@@ -247,7 +248,10 @@ class ToastificationManager {
           ),
         );
 
-        if (config.blockBackgroundInteraction) {
+        // Use the provided blockBackgroundInteraction value if available, otherwise use the config value
+        final shouldBlockBackgroundInteraction = blockBackgroundInteraction ?? config.blockBackgroundInteraction;
+
+        if (shouldBlockBackgroundInteraction) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             child: overlay,
@@ -280,6 +284,5 @@ class ToastificationManager {
   ) =>
       item.animationBuilder ?? config.animationBuilder;
 
-  Duration _createAnimationDuration(ToastificationItem item) =>
-      item.animationDuration ?? config.animationDuration;
+  Duration _createAnimationDuration(ToastificationItem item) => item.animationDuration ?? config.animationDuration;
 }
