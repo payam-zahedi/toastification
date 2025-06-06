@@ -51,6 +51,8 @@ abstract class BaseStandardToastStyle extends Equatable {
   BorderRadiusGeometry get borderRadius =>
       providedValues?.borderRadius ?? defaults.borderRadius;
 
+  double get minHeight => providedValues?.minHeight ?? defaults.minHeight;
+
   TextStyle? get titleTextStyle => flutterTheme?.textTheme.titleSmall?.copyWith(
         color: foregroundColor,
         fontSize: 14,
@@ -104,7 +106,6 @@ class DefaultStyleValues extends StandardStyleValues {
     required Color surfaceLight,
     required Color surfaceDark,
     EdgeInsetsGeometry padding =
-        const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16),
     BorderSide borderSide = const BorderSide(color: Colors.black12),
     BorderRadiusGeometry borderRadius = const BorderRadius.all(
       Radius.circular(12),
@@ -112,6 +113,7 @@ class DefaultStyleValues extends StandardStyleValues {
     int titleMaxLines = 2,
     int descriptionMaxLines = 6,
     double progressIndicatorStrokeWidth = 2.0,
+    double minHeight = 64.0,
   }) : super(
           primaryColor: primaryColor,
           surfaceLight: surfaceLight,
@@ -122,6 +124,7 @@ class DefaultStyleValues extends StandardStyleValues {
           titleMaxLines: titleMaxLines,
           descriptionMaxLines: descriptionMaxLines,
           progressIndicatorStrokeWidth: progressIndicatorStrokeWidth,
+          minHeight: minHeight,
         );
 
   @override
@@ -148,6 +151,9 @@ class DefaultStyleValues extends StandardStyleValues {
       super.progressIndicatorStrokeWidth!;
 
   @override
+  double get minHeight => super.minHeight!;
+
+  @override
   List<Object> get props => [
         primaryColor,
         surfaceLight,
@@ -158,6 +164,7 @@ class DefaultStyleValues extends StandardStyleValues {
         titleMaxLines,
         descriptionMaxLines,
         progressIndicatorStrokeWidth,
+        minHeight,
       ];
 }
 
@@ -173,6 +180,7 @@ class StandardStyleValues extends Equatable {
     this.descriptionMaxLines,
     this.progressIndicatorStrokeWidth,
     this.progressIndicatorTheme,
+    this.minHeight,
   });
 
   final MaterialColor? primaryColor;
@@ -187,6 +195,7 @@ class StandardStyleValues extends Equatable {
 
   final double? progressIndicatorStrokeWidth;
   final ProgressIndicatorThemeData? progressIndicatorTheme;
+  final double? minHeight;
 
   @override
   bool get stringify => true;
@@ -203,6 +212,7 @@ class StandardStyleValues extends Equatable {
         descriptionMaxLines,
         progressIndicatorStrokeWidth,
         progressIndicatorTheme,
+        minHeight,
       ];
 }
 

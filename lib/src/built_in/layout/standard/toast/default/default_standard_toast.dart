@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toastification/src/built_in/layout/standard/toast/base_standard.dart';
-import 'package:toastification/src/utils/toast_theme_utils.dart';
 import 'package:toastification/src/built_in/theme/toastification_theme_data.dart';
-import 'package:toastification/src/built_in/widget/common/toast_content.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
+import 'package:toastification/src/built_in/widget/common/toast_content.dart';
+import 'package:toastification/src/utils/toast_theme_utils.dart';
 
 class DefaultStandardToastWidget extends StatelessWidget
     implements StandardToastWidget {
@@ -50,7 +50,7 @@ class DefaultStandardToastWidget extends StatelessWidget
     final toastStyle = toastTheme.toastStyle!;
 
     Widget body = Container(
-      constraints: const BoxConstraints(minHeight: 64),
+      constraints: BoxConstraints(minHeight: toastStyle.minHeight),
       decoration: BoxDecoration(
         color: toastStyle.blurredBackgroundColor(
           toastTheme.applyBlurEffect,
