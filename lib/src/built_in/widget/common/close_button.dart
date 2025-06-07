@@ -7,7 +7,9 @@ import 'package:toastification/src/utils/toast_theme_utils.dart';
 /// [context] The build context.
 /// [onClose] Callback function when the close button is tapped.
 typedef CloseButtonBuilder = Widget Function(
-    BuildContext context, VoidCallback onClose);
+  BuildContext context,
+  VoidCallback onClose,
+);
 
 /// Configuration class for toast close button customization.
 ///

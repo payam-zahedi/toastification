@@ -71,7 +71,10 @@ class ToastificationType {
   ///   [color] - Custom color for the toast
   ///   [icon] - Custom icon to be displayed
   const factory ToastificationType.custom(
-      String name, Color color, IconData icon) = ToastificationType._;
+    String name,
+    Color color,
+    IconData icon,
+  ) = ToastificationType._;
 
   /// Returns a list of all predefined toast types
   static List<ToastificationType> get defaultValues =>
