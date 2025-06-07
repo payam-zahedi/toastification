@@ -272,7 +272,7 @@ class Toastification {
     bool? pauseOnHover,
     bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
-    double? minHeight,
+    BoxConstraints? sizeConstraints,
   }) {
     // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
     var toastCloseButton = closeButton;
@@ -317,7 +317,7 @@ class Toastification {
           pauseOnHover: pauseOnHover,
           applyBlurEffect: applyBlurEffect,
           callbacks: callbacks,
-          minHeight: minHeight,
+          constraints: sizeConstraints,
         );
       },
     );

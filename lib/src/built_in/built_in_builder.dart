@@ -35,7 +35,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.pauseOnHover,
     this.showIcon,
     this.callbacks = const ToastificationCallbacks(),
-    this.minHeight,
+    this.constraints,
   });
 
   final ToastificationItem item;
@@ -86,7 +86,7 @@ class BuiltInBuilder extends StatelessWidget {
 
   final ToastificationCallbacks callbacks;
 
-  final double? minHeight;
+  final BoxConstraints? constraints;
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +130,7 @@ class BuiltInBuilder extends StatelessWidget {
         applyBlurEffect: applyBlurEffect,
         progressBarTheme: progressBarTheme,
         closeButton: closeButton,
-        minHeight: minHeight,
+        constraints: constraints,
       ),
     );
   }
@@ -172,7 +172,7 @@ class BuiltInToastBuilder extends StatelessWidget {
     this.applyBlurEffect,
     this.progressBarTheme,
     required this.closeButton,
-    this.minHeight,
+    this.constraints,
   });
 
   final ToastificationItem? item;
@@ -214,7 +214,7 @@ class BuiltInToastBuilder extends StatelessWidget {
 
   final ToastCloseButton closeButton;
 
-  final double? minHeight;
+  final BoxConstraints? constraints;
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +249,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           boxShadow: boxShadow,
           progressIndicatorStrokeWidth: progressBarTheme?.linearMinHeight,
           progressIndicatorTheme: progressBarTheme,
-          minHeight: minHeight,
+          constraints: constraints,
         ),
         flutterTheme: flutterTheme,
       ),

@@ -50,7 +50,7 @@ class DefaultStandardToastWidget extends StatelessWidget
     final toastStyle = toastTheme.toastStyle!;
 
     Widget body = Container(
-      constraints: BoxConstraints(minHeight: toastStyle.minHeight),
+      constraints: toastStyle.constraints,
       decoration: BoxDecoration(
         color: toastStyle.blurredBackgroundColor(
           toastTheme.applyBlurEffect,

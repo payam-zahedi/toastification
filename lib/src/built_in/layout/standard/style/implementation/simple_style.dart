@@ -18,6 +18,7 @@ class SimpleStandardToastStyle extends BaseStandardToastStyle {
           color: Color(0xffEBEBEB),
           width: 1.5,
         ),
+        constraints: const BoxConstraints(),
       );
 
   @override

@@ -68,6 +68,7 @@ class SimpleStandardToastWidget extends StatelessWidget
         boxShadow: toastStyle.boxShadow,
         borderRadius: toastStyle.borderRadius,
       ),
+      constraints: toastStyle.constraints,
       padding: toastStyle.padding,
       child: body,
     );
