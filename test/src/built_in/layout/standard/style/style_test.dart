@@ -19,6 +19,8 @@ void main() {
             offset: Offset(0, 10),
           ),
         ],
+        titleMaxLines: 1,
+        descriptionMaxLines: 2,
         progressIndicatorStrokeWidth: 4.0,
       );
 
@@ -35,6 +37,8 @@ void main() {
           offset: Offset(0, 10),
         ),
       ]);
+      expect(values.titleMaxLines, 1);
+      expect(values.descriptionMaxLines, 2);
       expect(values.progressIndicatorStrokeWidth, 4.0);
     });
 
