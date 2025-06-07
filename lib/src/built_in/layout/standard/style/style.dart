@@ -51,6 +51,9 @@ abstract class BaseStandardToastStyle extends Equatable {
   BorderRadiusGeometry get borderRadius =>
       providedValues?.borderRadius ?? defaults.borderRadius;
 
+  BoxConstraints get constraints =>
+      providedValues?.constraints ?? defaults.constraints;
+
   TextStyle? get titleTextStyle => flutterTheme?.textTheme.titleSmall?.copyWith(
         color: foregroundColor,
         fontSize: 14,
@@ -114,6 +117,7 @@ class DefaultStyleValues extends StandardStyleValues {
     int titleMaxLines = 2,
     int descriptionMaxLines = 6,
     double progressIndicatorStrokeWidth = 2.0,
+    BoxConstraints constraints = const BoxConstraints(minHeight: 64.0),
   }) : super(
           primaryColor: primaryColor,
           surfaceLight: surfaceLight,
@@ -125,6 +129,7 @@ class DefaultStyleValues extends StandardStyleValues {
           titleMaxLines: titleMaxLines,
           descriptionMaxLines: descriptionMaxLines,
           progressIndicatorStrokeWidth: progressIndicatorStrokeWidth,
+          constraints: constraints,
         );
 
   @override
@@ -152,6 +157,9 @@ class DefaultStyleValues extends StandardStyleValues {
       super.progressIndicatorStrokeWidth!;
 
   @override
+  BoxConstraints get constraints => super.constraints!;
+
+  @override
   List<Object> get props => [
         primaryColor,
         surfaceLight,
@@ -163,6 +171,7 @@ class DefaultStyleValues extends StandardStyleValues {
         titleMaxLines,
         descriptionMaxLines,
         progressIndicatorStrokeWidth,
+        constraints,
       ];
 }
 
@@ -179,6 +188,7 @@ class StandardStyleValues extends Equatable {
     this.descriptionMaxLines,
     this.progressIndicatorStrokeWidth,
     this.progressIndicatorTheme,
+    this.constraints,
   });
 
   final MaterialColor? primaryColor;
@@ -193,6 +203,7 @@ class StandardStyleValues extends Equatable {
 
   final double? progressIndicatorStrokeWidth;
   final ProgressIndicatorThemeData? progressIndicatorTheme;
+  final BoxConstraints? constraints;
 
   @override
   bool get stringify => true;
@@ -210,6 +221,7 @@ class StandardStyleValues extends Equatable {
         descriptionMaxLines,
         progressIndicatorStrokeWidth,
         progressIndicatorTheme,
+        constraints,
       ];
 }
 

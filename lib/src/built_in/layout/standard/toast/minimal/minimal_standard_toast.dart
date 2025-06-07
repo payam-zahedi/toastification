@@ -43,7 +43,7 @@ class MinimalStandardToastWidget extends StatelessWidget
             .primaryIconTheme
             .copyWith(color: toastStyle.iconColor),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 64),
+          constraints: toastStyle.constraints,
           child: Material(
             color: Colors.transparent,
             shape: LinearBorder.start(

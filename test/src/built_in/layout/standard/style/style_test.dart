@@ -21,6 +21,7 @@ void main() {
         ],
         titleMaxLines: 1,
         descriptionMaxLines: 2,
+        constraints: BoxConstraints(minHeight: 300.0, maxWidth: 200.0),
         progressIndicatorStrokeWidth: 4.0,
       );
 
@@ -39,6 +40,9 @@ void main() {
       ]);
       expect(values.titleMaxLines, 1);
       expect(values.descriptionMaxLines, 2);
+      expect(values.constraints?.minHeight, 300.0);
+      expect(values.constraints?.maxWidth, 200.0);
+
       expect(values.progressIndicatorStrokeWidth, 4.0);
     });
 
@@ -73,6 +77,7 @@ void main() {
       expect(values.borderSide, BorderSide(color: Colors.black12));
       expect(values.borderRadius, BorderRadius.all(Radius.circular(12)));
       expect(values.boxShadow, []);
+      expect(values.constraints, BoxConstraints(minHeight: 64.0));
       expect(values.progressIndicatorStrokeWidth, 2.0);
     });
   });
@@ -99,6 +104,7 @@ void main() {
       expect(style.borderRadius, BorderRadius.all(Radius.circular(12)));
       expect(style.elevation, 0.0);
       expect(style.boxShadow, []);
+      expect(style.constraints, BoxConstraints(minHeight: 64.0));
       expect(style.progressIndicatorStrokeWidth, 2.0);
     });
   });

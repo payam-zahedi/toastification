@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:toastification/src/built_in/built_in_builder.dart';
 import 'package:toastification/src/core/toastification_manager.dart';
 import 'package:toastification/src/core/toastification_overlay_state.dart';
-import 'package:toastification/src/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';
 
 // TODO(payam): add navigator observer
@@ -272,6 +272,7 @@ class Toastification {
     bool? pauseOnHover,
     bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
+    BoxConstraints? sizeConstraints,
   }) {
     // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
     var toastCloseButton = closeButton;
@@ -316,6 +317,7 @@ class Toastification {
           pauseOnHover: pauseOnHover,
           applyBlurEffect: applyBlurEffect,
           callbacks: callbacks,
+          constraints: sizeConstraints,
         );
       },
     );
