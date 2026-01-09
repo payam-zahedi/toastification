@@ -122,9 +122,15 @@ class ToastificationManager {
 
       final removedItem = notifications.removeAt(index);
 
+      Duration delay = removeOverlayDelay;
+
       /// if the [showRemoveAnimation] is true, we will show the remove animation
       /// of the notification.
       if (showRemoveAnimation) {
+        final animationDuration = _createAnimationDuration(removedItem);
+
+        delay = animationDuration + delay;
+
         listGlobalKey.currentState?.removeItem(
           index,
           (BuildContext context, Animation<double> animation) {
@@ -135,7 +141,7 @@ class ToastificationManager {
               transformerBuilder: _toastAnimationBuilder(removedItem),
             );
           },
-          duration: _createAnimationDuration(removedItem),
+          duration: animationDuration,
         );
 
         /// if the [showRemoveAnimation] is false, we will remove the notification
@@ -149,16 +155,21 @@ class ToastificationManager {
         );
       }
 
+      // Always dispose the item after the delay value notifier and timer can cause leaks memory.
+      Future.delayed(delay, () {
+        removedItem.dispose();
+      });
+
       /// we will remove the [_overlayEntry] if there are no notifications
       /// We need to check if the _notifications list is empty twice.
       /// To make sure after the delay, there are no new notifications added.
       if (notifications.isEmpty) {
         Future.delayed(
-          (removedItem.animationDuration ?? config.animationDuration) +
-              removeOverlayDelay,
+          delay,
           () {
             if (notifications.isEmpty) {
               overlayEntry?.remove();
+              overlayEntry?.dispose();
               overlayEntry = null;
             }
           },

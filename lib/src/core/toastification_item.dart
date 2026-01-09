@@ -177,4 +177,9 @@ class ToastificationItem implements Equatable {
 
   @override
   bool? get stringify => false;
+
+  void dispose() {
+    stop();
+    _timeStatus.dispose();
+  }
 }
