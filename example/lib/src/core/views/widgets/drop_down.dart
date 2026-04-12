@@ -78,7 +78,7 @@ class BorderedDropDown<T> extends StatelessWidget {
                 ],
               )
             : null,
-        value: value,
+        initialValue: value,
         items: items,
         onChanged: available ? onChanged : null,
         selectedItemBuilder: (context) {
