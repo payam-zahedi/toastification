@@ -126,6 +126,7 @@ toastification.show(
   pauseOnHover: true,
   dragToClose: true,
   applyBlurEffect: true,
+  onHoverMouseCursor: SystemMouseCursors.click,
   callbacks: ToastificationCallbacks(
     onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
     onCloseButtonTap: (toastItem) => print('Toast ${toastItem.id} close button tapped'),
