@@ -130,7 +130,7 @@ class Toastification {
 
     if (contextProvided) {
       direction ??= Directionality.of(context!);
-      overlayState ??= Overlay.maybeOf(context!, rootOverlay: true);
+      overlayState ??= context!.findAncestorStateOfType<OverlayState>();
     }
 
     /// if context isn't provided
