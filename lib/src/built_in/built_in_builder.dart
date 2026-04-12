@@ -35,6 +35,7 @@ class BuiltInBuilder extends StatelessWidget {
     this.pauseOnHover,
     this.showIcon,
     this.callbacks = const ToastificationCallbacks(),
+    this.onHoverMouseCursor,
     this.constraints,
   });
 
@@ -86,6 +87,12 @@ class BuiltInBuilder extends StatelessWidget {
 
   final ToastificationCallbacks callbacks;
 
+  /// The mouse cursor to display when hovering over the toast.
+  ///
+  /// Use [SystemMouseCursors.click] to indicate the toast is tappable.
+  /// If null, the default cursor is used.
+  final MouseCursor? onHoverMouseCursor;
+
   final BoxConstraints? constraints;
 
   @override
@@ -108,6 +115,7 @@ class BuiltInBuilder extends StatelessWidget {
       dismissDirection: dismissDirection,
       pauseOnHover: pauseOnHover,
       callbacks: callbacks,
+      onHoverMouseCursor: onHoverMouseCursor,
       child: BuiltInToastBuilder(
         item: item,
         type: type,
@@ -297,6 +305,7 @@ class _BuiltInContainer extends StatelessWidget {
     required this.dragToClose,
     this.dismissDirection,
     required this.callbacks,
+    this.onHoverMouseCursor,
     required this.child,
   });
 
@@ -313,6 +322,8 @@ class _BuiltInContainer extends StatelessWidget {
   final bool pauseOnHover;
 
   final ToastificationCallbacks callbacks;
+
+  final MouseCursor? onHoverMouseCursor;
 
   final Widget child;
 
@@ -347,6 +358,13 @@ class _BuiltInContainer extends StatelessWidget {
       },
       child: toast,
     );
+
+    if (onHoverMouseCursor != null) {
+      toast = MouseRegion(
+        cursor: onHoverMouseCursor!,
+        child: toast,
+      );
+    }
 
     if (dragToClose) {
       toast = _FadeDismissible(

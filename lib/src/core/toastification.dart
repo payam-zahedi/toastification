@@ -273,6 +273,14 @@ class Toastification {
     bool? applyBlurEffect,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
     BoxConstraints? sizeConstraints,
+
+    /// The mouse cursor to display when hovering over the toast.
+    ///
+    /// Use [SystemMouseCursors.click] to indicate the toast is tappable
+    /// when [ToastificationCallbacks.onTap] is provided.
+    ///
+    /// If null, the default cursor is used.
+    MouseCursor? onHoverMouseCursor,
   }) {
     // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
     var toastCloseButton = closeButton;
@@ -318,6 +326,7 @@ class Toastification {
           applyBlurEffect: applyBlurEffect,
           callbacks: callbacks,
           constraints: sizeConstraints,
+          onHoverMouseCursor: onHoverMouseCursor,
         );
       },
     );
