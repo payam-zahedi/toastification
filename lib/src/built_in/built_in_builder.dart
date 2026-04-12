@@ -6,6 +6,11 @@ import 'package:toastification/toastification.dart';
 
 const _defaultShowProgressBar = false;
 
+@visibleForTesting
+class BuiltInBuilderKeys {
+  static const mouseRegion = Key('toastification-built-in-mouse-region');
+}
+
 class BuiltInBuilder extends StatelessWidget {
   const BuiltInBuilder({
     super.key,
@@ -361,6 +366,7 @@ class _BuiltInContainer extends StatelessWidget {
 
     if (onHoverMouseCursor != null) {
       toast = MouseRegion(
+        key: BuiltInBuilderKeys.mouseRegion,
         cursor: onHoverMouseCursor!,
         child: toast,
       );
