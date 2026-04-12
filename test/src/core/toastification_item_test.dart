@@ -191,4 +191,34 @@ void main() {
       );
     });
   });
+
+  group('Dispose', () {
+    test('dispose stops the timer and disposes the time status notifier', () {
+      toastification = ToastificationItem(
+        builder: mockBuilder,
+        alignment: Alignment.topCenter,
+        autoCloseDuration: const Duration(seconds: 2),
+      );
+
+      expect(toastification.timeStatus, ToastTimeStatus.started);
+
+      toastification.dispose();
+
+      expect(toastification.timeStatus, ToastTimeStatus.stopped);
+    });
+
+    test('adding listener after dispose throws', () {
+      toastification = ToastificationItem(
+        builder: mockBuilder,
+        alignment: Alignment.topCenter,
+      );
+
+      toastification.dispose();
+
+      expect(
+        () => toastification.addListenerOnTimeStatus(() {}),
+        throwsFlutterError,
+      );
+    });
+  });
 }
