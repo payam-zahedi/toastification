@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:toastification/toastification.dart';
 
 void main() {
@@ -188,6 +189,36 @@ void main() {
       expect(
         toastification.toString(),
         contains('timerDuration: ${toastification.originalDuration}'),
+      );
+    });
+  });
+
+  group('Dispose', () {
+    test('dispose stops the timer and disposes the time status notifier', () {
+      toastification = ToastificationItem(
+        builder: mockBuilder,
+        alignment: Alignment.topCenter,
+        autoCloseDuration: const Duration(seconds: 2),
+      );
+
+      expect(toastification.timeStatus, ToastTimeStatus.started);
+
+      toastification.dispose();
+
+      expect(toastification.timeStatus, ToastTimeStatus.stopped);
+    });
+
+    test('adding listener after dispose throws', () {
+      toastification = ToastificationItem(
+        builder: mockBuilder,
+        alignment: Alignment.topCenter,
+      );
+
+      toastification.dispose();
+
+      expect(
+        () => toastification.addListenerOnTimeStatus(() {}),
+        throwsFlutterError,
       );
     });
   });

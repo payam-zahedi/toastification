@@ -481,6 +481,36 @@ void main() {
       await tester.pumpAndSettle();
     });
 
+    testWidgets('should dispose item after dismiss animation completes',
+        (WidgetTester tester) async {
+      await createOverlay(tester);
+
+      final item = manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('Test Toast'),
+        animationBuilder: null,
+        animationDuration: const Duration(milliseconds: 100),
+        autoCloseDuration: const Duration(seconds: 2),
+        callbacks: const ToastificationCallbacks(),
+      );
+
+      await tester.pumpAndSettle();
+
+      manager.dismiss(item);
+
+      // Wait for animation duration + removeOverlayDelay
+      await tester.pump(const Duration(milliseconds: 100));
+      await tester.pump(manager.removeOverlayDelay);
+
+      // After the delay, the item should be disposed —
+      // adding a listener to a disposed ValueNotifier throws
+      expect(
+        () => item.addListenerOnTimeStatus(() {}),
+        throwsFlutterError,
+      );
+    });
+
     testWidgets('should do nothing when dismissing non-existent notification',
         (WidgetTester tester) async {
       await createOverlay(tester);
