@@ -4,10 +4,10 @@ version: 3.1.0
 homepage: https://payamzahedi.com/toastification/
 repository: https://github.com/payam-zahedi/toastification
 topics:
-  - toast
-  - notification
-  - message
-  - toastification
+- toast
+- notification
+- message
+- toastification
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -20,8 +20,6 @@ dependencies:
   uuid: ^4.5.0
   pausable_timer: ^3.1.0+3
   collection: ^1.18.0
-  iconsax_flutter: ^1.0.0
-  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
