@@ -28,3 +28,10 @@ dev_dependencies:
   test: ^1.25.8
   mockito: ^5.4.5
   build_runner: ^2.4.14
+
+
+flutter:
+  fonts:
+   - family:  Toastification_icons
+     fonts:
+      - asset: assets/fonts/Toastification_icons.ttf
