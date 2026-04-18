@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:toastification/src/built_in/theme/toastification_icons.dart';
 import 'package:toastification/src/built_in/toastification_type.dart';
 import 'package:toastification/src/utils/constants_values.dart';
 
@@ -8,19 +9,20 @@ void main() {
     test('Default types', () {
       expect(ToastificationType.info.name, 'info');
       expect(ToastificationType.info.color, infoColor);
-      expect(ToastificationType.info.icon, Icons.info_outline);
+      expect(ToastificationType.info.icon, ToastificationIcons.info_circle);
 
       expect(ToastificationType.success.name, 'success');
       expect(ToastificationType.success.color, successColor);
-      expect(ToastificationType.success.icon, Icons.check_circle_outline);
+      expect(ToastificationType.success.icon, ToastificationIcons.tick_circle);
 
       expect(ToastificationType.warning.name, 'warning');
       expect(ToastificationType.warning.color, warningColor);
-      expect(ToastificationType.warning.icon, Icons.warning_amber_rounded);
+      expect(
+          ToastificationType.warning.icon, ToastificationIcons.warning_circle);
 
       expect(ToastificationType.error.name, 'error');
       expect(ToastificationType.error.color, errorColor);
-      expect(ToastificationType.error.icon, Icons.error_outline);
+      expect(ToastificationType.error.icon, ToastificationIcons.close_circle);
     });
 
     test('Default types: equality and hashCode', () {

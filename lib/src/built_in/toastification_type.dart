@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toastification/src/built_in/theme/toastification_icons.dart';
 import 'package:toastification/src/utils/constants_values.dart';
 
 /// Defines the visual and behavioral characteristics of built-in toast notifications.
@@ -49,28 +50,28 @@ class ToastificationType {
   static const info = ToastificationType._(
     'info',
     infoColor,
-    Icons.info_outline,
+    ToastificationIcons.info_circle,
   );
 
   /// Predefined success toast type with green color scheme and checkmark icon
   static const success = ToastificationType._(
     'success',
     successColor,
-    Icons.check_circle_outline,
+    ToastificationIcons.tick_circle,
   );
 
   /// Predefined warning toast type with yellow/orange color scheme and warning icon
   static const warning = ToastificationType._(
     'warning',
     warningColor,
-    Icons.warning_amber_rounded,
+    ToastificationIcons.warning_circle,
   );
 
   /// Predefined error toast type with red color scheme and close icon
   static const error = ToastificationType._(
     'error',
     errorColor,
-    Icons.error_outline,
+    ToastificationIcons.close_circle,
   );
 
   /// Creates a custom toast type with specified name, color and icon.
