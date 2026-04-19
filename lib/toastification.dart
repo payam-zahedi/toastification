@@ -22,8 +22,8 @@ export 'src/core/widget/toast_animation.dart';
 
 // built-in widgets
 export 'src/built_in/widget/common/toast_content.dart';
-export 'src/built_in/built_in_builder.dart'
-    hide BuiltInBuilder, BuiltInBuilderKeys;
+export 'src/built_in/built_in_builder.dart' hide BuiltInBuilder;
+export 'src/built_in/widget/built_in_container.dart' hide BuiltInContainerKeys;
 export 'src/built_in/layout/standard/toast/factory.dart';
 export 'src/built_in/layout/standard/toast/base_standard.dart';
 export 'src/built_in/layout/standard/toast/default/default_standard_toast.dart';
