@@ -112,7 +112,7 @@ class BuiltInBuilder extends StatelessWidget {
     final backgroundColor =
         ColorUtils.convertToMaterialColor(this.backgroundColor);
 
-    return _BuiltInContainer(
+    return BuiltInContainer(
       item: item,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       closeOnClick: closeOnClick,
@@ -301,8 +301,9 @@ class BuiltInToastBuilder extends StatelessWidget {
 
 /// This widget help you to use the default behavior of the built-in
 /// toastification Items
-class _BuiltInContainer extends StatelessWidget {
-  const _BuiltInContainer({
+final class BuiltInContainer extends StatelessWidget {
+  const BuiltInContainer({
+    super.key,
     required this.item,
     required this.margin,
     required this.closeOnClick,
