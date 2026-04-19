@@ -486,6 +486,11 @@ If you would like to contribute to the project, please read the [CONTRIBUTING.md
 
 Toastification is released under the `BSD-3-Clause` License. You can find the full text of the license in the LICENSE file in the root of the repository.
 
+
+#### Icon Assets
+This package uses icons from **[Iconsax](https://iconsax.io/)**.
+- **License:** [Iconsax Free License](https://docs.iconsax.io/license-and-terms/license)
+- **Attribution:** Icons are provided by Iconsax as a functional resource for this framework. The icons themselves remain the intellectual property of Iconsax.
 ---
 
-#### \* Written with the help of Chat GPT
+#### \* Written with the help of AI

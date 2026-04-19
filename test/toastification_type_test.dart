@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:toastification/src/built_in/theme/toastification_icons.dart';
 import 'package:toastification/src/built_in/toastification_type.dart';
 import 'package:toastification/src/utils/constants_values.dart';
 
@@ -9,19 +9,20 @@ void main() {
     test('Default types', () {
       expect(ToastificationType.info.name, 'info');
       expect(ToastificationType.info.color, infoColor);
-      expect(ToastificationType.info.icon, Iconsax.info_circle_copy);
+      expect(ToastificationType.info.icon, ToastificationIcons.info_circle);
 
       expect(ToastificationType.success.name, 'success');
       expect(ToastificationType.success.color, successColor);
-      expect(ToastificationType.success.icon, Iconsax.tick_circle_copy);
+      expect(ToastificationType.success.icon, ToastificationIcons.tick_circle);
 
       expect(ToastificationType.warning.name, 'warning');
       expect(ToastificationType.warning.color, warningColor);
-      expect(ToastificationType.warning.icon, Iconsax.danger_copy);
+      expect(
+          ToastificationType.warning.icon, ToastificationIcons.warning_circle);
 
       expect(ToastificationType.error.name, 'error');
       expect(ToastificationType.error.color, errorColor);
-      expect(ToastificationType.error.icon, Iconsax.close_circle_copy);
+      expect(ToastificationType.error.icon, ToastificationIcons.close_circle);
     });
 
     test('Default types: equality and hashCode', () {
@@ -45,7 +46,7 @@ void main() {
     test('Custom types: creation', () {
       const customName = 'custom';
       const customColor = Colors.purple;
-      const customIcon = Iconsax.star;
+      const customIcon = Icons.star;
 
       final customType =
           ToastificationType.custom(customName, customColor, customIcon);
@@ -57,11 +58,11 @@ void main() {
 
     test('Custom types: equality and hashCode', () {
       const customType1 =
-          ToastificationType.custom('custom', Colors.purple, Iconsax.star);
+          ToastificationType.custom('custom', Colors.purple, Icons.star);
       const customType2 =
-          ToastificationType.custom('custom', Colors.purple, Iconsax.star);
+          ToastificationType.custom('custom', Colors.purple, Icons.star);
       const customType3 =
-          ToastificationType.custom('different', Colors.red, Iconsax.heart);
+          ToastificationType.custom('different', Colors.red, Icons.favorite);
 
       expect(customType1, customType2);
       expect(customType1.hashCode, customType2.hashCode);
@@ -87,7 +88,7 @@ void main() {
       expect(ToastificationType.error.toString(), 'ToastificationType.error');
 
       const customType =
-          ToastificationType.custom('custom', Colors.purple, Iconsax.star);
+          ToastificationType.custom('custom', Colors.purple, Icons.star);
       expect(customType.toString(), 'ToastificationType.custom');
     });
   });

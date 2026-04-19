@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:toastification/src/built_in/theme/toastification_icons.dart';
 import 'package:toastification/src/utils/constants_values.dart';
 
 /// Defines the visual and behavioral characteristics of built-in toast notifications.
@@ -47,20 +47,32 @@ class ToastificationType {
   const ToastificationType._(this.name, this.color, this.icon);
 
   /// Predefined information toast type with blue color scheme and info icon
-  static const info =
-      ToastificationType._('info', infoColor, Iconsax.info_circle_copy);
+  static const info = ToastificationType._(
+    'info',
+    infoColor,
+    ToastificationIcons.info_circle,
+  );
 
   /// Predefined success toast type with green color scheme and checkmark icon
-  static const success =
-      ToastificationType._('success', successColor, Iconsax.tick_circle_copy);
+  static const success = ToastificationType._(
+    'success',
+    successColor,
+    ToastificationIcons.tick_circle,
+  );
 
   /// Predefined warning toast type with yellow/orange color scheme and warning icon
-  static const warning =
-      ToastificationType._('warning', warningColor, Iconsax.danger_copy);
+  static const warning = ToastificationType._(
+    'warning',
+    warningColor,
+    ToastificationIcons.warning_circle,
+  );
 
   /// Predefined error toast type with red color scheme and close icon
-  static const error =
-      ToastificationType._('error', errorColor, Iconsax.close_circle_copy);
+  static const error = ToastificationType._(
+    'error',
+    errorColor,
+    ToastificationIcons.close_circle,
+  );
 
   /// Creates a custom toast type with specified name, color and icon.
   ///
