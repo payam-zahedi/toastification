@@ -1,4 +1,11 @@
+# 3.2.0
+
+- feature: add new parameter for on hover mouse cursor by @payam-zahedi
+- refactor(deps): remove dependency to iconsax by @MostafaSensei106
+- refactor: make BuiltInContainer public by @payam-zahedi
+
 # 3.1.0
+
 - core: upgrade minimum supported flutter version to 3.38.0
 - fix: dispose overlay and value listener after animation remove by @pedrosantosdd
 - fix: Resolve toast block by Overlay breaking change (Flutter 3.38+) by @RF103T
