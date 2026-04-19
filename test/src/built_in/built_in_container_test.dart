@@ -108,7 +108,7 @@ void main() {
 
       // Simulate mouse enter
       final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
-      await gesture.addPointer(location: Offset.zero);
+      await gesture.addPointer(location: const Offset(-100, -100));
       addTearDown(gesture.removePointer);
       await gesture.moveTo(tester.getCenter(find.byKey(_childKey)));
       await tester.pump();
