@@ -121,7 +121,6 @@ class Toastification {
     Duration? animationDuration,
     Duration? autoCloseDuration,
     OverlayState? overlayState,
-    DismissDirection? dismissDirection,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
   }) {
     context ??= overlayState?.context;
