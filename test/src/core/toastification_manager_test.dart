@@ -481,6 +481,34 @@ void main() {
       await tester.pumpAndSettle();
     });
 
+    testWidgets(
+        'should remove instantly when showRemoveAnimation is false',
+        (WidgetTester tester) async {
+      await createOverlay(tester);
+
+      final item = manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('Test Toast'),
+        animationBuilder: null,
+        animationDuration: const Duration(seconds: 1),
+        callbacks: const ToastificationCallbacks(),
+      );
+
+      await tester.pumpAndSettle();
+      expect(tester.binding.transientCallbackCount, isZero);
+
+      manager.dismiss(item, showRemoveAnimation: false);
+      await tester.pump();
+
+      // No AnimatedList removal animation should remain after an instant dismiss.
+      expect(tester.binding.transientCallbackCount, isZero);
+
+      await tester.pump(manager.removeOverlayDelay);
+      expect(manager.overlayEntry, isNull);
+      expect(tester.takeException(), isNull);
+    });
+
     testWidgets('should dispose item after dismiss animation completes',
         (WidgetTester tester) async {
       await createOverlay(tester);

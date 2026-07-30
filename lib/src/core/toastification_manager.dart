@@ -122,38 +122,30 @@ class ToastificationManager {
 
       final removedItem = notifications.removeAt(index);
 
-      Duration delay = removeOverlayDelay;
+      // Pass Duration.zero when showRemoveAnimation is false. Omitting duration
+      // uses AnimatedList's 300ms default while overlay teardown still uses
+      // removeOverlayDelay (50ms), which can double-dispose the controller.
+      final Duration removeDuration = showRemoveAnimation
+          ? _createAnimationDuration(removedItem)
+          : Duration.zero;
+      final Duration delay = removeDuration + removeOverlayDelay;
 
-      /// if the [showRemoveAnimation] is true, we will show the remove animation
-      /// of the notification.
-      if (showRemoveAnimation) {
-        final animationDuration = _createAnimationDuration(removedItem);
-
-        delay = animationDuration + delay;
-
-        listGlobalKey.currentState?.removeItem(
-          index,
-          (BuildContext context, Animation<double> animation) {
-            return ToastHolderWidget(
-              item: removedItem,
-              animation: animation,
-              alignment: alignment,
-              transformerBuilder: _toastAnimationBuilder(removedItem),
-            );
-          },
-          duration: animationDuration,
-        );
-
-        /// if the [showRemoveAnimation] is false, we will remove the notification
-        /// without showing the remove animation.
-      } else {
-        listGlobalKey.currentState?.removeItem(
-          index,
-          (BuildContext context, Animation<double> animation) {
+      listGlobalKey.currentState?.removeItem(
+        index,
+        (BuildContext context, Animation<double> animation) {
+          if (!showRemoveAnimation) {
             return const SizedBox.shrink();
-          },
-        );
-      }
+          }
+
+          return ToastHolderWidget(
+            item: removedItem,
+            animation: animation,
+            alignment: alignment,
+            transformerBuilder: _toastAnimationBuilder(removedItem),
+          );
+        },
+        duration: removeDuration,
+      );
 
       // Always dispose the item after the delay value notifier and timer can cause leaks memory.
       Future.delayed(delay, () {
