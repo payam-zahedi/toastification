@@ -7,7 +7,7 @@ import 'package:example/src/features/home/views/widgets/customization_panel.dart
 import 'package:example/src/features/home/views/widgets/header.dart';
 import 'package:example/src/features/home/views/widgets/image.dart';
 import 'package:example/src/features/home/views/widgets/preview_panel.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 class HomeScreen extends StatefulWidget {

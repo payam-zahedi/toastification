@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:toastification/src/built_in/theme/toastification_icons.dart';
 import 'package:toastification/src/built_in/toastification_type.dart';

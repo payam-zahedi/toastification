@@ -1,6 +1,6 @@
 import 'package:example/src/features/home/views/ui_states/toast_code_formatter.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';

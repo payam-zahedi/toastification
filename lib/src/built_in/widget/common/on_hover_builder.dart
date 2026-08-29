@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef OnHoverBuilder = Widget Function(BuildContext context, bool showWidget);
 

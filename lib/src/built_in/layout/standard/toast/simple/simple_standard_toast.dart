@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
 import 'package:toastification/toastification.dart';

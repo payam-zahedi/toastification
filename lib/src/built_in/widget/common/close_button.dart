@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
 
 /// Signature for a function that builds a custom close button widget.
@@ -107,7 +107,7 @@ class ToastCloseButtonHolder extends StatelessWidget {
               child: SizeTransition(
                 sizeFactor: animation,
                 axis: Axis.horizontal,
-                axisAlignment: 1,
+                alignment: Alignment.centerRight,
                 child: child,
               ),
             );

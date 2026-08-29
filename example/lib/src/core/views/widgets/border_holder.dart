@@ -1,5 +1,5 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 const topHolderPadding = EdgeInsets.fromLTRB(40, 40, 40, 32);
 const middleHolderPadding = EdgeInsets.fromLTRB(40, 32, 40, 32);
