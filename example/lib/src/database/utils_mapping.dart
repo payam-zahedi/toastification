@@ -3,7 +3,7 @@ import 'package:example/src/database/database.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/ui_states/icon_model.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
 class UtilsMapping {
@@ -160,8 +160,11 @@ class IconMapper {
     final icon = IconModel(
       name: castedMap['name'] ?? 'default_name',
       iconData: IconData(
+        // ignore: non_const_argument_for_const_parameter
         codePoint,
+        // ignore: non_const_argument_for_const_parameter
         fontFamily: fontFamily,
+        // ignore: non_const_argument_for_const_parameter
         fontPackage: fontPackage,
         matchTextDirection: matchTextDirection,
       ),

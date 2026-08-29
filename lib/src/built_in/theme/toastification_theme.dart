@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/src/built_in/theme/toastification_theme_data.dart';
 
 /// An inherited widget that defines the configuration for

@@ -1,7 +1,7 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';

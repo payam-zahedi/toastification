@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/src/built_in/layout/standard/toast/base_standard.dart';
 import 'package:toastification/src/built_in/theme/toastification_theme_data.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';

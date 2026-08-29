@@ -1,6 +1,6 @@
 // Originally copied from https://github.com/boyan01/overlay_support/blob/master/lib/src/overlay_state_finder.dart
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/core/widget/toastification_config_provider.dart';
 
