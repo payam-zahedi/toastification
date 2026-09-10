@@ -410,9 +410,9 @@ void main() {
       expect(manager.overlayEntry, isNotNull);
 
       manager.dismiss(item);
-      // Wait for animation and removal delay
-      await tester.pump(const Duration(milliseconds: 100)); // animation
-      await tester.pump(manager.removeOverlayDelay); // removal delay
+      // The overlay is torn down once the exit animation has actually
+      // completed, not on a timer: settle it.
+      await tester.pumpAndSettle();
 
       expect(manager.overlayEntry, isNull);
     });
@@ -576,9 +576,9 @@ void main() {
 
       manager.dismissAll(delayForAnimation: false);
 
-      // Wait for animation and removal delay
-      await tester.pump(const Duration(milliseconds: 100)); // animation
-      await tester.pump(manager.removeOverlayDelay); // removal delay
+      // The overlay is torn down once the exit animation has actually
+      // completed, not on a timer: settle it.
+      await tester.pumpAndSettle();
 
       expect(manager.overlayEntry, isNull);
     });
