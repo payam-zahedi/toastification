@@ -1,3 +1,10 @@
+# 3.2.1
+
+- chore(deps): bump equatable to ^3.0.0
+- chore(deps): bump uuid to ^4.6.0
+- chore(deps): bump collection to ^1.19.1
+- chore(deps): bump dev dependencies (flutter_lints, test, mockito, build_runner) to latest
+
 # 3.2.0
 
 - feature: add new parameter for on hover mouse cursor by @payam-zahedi
