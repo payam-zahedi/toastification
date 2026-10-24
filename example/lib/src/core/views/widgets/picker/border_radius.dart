@@ -1,5 +1,5 @@
 import 'package:example/src/core/views/widgets/bordered_container.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final borderRadiusValues = {
   'Sharp': BorderRadius.circular(4),

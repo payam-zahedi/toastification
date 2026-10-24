@@ -5,7 +5,7 @@ import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/ui_states/toast_code_formatter.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_highlight/themes/github.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';

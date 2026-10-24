@@ -4,7 +4,7 @@ import 'package:example/src/core/views/widgets/picker/icon/icon.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContentWidget extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/widgets/app_bar/app_bar_container.dart';
 import 'package:example/src/features/home/views/widgets/app_bar/app_bar_logo.dart';
 import 'package:example/src/features/home/views/widgets/app_bar/app_bar_text_button.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
@@ -81,7 +81,7 @@ class _AppBar extends StatelessWidget {
               onPressed: () {
                 openGithub(context);
               },
-              icon: const Icon(FontAwesomeIcons.github),
+              icon: const FaIcon(FontAwesomeIcons.github),
               label: const Text('Github Source'),
             ),
             gap,

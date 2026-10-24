@@ -3,7 +3,7 @@ import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/features/home/views/ui_states/extra.dart';
 import 'package:example/src/features/home/views/widgets/github_stars.dart';
 import 'package:example/src/features/home/views/widgets/image.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';

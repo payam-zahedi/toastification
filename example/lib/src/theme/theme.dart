@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
+//import 'package:google_fonts/google_fonts.dart';
 
 const _primary = Color(0xff3F5EFF);
 const _onPrimary = Color(0xffFFFFFF);
@@ -50,19 +50,26 @@ ThemeData _themeBuilder({bool useInterFont = true}) {
   );
 
   final TextTheme textTheme;
+  // TODO: Re-enable Google Fonts after google_fonts supports the standalone material_ui TextTheme type.
 
-  if (useInterFont) {
-    textTheme = GoogleFonts.interTextTheme().apply(
-      bodyColor: scheme.onSurface,
-      displayColor: scheme.onSurface,
-    );
-  } else {
-    textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
-          fontFamily: 'PlusJakartaDisplay',
-          bodyColor: scheme.onSurface,
-          displayColor: scheme.onSurface,
-        );
-  }
+  // if (useInterFont) {
+  //   textTheme = GoogleFonts.interTextTheme().apply(
+  //     bodyColor: scheme.onSurface,
+  //     displayColor: scheme.onSurface,
+  //   );
+  // } else {
+  //   textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
+  //         fontFamily: 'PlusJakartaDisplay',
+  //         bodyColor: scheme.onSurface,
+  //         displayColor: scheme.onSurface,
+  //       );
+  // }
+
+  textTheme = ThemeData.light(useMaterial3: true).textTheme.apply(
+    fontFamily: 'PlusJakartaDisplay',
+    bodyColor: scheme.onSurface,
+    displayColor: scheme.onSurface,
+  );
 
   return ThemeData(
     useMaterial3: true,

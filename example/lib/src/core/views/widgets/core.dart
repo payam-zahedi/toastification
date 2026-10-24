@@ -1,5 +1,6 @@
 import 'package:example/src/core/usecase/responsive/responsive.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ColoredTag extends StatelessWidget {
   const ColoredTag({
@@ -11,7 +12,7 @@ class ColoredTag extends StatelessWidget {
   });
 
   final String text;
-  final IconData? icon;
+  final FaIconData? icon;
   final Color? background;
   final Color? foreground;
 
@@ -39,7 +40,7 @@ class ColoredTag extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
+          FaIcon(
             icon,
             size: context.responsiveValue(
               desktop: 24,
