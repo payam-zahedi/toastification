@@ -31,6 +31,9 @@ class ToastificationManager {
   @visibleForTesting
   final List<ToastificationItem> notifications = [];
 
+  /// Items waiting for the next frame before they are inserted into [notifications].
+  final Set<ToastificationItem> _pendingNotifications = {};
+
   /// this is the delay for removing the overlay entry
   ///
   /// when we want to remove the last toast, we need to wait for the animation
@@ -67,6 +70,7 @@ class ToastificationManager {
       _createNotificationHolder(overlayState);
     }
 
+    _pendingNotifications.add(item);
     scheduler.addPostFrameCallback((_) {
       _addItemToList(item);
     });
@@ -75,6 +79,7 @@ class ToastificationManager {
   }
 
   void _addItemToList(ToastificationItem item) {
+    if (!_pendingNotifications.remove(item)) return;
     if (notifications.contains(item)) return;
 
     notifications.insert(0, item);
@@ -174,6 +179,18 @@ class ToastificationManager {
             }
           },
         );
+      }
+    } else if (_pendingNotifications.remove(notification)) {
+      notification.dispose();
+
+      if (notifications.isEmpty && _pendingNotifications.isEmpty) {
+        Future.delayed(removeOverlayDelay, () {
+          if (notifications.isEmpty && _pendingNotifications.isEmpty) {
+            overlayEntry?.remove();
+            overlayEntry?.dispose();
+            overlayEntry = null;
+          }
+        });
       }
     }
   }
