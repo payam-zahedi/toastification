@@ -16,18 +16,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  equatable: ^3.0.0
-  uuid: ^4.6.0
+  equatable: ">=2.0.5 <4.0.0"
+  uuid: ^4.5.0
   pausable_timer: ^3.1.0+3
-  collection: ^1.19.1
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  test: ^1.31.1
-  mockito: ^5.8.1
-  build_runner: ^2.16.1
+  test: ^1.25.8
+  mockito: ^5.4.5
+  build_runner: ^2.4.14
 
 
 flutter:
