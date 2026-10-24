@@ -122,9 +122,8 @@ class ToastificationManager {
 
       final removedItem = notifications.removeAt(index);
 
-      // Pass Duration.zero when showRemoveAnimation is false. Omitting duration
-      // uses AnimatedList's 300ms default while overlay teardown still uses
-      // removeOverlayDelay (50ms), which can double-dispose the controller.
+      // Use Duration.zero when there is no remove animation. Without a
+      // duration, AnimatedList falls back to its 300ms default.
       final Duration removeDuration = showRemoveAnimation
           ? _createAnimationDuration(removedItem)
           : Duration.zero;
