@@ -4,6 +4,7 @@ import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/ui_states/icon_model.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
 
 class UtilsMapping {
@@ -143,28 +144,21 @@ class IconMapper {
 
     final Map<String, dynamic> castedMap = {
       'name': parsedMap[0].split(': ')[1],
-      'code_point': int.parse(parsedMap[1].split(': ')[1]),
-      'font_family': parsedMap[2].split(': ')[1],
-      'font_package': parsedMap[3].split(': ')[1],
-      'match_text_direction': parsedMap[4].split(': ')[1] == 'true',
       'color': parsedMap[5].split(': ')[1],
     };
 
-    final int codePoint = castedMap['code_point'];
-    final String? fontFamily = castedMap['font_family'];
-    final String? fontPackage = castedMap['font_package'];
-    final bool matchTextDirection = castedMap['match_text_direction'] ?? false;
+    final String name = castedMap['name'] ?? 'default_name';
     final Color color =
         UtilsMapping.colorFromHex(castedMap['color']) ?? Colors.white;
 
+    // Look up the icon by name from the Iconsax const map
+    // instead of constructing IconData dynamically,
+    // so that icon tree-shaking works properly.
+    final iconData = Iconsax.items[name] ?? Iconsax.info_circle;
+
     final icon = IconModel(
-      name: castedMap['name'] ?? 'default_name',
-      iconData: IconData(
-        codePoint,
-        fontFamily: fontFamily,
-        fontPackage: fontPackage,
-        matchTextDirection: matchTextDirection,
-      ),
+      name: name,
+      iconData: iconData,
       color: color,
     );
 
