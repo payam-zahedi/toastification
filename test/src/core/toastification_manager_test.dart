@@ -481,8 +481,7 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets(
-        'should remove instantly when showRemoveAnimation is false',
+    testWidgets('should remove instantly when showRemoveAnimation is false',
         (WidgetTester tester) async {
       await createOverlay(tester);
 
