@@ -1,3 +1,8 @@
+# 3.2.1
+
+- fix(deps): support equatable 3.x alongside 2.x by @dhc-tech
+- fix(example): fix IconMapper analyzer warning by @payam-zahedi
+
 # 3.2.0
 
 - feature: add new parameter for on hover mouse cursor by @payam-zahedi
