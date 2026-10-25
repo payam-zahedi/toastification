@@ -1,7 +1,3 @@
-# Unreleased
-
-- fix: tear the overlay down once the exit animation has completed, not on a timer that could land in the very frame completing it — on the web that disposed the `AnimatedList` item controller twice (`Null check operator used on a null value` in `AnimationController.dispose`).
-
 # 3.2.1
 
 - fix(deps): support equatable 3.x alongside 2.x by @dhc-tech
