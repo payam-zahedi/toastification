@@ -417,6 +417,76 @@ void main() {
       expect(manager.overlayEntry, isNull);
     });
 
+    // https://github.com/payam-zahedi/toastification/pull/247
+    testWidgets(
+        'should not dispose the exit animation twice when frames stall on the web',
+        (WidgetTester tester) async {
+      await createOverlay(tester);
+
+      const animationDuration = Duration(milliseconds: 100);
+      final item = manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('Test Toast'),
+        animationBuilder: null,
+        animationDuration: animationDuration,
+        callbacks: const ToastificationCallbacks(),
+      );
+      await tester.pumpAndSettle();
+
+      manager.dismiss(item);
+      // first frame of the exit animation.
+      await tester.pump();
+
+      // no frames while timers keep running, like a hidden browser tab.
+      await tester.binding
+          .delayed(animationDuration + manager.removeOverlayDelay);
+
+      // the web engine runs both frame phases before any microtask. the test
+      // binding flushes microtasks in between, so drive the frame by hand.
+      final binding = tester.binding;
+      binding.handleBeginFrame(
+        Duration(microseconds: binding.clock.now().microsecondsSinceEpoch),
+      );
+      binding.handleDrawFrame();
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.text('Test Toast'), findsNothing);
+      expect(manager.overlayEntry, isNull);
+    });
+
+    testWidgets(
+        'should keep the overlay until a slower exit animation finishes',
+        (WidgetTester tester) async {
+      await createOverlay(tester);
+
+      ToastificationItem show(String text, Duration animationDuration) =>
+          manager.showCustom(
+            overlayState: overlayState,
+            scheduler: tester.binding,
+            builder: (context, item) => Text(text),
+            animationBuilder: null,
+            animationDuration: animationDuration,
+            callbacks: const ToastificationCallbacks(),
+          );
+      final slow = show('slow', const Duration(milliseconds: 1000));
+      final fast = show('fast', const Duration(milliseconds: 100));
+      await tester.pumpAndSettle();
+
+      manager.dismiss(slow);
+      manager.dismiss(fast);
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+
+      // the fast toast is gone, the slow one is still sliding out.
+      expect(manager.overlayEntry, isNotNull);
+      expect(find.text('slow'), findsOneWidget);
+
+      await tester.pumpAndSettle();
+      expect(manager.overlayEntry, isNull);
+    });
+
     testWidgets(
         'should keep overlay entry when dismissing notification but others exist',
         (WidgetTester tester) async {

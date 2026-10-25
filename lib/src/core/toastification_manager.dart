@@ -40,6 +40,14 @@ class ToastificationManager {
   @visibleForTesting
   final removeOverlayDelay = const Duration(milliseconds: 50);
 
+  /// exit animations that are still running.
+  ///
+  /// on the web, removing the overlay in the frame that finishes an exit
+  /// animation makes [AnimatedList] dispose its controller twice, so the
+  /// overlay waits for all of them.
+  @visibleForTesting
+  final Set<Animation<double>> exitAnimations = {};
+
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
   /// if the [notifications] list is empty, we will create the [overlayEntry]
@@ -114,7 +122,7 @@ class ToastificationManager {
     bool showRemoveAnimation = true,
   }) {
     final index = notifications.indexOf(notification);
-    // print("Toastification Manager Dismiss Notifications: $_notifications");
+
     if (index != -1) {
       notification = notifications[index];
 
@@ -131,13 +139,14 @@ class ToastificationManager {
           : Duration.zero;
       final Duration delay = removeDuration + removeOverlayDelay;
 
-      _removeItemWithExitWatch(
+      listGlobalKey.currentState?.removeItem(
         index,
-        removedItem,
         (BuildContext context, Animation<double> animation) {
           if (!showRemoveAnimation) {
             return const SizedBox.shrink();
           }
+
+          _trackExitAnimation(animation);
 
           return ToastHolderWidget(
             item: removedItem,
@@ -157,87 +166,40 @@ class ToastificationManager {
       /// we will remove the [_overlayEntry] if there are no notifications
       /// We need to check if the _notifications list is empty twice.
       /// To make sure after the delay, there are no new notifications added.
-      ///
-      /// This timer is only a safety net for exit animations that were never
-      /// observed (see [_removeItemWithExitWatch]): while the animation is
-      /// still running, its status listener owns the teardown. Tearing the
-      /// overlay down from here would race the [AnimatedList]'s own
-      /// bookkeeping and dispose the animation controller twice.
       if (notifications.isEmpty) {
-        Future.delayed(
-          delay,
-          () {
-            final exit = exitAnimations[removedItem.id];
-            if (exit is AnimationController && exit.isAnimating) {
-              return;
-            }
-            exitAnimations.remove(removedItem.id);
-            _removeOverlayIfIdle();
-          },
-        );
+        Future.delayed(delay, _removeOverlayIfIdle);
       }
     }
   }
 
-  /// Exit animations currently running, keyed by [ToastificationItem.id].
+  /// keeps the overlay alive until a toast's exit [animation] ends.
   ///
-  /// The overlay may only be torn down once the framework has finished its
-  /// own bookkeeping for every one of them, see [_removeItemWithExitWatch].
-  @visibleForTesting
-  final Map<String, Animation<double>> exitAnimations = {};
+  /// when it ends, the overlay removal is queued after [AnimatedList]'s own
+  /// cleanup, so the list never disposes the animation's controller twice.
+  void _trackExitAnimation(Animation<double> animation) {
+    // the builder runs on every frame of the exit.
+    if (!exitAnimations.add(animation)) return;
 
-  /// Starts the exit animation of [item] on the [AnimatedList] and drives the
-  /// overlay teardown from the animation itself.
-  ///
-  /// `AnimatedListState.removeItem` disposes the animation controller in a
-  /// `.then` MICROTASK once the exit animation completes, and the list's
-  /// `State.dispose` disposes every controller still in flight too. If the
-  /// overlay entry is removed in the very frame that completes the animation,
-  /// that microtask runs after the dispose — on the web the engine does not
-  /// flush microtasks between `onBeginFrame` and `onDrawFrame` — and the
-  /// controller is disposed twice: `Null check operator used on a null value`
-  /// in `AnimationController.dispose`. A timer set to the animation duration
-  /// lands in exactly that frame as soon as frames stall (background tab,
-  /// rendering hiccup).
-  ///
-  /// So the teardown waits for [AnimationStatus.dismissed] and is queued as a
-  /// microtask from the status listener, i.e. AFTER the framework's own
-  /// `.then` for that very tick. By the time it runs, the controller has left
-  /// the list's bookkeeping and the dispose has nothing left to free twice.
-  void _removeItemWithExitWatch(
-    int index,
-    ToastificationItem item,
-    AnimatedRemovedItemBuilder builder, {
-    required Duration duration,
-  }) {
-    void watch(Animation<double> animation) {
-      // The builder runs on every frame of the exit; watch only once.
-      if (exitAnimations.containsKey(item.id)) return;
-      exitAnimations[item.id] = animation;
+    void onStatus(AnimationStatus status) {
+      // if it's not dismissed yet, we don't do anything.
+      if (status != AnimationStatus.dismissed) return;
 
-      void onStatus(AnimationStatus status) {
-        if (status != AnimationStatus.dismissed) return;
-        animation.removeStatusListener(onStatus);
-        exitAnimations.remove(item.id);
-        scheduleMicrotask(_removeOverlayIfIdle);
-      }
+      animation.removeStatusListener(onStatus);
 
-      animation.addStatusListener(onStatus);
+      exitAnimations.remove(animation);
+      // queued after AnimatedList's own cleanup for this animation.
+      scheduleMicrotask(_removeOverlayIfIdle);
     }
 
-    listGlobalKey.currentState?.removeItem(
-      index,
-      (BuildContext context, Animation<double> animation) {
-        watch(animation);
-        return builder(context, animation);
-      },
-      duration: duration,
-    );
+    animation.addStatusListener(onStatus);
   }
 
-  /// Removes the [overlayEntry] once no toast is shown nor still exiting.
   void _removeOverlayIfIdle() {
+    // drop animations whose list was disposed before they finished.
+    exitAnimations.removeWhere((animation) => !animation.isAnimating);
+
     if (notifications.isNotEmpty || exitAnimations.isNotEmpty) return;
+
     overlayEntry?.remove();
     overlayEntry?.dispose();
     overlayEntry = null;
