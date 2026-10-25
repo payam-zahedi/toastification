@@ -110,9 +110,12 @@ void main() {
     // animation is done once STRICTLY past its duration, counted from its
     // first tick.
     manager.dismissAll();
-    await tester.pump(const Duration(milliseconds: 100)); // t=100: first tick of toast 1
-    await tester.pump(const Duration(milliseconds: 100)); // t=200: toast 0 dismissed at 150, its first tick
-    await tester.pump(const Duration(milliseconds: 1)); // t=201: toast 1 done, toast 0 still exiting
+    // t=100: first tick of toast 1.
+    await tester.pump(const Duration(milliseconds: 100));
+    // t=200: toast 0 dismissed at 150, its first tick.
+    await tester.pump(const Duration(milliseconds: 100));
+    // t=201: toast 1 done, toast 0 still exiting.
+    await tester.pump(const Duration(milliseconds: 1));
     expect(manager.overlayEntry, isNotNull);
     expect(manager.exitAnimations.length, 1);
 
