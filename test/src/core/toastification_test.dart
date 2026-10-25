@@ -362,6 +362,38 @@ void main() {
   });
 
   group('Toastification - dismiss()', () {
+    testWidgets('should dismiss a toast before it is inserted into the overlay',
+        (tester) async {
+      late ToastificationItem toastItem;
+      const kToastTitle = 'Immediate Dismiss Toast';
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) => ElevatedButton(
+                onPressed: () {
+                  toastItem = toastification.show(
+                    context: context,
+                    title: const Text(kToastTitle),
+                    autoCloseDuration: null,
+                  );
+                  toastification.dismiss(toastItem);
+                },
+                child: const Text('Show and immediately dismiss toast'),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(find.text(kToastTitle), findsNothing);
+    });
+
     testWidgets('should remove toast from overlay when dismiss method called',
         (tester) async {
       late ToastificationItem toastItem;
