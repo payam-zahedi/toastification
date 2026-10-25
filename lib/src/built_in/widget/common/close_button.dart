@@ -107,6 +107,11 @@ class ToastCloseButtonHolder extends StatelessWidget {
               child: SizeTransition(
                 sizeFactor: animation,
                 axis: Axis.horizontal,
+                // TODO(payam): switch to `alignment: AlignmentDirectional.topEnd`
+                // once the minimum Flutter version is 3.44. Flutter 3.44
+                // replaces axisAlignment with alignment, but the package still
+                // supports 3.38.
+                // ignore: deprecated_member_use
                 axisAlignment: 1,
                 child: child,
               ),

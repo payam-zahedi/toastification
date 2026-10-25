@@ -124,41 +124,30 @@ class ToastificationManager {
 
       final removedItem = notifications.removeAt(index);
 
-      Duration delay = removeOverlayDelay;
+      // Use Duration.zero when there is no remove animation. Without a
+      // duration, AnimatedList falls back to its 300ms default.
+      final Duration removeDuration = showRemoveAnimation
+          ? _createAnimationDuration(removedItem)
+          : Duration.zero;
+      final Duration delay = removeDuration + removeOverlayDelay;
 
-      /// if the [showRemoveAnimation] is true, we will show the remove animation
-      /// of the notification.
-      if (showRemoveAnimation) {
-        final animationDuration = _createAnimationDuration(removedItem);
-
-        delay = animationDuration + delay;
-
-        _removeItemWithExitWatch(
-          index,
-          removedItem,
-          (BuildContext context, Animation<double> animation) {
-            return ToastHolderWidget(
-              item: removedItem,
-              animation: animation,
-              alignment: alignment,
-              transformerBuilder: _toastAnimationBuilder(removedItem),
-            );
-          },
-          duration: animationDuration,
-        );
-
-        /// if the [showRemoveAnimation] is false, we will remove the notification
-        /// without showing the remove animation.
-      } else {
-        _removeItemWithExitWatch(
-          index,
-          removedItem,
-          (BuildContext context, Animation<double> animation) {
+      _removeItemWithExitWatch(
+        index,
+        removedItem,
+        (BuildContext context, Animation<double> animation) {
+          if (!showRemoveAnimation) {
             return const SizedBox.shrink();
-          },
-          duration: _defaultRemoveDuration,
-        );
-      }
+          }
+
+          return ToastHolderWidget(
+            item: removedItem,
+            animation: animation,
+            alignment: alignment,
+            transformerBuilder: _toastAnimationBuilder(removedItem),
+          );
+        },
+        duration: removeDuration,
+      );
 
       // Always dispose the item after the delay value notifier and timer can cause leaks memory.
       Future.delayed(delay, () {
@@ -189,10 +178,6 @@ class ToastificationManager {
       }
     }
   }
-
-  /// [AnimatedList.removeItem]'s own default duration, replicated because the
-  /// framework keeps it private.
-  static const Duration _defaultRemoveDuration = Duration(milliseconds: 300);
 
   /// Exit animations currently running, keyed by [ToastificationItem.id].
   ///
