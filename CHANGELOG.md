@@ -1,3 +1,9 @@
+# 3.2.2
+
+- fix: remove item instantly when showRemoveAnimation is false by @prokash-sarkar
+- fix: tear the overlay down after the exit animation, not on a timer racing it (double dispose on web) by @Khorus888
+- refactor: simplify the exit animation tracking from #247 by @payam-zahedi
+
 # 3.2.1
 
 - fix(deps): support equatable 3.x alongside 2.x by @dhc-tech

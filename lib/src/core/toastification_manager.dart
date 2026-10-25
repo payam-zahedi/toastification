@@ -40,6 +40,8 @@ class ToastificationManager {
   @visibleForTesting
   final removeOverlayDelay = const Duration(milliseconds: 50);
 
+  // TODO(payam): remove once the minimum Flutter version includes
+  // flutter/flutter#192699, see https://github.com/payam-zahedi/toastification/issues/254
   /// exit animations that are still running.
   ///
   /// on the web, removing the overlay in the frame that finishes an exit
