@@ -18,6 +18,46 @@ Future<void> cleanUpToasts(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
+/// Pumps an app with one [Overlay] per key, side by side.
+///
+/// This is what an app with nested navigators, or with several windows on
+/// desktop, looks like for toastification: more than one overlay at a time.
+Future<void> pumpOverlays(
+  WidgetTester tester,
+  List<GlobalKey<OverlayState>> overlays,
+) {
+  return tester.pumpWidget(
+    MaterialApp(
+      home: Row(
+        children: [
+          for (final overlay in overlays)
+            Expanded(child: Overlay(key: overlay)),
+        ],
+      ),
+    ),
+  );
+}
+
+/// Shows a toast with the given [text] in the given [overlay].
+ToastificationItem showToastIn(
+  GlobalKey<OverlayState> overlay,
+  String text, {
+  Duration? autoCloseDuration,
+}) {
+  return toastification.showCustom(
+    overlayState: overlay.currentState,
+    alignment: Alignment.topRight,
+    animationDuration: const Duration(milliseconds: 100),
+    autoCloseDuration: autoCloseDuration,
+    builder: (context, item) => Text(text),
+  );
+}
+
+/// Finds the given [text] inside the given [overlay].
+Finder findInOverlay(GlobalKey<OverlayState> overlay, String text) {
+  return find.descendant(of: find.byKey(overlay), matching: find.text(text));
+}
+
 void main() {
   /// Tests for the basic [show] method functionality
   /// These tests verify the core features of displaying built-in toasts
@@ -711,6 +751,160 @@ void main() {
       expect(foundToast?.id, equals(toast.id));
 
       await tester.pumpAndSettle(); // Clean up
+
+      await cleanUpToasts(tester);
+    });
+  });
+
+  /// Tests for apps with more than one [Overlay]
+  /// (nested navigators, several windows on desktop, ...)
+  group('Toastification - multiple overlays', () {
+    testWidgets('should show each toast in the overlay it was requested for',
+        (tester) async {
+      final firstOverlay = GlobalKey<OverlayState>();
+      final secondOverlay = GlobalKey<OverlayState>();
+      await pumpOverlays(tester, [firstOverlay, secondOverlay]);
+
+      showToastIn(firstOverlay, 'First');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Same alignment, while the first toast is still visible
+      showToastIn(secondOverlay, 'Second');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(findInOverlay(firstOverlay, 'First'), findsOneWidget);
+      expect(findInOverlay(secondOverlay, 'Second'), findsOneWidget);
+      expect(findInOverlay(firstOverlay, 'Second'), findsNothing);
+
+      await cleanUpToasts(tester);
+
+      expect(find.text('First'), findsNothing);
+      expect(find.text('Second'), findsNothing);
+    });
+
+    testWidgets('should find and dismiss a toast in any overlay',
+        (tester) async {
+      final firstOverlay = GlobalKey<OverlayState>();
+      final secondOverlay = GlobalKey<OverlayState>();
+      await pumpOverlays(tester, [firstOverlay, secondOverlay]);
+
+      final first = showToastIn(firstOverlay, 'First');
+      final second = showToastIn(secondOverlay, 'Second');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(toastification.findToastificationItem(first.id), first);
+      expect(toastification.findToastificationItem(second.id), second);
+
+      toastification.dismiss(second);
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(findInOverlay(firstOverlay, 'First'), findsOneWidget);
+      expect(find.text('Second'), findsNothing);
+
+      toastification.dismissById(first.id);
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(find.text('First'), findsNothing);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets(
+        'should show the toast when another overlay is gone with its toast still visible',
+        (tester) async {
+      final firstOverlay = GlobalKey<OverlayState>();
+      final secondOverlay = GlobalKey<OverlayState>();
+      await pumpOverlays(tester, [firstOverlay, secondOverlay]);
+
+      final first = showToastIn(
+        firstOverlay,
+        'First',
+        autoCloseDuration: const Duration(minutes: 1),
+      );
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(findInOverlay(firstOverlay, 'First'), findsOneWidget);
+
+      // The first overlay goes away, like a closed window
+      await pumpOverlays(tester, [secondOverlay]);
+
+      showToastIn(secondOverlay, 'Second');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(findInOverlay(secondOverlay, 'Second'), findsOneWidget);
+
+      // The toast of the overlay that is gone is released with it
+      expect(toastification.findToastificationItem(first.id), isNull);
+      expect(first.timeStatus, ToastTimeStatus.stopped);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets('should release the managers of an overlay that is gone',
+        (tester) async {
+      final firstOverlay = GlobalKey<OverlayState>();
+      final secondOverlay = GlobalKey<OverlayState>();
+      await pumpOverlays(tester, [firstOverlay, secondOverlay]);
+
+      Iterable<OverlayState> overlaysWithManager() =>
+          toastification.managers.keys.map((key) => key.$1);
+
+      final first = showToastIn(firstOverlay, 'First');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(overlaysWithManager(), [firstOverlay.currentState]);
+
+      // No toast is left in the first overlay when it goes away
+      toastification.dismiss(first);
+      await tester.pump();
+      await tester.pumpAndSettle();
+      await pumpOverlays(tester, [secondOverlay]);
+
+      showToastIn(secondOverlay, 'Second');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(overlaysWithManager(), [secondOverlay.currentState]);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets(
+        'should not fail when a toast auto closes after its overlay is gone',
+        (tester) async {
+      final firstOverlay = GlobalKey<OverlayState>();
+      final secondOverlay = GlobalKey<OverlayState>();
+      await pumpOverlays(tester, [firstOverlay, secondOverlay]);
+
+      showToastIn(
+        firstOverlay,
+        'First',
+        autoCloseDuration: const Duration(seconds: 2),
+      );
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      await pumpOverlays(tester, [secondOverlay]);
+
+      // Past the auto close duration of the first toast
+      await tester.pump(const Duration(seconds: 3));
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+
+      showToastIn(secondOverlay, 'Second');
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      expect(findInOverlay(secondOverlay, 'Second'), findsOneWidget);
 
       await cleanUpToasts(tester);
     });

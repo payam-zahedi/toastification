@@ -84,11 +84,13 @@ class Toastification {
   /// returns the singleton instance of the class
   factory Toastification() => _instance;
 
-  /// list of managers for each [Alignment] object
+  /// list of managers for each [OverlayState] and [Alignment] object
   ///
-  /// for each [Alignment] object we will create a [ToastificationManager]
+  /// for each [Alignment] object of an [OverlayState] we will create a
+  /// [ToastificationManager], so a toast is always shown in the overlay
+  /// it was requested for (nested navigators, several windows, ...)
   @visibleForTesting
-  final Map<Alignment, ToastificationManager> managers = {};
+  final Map<(OverlayState, Alignment), ToastificationManager> managers = {};
 
   /// shows a custom notification
   ///
@@ -151,8 +153,10 @@ class Toastification {
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
 
+    _releaseManagersWithoutOverlay();
+
     final manager = managers.putIfAbsent(
-      effectiveAlignment,
+      (overlayState!, effectiveAlignment),
       () => ToastificationManager(
         alignment: effectiveAlignment,
         config: config,
@@ -165,9 +169,23 @@ class Toastification {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
-      overlayState: overlayState!,
+      overlayState: overlayState,
       callbacks: callbacks,
     );
+  }
+
+  /// releases the managers whose overlay is no longer in the widget tree,
+  /// for example when its window is closed or its Navigator is removed.
+  ///
+  /// their toasts can't be shown anymore, so they are released with them.
+  void _releaseManagersWithoutOverlay() {
+    managers.removeWhere((key, manager) {
+      final (overlayState, _) = key;
+      if (overlayState.mounted) return false;
+
+      manager.dispose();
+      return true;
+    });
   }
 
   @Deprecated(
@@ -335,6 +353,8 @@ class Toastification {
   ///
   /// if there is no notification with the given [id] it will return null
   ToastificationItem? findToastificationItem(String id) {
+    _releaseManagersWithoutOverlay();
+
     try {
       for (final manager in managers.values) {
         final foundValue = manager.findToastificationItem(id);
@@ -357,9 +377,11 @@ class Toastification {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
-    final manager = managers[notification.alignment];
+    _releaseManagersWithoutOverlay();
 
-    if (manager != null) {
+    // a manager ignores the notifications it doesn't hold,
+    // so only the one that shows the notification dismisses it.
+    for (final manager in managers.values) {
       manager.dismiss(notification, showRemoveAnimation: showRemoveAnimation);
     }
   }
@@ -369,6 +391,8 @@ class Toastification {
   /// The [delayForAnimation] parameter is used to determine
   /// whether to wait for the animation to finish or not.
   void dismissAll({bool delayForAnimation = true}) {
+    _releaseManagersWithoutOverlay();
+
     for (final manager in managers.values) {
       manager.dismissAll(delayForAnimation: delayForAnimation);
     }

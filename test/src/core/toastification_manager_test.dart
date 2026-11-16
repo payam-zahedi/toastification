@@ -735,4 +735,38 @@ void main() {
       expect(manager.overlayEntry, isNull);
     });
   });
+
+  group('dispose', () {
+    testWidgets(
+        'should release the notifications and the overlay entry when the overlay is gone',
+        (WidgetTester tester) async {
+      await createOverlay(tester);
+
+      final item = manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('Test Toast'),
+        animationBuilder: null,
+        animationDuration: null,
+        autoCloseDuration: const Duration(seconds: 5),
+        callbacks: const ToastificationCallbacks(),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(manager.notifications, [item]);
+      expect(manager.overlayEntry, isNotNull);
+
+      // The overlay goes away with the toast still in it
+      await tester.pumpWidget(const SizedBox.shrink());
+
+      expect(overlayState.mounted, isFalse);
+
+      manager.dispose();
+
+      expect(manager.notifications, isEmpty);
+      expect(manager.overlayEntry, isNull);
+      expect(item.timeStatus, ToastTimeStatus.stopped);
+    });
+  });
 }
