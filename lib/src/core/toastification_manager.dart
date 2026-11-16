@@ -8,6 +8,7 @@ import 'package:toastification/toastification.dart';
 
 /// This class is responsible for managing the [Toastification] items
 /// we have several ToastificationManagers for each [Alignment] object
+/// of each [OverlayState]
 ///
 /// You don't need to use [ToastificationManager] directly
 /// [Toastification] will handle them internally
@@ -238,6 +239,22 @@ class ToastificationManager {
   /// remove the last notification in the list.
   void dismissLast() {
     dismiss(notifications.last);
+  }
+
+  /// releases everything this manager holds.
+  ///
+  /// [Toastification] calls it once the overlay of this manager is gone,
+  /// its toasts can't be shown anymore so they are stopped and disposed.
+  void dispose() {
+    for (final notification in notifications) {
+      notification.dispose();
+    }
+    notifications.clear();
+    exitAnimations.clear();
+
+    overlayEntry?.remove();
+    overlayEntry?.dispose();
+    overlayEntry = null;
   }
 
   void _createNotificationHolder(OverlayState overlay) {
