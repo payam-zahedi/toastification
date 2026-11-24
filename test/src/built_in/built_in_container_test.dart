@@ -56,6 +56,22 @@ Widget buildContainerTestApp({
   );
 }
 
+/// Pumps an empty app and returns a context that can show real toasts.
+Future<BuildContext> pumpToastApp(WidgetTester tester) async {
+  late BuildContext context;
+  await tester.pumpWidget(
+    MaterialApp(
+      home: Scaffold(
+        body: Builder(builder: (ctx) {
+          context = ctx;
+          return const SizedBox.expand();
+        }),
+      ),
+    ),
+  );
+  return context;
+}
+
 void main() {
   group('BuiltInContainer - margin', () {
     testWidgets('wraps child in Padding with the provided margin',
@@ -413,6 +429,41 @@ void main() {
       expect(item.timeStatus, ToastTimeStatus.started);
 
       item.stop();
+    });
+
+    testWidgets('does not throw when onDismissed dismisses the swiped toast',
+        (tester) async {
+      final context = await pumpToastApp(tester);
+      toastification.show(
+        context: context,
+        title: const Text('A'),
+        callbacks: ToastificationCallbacks(
+          onDismissed: (item) => toastification.dismiss(item),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.fling(find.text('A'), const Offset(400, 0), 1500);
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+      expect(find.text('A'), findsNothing);
+    });
+
+    testWidgets('does not throw when dismissAll is called right after a swipe',
+        (tester) async {
+      final context = await pumpToastApp(tester);
+      for (final title in ['A', 'B', 'C']) {
+        toastification.show(context: context, title: Text(title));
+        await tester.pumpAndSettle();
+      }
+
+      await tester.fling(find.text('C'), const Offset(400, 0), 1500);
+      toastification.dismissAll();
+      await tester.pumpAndSettle();
+
+      expect(tester.takeException(), isNull);
+      expect(find.byType(Dismissible), findsNothing);
     });
   });
 }
