@@ -81,7 +81,7 @@ class _AppBar extends StatelessWidget {
               onPressed: () {
                 openGithub(context);
               },
-              icon: const Icon(FontAwesomeIcons.github),
+              icon: const FaIcon(FontAwesomeIcons.github),
               label: const Text('Github Source'),
             ),
             gap,

@@ -17,7 +17,7 @@ dependencies:
     path: ../
   dart_style: ^3.0.1
   flutter_svg: ^2.0.6
-  font_awesome_flutter: ^10.4.0
+  font_awesome_flutter: ^11.0.0
   flutter_sticky_header: ^0.8.0
   highlight: ^0.7.0
   flutter_highlight: ^0.7.0
