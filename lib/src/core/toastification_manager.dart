@@ -158,10 +158,20 @@ class ToastificationManager {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
-    // a pending toast was never built, so there is nothing to animate.
-    if (_pending.remove(notification)) {
-      notification.dispose();
-      Future.delayed(removeOverlayDelay, _removeOverlayIfIdle);
+    final isPending = _pending.contains(notification);
+
+    // if its a pending toast, that means it hasn't been displayed yet,
+    // so we just need to remove it from the pending list without worrying about animations.
+    if (isPending) {
+      // disposed after the caller's callbacks, like a displayed toast.
+      scheduleMicrotask(notification.dispose);
+
+      // a list that was never built has no exit animation to wait for.
+      if (listGlobalKey.currentState == null) {
+        scheduleMicrotask(_removeOverlayIfIdle);
+      } else {
+        Future.delayed(removeOverlayDelay, _removeOverlayIfIdle);
+      }
       return;
     }
 

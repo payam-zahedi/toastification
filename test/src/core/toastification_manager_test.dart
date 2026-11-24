@@ -768,22 +768,21 @@ void main() {
 
     testWidgets(
         'should never build a toast dismissed in the same frame and remove '
-        'the overlay after the removal delay', (tester) async {
+        'the overlay at once', (tester) async {
       await createOverlay(tester);
 
       final item = showToast(tester, 'A');
       manager.dismiss(item);
       expect(manager.notifications, isEmpty);
 
+      // no time passes: a timer left behind would fail the test at its end.
       await tester.pump();
       expect(findToast('A'), findsNothing);
-      await tester.pump();
-      expect(findToast('A'), findsNothing);
-      await tester.pump(manager.removeOverlayDelay);
-      expect(findToast('A'), findsNothing);
-
-      expect(manager.notifications, isEmpty);
       expect(manager.overlayEntry, isNull);
+
+      await tester.pump();
+      expect(findToast('A'), findsNothing);
+      expect(manager.notifications, isEmpty);
     });
 
     testWidgets(
@@ -792,12 +791,16 @@ void main() {
       await createOverlay(tester);
 
       var calls = 0;
+      ToastTimeStatus? status;
       showToast(
         tester,
         'A',
         autoCloseDuration: const Duration(seconds: 1),
         callbacks: ToastificationCallbacks(
-          onAutoCompleteCompleted: (_) => calls++,
+          onAutoCompleteCompleted: (item) {
+            calls++;
+            status = item.timeStatus;
+          },
         ),
       );
 
@@ -813,6 +816,8 @@ void main() {
       expect(manager.notifications, isEmpty);
       expect(manager.overlayEntry, isNull);
       expect(calls, 1);
+      // the callback sees the same status as for a displayed toast.
+      expect(status, ToastTimeStatus.finished);
     });
 
     testWidgets(
