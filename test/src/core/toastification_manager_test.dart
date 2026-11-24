@@ -121,7 +121,7 @@ void main() {
     });
 
     testWidgets(
-      'should add item after delay we have to create the overlay',
+      'should add item at once and display it after the next frame',
       (WidgetTester tester) async {
         await createOverlay(tester);
 
@@ -133,12 +133,14 @@ void main() {
           animationDuration: null,
           callbacks: const ToastificationCallbacks(),
         );
-        // Overlay is not created yet
-        expect(manager.notifications.contains(firstItem), isFalse);
+        // The item is in the list, but not on the screen yet
+        expect(manager.notifications.contains(firstItem), isTrue);
+        expect(find.text('First Toast'), findsNothing);
 
-        // Wait for overlay creation delay
+        // Wait for the next frame
         await tester.pumpAndSettle();
         expect(manager.notifications.contains(firstItem), isTrue);
+        expect(find.text('First Toast'), findsOneWidget);
       },
     );
 

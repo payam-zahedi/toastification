@@ -28,10 +28,20 @@ class ToastificationManager {
   @visibleForTesting
   final listGlobalKey = GlobalKey<AnimatedListState>();
 
-  /// this is the list of items that are currently shown
+  /// this is the list of all the items, newest first: the pending ones, then
+  /// the displayed ones.
   /// if the list is empty, the overlay entry will be removed
   @visibleForTesting
-  final List<ToastificationItem> notifications = [];
+  late final List<ToastificationItem> notifications =
+      CombinedListView([_pending, _displayed]);
+
+  /// toasts that [showCustom] accepted but that are not in the list yet,
+  /// newest first. They move to [_displayed] after the next frame, see
+  /// [_display].
+  final List<ToastificationItem> _pending = [];
+
+  /// toasts that are in the [AnimatedList], newest first.
+  final List<ToastificationItem> _displayed = [];
 
   /// this is the delay for removing the overlay entry
   ///
@@ -52,8 +62,8 @@ class ToastificationManager {
 
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
-  /// if the [notifications] list is empty, we will create the [overlayEntry]
-  /// otherwise we will just add the [item] to the [notifications] list.
+  /// the [item] is displayed after the next frame.
+  /// if there is no [overlayEntry], we will create it.
   ToastificationItem showCustom({
     required OverlayState overlayState,
     required SchedulerBinding scheduler,
@@ -75,29 +85,54 @@ class ToastificationManager {
       },
     );
 
-    if (overlayEntry == null) {
-      _createNotificationHolder(overlayState);
-    }
+    _pending.insert(0, item);
 
-    scheduler.addPostFrameCallback((_) {
-      _addItemToList(item);
-    });
+    // the overlay and the list can't change while the widget tree is building.
+    if (scheduler.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+      scheduler.addPostFrameCallback((_) {
+        _displayOnNextFrame(item, overlayState, scheduler);
+      });
+    } else {
+      _displayOnNextFrame(item, overlayState, scheduler);
+    }
 
     return item;
   }
 
-  void _addItemToList(ToastificationItem item) {
-    if (notifications.contains(item)) return;
+  /// keeps the toasts within [ToastificationConfig.maxToastLimit], makes sure
+  /// an [overlayEntry] holds the list, and displays the pending [item] after
+  /// the next frame, once the list is built.
+  void _displayOnNextFrame(
+    ToastificationItem item,
+    OverlayState overlayState,
+    SchedulerBinding scheduler,
+  ) {
+    while (notifications.length > config.maxToastLimit) {
+      dismissLast();
+    }
 
-    notifications.insert(0, item);
+    // the toast was dismissed in the meantime.
+    if (!_pending.contains(item)) return;
+
+    if (overlayEntry == null) {
+      _createNotificationHolder(overlayState);
+    }
+
+    scheduler.addPostFrameCallback((_) => _display(item));
+    // a post-frame callback alone doesn't schedule a frame.
+    scheduler.ensureVisualUpdate();
+  }
+
+  /// moves a pending [item] to [_displayed] and into the list.
+  void _display(ToastificationItem item) {
+    // the toast was dismissed before its frame.
+    if (!_pending.remove(item)) return;
+
+    _displayed.insert(0, item);
     listGlobalKey.currentState?.insertItem(
       0,
       duration: _createAnimationDuration(item),
     );
-
-    while (notifications.length > config.maxToastLimit) {
-      dismissLast();
-    }
   }
 
   /// Finds the [ToastificationItem] with the given [id].
@@ -123,16 +158,23 @@ class ToastificationManager {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
-    final index = notifications.indexOf(notification);
+    // a pending toast was never built, so there is nothing to animate.
+    if (_pending.remove(notification)) {
+      notification.dispose();
+      Future.delayed(removeOverlayDelay, _removeOverlayIfIdle);
+      return;
+    }
+
+    final index = _displayed.indexOf(notification);
 
     if (index != -1) {
-      notification = notifications[index];
+      notification = _displayed[index];
 
       if (notification.isRunning) {
         notification.stop();
       }
 
-      final removedItem = notifications.removeAt(index);
+      final removedItem = _displayed.removeAt(index);
 
       // Use Duration.zero when there is no remove animation. Without a
       // duration, AnimatedList falls back to its 300ms default.
@@ -264,7 +306,7 @@ class ToastificationManager {
               child: AnimatedList(
                 key: listGlobalKey,
                 clipBehavior: config.clipBehavior,
-                initialItemCount: notifications.length,
+                initialItemCount: _displayed.length,
                 reverse: alignment.y >= 0,
                 primary: true,
                 shrinkWrap: true,
@@ -273,7 +315,7 @@ class ToastificationManager {
                   int index,
                   Animation<double> animation,
                 ) {
-                  final item = notifications[index];
+                  final item = _displayed[index];
 
                   return ToastHolderWidget(
                     item: item,
