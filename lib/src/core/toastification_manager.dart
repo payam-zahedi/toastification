@@ -158,7 +158,7 @@ class ToastificationManager {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
-    final isPending = _pending.contains(notification);
+    final isPending = _pending.remove(notification);
 
     // if its a pending toast, that means it hasn't been displayed yet,
     // so we just need to remove it from the pending list without worrying about animations.
