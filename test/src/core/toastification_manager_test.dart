@@ -1039,4 +1039,37 @@ void main() {
       await tester.pumpAndSettle();
     });
   });
+
+  group('dispose', () {
+    testWidgets('should release the toasts and the overlay entry',
+        (tester) async {
+      await createOverlay(tester);
+
+      ToastificationItem showToast(String text) => manager.showCustom(
+            overlayState: overlayState,
+            scheduler: tester.binding,
+            builder: (context, item) => Text(text),
+            animationBuilder: null,
+            animationDuration: null,
+            autoCloseDuration: const Duration(seconds: 5),
+            callbacks: const ToastificationCallbacks(),
+          );
+
+      final displayed = showToast('Displayed');
+      await tester.pumpAndSettle();
+      final pending = showToast('Pending');
+
+      manager.dispose();
+
+      expect(manager.notifications, isEmpty);
+      expect(manager.overlayEntry, isNull);
+      expect(displayed.timeStatus, ToastTimeStatus.stopped);
+      expect(pending.timeStatus, ToastTimeStatus.stopped);
+
+      // the frame callback and the timers left behind find nothing to do.
+      await tester.pump(const Duration(seconds: 6));
+      expect(tester.takeException(), isNull);
+      expect(find.text('Displayed'), findsNothing);
+    });
+  });
 }

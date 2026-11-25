@@ -868,4 +868,145 @@ void main() {
       expectNoOverlay();
     });
   });
+
+  // https://github.com/payam-zahedi/toastification/issues/255
+  group('Toastification - multiple overlays', () {
+    const perOverlay = ToastificationConfig(scope: ToastificationScope.overlay);
+    const perApp = ToastificationConfig();
+
+    final first = GlobalKey<OverlayState>();
+    final second = GlobalKey<OverlayState>();
+
+    setUp(() => toastification.hosts.clear());
+
+    // two overlays side by side, like two windows or two nested navigators.
+    Future<void> pumpOverlays(
+      WidgetTester tester, {
+      bool withFirst = true,
+      ToastificationConfig firstConfig = perOverlay,
+      ToastificationConfig secondConfig = perOverlay,
+    }) {
+      Widget overlay(GlobalKey<OverlayState> key, ToastificationConfig config) {
+        return Expanded(
+          child: ToastificationConfigProvider(
+            config: config,
+            child: Overlay(key: key),
+          ),
+        );
+      }
+
+      return tester.pumpWidget(
+        MaterialApp(
+          home: Row(
+            children: [
+              if (withFirst) overlay(first, firstConfig),
+              overlay(second, secondConfig),
+            ],
+          ),
+        ),
+      );
+    }
+
+    Future<ToastificationItem> showToast(
+      WidgetTester tester,
+      GlobalKey<OverlayState> overlay,
+      String text,
+    ) async {
+      final item = toastification.showCustom(
+        overlayState: overlay.currentState,
+        alignment: Alignment.topRight,
+        animationDuration: const Duration(milliseconds: 100),
+        builder: (context, item) => Text(text),
+      );
+      await tester.pumpAndSettle();
+      return item;
+    }
+
+    Finder findIn(GlobalKey<OverlayState> overlay, String text) =>
+        find.descendant(of: find.byKey(overlay), matching: find.text(text));
+
+    testWidgets('should show the toasts of all overlays in one list by default',
+        (tester) async {
+      await pumpOverlays(tester, firstConfig: perApp, secondConfig: perApp);
+
+      await showToast(tester, first, 'First');
+      await showToast(tester, second, 'Second');
+
+      expect(findIn(first, 'First'), findsOneWidget);
+      expect(findIn(first, 'Second'), findsOneWidget);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets(
+        'should show, find and dismiss each toast in the overlay it was '
+        'requested for', (tester) async {
+      await pumpOverlays(tester);
+
+      final firstItem = await showToast(tester, first, 'First');
+      final secondItem = await showToast(tester, second, 'Second');
+
+      expect(findIn(first, 'First'), findsOneWidget);
+      expect(findIn(second, 'Second'), findsOneWidget);
+      expect(toastification.findToastificationItem(firstItem.id), firstItem);
+      expect(toastification.findToastificationItem(secondItem.id), secondItem);
+
+      toastification.dismiss(secondItem);
+      await tester.pumpAndSettle();
+      expect(find.text('Second'), findsNothing);
+      expect(findIn(first, 'First'), findsOneWidget);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets(
+        'should show a toast after another overlay is gone with its toast '
+        'still visible, and release that toast', (tester) async {
+      await pumpOverlays(tester);
+      final firstItem = await showToast(tester, first, 'First');
+
+      await pumpOverlays(tester, withFirst: false);
+      await showToast(tester, second, 'Second');
+
+      expect(findIn(second, 'Second'), findsOneWidget);
+      expect(toastification.findToastificationItem(firstItem.id), isNull);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets('should use the scope of the wrapper when there is no context',
+        (tester) async {
+      await tester.pumpWidget(
+        const ToastificationWrapper(
+          config: perOverlay,
+          child: MaterialApp(home: Scaffold()),
+        ),
+      );
+
+      toastification.show(title: const Text('No context'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('No context'), findsOneWidget);
+      expect(toastification.hosts.keys, [ToastificationScope.overlay]);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets('should find and dismiss toasts shown with both scopes',
+        (tester) async {
+      await pumpOverlays(tester, secondConfig: perApp);
+
+      final firstItem = await showToast(tester, first, 'First');
+      final secondItem = await showToast(tester, second, 'Second');
+
+      expect(toastification.hosts, hasLength(2));
+      expect(toastification.findToastificationItem(firstItem.id), firstItem);
+      expect(toastification.findToastificationItem(secondItem.id), secondItem);
+
+      toastification.dismissAll(delayForAnimation: false);
+      await tester.pumpAndSettle();
+      expect(find.text('First'), findsNothing);
+      expect(find.text('Second'), findsNothing);
+    });
+  });
 }

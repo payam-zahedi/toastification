@@ -58,6 +58,16 @@ void main() {
       expect(updated.marginBuilder, isNotNull);
     });
 
+    test('scope is app by default and kept by copyWith', () {
+      const config = ToastificationConfig();
+      final updated = config.copyWith(scope: ToastificationScope.overlay);
+
+      expect(config.scope, ToastificationScope.app);
+      expect(updated.scope, ToastificationScope.overlay);
+      expect(updated.copyWith().scope, ToastificationScope.overlay);
+      expect(config, isNot(equals(updated)));
+    });
+
     test('equals | returns true for unchanged copyWith check', () {
       const config = ToastificationConfig();
       final updated = config.copyWith();
