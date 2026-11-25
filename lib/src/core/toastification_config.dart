@@ -42,6 +42,7 @@ class ToastificationConfig extends Equatable {
     this.maxTitleLines = 2,
     this.maxDescriptionLines = 6,
     this.blockBackgroundInteraction = false,
+    this.scope = ToastificationScope.app,
   });
 
   final AlignmentGeometry alignment;
@@ -85,6 +86,11 @@ class ToastificationConfig extends Equatable {
   /// The default value is false.
   final bool blockBackgroundInteraction;
 
+  /// Decides which toasts are shown together in one list.
+  ///
+  /// The default value is [ToastificationScope.app].
+  final ToastificationScope scope;
+
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
     AlignmentGeometry? alignment,
@@ -96,6 +102,7 @@ class ToastificationConfig extends Equatable {
     int? maxToastLimit,
     bool? applyMediaQueryViewInsets,
     bool? blockBackgroundInteraction,
+    ToastificationScope? scope,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
@@ -109,6 +116,7 @@ class ToastificationConfig extends Equatable {
           applyMediaQueryViewInsets ?? this.applyMediaQueryViewInsets,
       blockBackgroundInteraction:
           blockBackgroundInteraction ?? this.blockBackgroundInteraction,
+      scope: scope ?? this.scope,
     );
   }
 
@@ -124,6 +132,7 @@ class ToastificationConfig extends Equatable {
         maxDescriptionLines,
         applyMediaQueryViewInsets,
         blockBackgroundInteraction,
+        scope,
       ];
 }
 
