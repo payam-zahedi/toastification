@@ -722,7 +722,7 @@ void main() {
 
     late BuildContext appContext;
 
-    setUp(() => toastification.managers.clear());
+    setUp(() => toastification.hosts.clear());
 
     Future<void> pumpApp(WidgetTester tester, {Widget? child}) {
       return tester.pumpWidget(
@@ -752,9 +752,11 @@ void main() {
     Finder findToast(String title) => find.text(title, skipOffstage: false);
 
     void expectNoOverlay() {
-      for (final manager in toastification.managers.values) {
-        expect(manager.notifications, isEmpty);
-        expect(manager.overlayEntry, isNull);
+      for (final host in toastification.hosts.values) {
+        for (final manager in host.managers) {
+          expect(manager.notifications, isEmpty);
+          expect(manager.overlayEntry, isNull);
+        }
       }
     }
 
