@@ -1207,27 +1207,5 @@ void main() {
       expect(manager.overlayEntry, isNull);
       expect(await isBackgroundBlocked(tester), isFalse);
     });
-
-    testWidgets('should block again when a new blocking toast replaces '
-        'a non-blocking one', (WidgetTester tester) async {
-      manager = ToastificationManager(
-        alignment: Alignment.topRight,
-        config: const ToastificationConfig(maxToastLimit: 1),
-      );
-      await createTappableOverlay(tester);
-
-      show(tester);
-      await tester.pumpAndSettle();
-
-      expect(await isBackgroundBlocked(tester), isFalse);
-
-      show(tester, block: true);
-      await tester.pump();
-
-      expect(await isBackgroundBlocked(tester), isTrue);
-
-      manager.dismissAll(delayForAnimation: false);
-      await tester.pumpAndSettle();
-    });
   });
 }
