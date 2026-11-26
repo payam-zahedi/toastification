@@ -726,6 +726,66 @@ void main() {
     });
   });
 
+  // https://github.com/payam-zahedi/toastification/issues/165
+  group('Toastification - id', () {
+    late BuildContext appContext;
+
+    Future<void> pumpApp(WidgetTester tester) {
+      return tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (context) {
+              appContext = context;
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+    }
+
+    testWidgets('should give the toast the given id', (tester) async {
+      await pumpApp(tester);
+
+      final item = toastification.show(
+        context: appContext,
+        id: 'network',
+        title: const Text('Offline'),
+      );
+      await tester.pumpAndSettle();
+
+      expect(item.id, 'network');
+      expect(toastification.findToastificationItem('network'), same(item));
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets('should replace the toast with the same id', (tester) async {
+      await pumpApp(tester);
+
+      toastification.show(
+        context: appContext,
+        id: 'network',
+        title: const Text('Offline'),
+      );
+      await tester.pumpAndSettle();
+
+      // the new toast replaces the old one in another alignment too.
+      final online = toastification.showCustom(
+        context: appContext,
+        id: 'network',
+        alignment: Alignment.bottomCenter,
+        builder: (context, item) => const Text('Online'),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Offline'), findsNothing);
+      expect(find.text('Online'), findsOneWidget);
+      expect(toastification.findToastificationItem('network'), same(online));
+
+      await cleanUpToasts(tester);
+    });
+  });
+
   // https://github.com/payam-zahedi/toastification/issues/193
   group('Toastification - before the first frame', () {
     const animationDuration = Duration(milliseconds: 100);

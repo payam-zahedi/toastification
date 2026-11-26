@@ -71,8 +71,10 @@ class ToastificationManager {
     required Duration? animationDuration,
     required ToastificationCallbacks callbacks,
     Duration? autoCloseDuration,
+    String? id,
   }) {
     final item = ToastificationItem(
+      id: id,
       builder: builder,
       alignment: alignment,
       animationBuilder: animationBuilder,

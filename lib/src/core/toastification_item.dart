@@ -57,13 +57,14 @@ typedef ToastificationAnimationBuilder = Widget Function(
 ///
 class ToastificationItem implements Equatable {
   ToastificationItem({
+    String? id,
     required this.builder,
     required this.alignment,
     this.animationBuilder,
     this.animationDuration,
     this.autoCloseDuration,
     void Function(ToastificationItem holder)? onAutoCompleteCompleted,
-  }) : id = _uuid.v4() {
+  }) : id = id ?? _uuid.v4() {
     if (autoCloseDuration != null) {
       _timer = PausableTimer(autoCloseDuration!, () {
         _timeStatus.value = ToastTimeStatus.finished;
@@ -78,6 +79,9 @@ class ToastificationItem implements Equatable {
 
   /// unique id for the toastification item
   /// this id will be used to identify the toastification item
+  ///
+  /// it's the id given to [Toastification.show] or
+  /// [Toastification.showCustom], or a generated one.
   final String id;
 
   /// the alignment of the toastification item

@@ -99,6 +99,10 @@ class Toastification {
   /// the return value is a [ToastificationItem] that you can use to dismiss the notification
   /// or find the notification details by its [id]
   ///
+  /// pass an [id] to give the notification your own id. a notification that
+  /// already has this [id] is dismissed first, so the new one replaces it.
+  /// without an [id], a unique one is generated.
+  ///
   /// example :
   ///
   /// ```dart
@@ -122,7 +126,11 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
+    String? id,
   }) {
+    // the latest notification with an id replaces the one on screen.
+    if (id != null) dismissById(id);
+
     context ??= overlayState?.context;
 
     final contextProvided = context?.mounted == true;
@@ -167,6 +175,7 @@ class Toastification {
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState!,
       callbacks: callbacks,
+      id: id,
     );
   }
 
@@ -222,6 +231,10 @@ class Toastification {
   ///
   /// the return value is a [ToastificationItem] that you can use to dismiss the notification
   /// or find the notification details by its [id]
+  ///
+  /// pass an [id] to give the notification your own id. a notification that
+  /// already has this [id] is dismissed first, so the new one replaces it.
+  /// without an [id], a unique one is generated.
   ///
   /// example :
   ///
@@ -281,6 +294,7 @@ class Toastification {
     ///
     /// If null, the default cursor is used.
     MouseCursor? onHoverMouseCursor,
+    String? id,
   }) {
     // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
     var toastCloseButton = closeButton;
@@ -298,6 +312,7 @@ class Toastification {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       callbacks: callbacks,
+      id: id,
       builder: (context, holder) {
         return BuiltInBuilder(
           item: holder,
