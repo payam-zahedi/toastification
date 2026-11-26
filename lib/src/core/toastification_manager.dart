@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:toastification/src/core/widget/background_blocker.dart';
 import 'package:toastification/src/core/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -60,9 +61,7 @@ class ToastificationManager {
   final Set<Animation<double>> exitAnimations = {};
 
   /// whether the overlay blocks the interaction with the widgets behind it.
-  late final ValueNotifier<bool> _blocksBackground = ValueNotifier(
-    config.blockBackgroundInteraction,
-  );
+  late bool _blocksBackground = config.blockBackgroundInteraction;
 
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
@@ -267,7 +266,7 @@ class ToastificationManager {
   void _updateBlocksBackground() {
     if (notifications.isEmpty) return;
 
-    _blocksBackground.value = notifications.any(
+    _blocksBackground = notifications.any(
       (item) =>
           item.blockBackgroundInteraction ?? config.blockBackgroundInteraction,
     );
@@ -363,15 +362,8 @@ class ToastificationManager {
           ),
         );
 
-        // only the hit test behaviour rebuilds when the value changes.
-        return ValueListenableBuilder(
-          valueListenable: _blocksBackground,
-          builder: (context, blocksBackground, child) => Listener(
-            behavior: blocksBackground
-                ? HitTestBehavior.opaque
-                : HitTestBehavior.deferToChild,
-            child: child,
-          ),
+        return BackgroundBlocker(
+          blocks: () => _blocksBackground,
           child: overlay,
         );
       },

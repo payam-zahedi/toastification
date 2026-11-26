@@ -1070,17 +1070,22 @@ void main() {
 
   group('blockBackgroundInteraction', () {
     var backgroundTaps = 0;
+    late StateSetter rebuildBackground;
+    VoidCallback? onBackgroundBuild;
 
     // a point far from the top right toasts.
     const backgroundPoint = Offset(20, 500);
 
     Future<void> createTappableOverlay(WidgetTester tester) async {
       backgroundTaps = 0;
+      onBackgroundBuild = null;
       await tester.pumpWidget(
         MaterialApp(
-          home: Builder(
-            builder: (BuildContext context) {
+          home: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
               overlayState = Overlay.of(context);
+              rebuildBackground = setState;
+              onBackgroundBuild?.call();
               return GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: () => backgroundTaps++,
@@ -1171,16 +1176,22 @@ void main() {
     });
 
     testWidgets('should stop blocking when a blocking toast is dismissed '
-        'before it is displayed', (WidgetTester tester) async {
+        'from build before it is displayed', (WidgetTester tester) async {
       await createTappableOverlay(tester);
 
       show(tester);
       await tester.pumpAndSettle();
 
       final blocking = show(tester, block: true);
-      manager.dismiss(blocking);
+      rebuildBackground(() {
+        onBackgroundBuild = () {
+          onBackgroundBuild = null;
+          manager.dismiss(blocking);
+        };
+      });
       await tester.pump();
 
+      expect(tester.takeException(), isNull);
       expect(await isBackgroundBlocked(tester), isFalse);
 
       manager.dismissAll(delayForAnimation: false);
