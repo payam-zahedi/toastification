@@ -227,6 +227,33 @@ void main() {
 
       await cleanUpToasts(tester);
     });
+
+    testWidgets('should pass blockBackgroundInteraction to the toast', (
+      tester,
+    ) async {
+      late ToastificationItem item;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (context) => ElevatedButton(
+              onPressed: () => item = toastification.show(
+                context: context,
+                title: const Text('Loading'),
+                blockBackgroundInteraction: true,
+              ),
+              child: const Text('Show'),
+            ),
+          ),
+        ),
+      );
+
+      await tester.tap(find.text('Show'));
+      await tester.pumpAndSettle();
+
+      expect(item.blockBackgroundInteraction, isTrue);
+
+      await cleanUpToasts(tester);
+    });
   });
 
   /// Tests for the [showCustom] method functionality

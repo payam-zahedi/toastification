@@ -1067,4 +1067,167 @@ void main() {
       await tester.pumpAndSettle();
     });
   });
+
+  group('blockBackgroundInteraction', () {
+    var backgroundTaps = 0;
+
+    // a point far from the top right toasts.
+    const backgroundPoint = Offset(20, 500);
+
+    Future<void> createTappableOverlay(WidgetTester tester) async {
+      backgroundTaps = 0;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (BuildContext context) {
+              overlayState = Overlay.of(context);
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => backgroundTaps++,
+              );
+            },
+          ),
+        ),
+      );
+    }
+
+    ToastificationItem show(WidgetTester tester, {bool? block}) {
+      return manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('Test Toast'),
+        animationBuilder: null,
+        animationDuration: null,
+        callbacks: const ToastificationCallbacks(),
+        blockBackgroundInteraction: block,
+      );
+    }
+
+    Future<bool> isBackgroundBlocked(WidgetTester tester) async {
+      final tapsBefore = backgroundTaps;
+      await tester.tapAt(backgroundPoint);
+      await tester.pump();
+      return backgroundTaps == tapsBefore;
+    }
+
+    testWidgets('should use the config value when the toast has none', (
+      WidgetTester tester,
+    ) async {
+      manager = ToastificationManager(
+        alignment: Alignment.topRight,
+        config: const ToastificationConfig(blockBackgroundInteraction: true),
+      );
+      await createTappableOverlay(tester);
+
+      show(tester);
+      await tester.pumpAndSettle();
+
+      expect(await isBackgroundBlocked(tester), isTrue);
+
+      manager.dismissAll(delayForAnimation: false);
+      await tester.pumpAndSettle();
+
+      expect(await isBackgroundBlocked(tester), isFalse);
+    });
+
+    testWidgets('should let the toast value override the config value', (
+      WidgetTester tester,
+    ) async {
+      manager = ToastificationManager(
+        alignment: Alignment.topRight,
+        config: const ToastificationConfig(blockBackgroundInteraction: true),
+      );
+      await createTappableOverlay(tester);
+
+      show(tester, block: false);
+      await tester.pumpAndSettle();
+
+      expect(await isBackgroundBlocked(tester), isFalse);
+
+      manager.dismissAll(delayForAnimation: false);
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('should block while any toast on the screen blocks', (
+      WidgetTester tester,
+    ) async {
+      await createTappableOverlay(tester);
+
+      final blocking = show(tester, block: true);
+      show(tester);
+      await tester.pumpAndSettle();
+
+      expect(await isBackgroundBlocked(tester), isTrue);
+
+      manager.dismiss(blocking);
+      await tester.pump();
+
+      // the other toast is still on the screen.
+      expect(manager.notifications, hasLength(1));
+      expect(await isBackgroundBlocked(tester), isFalse);
+
+      manager.dismissAll(delayForAnimation: false);
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('should stop blocking when a blocking toast is dismissed '
+        'before it is displayed', (WidgetTester tester) async {
+      await createTappableOverlay(tester);
+
+      show(tester);
+      await tester.pumpAndSettle();
+
+      final blocking = show(tester, block: true);
+      manager.dismiss(blocking);
+      await tester.pump();
+
+      expect(await isBackgroundBlocked(tester), isFalse);
+
+      manager.dismissAll(delayForAnimation: false);
+      await tester.pump(const Duration(seconds: 1));
+    });
+
+    testWidgets('should block until the last blocking toast has left', (
+      WidgetTester tester,
+    ) async {
+      await createTappableOverlay(tester);
+
+      final blocking = show(tester, block: true);
+      await tester.pumpAndSettle();
+
+      manager.dismiss(blocking);
+      await tester.pump();
+
+      // the exit animation is still running.
+      expect(manager.overlayEntry, isNotNull);
+      expect(await isBackgroundBlocked(tester), isTrue);
+
+      await tester.pumpAndSettle();
+
+      expect(manager.overlayEntry, isNull);
+      expect(await isBackgroundBlocked(tester), isFalse);
+    });
+
+    testWidgets('should block again when a new blocking toast replaces '
+        'a non-blocking one', (WidgetTester tester) async {
+      manager = ToastificationManager(
+        alignment: Alignment.topRight,
+        config: const ToastificationConfig(maxToastLimit: 1),
+      );
+      await createTappableOverlay(tester);
+
+      show(tester);
+      await tester.pumpAndSettle();
+
+      expect(await isBackgroundBlocked(tester), isFalse);
+
+      show(tester, block: true);
+      await tester.pump();
+
+      expect(await isBackgroundBlocked(tester), isTrue);
+
+      manager.dismissAll(delayForAnimation: false);
+      await tester.pumpAndSettle();
+    });
+  });
 }

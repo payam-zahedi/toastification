@@ -62,6 +62,7 @@ class ToastificationItem implements Equatable {
     this.animationBuilder,
     this.animationDuration,
     this.autoCloseDuration,
+    this.blockBackgroundInteraction,
     void Function(ToastificationItem holder)? onAutoCompleteCompleted,
   }) : id = _uuid.v4() {
     if (autoCloseDuration != null) {
@@ -98,6 +99,10 @@ class ToastificationItem implements Equatable {
 
   /// the animation duration of the toastification item animation
   final Duration? animationDuration;
+
+  /// whether this toast blocks the background while it is on the screen.
+  /// if it is null, [ToastificationConfig.blockBackgroundInteraction] is used.
+  final bool? blockBackgroundInteraction;
 
   /// the timer of the toastification item
   late final PausableTimer? _timer;
