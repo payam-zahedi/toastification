@@ -81,6 +81,17 @@ void main() {
       expect(config, isNot(equals(updated)));
     });
 
+    test('equals | returns false for another layout', () {
+      const config = ToastificationConfig();
+      final updated = config.copyWith(
+        layout: const ToastificationLayout.stacked(),
+      );
+
+      expect(config.layout, const ToastificationLayout.list());
+      expect(updated.layout, const ToastificationLayout.stacked());
+      expect(config, isNot(equals(updated)));
+    });
+
     test('hashCode', () {
       const config = ToastificationConfig();
       final updated = config.copyWith(
