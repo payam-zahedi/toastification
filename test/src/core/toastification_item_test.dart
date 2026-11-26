@@ -217,7 +217,8 @@ void main() {
 
       expect(
         () => toastification.addListenerOnTimeStatus(() {}),
-        throwsFlutterError,
+        // a FlutterError before Flutter 3.50, a StateError from 3.50.
+        throwsA(isA<Error>()),
       );
     });
   });
