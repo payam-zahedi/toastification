@@ -292,6 +292,24 @@ class ToastificationManager {
     dismiss(notifications.last);
   }
 
+  /// releases the toasts and the overlay entry of this manager.
+  ///
+  /// [MultiOverlayHost] calls it once its overlay left the tree,
+  /// so the toasts can't be shown anymore.
+  void dispose() {
+    // the frame callbacks of a pending toast skip it once it's not pending.
+    for (final item in notifications) {
+      item.dispose();
+    }
+    _pending.clear();
+    _displayed.clear();
+    exitAnimations.clear();
+
+    overlayEntry?.remove();
+    overlayEntry?.dispose();
+    overlayEntry = null;
+  }
+
   void _createNotificationHolder(OverlayState overlay) {
     overlayEntry = _createOverlayEntry();
     overlay.insert(overlayEntry!);

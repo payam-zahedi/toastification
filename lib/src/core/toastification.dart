@@ -1,7 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:toastification/src/built_in/built_in_builder.dart';
-import 'package:toastification/src/core/toastification_manager.dart';
+import 'package:toastification/src/core/toastification_host.dart';
 import 'package:toastification/src/core/toastification_overlay_state.dart';
 import 'package:toastification/toastification.dart';
 
@@ -84,11 +84,10 @@ class Toastification {
   /// returns the singleton instance of the class
   factory Toastification() => _instance;
 
-  /// list of managers for each [Alignment] object
-  ///
-  /// for each [Alignment] object we will create a [ToastificationManager]
+  /// the host of each [ToastificationScope] in use,
+  /// a host keeps the managers and decides which one shows a toast.
   @visibleForTesting
-  final Map<Alignment, ToastificationManager> managers = {};
+  final Map<ToastificationScope, ToastificationHost> hosts = {};
 
   /// shows a custom notification
   ///
@@ -151,12 +150,15 @@ class Toastification {
     final effectiveAlignment =
         (alignment ?? config.alignment).resolve(direction);
 
-    final manager = managers.putIfAbsent(
+    final host = hosts.putIfAbsent(
+      config.scope,
+      () => ToastificationHost.fromScope(config.scope),
+    );
+
+    final manager = host.managerFor(
+      overlayState!,
       effectiveAlignment,
-      () => ToastificationManager(
-        alignment: effectiveAlignment,
-        config: config,
-      ),
+      config,
     );
 
     return manager.showCustom(
@@ -165,7 +167,7 @@ class Toastification {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
-      overlayState: overlayState!,
+      overlayState: overlayState,
       callbacks: callbacks,
     );
   }
@@ -336,8 +338,8 @@ class Toastification {
   /// if there is no notification with the given [id] it will return null
   ToastificationItem? findToastificationItem(String id) {
     try {
-      for (final manager in managers.values) {
-        final foundValue = manager.findToastificationItem(id);
+      for (final host in hosts.values) {
+        final foundValue = host.findToastificationItem(id);
 
         if (foundValue != null) {
           return foundValue;
@@ -357,10 +359,8 @@ class Toastification {
     ToastificationItem notification, {
     bool showRemoveAnimation = true,
   }) {
-    final manager = managers[notification.alignment];
-
-    if (manager != null) {
-      manager.dismiss(notification, showRemoveAnimation: showRemoveAnimation);
+    for (final host in hosts.values) {
+      host.dismiss(notification, showRemoveAnimation: showRemoveAnimation);
     }
   }
 
@@ -369,8 +369,8 @@ class Toastification {
   /// The [delayForAnimation] parameter is used to determine
   /// whether to wait for the animation to finish or not.
   void dismissAll({bool delayForAnimation = true}) {
-    for (final manager in managers.values) {
-      manager.dismissAll(delayForAnimation: delayForAnimation);
+    for (final host in hosts.values) {
+      host.dismissAll(delayForAnimation: delayForAnimation);
     }
   }
 
