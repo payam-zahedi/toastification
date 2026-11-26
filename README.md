@@ -402,6 +402,28 @@ ToastificationConfig(
 
 In addition to displaying toast messages, the Toastification package also provides methods for managing and dismissing existing notifications. Here are the available methods:
 
+#### Show a Notification with Your Own ID
+
+Pass an `id` to `show` or `showCustom`. A notification that already has this `id` is dismissed first, so the new one replaces it. Without an `id`, a unique one is generated.
+
+```dart
+connectivity.onChanged.listen((isOnline) {
+  // the new state replaces the toast of the previous state
+  toastification.show(
+    id: 'connectivity',
+    title: Text(isOnline ? 'Back online' : 'No connection'),
+  );
+});
+```
+
+To keep the notification that is on screen and skip the new one, check for it first:
+
+```dart
+if (toastification.findToastificationItem('connectivity') == null) {
+  toastification.show(id: 'connectivity', title: Text('No connection'));
+}
+```
+
 #### Find a Notification item
 
 Find a notification with the given ID.

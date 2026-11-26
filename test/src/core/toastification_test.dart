@@ -726,6 +726,77 @@ void main() {
     });
   });
 
+  // https://github.com/payam-zahedi/toastification/issues/165
+  group('Toastification - id', () {
+    late BuildContext appContext;
+
+    setUp(() => toastification.managers.clear());
+
+    Future<void> pumpApp(WidgetTester tester) {
+      return tester.pumpWidget(
+        MaterialApp(
+          home: Builder(
+            builder: (context) {
+              appContext = context;
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
+    }
+
+    testWidgets('should replace the toast with the same id', (tester) async {
+      await pumpApp(tester);
+
+      toastification.show(
+        context: appContext,
+        id: 'network',
+        title: const Text('Offline'),
+      );
+      await tester.pumpAndSettle();
+
+      // the new toast replaces the old one in another alignment too.
+      final online = toastification.showCustom(
+        context: appContext,
+        id: 'network',
+        alignment: Alignment.bottomCenter,
+        builder: (context, item) => const Text('Online'),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Offline'), findsNothing);
+      expect(find.text('Online'), findsOneWidget);
+      expect(toastification.findToastificationItem('network'), same(online));
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets('should build the new toast with its own state', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+
+      toastification.showCustom(
+        context: appContext,
+        id: 'network',
+        builder: (context, item) => const _InitStateText('Offline'),
+      );
+      await tester.pumpAndSettle();
+
+      toastification.showCustom(
+        context: appContext,
+        id: 'network',
+        builder: (context, item) => const _InitStateText('Online'),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Offline'), findsNothing);
+      expect(find.text('Online'), findsOneWidget);
+
+      await cleanUpToasts(tester);
+    });
+  });
+
   // https://github.com/payam-zahedi/toastification/issues/193
   group('Toastification - before the first frame', () {
     const animationDuration = Duration(milliseconds: 100);
@@ -876,4 +947,21 @@ void main() {
       expectNoOverlay();
     });
   });
+}
+
+/// shows the text it had when its state was created.
+class _InitStateText extends StatefulWidget {
+  const _InitStateText(this.text);
+
+  final String text;
+
+  @override
+  State<_InitStateText> createState() => _InitStateTextState();
+}
+
+class _InitStateTextState extends State<_InitStateText> {
+  late final String _text = widget.text;
+
+  @override
+  Widget build(BuildContext context) => Text(_text);
 }
