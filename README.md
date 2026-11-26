@@ -396,6 +396,16 @@ ToastificationConfig(
 )
 ```
 
+You can also set `blockBackgroundInteraction` for a single toast with `show` or `showCustom`. The toast value overrides the config value, so a loading toast can block the screen while a success toast does not. The background stays blocked while any toast with the same alignment blocks it.
+
+```dart
+toastification.show(
+  context: context,
+  title: Text('Uploading...'),
+  blockBackgroundInteraction: true, // blocks the background for this toast only
+);
+```
+
 ---
 
 ## Manage Your Notifications
