@@ -10,6 +10,7 @@ export 'src/core/toastification_overlay_state.dart'
 export 'src/built_in/toastification_type.dart';
 export 'src/utils/constants_values.dart';
 export 'src/built_in/toastification_style.dart';
+export 'src/built_in/toastification_theme_mode.dart';
 export 'src/built_in/layout/standard/style/factory.dart';
 export 'src/core/widget/toastification_config_provider.dart';
 export 'src/utils/color_utils.dart';

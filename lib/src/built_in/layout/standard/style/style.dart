@@ -20,11 +20,15 @@ abstract class BaseStandardToastStyle extends Equatable {
     required this.type,
     this.providedValues,
     this.flutterTheme,
+    this.brightness = Brightness.light,
   });
 
   final ToastificationType type;
   final StandardStyleValues? providedValues;
   final ThemeData? flutterTheme;
+
+  /// Whether [defaults] holds the light or the dark colors.
+  final Brightness brightness;
 
   DefaultStyleValues get defaults;
 
@@ -95,7 +99,7 @@ abstract class BaseStandardToastStyle extends Equatable {
       );
 
   @override
-  List<Object?> get props => [type, providedValues, flutterTheme];
+  List<Object?> get props => [type, providedValues, flutterTheme, brightness];
 }
 
 class DefaultStyleValues extends StandardStyleValues {

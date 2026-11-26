@@ -7,17 +7,33 @@ class FlatStandardColoredToastStyle extends BaseStandardToastStyle {
     required super.type,
     super.providedValues,
     super.flutterTheme,
+    super.brightness,
   });
 
   @override
-  DefaultStyleValues get defaults => DefaultStyleValues(
-    primaryColor: type.color.toMaterialColor,
-    surfaceLight: Colors.white,
-    surfaceDark: Colors.black,
-  );
+  DefaultStyleValues get defaults => switch (brightness) {
+    Brightness.light => DefaultStyleValues(
+      primaryColor: type.color.toMaterialColor,
+      surfaceLight: Colors.white,
+      surfaceDark: Colors.black,
+    ),
+    // surfaceLight is the background, so it holds the dark surface.
+    Brightness.dark => DefaultStyleValues(
+      primaryColor: type.color.toMaterialColor,
+      surfaceLight: const Color(0xff2B2B2B),
+      surfaceDark: Colors.white,
+    ),
+  };
 
   @override
-  Color get backgroundColor => primaryColor.shade50;
+  Color get backgroundColor => switch (brightness) {
+    Brightness.light => primaryColor.shade50,
+    // a faint tint of the type color, like shade50 but over the dark surface.
+    Brightness.dark => Color.alphaBlend(
+      primaryColor.withValues(alpha: .15),
+      defaults.surfaceLight,
+    ),
+  };
 
   @override
   Color get iconColor => providedValues?.surfaceDark ?? defaults.surfaceDark;
