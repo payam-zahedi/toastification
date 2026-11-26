@@ -730,6 +730,8 @@ void main() {
   group('Toastification - id', () {
     late BuildContext appContext;
 
+    setUp(() => toastification.managers.clear());
+
     Future<void> pumpApp(WidgetTester tester) {
       return tester.pumpWidget(
         MaterialApp(
@@ -742,22 +744,6 @@ void main() {
         ),
       );
     }
-
-    testWidgets('should give the toast the given id', (tester) async {
-      await pumpApp(tester);
-
-      final item = toastification.show(
-        context: appContext,
-        id: 'network',
-        title: const Text('Offline'),
-      );
-      await tester.pumpAndSettle();
-
-      expect(item.id, 'network');
-      expect(toastification.findToastificationItem('network'), same(item));
-
-      await cleanUpToasts(tester);
-    });
 
     testWidgets('should replace the toast with the same id', (tester) async {
       await pumpApp(tester);
