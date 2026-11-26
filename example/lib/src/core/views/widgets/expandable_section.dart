@@ -1,5 +1,5 @@
 import 'package:example/src/core/views/widgets/expandable_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ExpandableSection extends StatefulWidget {
   const ExpandableSection({

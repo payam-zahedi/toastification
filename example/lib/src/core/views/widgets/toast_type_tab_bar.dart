@@ -2,7 +2,7 @@ import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/soon.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:toastification/toastification.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';

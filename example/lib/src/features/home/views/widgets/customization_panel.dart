@@ -15,7 +15,7 @@ import 'package:example/src/core/views/widgets/toggle_tile.dart';
 import 'package:example/src/features/home/controllers/toast_detail.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/widgets/content.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';

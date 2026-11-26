@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:toastification/src/built_in/built_in_builder.dart';
 import 'package:toastification/toastification.dart';

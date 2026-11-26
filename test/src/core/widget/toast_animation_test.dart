@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:toastification/toastification.dart';
 
@@ -8,7 +8,7 @@ void main() {
 
     setUp(() {
       mockItem = ToastificationItem(
-        builder: (_, __) => const SizedBox(),
+        builder: (_, _) => const SizedBox(),
         alignment: Alignment.topCenter,
         autoCloseDuration: const Duration(seconds: 3),
       );
@@ -102,7 +102,7 @@ void main() {
         MaterialApp(
           home: ToastTimerAnimationBuilder(
             item: mockItem,
-            builder: (_, __, ___) => Container(),
+            builder: (_, _, _) => Container(),
           ),
         ),
       );

@@ -2,7 +2,7 @@ import 'package:dart_style/dart_style.dart';
 import 'package:example/src/features/home/views/ui_states/animation_type.dart';
 import 'package:example/src/features/home/views/ui_states/toast_detail_ui_state.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
 
 class ToastCodeFormatter {
