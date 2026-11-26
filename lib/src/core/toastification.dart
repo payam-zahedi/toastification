@@ -128,7 +128,7 @@ class Toastification {
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
     String? id,
   }) {
-    // the latest notification with an id replaces the one on screen.
+    // the new notification replaces a pending or shown one with this id.
     if (id != null) dismissById(id);
 
     context ??= overlayState?.context;
