@@ -9,32 +9,38 @@ class StandardToastStyleFactory {
     required ToastificationType type,
     StandardStyleValues? providedValues,
     ThemeData? flutterTheme,
+    Brightness brightness = Brightness.light,
   }) {
     return switch (style) {
       StandardStyle.minimal => MinimalStandardToastStyle(
         type: type,
         providedValues: providedValues,
         flutterTheme: flutterTheme,
+        brightness: brightness,
       ),
       StandardStyle.fillColored => FilledStandardToastStyle(
         type: type,
         providedValues: providedValues,
         flutterTheme: flutterTheme,
+        brightness: brightness,
       ),
       StandardStyle.flatColored => FlatStandardColoredToastStyle(
         type: type,
         providedValues: providedValues,
         flutterTheme: flutterTheme,
+        brightness: brightness,
       ),
       StandardStyle.flat => FlatStandardToastStyle(
         type: type,
         providedValues: providedValues,
         flutterTheme: flutterTheme,
+        brightness: brightness,
       ),
       StandardStyle.simple => SimpleStandardToastStyle(
         type: type,
         providedValues: providedValues,
         flutterTheme: flutterTheme,
+        brightness: brightness,
       ),
     };
   }

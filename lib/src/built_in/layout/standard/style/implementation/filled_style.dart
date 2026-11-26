@@ -7,8 +7,11 @@ class FilledStandardToastStyle extends BaseStandardToastStyle {
     required super.type,
     super.providedValues,
     super.flutterTheme,
+    super.brightness,
   });
 
+  // the type color with white text reads well in light and dark apps,
+  // so brightness doesn't change it.
   @override
   DefaultStyleValues get defaults => DefaultStyleValues(
     primaryColor: type.color.toMaterialColor,

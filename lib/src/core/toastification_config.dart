@@ -42,6 +42,7 @@ class ToastificationConfig extends Equatable {
     this.maxTitleLines = 2,
     this.maxDescriptionLines = 6,
     this.blockBackgroundInteraction = false,
+    this.themeMode = ToastificationThemeMode.light,
   });
 
   final AlignmentGeometry alignment;
@@ -85,6 +86,12 @@ class ToastificationConfig extends Equatable {
   /// The default value is false.
   final bool blockBackgroundInteraction;
 
+  /// Whether built-in toasts use their light or dark colors.
+  /// Toasts read it from the provider above the app's `Navigator`, so a
+  /// provider around a single page doesn't change it.
+  /// The default value is [ToastificationThemeMode.light].
+  final ToastificationThemeMode themeMode;
+
   // Copy with method for ToastificationConfig
   ToastificationConfig copyWith({
     AlignmentGeometry? alignment,
@@ -96,6 +103,7 @@ class ToastificationConfig extends Equatable {
     int? maxToastLimit,
     bool? applyMediaQueryViewInsets,
     bool? blockBackgroundInteraction,
+    ToastificationThemeMode? themeMode,
   }) {
     return ToastificationConfig(
       alignment: alignment ?? this.alignment,
@@ -109,6 +117,7 @@ class ToastificationConfig extends Equatable {
           applyMediaQueryViewInsets ?? this.applyMediaQueryViewInsets,
       blockBackgroundInteraction:
           blockBackgroundInteraction ?? this.blockBackgroundInteraction,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 
@@ -124,6 +133,7 @@ class ToastificationConfig extends Equatable {
     maxDescriptionLines,
     applyMediaQueryViewInsets,
     blockBackgroundInteraction,
+    themeMode,
   ];
 }
 

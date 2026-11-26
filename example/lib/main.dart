@@ -11,6 +11,10 @@ final themeVariantProvider = StateProvider<bool>((ref) {
   return false;
 });
 
+final toastThemeModeProvider = StateProvider<ToastificationThemeMode>((ref) {
+  return ToastificationThemeMode.light;
+});
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -30,6 +34,7 @@ class ToastificationApp extends ConsumerWidget {
       config: ToastificationConfig(
         maxTitleLines: 2,
         maxDescriptionLines: 6,
+        themeMode: ref.watch(toastThemeModeProvider),
         marginBuilder: (context, alignment) =>
             const EdgeInsets.fromLTRB(0, 16, 0, 110),
       ),

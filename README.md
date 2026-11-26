@@ -396,6 +396,17 @@ ToastificationConfig(
 )
 ```
 
+##### Dark Mode
+
+The `themeMode` parameter controls whether built-in toasts use their light or dark colors. The default value is `ToastificationThemeMode.light`, so toasts stay light even when your app is dark. Use `ToastificationThemeMode.followAppTheme` to follow `Theme.of(context).brightness`, or `ToastificationThemeMode.dark` to always use the dark colors. Colors you pass to `show()` are applied the same way in both modes. Set `themeMode` on `ToastificationWrapper` or in `MaterialApp.builder`, because toasts read it from the provider above the `Navigator`.
+
+```dart
+ToastificationConfig(
+  themeMode: ToastificationThemeMode.followAppTheme, // Dark toasts in a dark app
+  // ... other configuration options
+)
+```
+
 ---
 
 ## Manage Your Notifications

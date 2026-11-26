@@ -232,6 +232,15 @@ class BuiltInToastBuilder extends StatelessWidget {
 
     final effectiveType = type ?? ToastificationType.success;
 
+    final themeMode =
+        ToastificationConfigProvider.maybeOf(context)?.config.themeMode ??
+        ToastificationThemeMode.light;
+    final toastBrightness = switch (themeMode) {
+      ToastificationThemeMode.light => Brightness.light,
+      ToastificationThemeMode.dark => Brightness.dark,
+      ToastificationThemeMode.followAppTheme => flutterTheme.brightness,
+    };
+
     final progressBarWidget = showProgressBar && item != null
         ? ToastTimerAnimationBuilder(
             item: item!,
@@ -259,6 +268,7 @@ class BuiltInToastBuilder extends StatelessWidget {
           constraints: constraints,
         ),
         flutterTheme: flutterTheme,
+        brightness: toastBrightness,
       ),
       flutterTheme: flutterTheme,
       direction: direction ?? Directionality.of(context),
