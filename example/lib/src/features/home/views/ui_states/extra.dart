@@ -21,6 +21,8 @@ void copyCode(BuildContext context, ToastDetail detail) async {
     (result) {
       if (result) {
         toastification.show(
+          // one id for both results, so copying again replaces the toast.
+          id: 'clipboard',
           type: ToastificationType.success,
           style: ToastificationStyle.flatColored,
           title: const Text('Clipboard'),
@@ -33,6 +35,7 @@ void copyCode(BuildContext context, ToastDetail detail) async {
         );
       } else {
         toastification.show(
+          id: 'clipboard',
           type: ToastificationType.error,
           style: ToastificationStyle.flatColored,
           title: const Text('Ops!'),
