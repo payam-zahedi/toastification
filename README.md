@@ -396,6 +396,18 @@ ToastificationConfig(
 )
 ```
 
+##### Stacked Layout
+
+By default, the toasts of one alignment are shown one after another in a list. With the `layout` parameter you can show them as a compact stack instead: the newest toast is in front and the older ones stick out from behind it.
+
+```dart
+ToastificationConfig(
+  layout: ToastificationLayout.stacked(),
+)
+```
+
+The stack expands to the list when the pointer hovers over it or when it is tapped, and it collapses again when the pointer leaves it or when something else is tapped. The default value is `ToastificationLayout.list()`.
+
 ---
 
 ## Manage Your Notifications

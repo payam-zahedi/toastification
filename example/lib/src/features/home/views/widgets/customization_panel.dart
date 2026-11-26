@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:example/main.dart';
 import 'package:example/src/core/usecase/responsive/responsive.dart';
 import 'package:example/src/core/views/widgets/border_holder.dart';
 import 'package:example/src/core/views/widgets/count_tile.dart';
@@ -241,6 +242,8 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 20),
+        const _LayoutSection(),
       ],
     );
   }
@@ -727,6 +730,24 @@ class _PauseSection extends ConsumerWidget {
           ref
               .read(toastDetailControllerProvider.notifier)
               .changePauseOnHover(value!);
+        },
+      ),
+    );
+  }
+}
+
+class _LayoutSection extends ConsumerWidget {
+  const _LayoutSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'LAYOUT',
+      body: ToggleTile(
+        title: 'Stacked toasts',
+        value: ref.watch(stackedLayoutProvider),
+        onChanged: (value) {
+          ref.read(stackedLayoutProvider.notifier).state = value!;
         },
       ),
     );
