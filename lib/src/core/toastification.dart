@@ -122,6 +122,13 @@ class Toastification {
     Duration? autoCloseDuration,
     OverlayState? overlayState,
     ToastificationCallbacks callbacks = const ToastificationCallbacks(),
+
+    /// Whether this toast blocks the interaction with the widgets behind it.
+    ///
+    /// If null, [ToastificationConfig.blockBackgroundInteraction] is used.
+    /// The background stays blocked while any toast with the same alignment
+    /// blocks it.
+    bool? blockBackgroundInteraction,
   }) {
     context ??= overlayState?.context;
 
@@ -167,6 +174,7 @@ class Toastification {
       autoCloseDuration: autoCloseDuration,
       overlayState: overlayState!,
       callbacks: callbacks,
+      blockBackgroundInteraction: blockBackgroundInteraction,
     );
   }
 
@@ -281,6 +289,13 @@ class Toastification {
     ///
     /// If null, the default cursor is used.
     MouseCursor? onHoverMouseCursor,
+
+    /// Whether this toast blocks the interaction with the widgets behind it.
+    ///
+    /// If null, [ToastificationConfig.blockBackgroundInteraction] is used.
+    /// The background stays blocked while any toast with the same alignment
+    /// blocks it.
+    bool? blockBackgroundInteraction,
   }) {
     // TODO: remove this variable when the deprecated parameter (closeButtonShowType) is removed
     var toastCloseButton = closeButton;
@@ -298,6 +313,7 @@ class Toastification {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       callbacks: callbacks,
+      blockBackgroundInteraction: blockBackgroundInteraction,
       builder: (context, holder) {
         return BuiltInBuilder(
           item: holder,

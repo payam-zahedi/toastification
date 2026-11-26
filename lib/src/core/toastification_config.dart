@@ -83,6 +83,8 @@ class ToastificationConfig extends Equatable {
   /// Whether to block background interaction.
   /// If set to true, the background will not be interactive.
   /// The default value is false.
+  /// A single toast can override it with the `blockBackgroundInteraction`
+  /// parameter of [Toastification.show] or [Toastification.showCustom].
   final bool blockBackgroundInteraction;
 
   // Copy with method for ToastificationConfig

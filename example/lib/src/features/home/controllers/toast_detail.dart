@@ -160,6 +160,11 @@ class ToastDetailControllerNotifier extends StateNotifier<ToastDetail> {
         (current) => current.copyWith(applyBlurEffect: applyBlurEffect));
   }
 
+  void changeBlockBackgroundInteraction(bool blockBackgroundInteraction) {
+    _updateAndSave((current) => current.copyWith(
+        blockBackgroundInteraction: blockBackgroundInteraction));
+  }
+
   void resetColors() {
     _updateAndSave((current) => current.copyWith(
           primaryColor: null,

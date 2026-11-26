@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:toastification/src/core/widget/background_blocker.dart';
 import 'package:toastification/src/core/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -59,6 +60,9 @@ class ToastificationManager {
   @visibleForTesting
   final Set<Animation<double>> exitAnimations = {};
 
+  /// whether the overlay blocks the interaction with the widgets behind it.
+  late bool _blocksBackground = config.blockBackgroundInteraction;
+
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
   /// the [item] is displayed after the next frame.
@@ -71,6 +75,7 @@ class ToastificationManager {
     required Duration? animationDuration,
     required ToastificationCallbacks callbacks,
     Duration? autoCloseDuration,
+    bool? blockBackgroundInteraction,
   }) {
     final item = ToastificationItem(
       builder: builder,
@@ -78,6 +83,7 @@ class ToastificationManager {
       animationBuilder: animationBuilder,
       animationDuration: animationDuration,
       autoCloseDuration: autoCloseDuration,
+      blockBackgroundInteraction: blockBackgroundInteraction,
       onAutoCompleteCompleted: (toastItem) {
         dismiss(toastItem);
         callbacks.onAutoCompleteCompleted?.call(toastItem);
@@ -112,6 +118,8 @@ class ToastificationManager {
 
     // the toast was dismissed in the meantime.
     if (!_pending.contains(item)) return;
+
+    _updateBlocksBackground();
 
     if (overlayEntry == null) {
       _createNotificationHolder(overlayState);
@@ -163,6 +171,8 @@ class ToastificationManager {
     // if its a pending toast, that means it hasn't been displayed yet,
     // so we just need to remove it from the pending list without worrying about animations.
     if (isPending) {
+      _updateBlocksBackground();
+
       // disposed after the caller's callbacks, like a displayed toast.
       scheduleMicrotask(notification.dispose);
 
@@ -185,6 +195,8 @@ class ToastificationManager {
       }
 
       final removedItem = _displayed.removeAt(index);
+
+      _updateBlocksBackground();
 
       // Use Duration.zero when there is no remove animation. Without a
       // duration, AnimatedList falls back to its 300ms default.
@@ -245,6 +257,19 @@ class ToastificationManager {
     }
 
     animation.addStatusListener(onStatus);
+  }
+
+  /// blocks the background while any toast on the screen asks for it.
+  ///
+  /// when the last toast is dismissed, the value is kept until the overlay is
+  /// removed, so a blocking toast also blocks during its exit animation.
+  void _updateBlocksBackground() {
+    if (notifications.isEmpty) return;
+
+    _blocksBackground = notifications.any(
+      (item) =>
+          item.blockBackgroundInteraction ?? config.blockBackgroundInteraction,
+    );
   }
 
   void _removeOverlayIfIdle() {
@@ -337,14 +362,10 @@ class ToastificationManager {
           ),
         );
 
-        if (config.blockBackgroundInteraction) {
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            child: overlay,
-          );
-        }
-
-        return overlay;
+        return BackgroundBlocker(
+          blocks: () => _blocksBackground,
+          child: overlay,
+        );
       },
     );
   }
