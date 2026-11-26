@@ -241,6 +241,8 @@ class _ControllersAndInteractionsHolder extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 20),
+        const _BackgroundSection(),
       ],
     );
   }
@@ -747,6 +749,27 @@ class _DragSection extends ConsumerWidget {
           ref
               .read(toastDetailControllerProvider.notifier)
               .changeDragToClose(value!);
+        },
+      ),
+    );
+  }
+}
+
+class _BackgroundSection extends ConsumerWidget {
+  const _BackgroundSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'BACKGROUND',
+      body: ToggleTile(
+        title: 'Block background interaction',
+        value:
+            ref.watch(toastDetailControllerProvider).blockBackgroundInteraction,
+        onChanged: (value) {
+          ref
+              .read(toastDetailControllerProvider.notifier)
+              .changeBlockBackgroundInteraction(value!);
         },
       ),
     );
