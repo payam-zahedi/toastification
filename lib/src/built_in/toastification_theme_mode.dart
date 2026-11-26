@@ -1,6 +1,7 @@
 /// Defines whether built-in toasts use their light or dark colors.
 ///
-/// Set it once with [ToastificationConfig.themeMode]:
+/// Set it with [ToastificationConfig.themeMode] on [ToastificationWrapper],
+/// or on a [ToastificationConfigProvider] in `MaterialApp.builder`:
 /// ```dart
 /// ToastificationWrapper(
 ///   config: ToastificationConfig(
@@ -10,8 +11,7 @@
 /// );
 /// ```
 ///
-/// Colors you pass to `show()`, like `backgroundColor`, always win over the
-/// light or dark defaults.
+/// Colors you pass to `show()` are applied the same way in both modes.
 enum ToastificationThemeMode {
   /// Always use the light colors. This is the default.
   light,

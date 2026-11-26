@@ -87,6 +87,8 @@ class ToastificationConfig extends Equatable {
   final bool blockBackgroundInteraction;
 
   /// Whether built-in toasts use their light or dark colors.
+  /// Toasts read it from the provider above the app's `Navigator`, so a
+  /// provider around a single page doesn't change it.
   /// The default value is [ToastificationThemeMode.light].
   final ToastificationThemeMode themeMode;
 
