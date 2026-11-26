@@ -20,8 +20,8 @@ class ToastificationTheme extends InheritedTheme {
   ///
   /// If there is no ancestor, it will assert in debug mode.
   static ToastificationThemeData of(BuildContext context) {
-    final ToastificationTheme? result =
-        context.dependOnInheritedWidgetOfExactType<ToastificationTheme>();
+    final ToastificationTheme? result = context
+        .dependOnInheritedWidgetOfExactType<ToastificationTheme>();
     assert(result != null, 'No ToastificationTheme Widget found in context');
     return result!.themeData;
   }
@@ -33,9 +33,6 @@ class ToastificationTheme extends InheritedTheme {
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    return ToastificationTheme(
-      themeData: themeData,
-      child: child,
-    );
+    return ToastificationTheme(themeData: themeData, child: child);
   }
 }

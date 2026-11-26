@@ -58,7 +58,8 @@ class ToastContent extends StatelessWidget {
           if (title != null || description != null) const SizedBox(height: 10),
           ProgressIndicatorTheme(
             data: toastStyle.progressIndicatorTheme,
-            child: progressBarWidget ??
+            child:
+                progressBarWidget ??
                 LinearProgressIndicator(value: progressBarValue),
           ),
         ],

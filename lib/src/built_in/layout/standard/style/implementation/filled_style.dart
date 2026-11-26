@@ -11,10 +11,10 @@ class FilledStandardToastStyle extends BaseStandardToastStyle {
 
   @override
   DefaultStyleValues get defaults => DefaultStyleValues(
-        primaryColor: type.color.toMaterialColor,
-        surfaceLight: Colors.white,
-        surfaceDark: Colors.black,
-      );
+    primaryColor: type.color.toMaterialColor,
+    surfaceLight: Colors.white,
+    surfaceDark: Colors.black,
+  );
 
   @override
   Color get backgroundColor => primaryColor;

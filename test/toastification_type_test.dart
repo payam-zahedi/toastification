@@ -18,7 +18,9 @@ void main() {
       expect(ToastificationType.warning.name, 'warning');
       expect(ToastificationType.warning.color, warningColor);
       expect(
-          ToastificationType.warning.icon, ToastificationIcons.warning_circle);
+        ToastificationType.warning.icon,
+        ToastificationIcons.warning_circle,
+      );
 
       expect(ToastificationType.error.name, 'error');
       expect(ToastificationType.error.color, errorColor);
@@ -28,19 +30,27 @@ void main() {
     test('Default types: equality and hashCode', () {
       expect(ToastificationType.info, ToastificationType.info);
       expect(
-          ToastificationType.info.hashCode, ToastificationType.info.hashCode);
+        ToastificationType.info.hashCode,
+        ToastificationType.info.hashCode,
+      );
 
       expect(ToastificationType.success, ToastificationType.success);
-      expect(ToastificationType.success.hashCode,
-          ToastificationType.success.hashCode);
+      expect(
+        ToastificationType.success.hashCode,
+        ToastificationType.success.hashCode,
+      );
 
       expect(ToastificationType.warning, ToastificationType.warning);
-      expect(ToastificationType.warning.hashCode,
-          ToastificationType.warning.hashCode);
+      expect(
+        ToastificationType.warning.hashCode,
+        ToastificationType.warning.hashCode,
+      );
 
       expect(ToastificationType.error, ToastificationType.error);
       expect(
-          ToastificationType.error.hashCode, ToastificationType.error.hashCode);
+        ToastificationType.error.hashCode,
+        ToastificationType.error.hashCode,
+      );
     });
 
     test('Custom types: creation', () {
@@ -48,8 +58,11 @@ void main() {
       const customColor = Colors.purple;
       const customIcon = Icons.star;
 
-      final customType =
-          ToastificationType.custom(customName, customColor, customIcon);
+      final customType = ToastificationType.custom(
+        customName,
+        customColor,
+        customIcon,
+      );
 
       expect(customType.name, customName);
       expect(customType.color, customColor);
@@ -57,12 +70,21 @@ void main() {
     });
 
     test('Custom types: equality and hashCode', () {
-      const customType1 =
-          ToastificationType.custom('custom', Colors.purple, Icons.star);
-      const customType2 =
-          ToastificationType.custom('custom', Colors.purple, Icons.star);
-      const customType3 =
-          ToastificationType.custom('different', Colors.red, Icons.favorite);
+      const customType1 = ToastificationType.custom(
+        'custom',
+        Colors.purple,
+        Icons.star,
+      );
+      const customType2 = ToastificationType.custom(
+        'custom',
+        Colors.purple,
+        Icons.star,
+      );
+      const customType3 = ToastificationType.custom(
+        'different',
+        Colors.red,
+        Icons.favorite,
+      );
 
       expect(customType1, customType2);
       expect(customType1.hashCode, customType2.hashCode);
@@ -82,13 +104,20 @@ void main() {
     test('toString returns correct string representation', () {
       expect(ToastificationType.info.toString(), 'ToastificationType.info');
       expect(
-          ToastificationType.success.toString(), 'ToastificationType.success');
+        ToastificationType.success.toString(),
+        'ToastificationType.success',
+      );
       expect(
-          ToastificationType.warning.toString(), 'ToastificationType.warning');
+        ToastificationType.warning.toString(),
+        'ToastificationType.warning',
+      );
       expect(ToastificationType.error.toString(), 'ToastificationType.error');
 
-      const customType =
-          ToastificationType.custom('custom', Colors.purple, Icons.star);
+      const customType = ToastificationType.custom(
+        'custom',
+        Colors.purple,
+        Icons.star,
+      );
       expect(customType.toString(), 'ToastificationType.custom');
     });
   });

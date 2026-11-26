@@ -13,11 +13,7 @@ void main() {
         borderSide: BorderSide(color: Colors.red),
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
         boxShadow: [
-          BoxShadow(
-            color: Colors.red,
-            blurRadius: 10,
-            offset: Offset(0, 10),
-          ),
+          BoxShadow(color: Colors.red, blurRadius: 10, offset: Offset(0, 10)),
         ],
         titleMaxLines: 1,
         descriptionMaxLines: 2,
@@ -32,11 +28,7 @@ void main() {
       expect(values.borderSide, BorderSide(color: Colors.red));
       expect(values.borderRadius, BorderRadius.all(Radius.circular(8.0)));
       expect(values.boxShadow, [
-        BoxShadow(
-          color: Colors.red,
-          blurRadius: 10,
-          offset: Offset(0, 10),
-        ),
+        BoxShadow(color: Colors.red, blurRadius: 10, offset: Offset(0, 10)),
       ]);
       expect(values.titleMaxLines, 1);
       expect(values.descriptionMaxLines, 2);
@@ -119,10 +111,10 @@ class TestToastStyle extends BaseStandardToastStyle {
 
   @override
   DefaultStyleValues get defaults => const DefaultStyleValues(
-        primaryColor: Colors.blue,
-        surfaceLight: Colors.white,
-        surfaceDark: Colors.black,
-      );
+    primaryColor: Colors.blue,
+    surfaceLight: Colors.white,
+    surfaceDark: Colors.black,
+  );
 
   @override
   Color get iconColor => Colors.red;

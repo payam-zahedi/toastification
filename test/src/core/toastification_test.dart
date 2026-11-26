@@ -25,65 +25,69 @@ void main() {
     /// Verifies that a basic toast appears with correct title and description
     /// This is the most fundamental test case for the show() method
     testWidgets(
-        'should display toast with title and description when show is called',
-        (tester) async {
-      const kShowBasicToastButton = Key('show_basic_toast');
-      const kBasicTitle = 'Basic Title';
-      const kBasicDescription = 'Basic Description';
+      'should display toast with title and description when show is called',
+      (tester) async {
+        const kShowBasicToastButton = Key('show_basic_toast');
+        const kBasicTitle = 'Basic Title';
+        const kBasicDescription = 'Basic Description';
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: Builder(
-              builder: (context) => Center(
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      key: kShowBasicToastButton,
-                      onPressed: () {
-                        toastification.show(
-                          context: context,
-                          type: ToastificationType.success,
-                          style: ToastificationStyle.flat,
-                          title: const Text(kBasicTitle),
-                          description: const Text(kBasicDescription),
-                          animationDuration: const Duration(milliseconds: 100),
-                        );
-                      },
-                      child: const Text('Show Basic Toast'),
-                    ),
-                  ],
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: Builder(
+                builder: (context) => Center(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        key: kShowBasicToastButton,
+                        onPressed: () {
+                          toastification.show(
+                            context: context,
+                            type: ToastificationType.success,
+                            style: ToastificationStyle.flat,
+                            title: const Text(kBasicTitle),
+                            description: const Text(kBasicDescription),
+                            animationDuration: const Duration(
+                              milliseconds: 100,
+                            ),
+                          );
+                        },
+                        child: const Text('Show Basic Toast'),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      // Verify that the toast is not displayed initially
-      expect(find.text(kBasicTitle), findsNothing);
+        // Verify that the toast is not displayed initially
+        expect(find.text(kBasicTitle), findsNothing);
 
-      // Tap the button to show the toast
-      await tester.tap(find.byKey(kShowBasicToastButton));
+        // Tap the button to show the toast
+        await tester.tap(find.byKey(kShowBasicToastButton));
 
-      // Using pump to rebuild and start animations we have
-      await tester.pump();
+        // Using pump to rebuild and start animations we have
+        await tester.pump();
 
-      // Using pumpAndSettle to wait for the animation to complete
-      await tester.pumpAndSettle();
+        // Using pumpAndSettle to wait for the animation to complete
+        await tester.pumpAndSettle();
 
-      // Verify that the toast is displayed with the correct title and description
-      expect(find.text(kBasicTitle), findsOneWidget);
-      expect(find.text(kBasicDescription), findsOneWidget);
+        // Verify that the toast is displayed with the correct title and description
+        expect(find.text(kBasicTitle), findsOneWidget);
+        expect(find.text(kBasicDescription), findsOneWidget);
 
-      // Clean up the toast after the test
-      await cleanUpToasts(tester);
-    });
+        // Clean up the toast after the test
+        await cleanUpToasts(tester);
+      },
+    );
 
     /// Verifies that toast cleanup works correctly
     /// This ensures toasts can be properly removed from the widget tree
-    testWidgets('should remove toast from widget tree when dismissed',
-        (tester) async {
+    testWidgets('should remove toast from widget tree when dismissed', (
+      tester,
+    ) async {
       const kShowBasicToastButton = Key('show_basic_toast');
       const kBasicTitle = 'Basic Title';
       const kBasicDescription = 'Basic Description';
@@ -134,56 +138,58 @@ void main() {
     /// Verifies automatic closure functionality
     /// Tests that toasts respect their autoCloseDuration parameter
     testWidgets(
-        'should automatically remove toast from widget tree after autoCloseDuration',
-        (tester) async {
-      const kAutoCloseTitle = 'AutoClose Title';
+      'should automatically remove toast from widget tree after autoCloseDuration',
+      (tester) async {
+        const kAutoCloseTitle = 'AutoClose Title';
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: Builder(
-              builder: (context) => Center(
-                child: ElevatedButton(
-                  key: const Key('show_auto_close'),
-                  onPressed: () {
-                    toastification.show(
-                      context: context,
-                      title: const Text(kAutoCloseTitle),
-                      showProgressBar: false,
-                      autoCloseDuration: const Duration(milliseconds: 1000),
-                      animationDuration: const Duration(milliseconds: 200),
-                    );
-                  },
-                  child: const Text('Show AutoClose Toast'),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: Builder(
+                builder: (context) => Center(
+                  child: ElevatedButton(
+                    key: const Key('show_auto_close'),
+                    onPressed: () {
+                      toastification.show(
+                        context: context,
+                        title: const Text(kAutoCloseTitle),
+                        showProgressBar: false,
+                        autoCloseDuration: const Duration(milliseconds: 1000),
+                        animationDuration: const Duration(milliseconds: 200),
+                      );
+                    },
+                    child: const Text('Show AutoClose Toast'),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
+        );
 
-      await tester.tap(find.byKey(const Key('show_auto_close')));
+        await tester.tap(find.byKey(const Key('show_auto_close')));
 
-      await tester.pump();
-      await tester.pumpAndSettle();
+        await tester.pump();
+        await tester.pumpAndSettle();
 
-      // Verify that the toast is displayed
-      expect(find.text(kAutoCloseTitle), findsOneWidget);
+        // Verify that the toast is displayed
+        expect(find.text(kAutoCloseTitle), findsOneWidget);
 
-      // Wait for the autoCloseDuration to pass and start close animation
-      await tester.pump(const Duration(milliseconds: 1200));
+        // Wait for the autoCloseDuration to pass and start close animation
+        await tester.pump(const Duration(milliseconds: 1200));
 
-      // Wait for the close animation to complete
-      await tester.pumpAndSettle();
+        // Wait for the close animation to complete
+        await tester.pumpAndSettle();
 
-      // Verify that the toast is removed from the widget tree
-      expect(find.text(kAutoCloseTitle), findsNothing);
-    });
+        // Verify that the toast is removed from the widget tree
+        expect(find.text(kAutoCloseTitle), findsNothing);
+      },
+    );
 
     /// Verifies progress bar functionality
     /// Tests that the progress indicator appears when requested
-    testWidgets('should display progress bar when showProgressBar is true',
-        (tester) async {
+    testWidgets('should display progress bar when showProgressBar is true', (
+      tester,
+    ) async {
       const kShowProgressBarButton = Key('show_progress_bar');
       const kProgressBarTitle = 'Progress Bar Toast';
 
@@ -228,8 +234,9 @@ void main() {
   group('Toastification - showCustom()', () {
     /// Verifies that custom widgets can be displayed as toasts
     /// Tests the basic custom builder functionality
-    testWidgets('should display custom widget when showCustom is called',
-        (tester) async {
+    testWidgets('should display custom widget when showCustom is called', (
+      tester,
+    ) async {
       const kShowCustomToastButton = Key('show_custom_toast');
       const kCustomToastContainer = Key('custom_toast_container');
       const kCustomToastText = 'Custom Toast';
@@ -275,8 +282,9 @@ void main() {
 
     /// Verifies alignment positioning system
     /// Tests that toasts appear in the specified screen position
-    testWidgets('should respect custom alignment when specified',
-        (tester) async {
+    testWidgets('should respect custom alignment when specified', (
+      tester,
+    ) async {
       const kShowCustomToastButton = Key('show_custom_toast');
       const kCustomToastContainer = Key('custom_toast_container');
       const kCustomToastText = 'Custom Toast';
@@ -362,8 +370,9 @@ void main() {
   });
 
   group('Toastification - dismiss()', () {
-    testWidgets('should remove toast from overlay when dismiss method called',
-        (tester) async {
+    testWidgets('should remove toast from overlay when dismiss method called', (
+      tester,
+    ) async {
       late ToastificationItem toastItem;
 
       const kShowBasicToastButton = Key('show_basic_toast');
@@ -428,8 +437,9 @@ void main() {
       expect(find.text(kBasicTitle), findsNothing);
     });
 
-    testWidgets('should remove toast when dismissById is called',
-        (tester) async {
+    testWidgets('should remove toast when dismissById is called', (
+      tester,
+    ) async {
       late ToastificationItem toastItem;
       const kBasicTitle = 'Basic Title';
 
@@ -463,8 +473,9 @@ void main() {
       expect(find.text(kBasicTitle), findsNothing);
     });
 
-    testWidgets('should remove all toasts when dismissAll is called',
-        (tester) async {
+    testWidgets('should remove all toasts when dismissAll is called', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Builder(
@@ -511,14 +522,11 @@ void main() {
       expect(find.text('Toast 2'), findsNothing);
     });
 
-    testWidgets('should handle dismissing non-existent toast gracefully',
-        (tester) async {
+    testWidgets('should handle dismissing non-existent toast gracefully', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-        MaterialApp(
-          home: Builder(
-            builder: (context) => Container(),
-          ),
-        ),
+        MaterialApp(home: Builder(builder: (context) => Container())),
       );
 
       // Should not throw when dismissing non-existent toast
@@ -528,55 +536,57 @@ void main() {
       );
     });
 
-    testWidgets('should not affect other toasts when dismissing specific toast',
-        (tester) async {
-      late ToastificationItem toast1;
+    testWidgets(
+      'should not affect other toasts when dismissing specific toast',
+      (tester) async {
+        late ToastificationItem toast1;
 
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Builder(
-            builder: (context) => Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    toast1 = toastification.show(
-                      context: context,
-                      title: const Text('Toast 1'),
-                    );
-                  },
-                  child: const Text('Show Toast 1'),
-                ),
-                ElevatedButton(
-                  onPressed: () => toastification.show(
-                    context: context,
-                    title: const Text('Toast 2'),
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Builder(
+              builder: (context) => Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      toast1 = toastification.show(
+                        context: context,
+                        title: const Text('Toast 1'),
+                      );
+                    },
+                    child: const Text('Show Toast 1'),
                   ),
-                  child: const Text('Show Toast 2'),
-                ),
-              ],
+                  ElevatedButton(
+                    onPressed: () => toastification.show(
+                      context: context,
+                      title: const Text('Toast 2'),
+                    ),
+                    child: const Text('Show Toast 2'),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
 
-      // Show both toasts
-      await tester.tap(find.text('Show Toast 1'));
-      await tester.pump();
-      await tester.tap(find.text('Show Toast 2'));
-      await tester.pump();
-      await tester.pumpAndSettle();
+        // Show both toasts
+        await tester.tap(find.text('Show Toast 1'));
+        await tester.pump();
+        await tester.tap(find.text('Show Toast 2'));
+        await tester.pump();
+        await tester.pumpAndSettle();
 
-      // Dismiss only first toast
-      toastification.dismiss(toast1);
-      await tester.pump();
-      await tester.pumpAndSettle();
+        // Dismiss only first toast
+        toastification.dismiss(toast1);
+        await tester.pump();
+        await tester.pumpAndSettle();
 
-      // Verify only first toast is removed
-      expect(find.text('Toast 1'), findsNothing);
-      expect(find.text('Toast 2'), findsOneWidget);
+        // Verify only first toast is removed
+        expect(find.text('Toast 1'), findsNothing);
+        expect(find.text('Toast 2'), findsOneWidget);
 
-      await cleanUpToasts(tester);
-    });
+        await cleanUpToasts(tester);
+      },
+    );
   });
 
   group('Toastification - findToastificationItem()', () {
@@ -604,8 +614,9 @@ void main() {
       await tester.pump();
       await tester.pumpAndSettle();
 
-      final foundToast =
-          toastification.findToastificationItem(originalToast.id);
+      final foundToast = toastification.findToastificationItem(
+        originalToast.id,
+      );
       expect(foundToast, isNotNull);
       expect(foundToast?.id, equals(originalToast.id));
 
@@ -613,19 +624,17 @@ void main() {
     });
 
     testWidgets('should return null for non-existent toast id', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Container(),
-        ),
-      );
+      await tester.pumpWidget(MaterialApp(home: Container()));
 
-      final foundToast =
-          toastification.findToastificationItem('non-existent-id');
+      final foundToast = toastification.findToastificationItem(
+        'non-existent-id',
+      );
       expect(foundToast, isNull);
     });
 
-    testWidgets('should find correct toast when multiple toasts exist',
-        (tester) async {
+    testWidgets('should find correct toast when multiple toasts exist', (
+      tester,
+    ) async {
       late ToastificationItem toast1;
       late ToastificationItem toast2;
 
@@ -679,8 +688,9 @@ void main() {
       await cleanUpToasts(tester);
     });
 
-    testWidgets('should still find toast before animation completes',
-        (tester) async {
+    testWidgets('should still find toast before animation completes', (
+      tester,
+    ) async {
       late ToastificationItem toast;
 
       await tester.pumpWidget(
@@ -758,8 +768,9 @@ void main() {
       }
     }
 
-    testWidgets('should never show a toast dismissed by id in the same frame',
-        (tester) async {
+    testWidgets('should never show a toast dismissed by id in the same frame', (
+      tester,
+    ) async {
       await pumpApp(tester);
 
       final item = showToast('A');
@@ -776,8 +787,7 @@ void main() {
       expectNoOverlay();
     });
 
-    testWidgets(
-        'should remove toasts shown in the same frame with '
+    testWidgets('should remove toasts shown in the same frame with '
         'dismissAll(delayForAnimation: false)', (tester) async {
       await pumpApp(tester);
 
@@ -796,8 +806,7 @@ void main() {
       expectNoOverlay();
     });
 
-    testWidgets(
-        'should remove toasts shown in the same frame with '
+    testWidgets('should remove toasts shown in the same frame with '
         'dismissAll(delayForAnimation: true)', (tester) async {
       await pumpApp(tester);
 
@@ -839,8 +848,9 @@ void main() {
       await cleanUpToasts(tester);
     });
 
-    testWidgets('should never show a toast shown and dismissed in one build',
-        (tester) async {
+    testWidgets('should never show a toast shown and dismissed in one build', (
+      tester,
+    ) async {
       var shown = false;
       await pumpApp(
         tester,

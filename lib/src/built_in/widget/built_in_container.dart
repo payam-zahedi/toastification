@@ -46,10 +46,7 @@ final class BuiltInContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasTimeout = item.hasTimer;
 
-    Widget toast = Padding(
-      padding: margin,
-      child: child,
-    );
+    Widget toast = Padding(padding: margin, child: child);
 
     if (pauseOnHover && hasTimeout) {
       toast = MouseRegion(
@@ -157,10 +154,7 @@ class _FadeDismissibleState extends State<_FadeDismissible> {
 
           toastification.dismiss(widget.item, showRemoveAnimation: false);
         },
-        child: Opacity(
-          opacity: 1 - currentOpacity,
-          child: widget.child,
-        ),
+        child: Opacity(opacity: 1 - currentOpacity, child: widget.child),
       ),
     );
   }

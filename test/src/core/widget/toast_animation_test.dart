@@ -14,8 +14,9 @@ void main() {
       );
     });
 
-    testWidgets('should initialize with proper timer status',
-        (WidgetTester tester) async {
+    testWidgets('should initialize with proper timer status', (
+      WidgetTester tester,
+    ) async {
       double? capturedValue;
 
       await tester.pumpWidget(
@@ -36,8 +37,9 @@ void main() {
       expect(capturedValue, isNot(equals(0.0)));
     });
 
-    testWidgets('should respond to toast status changes',
-        (WidgetTester tester) async {
+    testWidgets('should respond to toast status changes', (
+      WidgetTester tester,
+    ) async {
       double? capturedValue;
 
       await tester.pumpWidget(
@@ -67,8 +69,9 @@ void main() {
       expect(capturedValue, equals(pausedValue));
     });
 
-    testWidgets('should handle timer elapsedDuration properly',
-        (WidgetTester tester) async {
+    testWidgets('should handle timer elapsedDuration properly', (
+      WidgetTester tester,
+    ) async {
       double? capturedValue;
 
       await tester.pumpWidget(
@@ -96,8 +99,9 @@ void main() {
       expect(mockItem.elapsedDuration, equals(elapsedAtPause));
     });
 
-    testWidgets('should cleanup timer listeners on dispose',
-        (WidgetTester tester) async {
+    testWidgets('should cleanup timer listeners on dispose', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         MaterialApp(
           home: ToastTimerAnimationBuilder(

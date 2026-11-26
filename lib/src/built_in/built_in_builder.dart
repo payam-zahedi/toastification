@@ -102,8 +102,9 @@ class BuiltInBuilder extends StatelessWidget {
     final dragToClose = this.dragToClose ?? true;
 
     final primaryColor = ColorUtils.convertToMaterialColor(this.primaryColor);
-    final backgroundColor =
-        ColorUtils.convertToMaterialColor(this.backgroundColor);
+    final backgroundColor = ColorUtils.convertToMaterialColor(
+      this.backgroundColor,
+    );
 
     return BuiltInContainer(
       item: item,

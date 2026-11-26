@@ -30,8 +30,9 @@ void main() {
   }
 
   group('showCustom', () {
-    testWidgets('should show overlay entry in the screen',
-        (WidgetTester tester) async {
+    testWidgets('should show overlay entry in the screen', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       manager.showCustom(
@@ -52,8 +53,9 @@ void main() {
       expect(find.byType(Overlay), findsOneWidget);
     });
 
-    testWidgets('should create overlay entry for first notification',
-        (WidgetTester tester) async {
+    testWidgets('should create overlay entry for first notification', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       expect(manager.overlayEntry, isNull);
@@ -76,8 +78,9 @@ void main() {
       expect(manager.notifications.first, equals(item));
     });
 
-    testWidgets('should provide same parameters to the item',
-        (WidgetTester tester) async {
+    testWidgets('should provide same parameters to the item', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       customBuilder(context, item) {
@@ -120,32 +123,32 @@ void main() {
       await tester.pump(const Duration(milliseconds: 300));
     });
 
-    testWidgets(
-      'should add item at once and display it after the next frame',
-      (WidgetTester tester) async {
-        await createOverlay(tester);
+    testWidgets('should add item at once and display it after the next frame', (
+      WidgetTester tester,
+    ) async {
+      await createOverlay(tester);
 
-        final firstItem = manager.showCustom(
-          overlayState: overlayState,
-          scheduler: tester.binding,
-          builder: (context, item) => const Text('First Toast'),
-          animationBuilder: null,
-          animationDuration: null,
-          callbacks: const ToastificationCallbacks(),
-        );
-        // The item is in the list, but not on the screen yet
-        expect(manager.notifications.contains(firstItem), isTrue);
-        expect(find.text('First Toast'), findsNothing);
+      final firstItem = manager.showCustom(
+        overlayState: overlayState,
+        scheduler: tester.binding,
+        builder: (context, item) => const Text('First Toast'),
+        animationBuilder: null,
+        animationDuration: null,
+        callbacks: const ToastificationCallbacks(),
+      );
+      // The item is in the list, but not on the screen yet
+      expect(manager.notifications.contains(firstItem), isTrue);
+      expect(find.text('First Toast'), findsNothing);
 
-        // Wait for the next frame
-        await tester.pumpAndSettle();
-        expect(manager.notifications.contains(firstItem), isTrue);
-        expect(find.text('First Toast'), findsOneWidget);
-      },
-    );
+      // Wait for the next frame
+      await tester.pumpAndSettle();
+      expect(manager.notifications.contains(firstItem), isTrue);
+      expect(find.text('First Toast'), findsOneWidget);
+    });
 
-    testWidgets('should create overlay entry only once',
-        (WidgetTester tester) async {
+    testWidgets('should create overlay entry only once', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       manager.showCustom(
@@ -177,8 +180,9 @@ void main() {
       expect(manager.overlayEntry, equals(overlayEntry));
     });
 
-    testWidgets('should respect maxToastLimit from config',
-        (WidgetTester tester) async {
+    testWidgets('should respect maxToastLimit from config', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       manager = ToastificationManager(
@@ -231,8 +235,9 @@ void main() {
       expect(framesCount, equals(4));
     });
 
-    testWidgets('should insert new notifications at the beginning',
-        (WidgetTester tester) async {
+    testWidgets('should insert new notifications at the beginning', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       expect(manager.notifications.length, equals(0));
@@ -297,8 +302,9 @@ void main() {
       expect(manager.notifications[2], equals(firstItem));
     });
 
-    testWidgets('should use provided animation duration',
-        (WidgetTester tester) async {
+    testWidgets('should use provided animation duration', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       const customDuration = Duration(milliseconds: 300);
@@ -319,14 +325,16 @@ void main() {
   });
 
   group('findToastificationItem', () {
-    testWidgets('should return null when no notifications exist',
-        (WidgetTester tester) async {
+    testWidgets('should return null when no notifications exist', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
       expect(manager.findToastificationItem('non-existent-id'), isNull);
     });
 
-    testWidgets('should find notification by id when it exists',
-        (WidgetTester tester) async {
+    testWidgets('should find notification by id when it exists', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       final item = manager.showCustom(
@@ -349,8 +357,9 @@ void main() {
   });
 
   group('dismiss', () {
-    testWidgets('should remove notification from the list',
-        (WidgetTester tester) async {
+    testWidgets('should remove notification from the list', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       final item = manager.showCustom(
@@ -371,8 +380,9 @@ void main() {
       expect(manager.notifications, isEmpty);
     });
 
-    testWidgets('should stop running timer when dismissing',
-        (WidgetTester tester) async {
+    testWidgets('should stop running timer when dismissing', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       final item = manager.showCustom(
@@ -395,166 +405,173 @@ void main() {
     });
 
     testWidgets(
-        'should remove overlay entry when last notification is dismissed',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
+      'should remove overlay entry when last notification is dismissed',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-      final item = manager.showCustom(
-        overlayState: overlayState,
-        scheduler: tester.binding,
-        builder: (context, item) => const Text('Test Toast'),
-        animationBuilder: null,
-        animationDuration: const Duration(milliseconds: 100),
-        callbacks: const ToastificationCallbacks(),
-      );
+        final item = manager.showCustom(
+          overlayState: overlayState,
+          scheduler: tester.binding,
+          builder: (context, item) => const Text('Test Toast'),
+          animationBuilder: null,
+          animationDuration: const Duration(milliseconds: 100),
+          callbacks: const ToastificationCallbacks(),
+        );
 
-      await tester.pumpAndSettle();
-      expect(manager.overlayEntry, isNotNull);
+        await tester.pumpAndSettle();
+        expect(manager.overlayEntry, isNotNull);
 
-      manager.dismiss(item);
-      // The overlay is torn down once the exit animation has actually
-      // completed, not on a timer: settle it.
-      await tester.pumpAndSettle();
+        manager.dismiss(item);
+        // The overlay is torn down once the exit animation has actually
+        // completed, not on a timer: settle it.
+        await tester.pumpAndSettle();
 
-      expect(manager.overlayEntry, isNull);
-    });
+        expect(manager.overlayEntry, isNull);
+      },
+    );
 
     // https://github.com/payam-zahedi/toastification/pull/247
     testWidgets(
-        'should not dispose the exit animation twice when frames stall on the web',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
+      'should not dispose the exit animation twice when frames stall on the web',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-      const animationDuration = Duration(milliseconds: 100);
-      final item = manager.showCustom(
-        overlayState: overlayState,
-        scheduler: tester.binding,
-        builder: (context, item) => const Text('Test Toast'),
-        animationBuilder: null,
-        animationDuration: animationDuration,
-        callbacks: const ToastificationCallbacks(),
-      );
-      await tester.pumpAndSettle();
+        const animationDuration = Duration(milliseconds: 100);
+        final item = manager.showCustom(
+          overlayState: overlayState,
+          scheduler: tester.binding,
+          builder: (context, item) => const Text('Test Toast'),
+          animationBuilder: null,
+          animationDuration: animationDuration,
+          callbacks: const ToastificationCallbacks(),
+        );
+        await tester.pumpAndSettle();
 
-      manager.dismiss(item);
-      // first frame of the exit animation.
-      await tester.pump();
+        manager.dismiss(item);
+        // first frame of the exit animation.
+        await tester.pump();
 
-      // no frames while timers keep running, like a hidden browser tab.
-      await tester.binding
-          .delayed(animationDuration + manager.removeOverlayDelay);
+        // no frames while timers keep running, like a hidden browser tab.
+        await tester.binding.delayed(
+          animationDuration + manager.removeOverlayDelay,
+        );
 
-      // the web engine runs both frame phases before any microtask. the test
-      // binding flushes microtasks in between, so drive the frame by hand.
-      final binding = tester.binding;
-      binding.handleBeginFrame(
-        Duration(microseconds: binding.clock.now().microsecondsSinceEpoch),
-      );
-      binding.handleDrawFrame();
-      await tester.pump();
-      await tester.pump();
+        // the web engine runs both frame phases before any microtask. the test
+        // binding flushes microtasks in between, so drive the frame by hand.
+        final binding = tester.binding;
+        binding.handleBeginFrame(
+          Duration(microseconds: binding.clock.now().microsecondsSinceEpoch),
+        );
+        binding.handleDrawFrame();
+        await tester.pump();
+        await tester.pump();
 
-      expect(find.text('Test Toast'), findsNothing);
-      expect(manager.overlayEntry, isNull);
-    });
-
-    testWidgets(
-        'should keep the overlay until a slower exit animation finishes',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
-
-      ToastificationItem show(String text, Duration animationDuration) =>
-          manager.showCustom(
-            overlayState: overlayState,
-            scheduler: tester.binding,
-            builder: (context, item) => Text(text),
-            animationBuilder: null,
-            animationDuration: animationDuration,
-            callbacks: const ToastificationCallbacks(),
-          );
-      final slow = show('slow', const Duration(milliseconds: 1000));
-      final fast = show('fast', const Duration(milliseconds: 100));
-      await tester.pumpAndSettle();
-
-      manager.dismiss(slow);
-      manager.dismiss(fast);
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 300));
-
-      // the fast toast is gone, the slow one is still sliding out.
-      expect(manager.overlayEntry, isNotNull);
-      expect(find.text('slow'), findsOneWidget);
-
-      await tester.pumpAndSettle();
-      expect(manager.overlayEntry, isNull);
-    });
+        expect(find.text('Test Toast'), findsNothing);
+        expect(manager.overlayEntry, isNull);
+      },
+    );
 
     testWidgets(
-        'should keep overlay entry when dismissing notification but others exist',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
+      'should keep the overlay until a slower exit animation finishes',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-      final firstItem = manager.showCustom(
-        overlayState: overlayState,
-        scheduler: tester.binding,
-        builder: (context, item) => const Text('First Toast'),
-        animationBuilder: null,
-        animationDuration: null,
-        callbacks: const ToastificationCallbacks(),
-      );
+        ToastificationItem show(String text, Duration animationDuration) =>
+            manager.showCustom(
+              overlayState: overlayState,
+              scheduler: tester.binding,
+              builder: (context, item) => Text(text),
+              animationBuilder: null,
+              animationDuration: animationDuration,
+              callbacks: const ToastificationCallbacks(),
+            );
+        final slow = show('slow', const Duration(milliseconds: 1000));
+        final fast = show('fast', const Duration(milliseconds: 100));
+        await tester.pumpAndSettle();
 
-      final secondItem = manager.showCustom(
-        overlayState: overlayState,
-        scheduler: tester.binding,
-        builder: (context, item) => const Text('Second Toast'),
-        animationBuilder: null,
-        animationDuration: null,
-        callbacks: const ToastificationCallbacks(),
-      );
+        manager.dismiss(slow);
+        manager.dismiss(fast);
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 300));
 
-      await tester.pumpAndSettle();
-      final overlayEntry = manager.overlayEntry;
+        // the fast toast is gone, the slow one is still sliding out.
+        expect(manager.overlayEntry, isNotNull);
+        expect(find.text('slow'), findsOneWidget);
 
-      manager.dismiss(firstItem);
-      await tester.pumpAndSettle();
-
-      expect(manager.overlayEntry, equals(overlayEntry));
-      expect(manager.notifications, contains(secondItem));
-    });
+        await tester.pumpAndSettle();
+        expect(manager.overlayEntry, isNull);
+      },
+    );
 
     testWidgets(
-        'should not trigger animation when showRemoveAnimation is false',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
+      'should keep overlay entry when dismissing notification but others exist',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-      final item = manager.showCustom(
-        overlayState: overlayState,
-        scheduler: tester.binding,
-        builder: (context, item) => const Text('Test Toast'),
-        animationBuilder: null,
-        animationDuration: const Duration(seconds: 1),
-        callbacks: const ToastificationCallbacks(),
-      );
+        final firstItem = manager.showCustom(
+          overlayState: overlayState,
+          scheduler: tester.binding,
+          builder: (context, item) => const Text('First Toast'),
+          animationBuilder: null,
+          animationDuration: null,
+          callbacks: const ToastificationCallbacks(),
+        );
 
-      await tester.pump();
-      await tester.pumpAndSettle();
+        final secondItem = manager.showCustom(
+          overlayState: overlayState,
+          scheduler: tester.binding,
+          builder: (context, item) => const Text('Second Toast'),
+          animationBuilder: null,
+          animationDuration: null,
+          callbacks: const ToastificationCallbacks(),
+        );
 
-      expect(find.text('Test Toast'), findsOneWidget);
+        await tester.pumpAndSettle();
+        final overlayEntry = manager.overlayEntry;
 
-      manager.dismiss(item, showRemoveAnimation: false);
-      // If there was no animation, the item should be gone immediately
-      await tester.pump(Duration(milliseconds: 50));
+        manager.dismiss(firstItem);
+        await tester.pumpAndSettle();
 
-      expect(find.text('Test Toast'), findsNothing);
+        expect(manager.overlayEntry, equals(overlayEntry));
+        expect(manager.notifications, contains(secondItem));
+      },
+    );
 
-      // Wait to ensure OverlayEntry is removed after animation delay
-      // we need to this because we used Future.delayed in the dismiss method
-      await tester.pump(Duration(seconds: 1));
-      await tester.pumpAndSettle();
-    });
+    testWidgets(
+      'should not trigger animation when showRemoveAnimation is false',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-    testWidgets('should remove instantly when showRemoveAnimation is false',
-        (WidgetTester tester) async {
+        final item = manager.showCustom(
+          overlayState: overlayState,
+          scheduler: tester.binding,
+          builder: (context, item) => const Text('Test Toast'),
+          animationBuilder: null,
+          animationDuration: const Duration(seconds: 1),
+          callbacks: const ToastificationCallbacks(),
+        );
+
+        await tester.pump();
+        await tester.pumpAndSettle();
+
+        expect(find.text('Test Toast'), findsOneWidget);
+
+        manager.dismiss(item, showRemoveAnimation: false);
+        // If there was no animation, the item should be gone immediately
+        await tester.pump(Duration(milliseconds: 50));
+
+        expect(find.text('Test Toast'), findsNothing);
+
+        // Wait to ensure OverlayEntry is removed after animation delay
+        // we need to this because we used Future.delayed in the dismiss method
+        await tester.pump(Duration(seconds: 1));
+        await tester.pumpAndSettle();
+      },
+    );
+
+    testWidgets('should remove instantly when showRemoveAnimation is false', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       final item = manager.showCustom(
@@ -580,8 +597,9 @@ void main() {
       expect(tester.takeException(), isNull);
     });
 
-    testWidgets('should dispose item after dismiss animation completes',
-        (WidgetTester tester) async {
+    testWidgets('should dispose item after dismiss animation completes', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       final item = manager.showCustom(
@@ -604,14 +622,12 @@ void main() {
 
       // After the delay, the item should be disposed —
       // adding a listener to a disposed ValueNotifier throws
-      expect(
-        () => item.addListenerOnTimeStatus(() {}),
-        throwsFlutterError,
-      );
+      expect(() => item.addListenerOnTimeStatus(() {}), throwsFlutterError);
     });
 
-    testWidgets('should do nothing when dismissing non-existent notification',
-        (WidgetTester tester) async {
+    testWidgets('should do nothing when dismissing non-existent notification', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       final item = ToastificationItem(
@@ -628,8 +644,9 @@ void main() {
   });
 
   group('dismissAll', () {
-    testWidgets('should remove all notifications from the list',
-        (WidgetTester tester) async {
+    testWidgets('should remove all notifications from the list', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       // Add multiple notifications
@@ -654,77 +671,81 @@ void main() {
     });
 
     testWidgets(
-        'should remove overlay entry after all notifications are removed',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
+      'should remove overlay entry after all notifications are removed',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-      // Add multiple notifications
-      for (var i = 0; i < 3; i++) {
-        manager.showCustom(
-          overlayState: overlayState,
-          scheduler: tester.binding,
-          builder: (context, item) => Text('Toast $i'),
-          animationBuilder: null,
-          animationDuration: const Duration(milliseconds: 100),
-          callbacks: const ToastificationCallbacks(),
-        );
-      }
+        // Add multiple notifications
+        for (var i = 0; i < 3; i++) {
+          manager.showCustom(
+            overlayState: overlayState,
+            scheduler: tester.binding,
+            builder: (context, item) => Text('Toast $i'),
+            animationBuilder: null,
+            animationDuration: const Duration(milliseconds: 100),
+            callbacks: const ToastificationCallbacks(),
+          );
+        }
 
-      await tester.pumpAndSettle();
-      expect(manager.overlayEntry, isNotNull);
+        await tester.pumpAndSettle();
+        expect(manager.overlayEntry, isNotNull);
 
-      manager.dismissAll(delayForAnimation: false);
+        manager.dismissAll(delayForAnimation: false);
 
-      // The overlay is torn down once the exit animation has actually
-      // completed, not on a timer: settle it.
-      await tester.pumpAndSettle();
+        // The overlay is torn down once the exit animation has actually
+        // completed, not on a timer: settle it.
+        await tester.pumpAndSettle();
 
-      expect(manager.overlayEntry, isNull);
-    });
+        expect(manager.overlayEntry, isNull);
+      },
+    );
 
-    testWidgets('should respect animation delay when delayForAnimation is true',
-        (WidgetTester tester) async {
-      await createOverlay(tester);
+    testWidgets(
+      'should respect animation delay when delayForAnimation is true',
+      (WidgetTester tester) async {
+        await createOverlay(tester);
 
-      // Add multiple notifications
-      List<String> toastTexts = ['First', 'Second', 'Third'];
-      for (var text in toastTexts) {
-        manager.showCustom(
-          overlayState: overlayState,
-          scheduler: tester.binding,
-          builder: (context, item) => Text(text),
-          animationBuilder: null,
-          animationDuration: const Duration(milliseconds: 300),
-          callbacks: const ToastificationCallbacks(),
-        );
-      }
+        // Add multiple notifications
+        List<String> toastTexts = ['First', 'Second', 'Third'];
+        for (var text in toastTexts) {
+          manager.showCustom(
+            overlayState: overlayState,
+            scheduler: tester.binding,
+            builder: (context, item) => Text(text),
+            animationBuilder: null,
+            animationDuration: const Duration(milliseconds: 300),
+            callbacks: const ToastificationCallbacks(),
+          );
+        }
 
-      await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
 
-      manager.dismissAll(delayForAnimation: true);
+        manager.dismissAll(delayForAnimation: true);
 
-      // First pump to start animations
-      await tester.pump();
+        // First pump to start animations
+        await tester.pump();
 
-      // After first pump, all toasts should still be visible
-      for (var text in toastTexts) {
-        expect(find.text(text), findsOneWidget);
-      }
+        // After first pump, all toasts should still be visible
+        for (var text in toastTexts) {
+          expect(find.text(text), findsOneWidget);
+        }
 
-      // Pump half the animation delay duration
-      await tester.pump(const Duration(milliseconds: 75));
+        // Pump half the animation delay duration
+        await tester.pump(const Duration(milliseconds: 75));
 
-      // After animation completes
-      await tester.pumpAndSettle();
+        // After animation completes
+        await tester.pumpAndSettle();
 
-      // All toasts should be gone
-      for (var text in toastTexts) {
-        expect(find.text(text), findsNothing);
-      }
-    });
+        // All toasts should be gone
+        for (var text in toastTexts) {
+          expect(find.text(text), findsNothing);
+        }
+      },
+    );
 
-    testWidgets('should do nothing when no notifications exist',
-        (WidgetTester tester) async {
+    testWidgets('should do nothing when no notifications exist', (
+      WidgetTester tester,
+    ) async {
       await createOverlay(tester);
 
       expect(manager.notifications, isEmpty);
@@ -767,61 +788,64 @@ void main() {
     Finder findToast(String text) => find.text(text, skipOffstage: false);
 
     testWidgets(
-        'should never build a toast dismissed in the same frame and remove '
-        'the overlay at once', (tester) async {
-      await createOverlay(tester);
+      'should never build a toast dismissed in the same frame and remove '
+      'the overlay at once',
+      (tester) async {
+        await createOverlay(tester);
 
-      final item = showToast(tester, 'A');
-      manager.dismiss(item);
-      expect(manager.notifications, isEmpty);
+        final item = showToast(tester, 'A');
+        manager.dismiss(item);
+        expect(manager.notifications, isEmpty);
 
-      // no time passes: a timer left behind would fail the test at its end.
-      await tester.pump();
-      expect(findToast('A'), findsNothing);
-      expect(manager.overlayEntry, isNull);
+        // no time passes: a timer left behind would fail the test at its end.
+        await tester.pump();
+        expect(findToast('A'), findsNothing);
+        expect(manager.overlayEntry, isNull);
 
-      await tester.pump();
-      expect(findToast('A'), findsNothing);
-      expect(manager.notifications, isEmpty);
-    });
-
-    testWidgets(
-        'should remove a toast whose auto-close timer ends before the first '
-        'frame and call onAutoCompleteCompleted once', (tester) async {
-      await createOverlay(tester);
-
-      var calls = 0;
-      ToastTimeStatus? status;
-      showToast(
-        tester,
-        'A',
-        autoCloseDuration: const Duration(seconds: 1),
-        callbacks: ToastificationCallbacks(
-          onAutoCompleteCompleted: (item) {
-            calls++;
-            status = item.timeStatus;
-          },
-        ),
-      );
-
-      // timers run but no frame does, like an app in the background.
-      await tester.binding.delayed(const Duration(seconds: 2));
-      expect(manager.notifications, isEmpty);
-
-      await tester.pump();
-      await tester.pump();
-      await tester.pump(animationDuration);
-
-      expect(findToast('A'), findsNothing);
-      expect(manager.notifications, isEmpty);
-      expect(manager.overlayEntry, isNull);
-      expect(calls, 1);
-      // the callback sees the same status as for a displayed toast.
-      expect(status, ToastTimeStatus.finished);
-    });
+        await tester.pump();
+        expect(findToast('A'), findsNothing);
+        expect(manager.notifications, isEmpty);
+      },
+    );
 
     testWidgets(
-        'should not call onAutoCompleteCompleted for a toast dismissed '
+      'should remove a toast whose auto-close timer ends before the first '
+      'frame and call onAutoCompleteCompleted once',
+      (tester) async {
+        await createOverlay(tester);
+
+        var calls = 0;
+        ToastTimeStatus? status;
+        showToast(
+          tester,
+          'A',
+          autoCloseDuration: const Duration(seconds: 1),
+          callbacks: ToastificationCallbacks(
+            onAutoCompleteCompleted: (item) {
+              calls++;
+              status = item.timeStatus;
+            },
+          ),
+        );
+
+        // timers run but no frame does, like an app in the background.
+        await tester.binding.delayed(const Duration(seconds: 2));
+        expect(manager.notifications, isEmpty);
+
+        await tester.pump();
+        await tester.pump();
+        await tester.pump(animationDuration);
+
+        expect(findToast('A'), findsNothing);
+        expect(manager.notifications, isEmpty);
+        expect(manager.overlayEntry, isNull);
+        expect(calls, 1);
+        // the callback sees the same status as for a displayed toast.
+        expect(status, ToastTimeStatus.finished);
+      },
+    );
+
+    testWidgets('should not call onAutoCompleteCompleted for a toast dismissed '
         'before its first frame', (tester) async {
       await createOverlay(tester);
 
@@ -844,8 +868,9 @@ void main() {
       expect(manager.overlayEntry, isNull);
     });
 
-    testWidgets('should display two toasts shown in one frame, newest first',
-        (tester) async {
+    testWidgets('should display two toasts shown in one frame, newest first', (
+      tester,
+    ) async {
       await createOverlay(tester);
 
       final a = showToast(tester, 'A');
@@ -868,37 +893,38 @@ void main() {
     });
 
     testWidgets(
-        'should only build the newest toasts within maxToastLimit when they '
-        'are shown in one frame', (tester) async {
-      await createOverlay(tester);
-      manager = ToastificationManager(
-        alignment: Alignment.topRight,
-        config: const ToastificationConfig(maxToastLimit: 2),
-      );
+      'should only build the newest toasts within maxToastLimit when they '
+      'are shown in one frame',
+      (tester) async {
+        await createOverlay(tester);
+        manager = ToastificationManager(
+          alignment: Alignment.topRight,
+          config: const ToastificationConfig(maxToastLimit: 2),
+        );
 
-      final items = [for (var i = 0; i < 5; i++) showToast(tester, 'T$i')];
-      expect(manager.notifications, [items[4], items[3]]);
+        final items = [for (var i = 0; i < 5; i++) showToast(tester, 'T$i')];
+        expect(manager.notifications, [items[4], items[3]]);
 
-      await tester.pump();
-      await tester.pump();
-      for (var i = 0; i < 3; i++) {
-        expect(findToast('T$i'), findsNothing);
-      }
-      await tester.pumpAndSettle();
+        await tester.pump();
+        await tester.pump();
+        for (var i = 0; i < 3; i++) {
+          expect(findToast('T$i'), findsNothing);
+        }
+        await tester.pumpAndSettle();
 
-      expect(manager.notifications, [items[4], items[3]]);
-      expect(find.text('T4'), findsOneWidget);
-      expect(find.text('T3'), findsOneWidget);
-      for (var i = 0; i < 3; i++) {
-        expect(findToast('T$i'), findsNothing);
-      }
+        expect(manager.notifications, [items[4], items[3]]);
+        expect(find.text('T4'), findsOneWidget);
+        expect(find.text('T3'), findsOneWidget);
+        for (var i = 0; i < 3; i++) {
+          expect(findToast('T$i'), findsNothing);
+        }
 
-      manager.dismissAll(delayForAnimation: false);
-      await tester.pumpAndSettle();
-    });
+        manager.dismissAll(delayForAnimation: false);
+        await tester.pumpAndSettle();
+      },
+    );
 
-    testWidgets(
-        'should dismiss the newest and the oldest pending toast with '
+    testWidgets('should dismiss the newest and the oldest pending toast with '
         'dismissFirst and dismissLast', (tester) async {
       await createOverlay(tester);
 
@@ -922,32 +948,33 @@ void main() {
     });
 
     testWidgets(
-        'should keep the overlay for a toast shown during the removal delay '
-        'until it is displayed', (tester) async {
-      await createOverlay(tester);
+      'should keep the overlay for a toast shown during the removal delay '
+      'until it is displayed',
+      (tester) async {
+        await createOverlay(tester);
 
-      final a = showToast(tester, 'A');
-      await tester.pumpAndSettle();
-      final overlayEntry = manager.overlayEntry;
+        final a = showToast(tester, 'A');
+        await tester.pumpAndSettle();
+        final overlayEntry = manager.overlayEntry;
 
-      manager.dismiss(a, showRemoveAnimation: false);
-      await tester.pump(const Duration(milliseconds: 20));
-      final b = showToast(tester, 'B');
+        manager.dismiss(a, showRemoveAnimation: false);
+        await tester.pump(const Duration(milliseconds: 20));
+        final b = showToast(tester, 'B');
 
-      // the removal delay ends while B waits for its first frame.
-      await tester.binding.delayed(manager.removeOverlayDelay * 2);
-      expect(manager.overlayEntry, same(overlayEntry));
+        // the removal delay ends while B waits for its first frame.
+        await tester.binding.delayed(manager.removeOverlayDelay * 2);
+        expect(manager.overlayEntry, same(overlayEntry));
 
-      await tester.pumpAndSettle();
-      expect(manager.notifications, [b]);
-      expect(find.text('B'), findsOneWidget);
+        await tester.pumpAndSettle();
+        expect(manager.notifications, [b]);
+        expect(find.text('B'), findsOneWidget);
 
-      manager.dismissAll(delayForAnimation: false);
-      await tester.pumpAndSettle();
-    });
+        manager.dismissAll(delayForAnimation: false);
+        await tester.pumpAndSettle();
+      },
+    );
 
-    testWidgets(
-        'should request a frame for a toast shown while no frame is '
+    testWidgets('should request a frame for a toast shown while no frame is '
         'scheduled', (tester) async {
       await createOverlay(tester);
 
@@ -967,8 +994,9 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('should expose notifications as a live, read-only view',
-        (tester) async {
+    testWidgets('should expose notifications as a live, read-only view', (
+      tester,
+    ) async {
       await createOverlay(tester);
 
       final notifications = manager.notifications;
@@ -985,8 +1013,7 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets(
-        'should not throw when a toast without animation is shown and '
+    testWidgets('should not throw when a toast without animation is shown and '
         'dismissed in the same tick', (tester) async {
       await createOverlay(tester);
 
@@ -1010,8 +1037,9 @@ void main() {
       await tester.pumpAndSettle();
     });
 
-    testWidgets('should play the enter animation of the first toast',
-        (tester) async {
+    testWidgets('should play the enter animation of the first toast', (
+      tester,
+    ) async {
       await createOverlay(tester);
 
       const duration = Duration(milliseconds: 300);

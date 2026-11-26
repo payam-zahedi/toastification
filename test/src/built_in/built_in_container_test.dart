@@ -62,10 +62,12 @@ Future<BuildContext> pumpToastApp(WidgetTester tester) async {
   await tester.pumpWidget(
     MaterialApp(
       home: Scaffold(
-        body: Builder(builder: (ctx) {
-          context = ctx;
-          return const SizedBox.expand();
-        }),
+        body: Builder(
+          builder: (ctx) {
+            context = ctx;
+            return const SizedBox.expand();
+          },
+        ),
       ),
     ),
   );
@@ -74,15 +76,15 @@ Future<BuildContext> pumpToastApp(WidgetTester tester) async {
 
 void main() {
   group('BuiltInContainer - margin', () {
-    testWidgets('wraps child in Padding with the provided margin',
-        (tester) async {
+    testWidgets('wraps child in Padding with the provided margin', (
+      tester,
+    ) async {
       final item = createTestSampleItem();
       const margin = EdgeInsets.all(16);
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        margin: margin,
-      ));
+      await tester.pumpWidget(
+        buildContainerTestApp(item: item, margin: margin),
+      );
 
       final paddingFinder = find.ancestor(
         of: find.byKey(_childKey),
@@ -97,107 +99,110 @@ void main() {
 
   group('BuiltInContainer - pauseOnHover', () {
     testWidgets(
-        'adds MouseRegion that pauses/starts timer when pauseOnHover is true and item has timer',
-        (tester) async {
-      final item = createTestItemWithTimer();
+      'adds MouseRegion that pauses/starts timer when pauseOnHover is true and item has timer',
+      (tester) async {
+        final item = createTestItemWithTimer();
 
-      expect(item.hasTimer, isTrue);
+        expect(item.hasTimer, isTrue);
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        pauseOnHover: true,
-      ));
+        await tester.pumpWidget(
+          buildContainerTestApp(item: item, pauseOnHover: true),
+        );
 
-      // Find the MouseRegion used for pause-on-hover (not the one with
-      // BuiltInContainerKeys.mouseRegion key — that's the cursor one).
-      // The pause-on-hover MouseRegion wraps the Padding.
-      final mouseRegions = tester.widgetList<MouseRegion>(
-        find.ancestor(
+        // Find the MouseRegion used for pause-on-hover (not the one with
+        // BuiltInContainerKeys.mouseRegion key — that's the cursor one).
+        // The pause-on-hover MouseRegion wraps the Padding.
+        final mouseRegions = tester.widgetList<MouseRegion>(
+          find.ancestor(
+            of: find.byType(Padding),
+            matching: find.byType(MouseRegion),
+          ),
+        );
+        expect(mouseRegions, isNotEmpty);
+
+        // Verify the item is currently started (timer auto-starts)
+        expect(item.timeStatus, ToastTimeStatus.started);
+
+        // Simulate mouse enter
+        final gesture = await tester.createGesture(
+          kind: PointerDeviceKind.mouse,
+        );
+        await gesture.addPointer(location: const Offset(-100, -100));
+        addTearDown(gesture.removePointer);
+        await gesture.moveTo(tester.getCenter(find.byKey(_childKey)));
+        await tester.pump();
+
+        expect(item.timeStatus, ToastTimeStatus.paused);
+
+        // Simulate mouse exit
+        await gesture.moveTo(const Offset(-100, -100));
+        await tester.pump();
+
+        expect(item.timeStatus, ToastTimeStatus.started);
+
+        // PausableTimer holds a real Timer internally — must stop it
+        // before the test ends to avoid the pending timer assertion.
+        item.stop();
+      },
+    );
+
+    testWidgets(
+      'does not add pause-on-hover MouseRegion when pauseOnHover is true but item has no timer',
+      (tester) async {
+        final item = createTestSampleItem();
+        expect(item.hasTimer, isFalse);
+
+        await tester.pumpWidget(
+          buildContainerTestApp(item: item, pauseOnHover: true),
+        );
+
+        // Only the GestureDetector should wrap the Padding -- no extra
+        // MouseRegion for pause-on-hover since there's no timer.
+        final mouseRegionFinder = find.ancestor(
           of: find.byType(Padding),
           matching: find.byType(MouseRegion),
-        ),
-      );
-      expect(mouseRegions, isNotEmpty);
-
-      // Verify the item is currently started (timer auto-starts)
-      expect(item.timeStatus, ToastTimeStatus.started);
-
-      // Simulate mouse enter
-      final gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
-      await gesture.addPointer(location: const Offset(-100, -100));
-      addTearDown(gesture.removePointer);
-      await gesture.moveTo(tester.getCenter(find.byKey(_childKey)));
-      await tester.pump();
-
-      expect(item.timeStatus, ToastTimeStatus.paused);
-
-      // Simulate mouse exit
-      await gesture.moveTo(const Offset(-100, -100));
-      await tester.pump();
-
-      expect(item.timeStatus, ToastTimeStatus.started);
-
-      // PausableTimer holds a real Timer internally — must stop it
-      // before the test ends to avoid the pending timer assertion.
-      item.stop();
-    });
+        );
+        expect(mouseRegionFinder, findsNothing);
+      },
+    );
 
     testWidgets(
-        'does not add pause-on-hover MouseRegion when pauseOnHover is true but item has no timer',
-        (tester) async {
-      final item = createTestSampleItem();
-      expect(item.hasTimer, isFalse);
+      'does not add pause-on-hover MouseRegion when pauseOnHover is false',
+      (tester) async {
+        final item = createTestItemWithTimer();
+        expect(item.hasTimer, isTrue);
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        pauseOnHover: true,
-      ));
+        await tester.pumpWidget(
+          buildContainerTestApp(item: item, pauseOnHover: false),
+        );
 
-      // Only the GestureDetector should wrap the Padding -- no extra
-      // MouseRegion for pause-on-hover since there's no timer.
-      final mouseRegionFinder = find.ancestor(
-        of: find.byType(Padding),
-        matching: find.byType(MouseRegion),
-      );
-      expect(mouseRegionFinder, findsNothing);
-    });
+        // No MouseRegion for pause-on-hover when disabled.
+        final mouseRegionFinder = find.ancestor(
+          of: find.byType(Padding),
+          matching: find.byType(MouseRegion),
+        );
+        expect(mouseRegionFinder, findsNothing);
 
-    testWidgets(
-        'does not add pause-on-hover MouseRegion when pauseOnHover is false',
-        (tester) async {
-      final item = createTestItemWithTimer();
-      expect(item.hasTimer, isTrue);
-
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        pauseOnHover: false,
-      ));
-
-      // No MouseRegion for pause-on-hover when disabled.
-      final mouseRegionFinder = find.ancestor(
-        of: find.byType(Padding),
-        matching: find.byType(MouseRegion),
-      );
-      expect(mouseRegionFinder, findsNothing);
-
-      // PausableTimer holds a real Timer internally — must stop it
-      // before the test ends to avoid the pending timer assertion.
-      item.stop();
-    });
+        // PausableTimer holds a real Timer internally — must stop it
+        // before the test ends to avoid the pending timer assertion.
+        item.stop();
+      },
+    );
   });
 
   group('BuiltInContainer - GestureDetector / onTap', () {
-    testWidgets('tapping calls callbacks.onTap with the correct item',
-        (tester) async {
+    testWidgets('tapping calls callbacks.onTap with the correct item', (
+      tester,
+    ) async {
       final item = createTestSampleItem();
       ToastificationItem? tappedItem;
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        callbacks: ToastificationCallbacks(
-          onTap: (i) => tappedItem = i,
+      await tester.pumpWidget(
+        buildContainerTestApp(
+          item: item,
+          callbacks: ToastificationCallbacks(onTap: (i) => tappedItem = i),
         ),
-      ));
+      );
 
       await tester.tap(find.byKey(_childKey));
       await tester.pump();
@@ -206,27 +211,28 @@ void main() {
     });
 
     testWidgets(
-        'does not add GestureDetector when closeOnClick is false and onTap is null',
-        (tester) async {
+      'does not add GestureDetector when closeOnClick is false and onTap is null',
+      (tester) async {
+        final item = createTestSampleItem();
+
+        await tester.pumpWidget(buildContainerTestApp(item: item));
+
+        final gestureDetectorFinder = find.ancestor(
+          of: find.byKey(_childKey),
+          matching: find.byType(GestureDetector),
+        );
+        expect(gestureDetectorFinder, findsNothing);
+      },
+    );
+
+    testWidgets('adds GestureDetector when closeOnClick is true', (
+      tester,
+    ) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(item: item));
-
-      final gestureDetectorFinder = find.ancestor(
-        of: find.byKey(_childKey),
-        matching: find.byType(GestureDetector),
+      await tester.pumpWidget(
+        buildContainerTestApp(item: item, closeOnClick: true),
       );
-      expect(gestureDetectorFinder, findsNothing);
-    });
-
-    testWidgets('adds GestureDetector when closeOnClick is true',
-        (tester) async {
-      final item = createTestSampleItem();
-
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        closeOnClick: true,
-      ));
 
       final gestureDetectorFinder = find.ancestor(
         of: find.byKey(_childKey),
@@ -238,39 +244,45 @@ void main() {
 
   group('BuiltInContainer - onHoverMouseCursor', () {
     testWidgets(
-        'does not add keyed MouseRegion when onHoverMouseCursor is null',
-        (tester) async {
-      final item = createTestSampleItem();
+      'does not add keyed MouseRegion when onHoverMouseCursor is null',
+      (tester) async {
+        final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(item: item));
+        await tester.pumpWidget(buildContainerTestApp(item: item));
 
-      expect(find.byKey(BuiltInContainerKeys.mouseRegion), findsNothing);
-    });
+        expect(find.byKey(BuiltInContainerKeys.mouseRegion), findsNothing);
+      },
+    );
 
     testWidgets(
-        'adds MouseRegion with correct cursor when onHoverMouseCursor is provided',
-        (tester) async {
-      final item = createTestSampleItem();
+      'adds MouseRegion with correct cursor when onHoverMouseCursor is provided',
+      (tester) async {
+        final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        onHoverMouseCursor: SystemMouseCursors.click,
-      ));
+        await tester.pumpWidget(
+          buildContainerTestApp(
+            item: item,
+            onHoverMouseCursor: SystemMouseCursors.click,
+          ),
+        );
 
-      final mouseRegionFinder = find.byKey(BuiltInContainerKeys.mouseRegion);
-      expect(mouseRegionFinder, findsOneWidget);
+        final mouseRegionFinder = find.byKey(BuiltInContainerKeys.mouseRegion);
+        expect(mouseRegionFinder, findsOneWidget);
 
-      final mouseRegion = tester.widget<MouseRegion>(mouseRegionFinder);
-      expect(mouseRegion.cursor, SystemMouseCursors.click);
-    });
+        final mouseRegion = tester.widget<MouseRegion>(mouseRegionFinder);
+        expect(mouseRegion.cursor, SystemMouseCursors.click);
+      },
+    );
 
     testWidgets('supports custom mouse cursors', (tester) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        onHoverMouseCursor: SystemMouseCursors.grab,
-      ));
+      await tester.pumpWidget(
+        buildContainerTestApp(
+          item: item,
+          onHoverMouseCursor: SystemMouseCursors.grab,
+        ),
+      );
 
       final mouseRegionFinder = find.byKey(BuiltInContainerKeys.mouseRegion);
       expect(mouseRegionFinder, findsOneWidget);
@@ -284,22 +296,21 @@ void main() {
     testWidgets('adds Dismissible when dragToClose is true', (tester) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-      ));
+      await tester.pumpWidget(
+        buildContainerTestApp(item: item, dragToClose: true),
+      );
 
       expect(find.byType(Dismissible), findsOneWidget);
     });
 
-    testWidgets('does not add Dismissible when dragToClose is false',
-        (tester) async {
+    testWidgets('does not add Dismissible when dragToClose is false', (
+      tester,
+    ) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: false,
-      ));
+      await tester.pumpWidget(
+        buildContainerTestApp(item: item, dragToClose: false),
+      );
 
       expect(find.byType(Dismissible), findsNothing);
     });
@@ -307,29 +318,26 @@ void main() {
     testWidgets('uses horizontal dismiss direction by default', (tester) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-      ));
-
-      final dismissible = tester.widget<Dismissible>(
-        find.byType(Dismissible),
+      await tester.pumpWidget(
+        buildContainerTestApp(item: item, dragToClose: true),
       );
+
+      final dismissible = tester.widget<Dismissible>(find.byType(Dismissible));
       expect(dismissible.direction, DismissDirection.horizontal);
     });
 
     testWidgets('uses custom dismissDirection when provided', (tester) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-        dismissDirection: DismissDirection.vertical,
-      ));
-
-      final dismissible = tester.widget<Dismissible>(
-        find.byType(Dismissible),
+      await tester.pumpWidget(
+        buildContainerTestApp(
+          item: item,
+          dragToClose: true,
+          dismissDirection: DismissDirection.vertical,
+        ),
       );
+
+      final dismissible = tester.widget<Dismissible>(find.byType(Dismissible));
       expect(dismissible.direction, DismissDirection.vertical);
     });
 
@@ -337,13 +345,15 @@ void main() {
       final item = createTestSampleItem();
       bool wasDismissed = false;
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-        callbacks: ToastificationCallbacks(
-          onDismissed: (i) => wasDismissed = true,
+      await tester.pumpWidget(
+        buildContainerTestApp(
+          item: item,
+          dragToClose: true,
+          callbacks: ToastificationCallbacks(
+            onDismissed: (i) => wasDismissed = true,
+          ),
         ),
-      ));
+      );
 
       // Swipe the widget to the right to dismiss
       await tester.drag(find.byKey(_childKey), const Offset(500, 0));
@@ -352,14 +362,14 @@ void main() {
       expect(wasDismissed, isTrue);
     });
 
-    testWidgets('drag dismiss works without error when onDismissed is null',
-        (tester) async {
+    testWidgets('drag dismiss works without error when onDismissed is null', (
+      tester,
+    ) async {
       final item = createTestSampleItem();
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-      ));
+      await tester.pumpWidget(
+        buildContainerTestApp(item: item, dragToClose: true),
+      );
 
       // Should not throw
       await tester.drag(find.byKey(_childKey), const Offset(500, 0));
@@ -367,48 +377,54 @@ void main() {
     });
 
     testWidgets(
-        'pointer down pauses timer and pointer up resumes when pauseOnHover is false',
-        (tester) async {
+      'pointer down pauses timer and pointer up resumes when pauseOnHover is false',
+      (tester) async {
+        final item = createTestItemWithTimer();
+        expect(item.hasTimer, isTrue);
+
+        await tester.pumpWidget(
+          buildContainerTestApp(
+            item: item,
+            dragToClose: true,
+            pauseOnHover: false,
+          ),
+        );
+
+        expect(item.timeStatus, ToastTimeStatus.started);
+
+        // Use a touch pointer (not mouse) since pauseOnHover is false
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.byKey(_childKey)),
+          kind: PointerDeviceKind.touch,
+        );
+        await tester.pump();
+
+        expect(item.timeStatus, ToastTimeStatus.paused);
+
+        await gesture.up();
+        await tester.pump();
+
+        expect(item.timeStatus, ToastTimeStatus.started);
+
+        // PausableTimer holds a real Timer internally — must stop it
+        // before the test ends to avoid the pending timer assertion.
+        item.stop();
+      },
+    );
+
+    testWidgets('touch pointer pauses timer even when pauseOnHover is true', (
+      tester,
+    ) async {
       final item = createTestItemWithTimer();
       expect(item.hasTimer, isTrue);
 
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-        pauseOnHover: false,
-      ));
-
-      expect(item.timeStatus, ToastTimeStatus.started);
-
-      // Use a touch pointer (not mouse) since pauseOnHover is false
-      final gesture = await tester.startGesture(
-        tester.getCenter(find.byKey(_childKey)),
-        kind: PointerDeviceKind.touch,
+      await tester.pumpWidget(
+        buildContainerTestApp(
+          item: item,
+          dragToClose: true,
+          pauseOnHover: true,
+        ),
       );
-      await tester.pump();
-
-      expect(item.timeStatus, ToastTimeStatus.paused);
-
-      await gesture.up();
-      await tester.pump();
-
-      expect(item.timeStatus, ToastTimeStatus.started);
-
-      // PausableTimer holds a real Timer internally — must stop it
-      // before the test ends to avoid the pending timer assertion.
-      item.stop();
-    });
-
-    testWidgets('touch pointer pauses timer even when pauseOnHover is true',
-        (tester) async {
-      final item = createTestItemWithTimer();
-      expect(item.hasTimer, isTrue);
-
-      await tester.pumpWidget(buildContainerTestApp(
-        item: item,
-        dragToClose: true,
-        pauseOnHover: true,
-      ));
 
       item.start();
       expect(item.timeStatus, ToastTimeStatus.started);
@@ -431,8 +447,9 @@ void main() {
       item.stop();
     });
 
-    testWidgets('does not throw when onDismissed dismisses the swiped toast',
-        (tester) async {
+    testWidgets('does not throw when onDismissed dismisses the swiped toast', (
+      tester,
+    ) async {
       final context = await pumpToastApp(tester);
       toastification.show(
         context: context,
@@ -450,20 +467,22 @@ void main() {
       expect(find.text('A'), findsNothing);
     });
 
-    testWidgets('does not throw when dismissAll is called right after a swipe',
-        (tester) async {
-      final context = await pumpToastApp(tester);
-      for (final title in ['A', 'B', 'C']) {
-        toastification.show(context: context, title: Text(title));
+    testWidgets(
+      'does not throw when dismissAll is called right after a swipe',
+      (tester) async {
+        final context = await pumpToastApp(tester);
+        for (final title in ['A', 'B', 'C']) {
+          toastification.show(context: context, title: Text(title));
+          await tester.pumpAndSettle();
+        }
+
+        await tester.fling(find.text('C'), const Offset(400, 0), 1500);
+        toastification.dismissAll();
         await tester.pumpAndSettle();
-      }
 
-      await tester.fling(find.text('C'), const Offset(400, 0), 1500);
-      toastification.dismissAll();
-      await tester.pumpAndSettle();
-
-      expect(tester.takeException(), isNull);
-      expect(find.byType(Dismissible), findsNothing);
-    });
+        expect(tester.takeException(), isNull);
+        expect(find.byType(Dismissible), findsNothing);
+      },
+    );
   });
 }

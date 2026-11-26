@@ -65,13 +65,10 @@ class ToastificationItem implements Equatable {
     void Function(ToastificationItem holder)? onAutoCompleteCompleted,
   }) : id = _uuid.v4() {
     if (autoCloseDuration != null) {
-      _timer = PausableTimer(
-        autoCloseDuration!,
-        () {
-          _timeStatus.value = ToastTimeStatus.finished;
-          onAutoCompleteCompleted?.call(this);
-        },
-      )..start();
+      _timer = PausableTimer(autoCloseDuration!, () {
+        _timeStatus.value = ToastTimeStatus.finished;
+        onAutoCompleteCompleted?.call(this);
+      })..start();
 
       _timeStatus.value = ToastTimeStatus.started;
     } else {
@@ -106,8 +103,9 @@ class ToastificationItem implements Equatable {
   late final PausableTimer? _timer;
 
   /// the status notifier of the timer
-  final ValueNotifier<ToastTimeStatus> _timeStatus =
-      ValueNotifier(ToastTimeStatus.init);
+  final ValueNotifier<ToastTimeStatus> _timeStatus = ValueNotifier(
+    ToastTimeStatus.init,
+  );
 
   /// the status of the timer
   ToastTimeStatus get timeStatus => _timeStatus.value;

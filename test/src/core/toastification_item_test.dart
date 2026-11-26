@@ -181,10 +181,7 @@ void main() {
         autoCloseDuration: const Duration(seconds: 2),
       );
 
-      expect(
-        toastification.toString(),
-        contains('id: ${toastification.id}'),
-      );
+      expect(toastification.toString(), contains('id: ${toastification.id}'));
       expect(
         toastification.toString(),
         contains('timerDuration: ${toastification.originalDuration}'),

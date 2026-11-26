@@ -55,11 +55,11 @@ abstract class BaseStandardToastStyle extends Equatable {
       providedValues?.constraints ?? defaults.constraints;
 
   TextStyle? get titleTextStyle => flutterTheme?.textTheme.titleSmall?.copyWith(
-        color: foregroundColor,
-        fontSize: 14,
-        fontWeight: FontWeight.w500,
-        height: 1.2,
-      );
+    color: foregroundColor,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    height: 1.2,
+  );
 
   TextStyle? get descriptionTextStyle =>
       flutterTheme?.textTheme.titleSmall?.copyWith(
@@ -95,11 +95,7 @@ abstract class BaseStandardToastStyle extends Equatable {
       );
 
   @override
-  List<Object?> get props => [
-        type,
-        providedValues,
-        flutterTheme,
-      ];
+  List<Object?> get props => [type, providedValues, flutterTheme];
 }
 
 class DefaultStyleValues extends StandardStyleValues {
@@ -107,8 +103,12 @@ class DefaultStyleValues extends StandardStyleValues {
     required MaterialColor primaryColor,
     required Color surfaceLight,
     required Color surfaceDark,
-    EdgeInsetsGeometry padding =
-        const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 16),
+    EdgeInsetsGeometry padding = const EdgeInsetsDirectional.fromSTEB(
+      20,
+      16,
+      12,
+      16,
+    ),
     BorderSide borderSide = const BorderSide(color: Colors.black12),
     BorderRadiusGeometry borderRadius = const BorderRadius.all(
       Radius.circular(12),
@@ -119,18 +119,18 @@ class DefaultStyleValues extends StandardStyleValues {
     double progressIndicatorStrokeWidth = 2.0,
     BoxConstraints constraints = const BoxConstraints(minHeight: 64.0),
   }) : super(
-          primaryColor: primaryColor,
-          surfaceLight: surfaceLight,
-          surfaceDark: surfaceDark,
-          padding: padding,
-          borderSide: borderSide,
-          borderRadius: borderRadius,
-          boxShadow: boxShadow,
-          titleMaxLines: titleMaxLines,
-          descriptionMaxLines: descriptionMaxLines,
-          progressIndicatorStrokeWidth: progressIndicatorStrokeWidth,
-          constraints: constraints,
-        );
+         primaryColor: primaryColor,
+         surfaceLight: surfaceLight,
+         surfaceDark: surfaceDark,
+         padding: padding,
+         borderSide: borderSide,
+         borderRadius: borderRadius,
+         boxShadow: boxShadow,
+         titleMaxLines: titleMaxLines,
+         descriptionMaxLines: descriptionMaxLines,
+         progressIndicatorStrokeWidth: progressIndicatorStrokeWidth,
+         constraints: constraints,
+       );
 
   @override
   MaterialColor get primaryColor => super.primaryColor!;
@@ -161,18 +161,18 @@ class DefaultStyleValues extends StandardStyleValues {
 
   @override
   List<Object> get props => [
-        primaryColor,
-        surfaceLight,
-        surfaceDark,
-        padding,
-        borderSide,
-        borderRadius,
-        boxShadow,
-        titleMaxLines,
-        descriptionMaxLines,
-        progressIndicatorStrokeWidth,
-        constraints,
-      ];
+    primaryColor,
+    surfaceLight,
+    surfaceDark,
+    padding,
+    borderSide,
+    borderRadius,
+    boxShadow,
+    titleMaxLines,
+    descriptionMaxLines,
+    progressIndicatorStrokeWidth,
+    constraints,
+  ];
 }
 
 class StandardStyleValues extends Equatable {
@@ -210,19 +210,19 @@ class StandardStyleValues extends Equatable {
 
   @override
   List<Object?> get props => [
-        primaryColor,
-        surfaceLight,
-        surfaceDark,
-        padding,
-        borderSide,
-        borderRadius,
-        boxShadow,
-        titleMaxLines,
-        descriptionMaxLines,
-        progressIndicatorStrokeWidth,
-        progressIndicatorTheme,
-        constraints,
-      ];
+    primaryColor,
+    surfaceLight,
+    surfaceDark,
+    padding,
+    borderSide,
+    borderRadius,
+    boxShadow,
+    titleMaxLines,
+    descriptionMaxLines,
+    progressIndicatorStrokeWidth,
+    progressIndicatorTheme,
+    constraints,
+  ];
 }
 
 // TODO: remove this when the toastification package is updated

@@ -11,10 +11,10 @@ class FlatStandardColoredToastStyle extends BaseStandardToastStyle {
 
   @override
   DefaultStyleValues get defaults => DefaultStyleValues(
-        primaryColor: type.color.toMaterialColor,
-        surfaceLight: Colors.white,
-        surfaceDark: Colors.black,
-      );
+    primaryColor: type.color.toMaterialColor,
+    surfaceLight: Colors.white,
+    surfaceDark: Colors.black,
+  );
 
   @override
   Color get backgroundColor => primaryColor.shade50;
@@ -24,9 +24,5 @@ class FlatStandardColoredToastStyle extends BaseStandardToastStyle {
 
   @override
   BorderSide get borderSide =>
-      providedValues?.borderSide ??
-      BorderSide(
-        color: primaryColor,
-        width: 1.5,
-      );
+      providedValues?.borderSide ?? BorderSide(color: primaryColor, width: 1.5);
 }

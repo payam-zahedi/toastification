@@ -32,9 +32,9 @@ class ToastificationCallbacks extends Equatable {
 
   @override
   List<Object?> get props => [
-        onTap,
-        onCloseButtonTap,
-        onAutoCompleteCompleted,
-        onDismissed,
-      ];
+    onTap,
+    onCloseButtonTap,
+    onAutoCompleteCompleted,
+    onDismissed,
+  ];
 }

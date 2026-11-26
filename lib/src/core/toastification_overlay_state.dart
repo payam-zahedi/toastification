@@ -5,8 +5,9 @@ import 'package:toastification/src/core/toastification_config.dart';
 import 'package:toastification/src/core/widget/toastification_config_provider.dart';
 
 /// Key used to locate the [ToastificationOverlayState].
-final GlobalKey<ToastificationOverlayState> _keyFinder =
-    GlobalKey(debugLabel: 'toastification_overlay');
+final GlobalKey<ToastificationOverlayState> _keyFinder = GlobalKey(
+  debugLabel: 'toastification_overlay',
+);
 
 /// This method is responsible for finding [ToastificationOverlayState] with
 /// the GlobalKey that is assigned to [_GlobalToastificationOverlay].
@@ -22,8 +23,7 @@ ToastificationOverlayState findToastificationOverlayState() {
   final state = _keyFinder.currentState;
   assert(() {
     if (state == null) {
-      throw FlutterError(
-        '''
+      throw FlutterError('''
 We can't find ToastificationOverlayState in your app.
 Did you declare ToastificationWrapper in your app's widget tree like this?
   ToastificationWrapper(
@@ -32,8 +32,7 @@ Did you declare ToastificationWrapper in your app's widget tree like this?
       home: HomePage(),
     ),
   );
-''',
-      );
+''');
     }
     return true;
   }());
@@ -52,16 +51,13 @@ class ToastificationWrapper extends StatelessWidget {
   /// The configuration for Toastification.
   final ToastificationConfig? config;
 
-  const ToastificationWrapper({
-    super.key,
-    required this.child,
-    this.config,
-  });
+  const ToastificationWrapper({super.key, required this.child, this.config});
 
   @override
   Widget build(BuildContext context) {
     return ToastificationConfigProvider(
-      config: config ??
+      config:
+          config ??
           ToastificationConfigProvider.maybeOf(context)?.config ??
           const ToastificationConfig(),
       child: _GlobalToastificationOverlay(child: child),
@@ -126,9 +122,7 @@ class _GlobalToastificationOverlayState
 
     context.visitChildElements(visitor);
 
-    assert(
-      navigator != null,
-      '''
+    assert(navigator != null, '''
 It looks like you are not using Navigator in your app.
 Did you wrapped your app widget like this?
   ToastificationWrapper(
@@ -137,8 +131,7 @@ Did you wrapped your app widget like this?
       home: HomePage(),
     ),
   )
-''',
-    );
+''');
     return navigator?.overlay;
   }
 

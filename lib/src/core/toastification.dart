@@ -141,22 +141,22 @@ class Toastification {
     }
 
     /// find the config from the context or use the global config
-    final ToastificationConfig config = (contextProvided
+    final ToastificationConfig config =
+        (contextProvided
             ? ToastificationConfigProvider.maybeOf(context!)?.config
             : toastificationOverlayState?.globalConfig) ??
         const ToastificationConfig();
 
     direction ??= TextDirection.ltr;
 
-    final effectiveAlignment =
-        (alignment ?? config.alignment).resolve(direction);
+    final effectiveAlignment = (alignment ?? config.alignment).resolve(
+      direction,
+    );
 
     final manager = managers.putIfAbsent(
       effectiveAlignment,
-      () => ToastificationManager(
-        alignment: effectiveAlignment,
-        config: config,
-      ),
+      () =>
+          ToastificationManager(alignment: effectiveAlignment, config: config),
     );
 
     return manager.showCustom(
@@ -171,8 +171,8 @@ class Toastification {
   }
 
   @Deprecated(
-      'use show or showCustom method instead, and you can pass the OverlayState as a parameter')
-
+    'use show or showCustom method instead, and you can pass the OverlayState as a parameter',
+  )
   /// using this method you can show a notification by using the [navigator] overlay
   /// you should create your own widget and pass it to the [builder] parameter
   ///
@@ -261,7 +261,8 @@ class Toastification {
     bool? showProgressBar,
     ProgressIndicatorThemeData? progressBarTheme,
     @Deprecated(
-        'IMPORTANT: The closeButtonShowType parameter is deprecated and will be removed in the next major version. Use the closeButton parameter instead.')
+      'IMPORTANT: The closeButtonShowType parameter is deprecated and will be removed in the next major version. Use the closeButton parameter instead.',
+    )
     CloseButtonShowType? closeButtonShowType,
     ToastCloseButton closeButton = const ToastCloseButton(),
     bool? closeOnClick,
@@ -377,10 +378,7 @@ class Toastification {
   /// dismisses a notification by its [id]
   ///
   /// if there is no notification with the given [id] nothing will happen
-  void dismissById(
-    String id, {
-    bool showRemoveAnimation = true,
-  }) {
+  void dismissById(String id, {bool showRemoveAnimation = true}) {
     final notification = findToastificationItem(id);
 
     if (notification != null) {

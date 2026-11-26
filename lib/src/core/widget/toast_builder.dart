@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:toastification/toastification.dart';
+
 import 'dart:math' as math;
 
 final class ToastHolderWidget extends StatelessWidget {
@@ -23,7 +24,8 @@ final class ToastHolderWidget extends StatelessWidget {
     return KeyedSubtree(
       key: ValueKey(item.id),
       child: DefaultTextStyle(
-        style: Theme.of(context).textTheme.bodyLarge ??
+        style:
+            Theme.of(context).textTheme.bodyLarge ??
             ThemeData.light().textTheme.bodyLarge!,
         child: _AnimationTransformer(
           animation: animation,
@@ -57,31 +59,17 @@ class _AnimationTransformer extends AnimatedWidget {
 
     final alignment = this.alignment.resolve(Directionality.of(context));
 
-    final slideInAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
+    final slideInAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: animation,
-        curve: const Interval(
-          0,
-          0.6,
-          curve: Curves.easeInOut,
-        ),
+        curve: const Interval(0, 0.6, curve: Curves.easeInOut),
       ),
     );
 
-    final targetAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
+    final targetAnimation = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: animation,
-        curve: const Interval(
-          0.3,
-          1,
-          curve: Curves.easeInOut,
-        ),
+        curve: const Interval(0.3, 1, curve: Curves.easeInOut),
       ),
     );
 

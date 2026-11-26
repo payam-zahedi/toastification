@@ -11,15 +11,12 @@ class SimpleStandardToastStyle extends BaseStandardToastStyle {
 
   @override
   DefaultStyleValues get defaults => DefaultStyleValues(
-        primaryColor: type.color.toMaterialColor,
-        surfaceLight: Colors.white,
-        surfaceDark: Colors.black,
-        borderSide: const BorderSide(
-          color: Color(0xffEBEBEB),
-          width: 1.5,
-        ),
-        constraints: const BoxConstraints(),
-      );
+    primaryColor: type.color.toMaterialColor,
+    surfaceLight: Colors.white,
+    surfaceDark: Colors.black,
+    borderSide: const BorderSide(color: Color(0xffEBEBEB), width: 1.5),
+    constraints: const BoxConstraints(),
+  );
 
   @override
   Color get iconColor => primaryColor;

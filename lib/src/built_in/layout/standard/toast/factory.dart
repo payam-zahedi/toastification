@@ -16,31 +16,30 @@ class StandardToastWidgetFactory {
     return switch (style) {
       StandardStyle.flat ||
       StandardStyle.flatColored ||
-      StandardStyle.fillColored =>
-        DefaultStandardToastWidget(
-          title: title,
-          description: description,
-          icon: icon,
-          showCloseButton: showCloseButton,
-          onCloseTap: onCloseTap,
-          closeButton: closeButton,
-          progressBarWidget: progressBarWidget,
-        ),
+      StandardStyle.fillColored => DefaultStandardToastWidget(
+        title: title,
+        description: description,
+        icon: icon,
+        showCloseButton: showCloseButton,
+        onCloseTap: onCloseTap,
+        closeButton: closeButton,
+        progressBarWidget: progressBarWidget,
+      ),
       StandardStyle.minimal => MinimalStandardToastWidget(
-          title: title,
-          description: description,
-          icon: icon,
-          showCloseButton: showCloseButton,
-          onCloseTap: onCloseTap,
-          closeButton: closeButton,
-          progressBarWidget: progressBarWidget,
-        ),
+        title: title,
+        description: description,
+        icon: icon,
+        showCloseButton: showCloseButton,
+        onCloseTap: onCloseTap,
+        closeButton: closeButton,
+        progressBarWidget: progressBarWidget,
+      ),
       StandardStyle.simple => SimpleStandardToastWidget(
-          title: title,
-          showCloseButton: showCloseButton,
-          onCloseTap: onCloseTap,
-          closeButton: closeButton,
-        ),
+        title: title,
+        showCloseButton: showCloseButton,
+        onCloseTap: onCloseTap,
+        closeButton: closeButton,
+      ),
     };
   }
 }

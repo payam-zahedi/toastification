@@ -12,30 +12,30 @@ class StandardToastStyleFactory {
   }) {
     return switch (style) {
       StandardStyle.minimal => MinimalStandardToastStyle(
-          type: type,
-          providedValues: providedValues,
-          flutterTheme: flutterTheme,
-        ),
+        type: type,
+        providedValues: providedValues,
+        flutterTheme: flutterTheme,
+      ),
       StandardStyle.fillColored => FilledStandardToastStyle(
-          type: type,
-          providedValues: providedValues,
-          flutterTheme: flutterTheme,
-        ),
+        type: type,
+        providedValues: providedValues,
+        flutterTheme: flutterTheme,
+      ),
       StandardStyle.flatColored => FlatStandardColoredToastStyle(
-          type: type,
-          providedValues: providedValues,
-          flutterTheme: flutterTheme,
-        ),
+        type: type,
+        providedValues: providedValues,
+        flutterTheme: flutterTheme,
+      ),
       StandardStyle.flat => FlatStandardToastStyle(
-          type: type,
-          providedValues: providedValues,
-          flutterTheme: flutterTheme,
-        ),
+        type: type,
+        providedValues: providedValues,
+        flutterTheme: flutterTheme,
+      ),
       StandardStyle.simple => SimpleStandardToastStyle(
-          type: type,
-          providedValues: providedValues,
-          flutterTheme: flutterTheme,
-        ),
+        type: type,
+        providedValues: providedValues,
+        flutterTheme: flutterTheme,
+      ),
     };
   }
 }

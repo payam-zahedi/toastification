@@ -37,8 +37,7 @@ class DefaultStandardToastWidget extends StatelessWidget
     return Directionality(
       textDirection: context.toastTheme.direction,
       child: IconTheme(
-        data: Theme.of(context)
-            .primaryIconTheme
+        data: Theme.of(context).primaryIconTheme
             .copyWith(color: context.toastTheme.toastStyle!.iconColor),
         child: buildBody(context.toastTheme),
       ),
@@ -67,12 +66,9 @@ class DefaultStandardToastWidget extends StatelessWidget
             offstage: !toastTheme.showIcon,
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
-              child: icon ??
-                  Icon(
-                    toastStyle.icon,
-                    size: 24,
-                    color: toastStyle.iconColor,
-                  ),
+              child:
+                  icon ??
+                  Icon(toastStyle.icon, size: 24, color: toastStyle.iconColor),
             ),
           ),
           Expanded(

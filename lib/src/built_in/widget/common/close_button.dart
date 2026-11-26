@@ -7,7 +7,9 @@ import 'package:toastification/src/utils/toast_theme_utils.dart';
 /// [context] The build context.
 /// [onClose] Callback function when the close button is tapped.
 typedef CloseButtonBuilder = Widget Function(
-    BuildContext context, VoidCallback onClose);
+  BuildContext context,
+  VoidCallback onClose,
+);
 
 /// Configuration class for toast close button customization.
 ///
@@ -115,13 +117,14 @@ class ToastCloseButtonHolder extends StatelessWidget {
           child: showCloseButton
               ? SizedBox(
                   key: const ValueKey('close_button_visible'),
-                  child: toastCloseButton.buttonBuilder
-                          ?.call(context, onCloseTap) ??
+                  child:
+                      toastCloseButton.buttonBuilder?.call(
+                        context,
+                        onCloseTap,
+                      ) ??
                       _DefaultCloseButton(onCloseTap: onCloseTap),
                 )
-              : const SizedBox.shrink(
-                  key: ValueKey('close_button_hidden'),
-                ),
+              : const SizedBox.shrink(key: ValueKey('close_button_hidden')),
         ),
       ),
     );
@@ -133,9 +136,7 @@ class ToastCloseButtonHolder extends StatelessWidget {
 /// This widget provides the standard close button appearance and behavior
 /// when no custom button builder is provided.
 class _DefaultCloseButton extends StatelessWidget {
-  const _DefaultCloseButton({
-    required this.onCloseTap,
-  });
+  const _DefaultCloseButton({required this.onCloseTap});
 
   /// Callback function executed when the close button is tapped
   final VoidCallback? onCloseTap;

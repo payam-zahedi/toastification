@@ -44,8 +44,9 @@ void main() {
       expect(result, isNull);
     });
 
-    testWidgets('of throws assertion error when no provider exists',
-        (tester) async {
+    testWidgets('of throws assertion error when no provider exists', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         Builder(
           builder: (context) {
@@ -59,8 +60,9 @@ void main() {
       );
     });
 
-    testWidgets('updateShouldNotify returns true when config changes',
-        (tester) async {
+    testWidgets('updateShouldNotify returns true when config changes', (
+      tester,
+    ) async {
       final provider = ToastificationConfigProvider(
         config: config,
         child: const SizedBox(),

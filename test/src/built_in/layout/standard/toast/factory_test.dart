@@ -5,9 +5,7 @@ import 'package:toastification/toastification.dart';
 void main() {
   group('StandardToastWidgetFactory', () {
     group('Unit Tests', () {
-      test(
-          'returns DefaultStandardToastWidget for StandardStyle.flat, flatColored, fillColored',
-          () {
+      test('returns DefaultStandardToastWidget for StandardStyle.flat, flatColored, fillColored', () {
         // A helper function to reduce repeated logic
         Widget createWidget(StandardStyle style) {
           return StandardToastWidgetFactory.createStandardToastWidget(
@@ -83,8 +81,10 @@ void main() {
         expect(defaultWidget.onCloseTap, isNotNull);
 
         expect(defaultWidget.closeButton, isA<ToastCloseButton>());
-        expect(defaultWidget.closeButton.showType,
-            equals(CloseButtonShowType.onHover));
+        expect(
+          defaultWidget.closeButton.showType,
+          equals(CloseButtonShowType.onHover),
+        );
         expect(defaultWidget.progressBarWidget, isA<LinearProgressIndicator>());
       });
 
@@ -120,8 +120,10 @@ void main() {
         expect(minimalWidget.onCloseTap, isNotNull);
 
         expect(minimalWidget.closeButton, isA<ToastCloseButton>());
-        expect(minimalWidget.closeButton.showType,
-            equals(CloseButtonShowType.onHover));
+        expect(
+          minimalWidget.closeButton.showType,
+          equals(CloseButtonShowType.onHover),
+        );
         expect(minimalWidget.progressBarWidget, isA<LinearProgressIndicator>());
       });
 

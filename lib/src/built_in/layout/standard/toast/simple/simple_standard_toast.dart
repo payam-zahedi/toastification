@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:toastification/src/built_in/widget/common/close_button.dart';
 import 'package:toastification/src/utils/toast_theme_utils.dart';
@@ -24,9 +25,7 @@ class SimpleStandardToastWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: context.toastTheme.direction,
-      child: Center(
-        child: buildBody(context.toastTheme),
-      ),
+      child: Center(child: buildBody(context.toastTheme)),
     );
   }
 

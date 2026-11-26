@@ -12,10 +12,7 @@ import 'package:toastification/toastification.dart';
 /// You don't need to use [ToastificationManager] directly
 /// [Toastification] will handle them internally
 class ToastificationManager {
-  ToastificationManager({
-    required this.alignment,
-    required this.config,
-  });
+  ToastificationManager({required this.alignment, required this.config});
 
   final Alignment alignment;
 
@@ -32,8 +29,10 @@ class ToastificationManager {
   /// the displayed ones.
   /// if the list is empty, the overlay entry will be removed
   @visibleForTesting
-  late final List<ToastificationItem> notifications =
-      CombinedListView([_pending, _displayed]);
+  late final List<ToastificationItem> notifications = CombinedListView([
+    _pending,
+    _displayed,
+  ]);
 
   /// toasts that [showCustom] accepted but that are not in the list yet,
   /// newest first. They move to [_displayed] after the next frame, see
@@ -138,8 +137,9 @@ class ToastificationManager {
   /// Finds the [ToastificationItem] with the given [id].
   ToastificationItem? findToastificationItem(String id) {
     try {
-      return notifications
-          .firstWhereOrNull((notification) => notification.id == id);
+      return notifications.firstWhereOrNull(
+        (notification) => notification.id == id,
+      );
     } catch (e) {
       return null;
     }
@@ -193,24 +193,23 @@ class ToastificationManager {
           : Duration.zero;
       final Duration delay = removeDuration + removeOverlayDelay;
 
-      listGlobalKey.currentState?.removeItem(
-        index,
-        (BuildContext context, Animation<double> animation) {
-          if (!showRemoveAnimation) {
-            return const SizedBox.shrink();
-          }
+      listGlobalKey.currentState?.removeItem(index, (
+        BuildContext context,
+        Animation<double> animation,
+      ) {
+        if (!showRemoveAnimation) {
+          return const SizedBox.shrink();
+        }
 
-          _trackExitAnimation(animation);
+        _trackExitAnimation(animation);
 
-          return ToastHolderWidget(
-            item: removedItem,
-            animation: animation,
-            alignment: alignment,
-            transformerBuilder: _toastAnimationBuilder(removedItem),
-          );
-        },
-        duration: removeDuration,
-      );
+        return ToastHolderWidget(
+          item: removedItem,
+          animation: animation,
+          alignment: alignment,
+          transformerBuilder: _toastAnimationBuilder(removedItem),
+        );
+      }, duration: removeDuration);
 
       // Always dispose the item after the delay value notifier and timer can cause leaks memory.
       Future.delayed(delay, () {
@@ -306,9 +305,7 @@ class ToastificationManager {
           alignment: alignment,
           child: Container(
             margin: _marginBuilder(context, alignment, config),
-            constraints: BoxConstraints.tightFor(
-              width: config.itemWidth,
-            ),
+            constraints: BoxConstraints.tightFor(width: config.itemWidth),
             child: MediaQuery.removePadding(
               context: context,
               removeTop: true,
@@ -320,20 +317,21 @@ class ToastificationManager {
                 reverse: alignment.y >= 0,
                 primary: true,
                 shrinkWrap: true,
-                itemBuilder: (
-                  BuildContext context,
-                  int index,
-                  Animation<double> animation,
-                ) {
-                  final item = _displayed[index];
+                itemBuilder:
+                    (
+                      BuildContext context,
+                      int index,
+                      Animation<double> animation,
+                    ) {
+                      final item = _displayed[index];
 
-                  return ToastHolderWidget(
-                    item: item,
-                    animation: animation,
-                    alignment: alignment,
-                    transformerBuilder: _toastAnimationBuilder(item),
-                  );
-                },
+                      return ToastHolderWidget(
+                        item: item,
+                        animation: animation,
+                        alignment: alignment,
+                        transformerBuilder: _toastAnimationBuilder(item),
+                      );
+                    },
               ),
             ),
           ),
@@ -369,8 +367,7 @@ class ToastificationManager {
 
   ToastificationAnimationBuilder _toastAnimationBuilder(
     ToastificationItem item,
-  ) =>
-      item.animationBuilder ?? config.animationBuilder;
+  ) => item.animationBuilder ?? config.animationBuilder;
 
   Duration _createAnimationDuration(ToastificationItem item) =>
       item.animationDuration ?? config.animationDuration;

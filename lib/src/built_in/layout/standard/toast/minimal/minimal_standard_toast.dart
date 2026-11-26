@@ -39,18 +39,14 @@ class MinimalStandardToastWidget extends StatelessWidget
     return Directionality(
       textDirection: context.toastTheme.direction,
       child: IconTheme(
-        data: Theme.of(context)
-            .primaryIconTheme
+        data: Theme.of(context).primaryIconTheme
             .copyWith(color: toastStyle.iconColor),
         child: ConstrainedBox(
           constraints: toastStyle.constraints,
           child: Material(
             color: Colors.transparent,
             shape: LinearBorder.start(
-              side: BorderSide(
-                color: toastStyle.primaryColor,
-                width: 3,
-              ),
+              side: BorderSide(color: toastStyle.primaryColor, width: 3),
             ),
             child: buildBody(context.toastTheme),
           ),
@@ -82,12 +78,9 @@ class MinimalStandardToastWidget extends StatelessWidget
             offstage: !toastTheme.showIcon,
             child: Padding(
               padding: const EdgeInsetsDirectional.only(end: 12),
-              child: icon ??
-                  Icon(
-                    toastStyle.icon,
-                    size: 24,
-                    color: toastStyle.iconColor,
-                  ),
+              child:
+                  icon ??
+                  Icon(toastStyle.icon, size: 24, color: toastStyle.iconColor),
             ),
           ),
           Expanded(

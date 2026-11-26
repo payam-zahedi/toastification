@@ -5,15 +5,12 @@ import 'package:toastification/toastification.dart';
 
 void main() {
   group('ToastificationOverlayState', () {
-    testWidgets('ToastificationWrapper initializes correctly',
-        (WidgetTester tester) async {
+    testWidgets('ToastificationWrapper initializes correctly', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ToastificationWrapper(
-          child: MaterialApp(
-            home: Scaffold(
-              body: Container(),
-            ),
-          ),
+          child: MaterialApp(home: Scaffold(body: Container())),
         ),
       );
 
@@ -21,8 +18,9 @@ void main() {
       expect(find.byType(MaterialApp), findsOneWidget);
     });
 
-    testWidgets('ToastificationWrapper with custom config',
-        (WidgetTester tester) async {
+    testWidgets('ToastificationWrapper with custom config', (
+      WidgetTester tester,
+    ) async {
       final config = ToastificationConfig(
         alignment: Alignment.topLeft,
         animationDuration: const Duration(milliseconds: 300),
@@ -37,8 +35,8 @@ void main() {
             home: Scaffold(
               body: Builder(
                 builder: (context) {
-                  providedConfig =
-                      ToastificationConfigProvider.of(context).config;
+                  providedConfig = ToastificationConfigProvider.of(context)
+                      .config;
 
                   return Container();
                 },
@@ -57,13 +55,10 @@ void main() {
       );
     });
 
-    testWidgets('throws error when no Navigator is found',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        ToastificationWrapper(
-          child: Container(),
-        ),
-      );
+    testWidgets('throws error when no Navigator is found', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(ToastificationWrapper(child: Container()));
 
       expect(
         () => findToastificationOverlayState().overlayState,
@@ -71,29 +66,20 @@ void main() {
       );
     });
 
-    testWidgets('findToastificationOverlayState throws when not initialized',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Container(),
-        ),
-      );
+    testWidgets('findToastificationOverlayState throws when not initialized', (
+      WidgetTester tester,
+    ) async {
+      await tester.pumpWidget(MaterialApp(home: Container()));
 
-      expect(
-        () => findToastificationOverlayState(),
-        throwsAssertionError,
-      );
+      expect(() => findToastificationOverlayState(), throwsAssertionError);
     });
 
-    testWidgets('overlayState is accessible when properly initialized',
-        (WidgetTester tester) async {
+    testWidgets('overlayState is accessible when properly initialized', (
+      WidgetTester tester,
+    ) async {
       await tester.pumpWidget(
         ToastificationWrapper(
-          child: MaterialApp(
-            home: Scaffold(
-              body: Container(),
-            ),
-          ),
+          child: MaterialApp(home: Scaffold(body: Container())),
         ),
       );
 
@@ -111,11 +97,7 @@ void main() {
       await tester.pumpWidget(
         ToastificationWrapper(
           config: testConfig,
-          child: MaterialApp(
-            home: Scaffold(
-              body: Container(),
-            ),
-          ),
+          child: MaterialApp(home: Scaffold(body: Container())),
         ),
       );
 
@@ -123,7 +105,9 @@ void main() {
       expect(globalConfig, isNotNull);
       expect(globalConfig?.alignment, equals(Alignment.bottomCenter));
       expect(
-          globalConfig?.animationDuration, equals(const Duration(seconds: 1)));
+        globalConfig?.animationDuration,
+        equals(const Duration(seconds: 1)),
+      );
     });
   });
 }

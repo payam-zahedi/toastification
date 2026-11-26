@@ -114,17 +114,17 @@ class ToastificationConfig extends Equatable {
 
   @override
   List<Object?> get props => [
-        alignment,
-        itemWidth,
-        clipBehavior,
-        animationDuration,
-        marginBuilder,
-        maxToastLimit,
-        maxTitleLines,
-        maxDescriptionLines,
-        applyMediaQueryViewInsets,
-        blockBackgroundInteraction,
-      ];
+    alignment,
+    itemWidth,
+    clipBehavior,
+    animationDuration,
+    marginBuilder,
+    maxToastLimit,
+    maxTitleLines,
+    maxDescriptionLines,
+    applyMediaQueryViewInsets,
+    blockBackgroundInteraction,
+  ];
 }
 
 /// Default animation builder for [Toastification]

@@ -27,11 +27,11 @@ class DefaultToastificationTransition extends AnimatedWidget {
 
     final slideOffset = isCenter
         ? alignment.y >= 0
-            ? const Offset(0, 1)
-            : const Offset(0, -1)
+              ? const Offset(0, 1)
+              : const Offset(0, -1)
         : alignment.x >= 0
-            ? const Offset(1, 0)
-            : const Offset(-1, 0);
+        ? const Offset(1, 0)
+        : const Offset(-1, 0);
 
     return FadeTransition(
       opacity: animation,

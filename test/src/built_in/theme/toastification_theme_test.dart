@@ -61,23 +61,22 @@ void main() {
       expect(retrievedTheme, isNot(equals(themeData)));
     });
 
-    testWidgets('throws assertion error when no theme is found',
-        (tester) async {
+    testWidgets('throws assertion error when no theme is found', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         Builder(
           builder: (context) {
-            expect(
-              () => ToastificationTheme.of(context),
-              throwsAssertionError,
-            );
+            expect(() => ToastificationTheme.of(context), throwsAssertionError);
             return const SizedBox();
           },
         ),
       );
     });
 
-    testWidgets('wrap creates new ToastificationTheme instance',
-        (tester) async {
+    testWidgets('wrap creates new ToastificationTheme instance', (
+      tester,
+    ) async {
       late BuildContext testContext;
 
       await tester.pumpWidget(
@@ -96,10 +95,7 @@ void main() {
         child: const SizedBox(),
       );
 
-      final wrapped = theme.wrap(
-        testContext,
-        const SizedBox(),
-      );
+      final wrapped = theme.wrap(testContext, const SizedBox());
 
       expect(wrapped, isA<ToastificationTheme>());
       expect((wrapped as ToastificationTheme).themeData, equals(themeData));

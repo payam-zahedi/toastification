@@ -78,11 +78,11 @@ class ToastificationThemeData extends Equatable {
 
   @override
   List<Object?> get props => [
-        flutterTheme,
-        toastStyle,
-        showProgressBar,
-        applyBlurEffect,
-        showIcon,
-        direction,
-      ];
+    flutterTheme,
+    toastStyle,
+    showProgressBar,
+    applyBlurEffect,
+    showIcon,
+    direction,
+  ];
 }
