@@ -1,3 +1,4 @@
+import 'package:example/main.dart';
 import 'package:example/src/core/views/widgets/bordered_container.dart';
 import 'package:example/src/core/views/widgets/expandable_section.dart';
 import 'package:example/src/core/views/widgets/toggle_tile.dart';
@@ -191,6 +192,7 @@ class ToastStylePickerState extends State<ToastStylePicker> {
           ),
         ),
         const _ApplyBlurEffectSection(),
+        const _DarkModeSection(),
       ],
     );
   }
@@ -216,6 +218,27 @@ class _ApplyBlurEffectSection extends ConsumerWidget {
           ref
               .read(toastDetailControllerProvider.notifier)
               .changeApplyBlurEffect(value!);
+        },
+      ),
+    );
+  }
+}
+
+class _DarkModeSection extends ConsumerWidget {
+  const _DarkModeSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return SubSection(
+      title: 'THEME MODE',
+      body: ToggleTile(
+        title: 'Dark toasts',
+        value:
+            ref.watch(toastThemeModeProvider) == ToastificationThemeMode.dark,
+        onChanged: (value) {
+          ref.read(toastThemeModeProvider.notifier).state = value!
+              ? ToastificationThemeMode.dark
+              : ToastificationThemeMode.light;
         },
       ),
     );
