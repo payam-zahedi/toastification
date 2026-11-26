@@ -784,6 +784,31 @@ void main() {
 
       await cleanUpToasts(tester);
     });
+
+    testWidgets('should build the new toast with its own state', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+
+      toastification.showCustom(
+        context: appContext,
+        id: 'network',
+        builder: (context, item) => const _InitStateText('Offline'),
+      );
+      await tester.pumpAndSettle();
+
+      toastification.showCustom(
+        context: appContext,
+        id: 'network',
+        builder: (context, item) => const _InitStateText('Online'),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Offline'), findsNothing);
+      expect(find.text('Online'), findsOneWidget);
+
+      await cleanUpToasts(tester);
+    });
   });
 
   // https://github.com/payam-zahedi/toastification/issues/193
@@ -936,4 +961,21 @@ void main() {
       expectNoOverlay();
     });
   });
+}
+
+/// shows the text it had when its state was created.
+class _InitStateText extends StatefulWidget {
+  const _InitStateText(this.text);
+
+  final String text;
+
+  @override
+  State<_InitStateText> createState() => _InitStateTextState();
+}
+
+class _InitStateTextState extends State<_InitStateText> {
+  late final String _text = widget.text;
+
+  @override
+  Widget build(BuildContext context) => Text(_text);
 }

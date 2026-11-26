@@ -22,7 +22,8 @@ final class ToastHolderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyedSubtree(
-      key: ValueKey(item.id),
+      // a toast that replaces another one has the same id, but not its state.
+      key: ObjectKey(item),
       child: DefaultTextStyle(
         style:
             Theme.of(context).textTheme.bodyLarge ??
