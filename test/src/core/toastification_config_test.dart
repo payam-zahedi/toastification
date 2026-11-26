@@ -81,6 +81,16 @@ void main() {
       expect(config, isNot(equals(updated)));
     });
 
+    test('themeMode | defaults to light and is kept by copyWith', () {
+      const config = ToastificationConfig();
+      final dark = config.copyWith(themeMode: ToastificationThemeMode.dark);
+
+      expect(config.themeMode, ToastificationThemeMode.light);
+      expect(dark.themeMode, ToastificationThemeMode.dark);
+      expect(dark.copyWith().themeMode, ToastificationThemeMode.dark);
+      expect(dark, isNot(config));
+    });
+
     test('hashCode', () {
       const config = ToastificationConfig();
       final updated = config.copyWith(
