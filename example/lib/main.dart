@@ -11,6 +11,11 @@ final themeVariantProvider = StateProvider<bool>((ref) {
   return false;
 });
 
+/// whether the toasts overlap in a stack instead of a list.
+final stackedLayoutProvider = StateProvider<bool>((ref) {
+  return false;
+});
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -25,6 +30,7 @@ class ToastificationApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final useInterFont = ref.watch(themeVariantProvider);
+    final stackedLayout = ref.watch(stackedLayoutProvider);
 
     return ToastificationWrapper(
       config: ToastificationConfig(
@@ -32,6 +38,9 @@ class ToastificationApp extends ConsumerWidget {
         maxDescriptionLines: 6,
         marginBuilder: (context, alignment) =>
             const EdgeInsets.fromLTRB(0, 16, 0, 110),
+        layout: stackedLayout
+            ? const ToastificationLayout.stacked()
+            : const ToastificationLayout.list(),
       ),
       child: MaterialApp(
         title: 'Toastification',
