@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:toastification/src/core/widget/list/animated_toast_list_view.dart';
+import 'package:toastification/src/core/widget/list/stacked_toast_list_view.dart';
 import 'package:toastification/src/core/widget/toast_builder.dart';
 import 'package:toastification/toastification.dart';
 
@@ -11,6 +13,29 @@ abstract class ToastListView {
     required this.items,
     required this.onExitEnd,
   });
+
+  /// creates the view of [ToastificationConfig.layout].
+  factory ToastListView.of({
+    required Alignment alignment,
+    required ToastificationConfig config,
+    required List<ToastificationItem> items,
+    required VoidCallback onExitEnd,
+  }) {
+    return switch (config.layout) {
+      ToastificationListLayout() => AnimatedToastListView(
+        alignment: alignment,
+        config: config,
+        items: items,
+        onExitEnd: onExitEnd,
+      ),
+      ToastificationStackedLayout() => StackedToastListView(
+        alignment: alignment,
+        config: config,
+        items: items,
+        onExitEnd: onExitEnd,
+      ),
+    };
+  }
 
   final Alignment alignment;
 

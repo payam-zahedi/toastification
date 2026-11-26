@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:toastification/src/core/widget/list/animated_toast_list_view.dart';
 import 'package:toastification/src/core/widget/list/toast_list_view.dart';
 import 'package:toastification/toastification.dart';
 
@@ -40,7 +39,7 @@ class ToastificationManager {
   final List<ToastificationItem> _displayed = [];
 
   /// lays out the [_displayed] toasts inside the [overlayEntry].
-  late final ToastListView _listView = AnimatedToastListView(
+  late final _listView = ToastListView.of(
     alignment: alignment,
     config: config,
     items: _displayed,
