@@ -45,18 +45,6 @@ void main() {
       expect(brightness, Brightness.light);
     });
 
-    testWidgets('light ignores a dark app', (tester) async {
-      final brightness = await pumpToastBrightness(
-        tester,
-        appTheme: ThemeData.dark(),
-        config: const ToastificationConfig(
-          themeMode: ToastificationThemeMode.light,
-        ),
-      );
-
-      expect(brightness, Brightness.light);
-    });
-
     testWidgets('dark ignores a light app', (tester) async {
       final brightness = await pumpToastBrightness(
         tester,

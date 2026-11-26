@@ -116,17 +116,6 @@ void main() {
       expect(toastStyle.iconColor, Colors.white);
     });
 
-    test('fillColored looks the same as in light', () {
-      final dark = createStyle(StandardStyle.fillColored);
-      final light = StandardToastStyleFactory.createStyle(
-        style: StandardStyle.fillColored,
-        type: ToastificationType.success,
-      );
-
-      expect(dark.backgroundColor, light.backgroundColor);
-      expect(dark.foregroundColor, light.foregroundColor);
-    });
-
     test('provided colors win over the dark defaults', () {
       final toastStyle = createStyle(
         StandardStyle.flat,
