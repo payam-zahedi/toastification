@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:material_ui/material_ui.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:toastification/src/core/widget/toast_builder.dart';
+import 'package:toastification/src/core/widget/list/animated_toast_list_view.dart';
+import 'package:toastification/src/core/widget/list/toast_list_view.dart';
 import 'package:toastification/toastification.dart';
 
 /// This class is responsible for managing the [Toastification] items
@@ -21,10 +22,6 @@ class ToastificationManager {
   @visibleForTesting
   OverlayEntry? overlayEntry;
 
-  /// this key is attached to [AnimatedList] so we can add or remove items using it.
-  @visibleForTesting
-  final listGlobalKey = GlobalKey<AnimatedListState>();
-
   /// this is the list of all the items, newest first: the pending ones, then
   /// the displayed ones.
   /// if the list is empty, the overlay entry will be removed
@@ -39,8 +36,16 @@ class ToastificationManager {
   /// [_display].
   final List<ToastificationItem> _pending = [];
 
-  /// toasts that are in the [AnimatedList], newest first.
+  /// toasts that are in the [_listView], newest first.
   final List<ToastificationItem> _displayed = [];
+
+  /// lays out the [_displayed] toasts inside the [overlayEntry].
+  late final ToastListView _listView = AnimatedToastListView(
+    alignment: alignment,
+    config: config,
+    items: _displayed,
+    onExitEnd: _removeOverlayIfIdle,
+  );
 
   /// this is the delay for removing the overlay entry
   ///
@@ -48,16 +53,6 @@ class ToastificationManager {
   /// to be completed and then remove the overlay.
   @visibleForTesting
   final removeOverlayDelay = const Duration(milliseconds: 50);
-
-  // TODO(payam): remove once the minimum Flutter version includes
-  // flutter/flutter#192699, see https://github.com/payam-zahedi/toastification/issues/254
-  /// exit animations that are still running.
-  ///
-  /// on the web, removing the overlay in the frame that finishes an exit
-  /// animation makes [AnimatedList] dispose its controller twice, so the
-  /// overlay waits for all of them.
-  @visibleForTesting
-  final Set<Animation<double>> exitAnimations = {};
 
   /// Shows a [ToastificationItem] with the given [builder] and [animationBuilder].
   ///
@@ -128,10 +123,7 @@ class ToastificationManager {
     if (!_pending.remove(item)) return;
 
     _displayed.insert(0, item);
-    listGlobalKey.currentState?.insertItem(
-      0,
-      duration: _createAnimationDuration(item),
-    );
+    _listView.insert(item, _createAnimationDuration(item));
   }
 
   /// Finds the [ToastificationItem] with the given [id].
@@ -167,7 +159,7 @@ class ToastificationManager {
       scheduleMicrotask(notification.dispose);
 
       // a list that was never built has no exit animation to wait for.
-      if (listGlobalKey.currentState == null) {
+      if (!_listView.isBuilt) {
         scheduleMicrotask(_removeOverlayIfIdle);
       } else {
         Future.delayed(removeOverlayDelay, _removeOverlayIfIdle);
@@ -193,23 +185,7 @@ class ToastificationManager {
           : Duration.zero;
       final Duration delay = removeDuration + removeOverlayDelay;
 
-      listGlobalKey.currentState?.removeItem(index, (
-        BuildContext context,
-        Animation<double> animation,
-      ) {
-        if (!showRemoveAnimation) {
-          return const SizedBox.shrink();
-        }
-
-        _trackExitAnimation(animation);
-
-        return ToastHolderWidget(
-          item: removedItem,
-          animation: animation,
-          alignment: alignment,
-          transformerBuilder: _toastAnimationBuilder(removedItem),
-        );
-      }, duration: removeDuration);
+      _listView.remove(index, removedItem, removeDuration);
 
       // Always dispose the item after the delay value notifier and timer can cause leaks memory.
       Future.delayed(delay, () {
@@ -225,33 +201,8 @@ class ToastificationManager {
     }
   }
 
-  /// keeps the overlay alive until a toast's exit [animation] ends.
-  ///
-  /// when it ends, the overlay removal is queued after [AnimatedList]'s own
-  /// cleanup, so the list never disposes the animation's controller twice.
-  void _trackExitAnimation(Animation<double> animation) {
-    // the builder runs on every frame of the exit.
-    if (!exitAnimations.add(animation)) return;
-
-    void onStatus(AnimationStatus status) {
-      // if it's not dismissed yet, we don't do anything.
-      if (status != AnimationStatus.dismissed) return;
-
-      animation.removeStatusListener(onStatus);
-
-      exitAnimations.remove(animation);
-      // queued after AnimatedList's own cleanup for this animation.
-      scheduleMicrotask(_removeOverlayIfIdle);
-    }
-
-    animation.addStatusListener(onStatus);
-  }
-
   void _removeOverlayIfIdle() {
-    // drop animations whose list was disposed before they finished.
-    exitAnimations.removeWhere((animation) => !animation.isAnimating);
-
-    if (notifications.isNotEmpty || exitAnimations.isNotEmpty) return;
+    if (notifications.isNotEmpty || _listView.isExiting) return;
 
     overlayEntry?.remove();
     overlayEntry?.dispose();
@@ -310,29 +261,7 @@ class ToastificationManager {
               context: context,
               removeTop: true,
               removeBottom: true,
-              child: AnimatedList(
-                key: listGlobalKey,
-                clipBehavior: config.clipBehavior,
-                initialItemCount: _displayed.length,
-                reverse: alignment.y >= 0,
-                primary: true,
-                shrinkWrap: true,
-                itemBuilder:
-                    (
-                      BuildContext context,
-                      int index,
-                      Animation<double> animation,
-                    ) {
-                      final item = _displayed[index];
-
-                      return ToastHolderWidget(
-                        item: item,
-                        animation: animation,
-                        alignment: alignment,
-                        transformerBuilder: _toastAnimationBuilder(item),
-                      );
-                    },
-              ),
+              child: _listView.build(context),
             ),
           ),
         );
@@ -364,10 +293,6 @@ class ToastificationManager {
     /// will be touchable and not covered by the toastification overlay.
     return marginValue.add(MediaQuery.of(context).viewPadding);
   }
-
-  ToastificationAnimationBuilder _toastAnimationBuilder(
-    ToastificationItem item,
-  ) => item.animationBuilder ?? config.animationBuilder;
 
   Duration _createAnimationDuration(ToastificationItem item) =>
       item.animationDuration ?? config.animationDuration;
