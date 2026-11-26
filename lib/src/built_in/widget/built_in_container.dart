@@ -124,8 +124,15 @@ class _FadeDismissible extends StatefulWidget {
 class _FadeDismissibleState extends State<_FadeDismissible> {
   double currentOpacity = 0;
 
+  /// true once the swipe has fully dismissed the toast.
+  bool _dismissed = false;
+
   @override
   Widget build(BuildContext context) {
+    // a swiped toast can still be in the list while it animates out, and
+    // Flutter throws if a dismissed Dismissible is built again.
+    if (_dismissed) return const SizedBox.shrink();
+
     return Listener(
       onPointerDown: (event) {
         _handleDragUpdate(true, event.kind);
@@ -143,6 +150,8 @@ class _FadeDismissibleState extends State<_FadeDismissible> {
         direction: widget.dismissDirection ?? DismissDirection.horizontal,
         behavior: HitTestBehavior.deferToChild,
         onDismissed: (direction) {
+          _dismissed = true;
+
           // call the onDismissed callback
           widget.onDismissed?.call();
 

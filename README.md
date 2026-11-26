@@ -12,10 +12,10 @@ One of the advantages of the Toastification package is its ability to handle mul
 
 Overall, Toastification is a useful package for Flutter developers who want to add toast notifications to their apps without having to write the code from scratch.
 
-## [Toast Builder](https://payamzahedi.com/toastification/)
+## [Toast Builder](https://payam-zahedi.github.io/toastification/)
 
 Don't want to dive into the whole documentation? No problem!
-Just head over to our [Toast Builder Website](https://payamzahedi.com/toastification/), where you can effortlessly customize your toast notifications, copy the generated code, and seamlessly integrate them into your project. It's the quickest way to get started with Toastification!
+Just head over to our [Toast Builder Website](https://payam-zahedi.github.io/toastification/), where you can effortlessly customize your toast notifications, copy the generated code, and seamlessly integrate them into your project. It's the quickest way to get started with Toastification!
 
 https://github.com/payam-zahedi/toastification/assets/47558577/0e40aefd-b768-4d13-b982-eeeefb2256e9
 

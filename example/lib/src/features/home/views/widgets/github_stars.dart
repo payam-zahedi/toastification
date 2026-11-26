@@ -32,7 +32,7 @@ class GithubStars extends ConsumerWidget {
 
     return starsCount.maybeWhen(
       data: (data) => ColoredTag(
-        icon: FontAwesomeIcons.github,
+        icon: FontAwesomeIcons.github.data,
         text: '$data Stars on Github',
       ),
       orElse: () => TagContainer(

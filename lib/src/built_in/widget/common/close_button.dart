@@ -107,7 +107,7 @@ class ToastCloseButtonHolder extends StatelessWidget {
               child: SizeTransition(
                 sizeFactor: animation,
                 axis: Axis.horizontal,
-                alignment: Alignment.centerRight,
+                alignment: AlignmentDirectional.topEnd,
                 child: child,
               ),
             );

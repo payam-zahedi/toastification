@@ -715,4 +715,155 @@ void main() {
       await cleanUpToasts(tester);
     });
   });
+
+  // https://github.com/payam-zahedi/toastification/issues/193
+  group('Toastification - before the first frame', () {
+    const animationDuration = Duration(milliseconds: 100);
+
+    late BuildContext appContext;
+
+    setUp(() => toastification.managers.clear());
+
+    Future<void> pumpApp(WidgetTester tester, {Widget? child}) {
+      return tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: Builder(
+              builder: (context) {
+                appContext = context;
+                return child ?? const SizedBox.shrink();
+              },
+            ),
+          ),
+        ),
+      );
+    }
+
+    ToastificationItem showToast(String title, {BuildContext? context}) {
+      return toastification.show(
+        context: context ?? appContext,
+        title: Text(title),
+        animationDuration: animationDuration,
+      );
+    }
+
+    // skipOffstage: false, a toast whose enter animation has not started yet
+    // has zero height and counts as offstage.
+    Finder findToast(String title) => find.text(title, skipOffstage: false);
+
+    void expectNoOverlay() {
+      for (final manager in toastification.managers.values) {
+        expect(manager.notifications, isEmpty);
+        expect(manager.overlayEntry, isNull);
+      }
+    }
+
+    testWidgets('should never show a toast dismissed by id in the same frame',
+        (tester) async {
+      await pumpApp(tester);
+
+      final item = showToast('A');
+      toastification.dismissById(item.id);
+      expect(toastification.findToastificationItem(item.id), isNull);
+
+      await tester.pump();
+      expect(findToast('A'), findsNothing);
+      await tester.pump();
+      expect(findToast('A'), findsNothing);
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(findToast('A'), findsNothing);
+
+      expectNoOverlay();
+    });
+
+    testWidgets(
+        'should remove toasts shown in the same frame with '
+        'dismissAll(delayForAnimation: false)', (tester) async {
+      await pumpApp(tester);
+
+      showToast('A');
+      showToast('B');
+      showToast('C');
+      toastification.dismissAll(delayForAnimation: false);
+
+      await tester.pump();
+      await tester.pump();
+      for (final title in ['A', 'B', 'C']) {
+        expect(findToast(title), findsNothing);
+      }
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expectNoOverlay();
+    });
+
+    testWidgets(
+        'should remove toasts shown in the same frame with '
+        'dismissAll(delayForAnimation: true)', (tester) async {
+      await pumpApp(tester);
+
+      showToast('A');
+      showToast('B');
+      showToast('C');
+      toastification.dismissAll();
+
+      // dismissAll waits 150ms between two toasts.
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      for (final title in ['A', 'B', 'C']) {
+        expect(findToast(title), findsNothing);
+      }
+      expectNoOverlay();
+    });
+
+    testWidgets('should show a toast from build', (tester) async {
+      var shown = false;
+      await pumpApp(
+        tester,
+        child: Builder(
+          builder: (context) {
+            if (!shown) {
+              shown = true;
+              showToast('A', context: context);
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      );
+      expect(tester.takeException(), isNull);
+
+      await tester.pumpAndSettle();
+      expect(find.text('A'), findsOneWidget);
+
+      await cleanUpToasts(tester);
+    });
+
+    testWidgets('should never show a toast shown and dismissed in one build',
+        (tester) async {
+      var shown = false;
+      await pumpApp(
+        tester,
+        child: Builder(
+          builder: (context) {
+            if (!shown) {
+              shown = true;
+              toastification.dismiss(showToast('A', context: context));
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      );
+      expect(tester.takeException(), isNull);
+
+      await tester.pump();
+      expect(findToast('A'), findsNothing);
+      await tester.pump();
+      expect(findToast('A'), findsNothing);
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(findToast('A'), findsNothing);
+
+      expectNoOverlay();
+    });
+  });
 }
